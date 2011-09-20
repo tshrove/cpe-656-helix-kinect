@@ -25,8 +25,6 @@ namespace MapControlLib
         private KinectAudioSource kinectSource;
         private SpeechRecognitionEngine speechEngine;
         private const string RecognizerId = "SR_MS_en-US_Kinect_10.0";
-        private bool paused = false;
-        private bool valid = false;
 
         /// <summary>
         /// Constructor.
@@ -39,7 +37,7 @@ namespace MapControlLib
         /// <summary>
         /// Starts the speech recognition thread.
         /// </summary>
-        /// <param name="keyword"></param>
+        /// <param name="keyword">Not Implemented Yet</param>
         /// <param name="commandMap">Words or phrases mapped to actions to perform when the word or phrase is spoken.</param>
         public void Start(string keyword, Dictionary<string, Action> commandMap)
         {
@@ -67,6 +65,9 @@ namespace MapControlLib
             speechEngine = new SpeechRecognitionEngine(ri.Id);
 
             // Build a simple grammar of commands
+
+            // TODO: The speech recognition is picking up false positives.  Look into how
+            // to better refine speech input.
             Choices choices = new Choices();
             foreach (string phrase in wordToActionMap.Keys)
             {
@@ -74,15 +75,15 @@ namespace MapControlLib
             }
 
             GrammarBuilder gb = new GrammarBuilder(choices);
-
+            
             Grammar g = new Grammar(gb);
             speechEngine.LoadGrammar(g);
             speechEngine.SpeechRecognized += SpeechRecognized;
+            speechEngine.SpeechHypothesized += SpeechHypothesized;
+            speechEngine.SpeechRecognitionRejected += SpeechRejected;
 
             Thread t = new Thread(StartDMO);
             t.Start();
-
-            valid = true;
         }
 
         public void Stop()
@@ -137,6 +138,16 @@ namespace MapControlLib
                     break;
                 }
             }
+        }
+
+        void SpeechRejected(object sender, SpeechRecognitionRejectedEventArgs e)
+        {            
+            Console.WriteLine("\nSpeech Rejected");
+        }
+
+        void SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e)
+        {
+            Console.Write("\rSpeech Hypothesized: \t{0}", e.Result.Text);
         }
 
         #endregion

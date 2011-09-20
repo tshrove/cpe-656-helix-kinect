@@ -27,7 +27,7 @@
                          GroupName="Layers">
                     <Label Content="Streets" Foreground="White" Margin="0"/>
                 </RadioButton>
-                <RadioButton Name="ImageryRadioButton" 
+                <RadioButton Name="TopoRadioButton" 
                          Tag="http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer"
                          Margin="5,0,0,0" Foreground="Green" 
                          GroupName="Layers">
