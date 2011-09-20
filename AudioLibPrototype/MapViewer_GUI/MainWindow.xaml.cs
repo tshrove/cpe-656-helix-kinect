@@ -30,8 +30,28 @@ namespace MapViewer_GUI
         {
             InitializeComponent();
 
+            // Add voice commands and actions
+            voiceMap.Add("Exit Application", () => Close());
             voiceMap.Add("Zoom In", () => MyMap.Zoom(2));
             voiceMap.Add("Zoom Out", () => MyMap.Zoom(0.5));
+            voiceMap.Add("Street View", () => 
+                            {
+                                StreetsRadioButton.IsChecked = true;
+                                ArcGISTiledMapServiceLayer arcgisLayer = MyMap.Layers["AGOLayer"] as ArcGISTiledMapServiceLayer;
+                                arcgisLayer.Url = StreetsRadioButton.Tag as string;
+                            });
+            voiceMap.Add("Topo View", () => 
+                            {
+                                TopoRadioButton.IsChecked = true;
+                                ArcGISTiledMapServiceLayer arcgisLayer = MyMap.Layers["AGOLayer"] as ArcGISTiledMapServiceLayer;
+                                arcgisLayer.Url = TopoRadioButton.Tag as string;
+                            });
+            voiceMap.Add("Imagery View", () => 
+                            {
+                                BlendRadioButton.IsChecked = true;
+                                ArcGISTiledMapServiceLayer arcgisLayer = MyMap.Layers["AGOLayer"] as ArcGISTiledMapServiceLayer;
+                                arcgisLayer.Url = BlendRadioButton.Tag as string;
+                            });
         }
 
         private void RadioButton_Click(object sender, RoutedEventArgs e)
@@ -51,7 +71,5 @@ namespace MapViewer_GUI
         {
             mapControlLib.StopVoiceRecognition();
         }
-
-
     }
 }
