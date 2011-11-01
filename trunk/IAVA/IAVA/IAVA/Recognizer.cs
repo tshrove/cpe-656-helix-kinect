@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.ComponentModel;
 
-namespace IAVA
+namespace Iava
 {
     public abstract class Recognizer : IRecognizer
     {
