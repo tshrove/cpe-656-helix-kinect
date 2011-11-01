@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Audio", "Iava.Audio\Ia
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Gesture", "Iava.Gesture\Iava.Gesture.csproj", "{39C4649E-594B-41FC-B9BE-0000AA88F569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava", "IAVA\IAVA.csproj", "{80DF01EC-0E97-4B4D-A36F-FED9659D748A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Core", "IAVA\Iava.Core.csproj", "{80DF01EC-0E97-4B4D-A36F-FED9659D748A}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
