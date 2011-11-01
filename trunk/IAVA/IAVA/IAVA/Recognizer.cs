@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace IAVA
 {
-    public class Recognizer : IRecognizer
+    public abstract class Recognizer : IRecognizer
     {
         #region Public Properties
         /// <summary>
@@ -28,17 +28,33 @@ namespace IAVA
         }
         #endregion
 
+        #region Constructors
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public Recognizer()
+            :this(null)
+        {
+            // Nothing to do.
+        }
+        /// <summary>
+        /// Initializes the recognizers.
+        /// </summary>
+        /// <param name="configurationFile"></param>
+        public Recognizer(FileStream configurationFile)
+        {
+            this.Configuration = configurationFile;
+            this.Status = RecognizerStatus.Uninitialized;
+        }
+        #endregion
+
         #region Public Methods
         /// <summary>
         /// Used to initialize the recognizer object using the configuration
         /// file in the parameter of the function.
         /// </summary>
         /// <param name="configurationFile"></param>
-        public void Create(FileStream configurationFile)
-        {
-            this.Configuration = configurationFile;
-            this.Status = RecognizerStatus.Uninitialized;
-        }
+        public abstract void Create(FileStream configurationFile);
         /// <summary>
         /// Starts the recognizer.
         /// </summary>

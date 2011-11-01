@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Iava.Gesture 
 {
-    public class GestureRecognizer 
+    public class GestureRecognizer : 
     {
 
     }
