@@ -43,7 +43,8 @@ namespace IAVA
         /// </summary>
         public virtual void Start()
         {
-            
+            // TODO May need this class to create a worker thread and call the private
+            // Start function for more subclass specific functionality.
         }
         /// <summary>
         ///  Stops the recognizer.
