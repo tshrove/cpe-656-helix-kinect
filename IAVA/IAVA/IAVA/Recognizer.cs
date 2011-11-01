@@ -36,6 +36,7 @@ namespace IAVA
         public void Create(File configurationFile)
         {
             this.Configuration = configurationFile;
+            this.Status = RecognizerStatus.Uninitialized;
         }
         /// <summary>
         /// Starts the recognizer.
