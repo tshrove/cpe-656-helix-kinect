@@ -43,6 +43,12 @@
     <Compile Include="AudioRecognizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IAVA\IAVA.csproj">
+      <Project>{80DF01EC-0E97-4B4D-A36F-FED9659D748A}</Project>
+      <Name>IAVA</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
