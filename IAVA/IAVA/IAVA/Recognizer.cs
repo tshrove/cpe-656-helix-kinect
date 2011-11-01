@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.ComponentModel;
 
 namespace IAVA
 {
-    public sealed class Recognizer : IRecognizer
+    public class Recognizer : IRecognizer
     {
-        #region Properties
+        #region Public Properties
         /// <summary>
         /// Gets the file used for configuration of the recognizer.
         /// </summary>
-        public File Configuration
+        public FileStream Configuration
         {
             get;
             protected set;
@@ -33,7 +34,7 @@ namespace IAVA
         /// file in the parameter of the function.
         /// </summary>
         /// <param name="configurationFile"></param>
-        public void Create(File configurationFile)
+        public void Create(FileStream configurationFile)
         {
             this.Configuration = configurationFile;
             this.Status = RecognizerStatus.Uninitialized;
@@ -43,15 +44,14 @@ namespace IAVA
         /// </summary>
         public virtual void Start()
         {
-            // TODO May need this class to create a worker thread and call the private
-            // Start function for more subclass specific functionality.
+
         }
         /// <summary>
         ///  Stops the recognizer.
         /// </summary>
         public virtual void Stop()
         {
-            
+           
         }
         /// <summary>
         /// Used to subscribe the callback delegate with the specific delegate
