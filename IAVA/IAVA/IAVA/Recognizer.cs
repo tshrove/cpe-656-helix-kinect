@@ -6,7 +6,7 @@ using System.IO;
 
 namespace IAVA
 {
-    public class Recognizer : IRecognizer
+    public sealed class Recognizer : IRecognizer
     {
         #region Properties
         /// <summary>
