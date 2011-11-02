@@ -2,10 +2,9 @@
 {
     public enum RecognizerStatus
     {
-        Initialized = 0,
         Ready,
-        Configured,
-        Uninitialized,
+        NotReady,
+        Running,
         Error
     }
 }
