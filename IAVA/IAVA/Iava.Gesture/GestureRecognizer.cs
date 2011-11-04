@@ -25,15 +25,8 @@ namespace Iava.Gesture
         public GestureRecognizer(string filePath)
             :base(filePath)
         {
-            // Nothing to do.
+            this.GestureCallbacks = new Dictionary<string, GestureCallback>();
         }
-        #endregion
-
-        #region Private Members
-        /// <summary>
-        /// Holds the callback for each gesture.
-        /// </summary>
-        private Dictionary<string, GestureCallback> m_pGestureCallbacks = new Dictionary<string, GestureCallback>();
         #endregion
 
         #region Private Properties
@@ -72,7 +65,10 @@ namespace Iava.Gesture
         /// <param name="d"></param>
         public void Subscribe(string name, GestureCallback callBack)
         {
-            GestureCallbacks["name"] = callBack;
+            if (this.GestureCallbacks.ContainsKey(name))
+            {
+                this.GestureCallbacks[name] = callBack;
+            }
         }
         /// <summary>
         /// Unsubscribe the given delegate from the given delegate
@@ -81,7 +77,10 @@ namespace Iava.Gesture
         /// <param name="name"></param>
         public void Unsubscribe(string name)
         {
-            GestureCallbacks["name"] = null;
+            if (this.GestureCallbacks.ContainsKey(name))
+            {
+                this.GestureCallbacks[name] = null;
+            }
         }
         #endregion
     }
