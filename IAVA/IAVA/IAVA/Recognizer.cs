@@ -62,6 +62,7 @@ namespace Iava.Core
         /// <param name="filePath">Path to the configuration file</param>
         public Recognizer(string filePath)
         {
+            // TODO Check for correct file path and may want to do stuff with.
             this.Configuration = new FileStream(filePath, FileMode.Open);
             this.Status = RecognizerStatus.NotReady;
         }
