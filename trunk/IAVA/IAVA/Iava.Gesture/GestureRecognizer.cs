@@ -26,6 +26,7 @@ namespace Iava.Gesture
             :base(filePath)
         {
             this.GestureCallbacks = new Dictionary<string, GestureCallback>();
+            // TODO Add the function to load the gestures to the dictionary.
         }
         #endregion
 
