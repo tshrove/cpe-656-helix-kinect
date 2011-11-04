@@ -6,6 +6,14 @@ using Iava.Core;
 
 namespace Iava.Audio 
 {
+    /// <summary>
+    /// Audio Callback for when a audio command is detected.
+    /// </summary>
+    /// <param name="e"></param>
+    public delegate void AudioCallback(AudioEventArgs e);
+    /// <summary>
+    /// AudioRecognizer Class
+    /// </summary>
     public class AudioRecognizer : Recognizer
     {
         #region Constructors
