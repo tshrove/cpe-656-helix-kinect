@@ -11,14 +11,6 @@ namespace Iava.Gesture
     {
         #region Constructors
         /// <summary>
-        /// Default Constructor.
-        /// </summary>
-        public GestureRecognizer()
-            :this(null)
-        {
-            // Nothing to do.
-        }
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="filePath"></param>

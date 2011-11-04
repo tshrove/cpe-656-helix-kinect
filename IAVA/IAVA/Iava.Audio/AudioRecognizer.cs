@@ -10,14 +10,6 @@ namespace Iava.Audio
     {
         #region Constructors
         /// <summary>
-        /// Default Constructor.
-        /// </summary>
-        public AudioRecognizer()
-            :this(null)
-        {
-            // Nothing to do.
-        }
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="filePath"></param>
