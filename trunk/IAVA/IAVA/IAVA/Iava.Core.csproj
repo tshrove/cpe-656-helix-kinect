@@ -8,8 +8,8 @@
     <ProjectGuid>{80DF01EC-0E97-4B4D-A36F-FED9659D748A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IAVA</RootNamespace>
-    <AssemblyName>IAVA</AssemblyName>
+    <RootNamespace>Iava.Core</RootNamespace>
+    <AssemblyName>Iave.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>Svn</SccProjectName>
@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRecognizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recognizer.cs" />
     <Compile Include="RecognizerStatus.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
