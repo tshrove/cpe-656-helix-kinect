@@ -24,7 +24,19 @@ namespace Iava.Audio
         public AudioRecognizer(string filePath)
             :base(filePath)
         {
-            // Nothing to do.
+            this.AudioCallbacks = new Dictionary<string, AudioCallback>();
+            // TODO Add the function to load the gestures to the dictionary.
+        }
+        #endregion
+
+        #region Private Properties
+        /// <summary>
+        /// Holds the callbacks for each gesture.
+        /// </summary>
+        private Dictionary<string, AudioCallback> AudioCallbacks
+        {
+            get;
+            set;
         }
         #endregion
 
@@ -44,6 +56,31 @@ namespace Iava.Audio
         {
             Status = RecognizerStatus.Ready;
             OnStopped(this, new EventArgs());     
+        }
+        /// <summary>
+        /// Used to connect a given delegate to a specified gesture
+        /// given by the name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="d"></param>
+        public void Subscribe(string name, AudioCallback callBack)
+        {
+            if (this.AudioCallbacks.ContainsKey(name))
+            {
+                this.AudioCallbacks[name] = callBack;
+            }
+        }
+        /// <summary>
+        /// Unsubscribe the given delegate from the given delegate
+        /// by the name.
+        /// </summary>
+        /// <param name="name"></param>
+        public void Unsubscribe(string name)
+        {
+            if (this.AudioCallbacks.ContainsKey(name))
+            {
+                this.AudioCallbacks[name] = null;
+            }
         }
         #endregion
     }
