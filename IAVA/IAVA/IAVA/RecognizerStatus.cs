@@ -1,4 +1,4 @@
-﻿namespace Iava
+﻿namespace Iava.Core
 {
     public enum RecognizerStatus
     {
