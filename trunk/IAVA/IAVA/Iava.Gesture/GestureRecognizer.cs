@@ -7,6 +7,14 @@ using Iava.Core;
 
 namespace Iava.Gesture 
 {
+    /// <summary>
+    /// Audio Callback for when a audio command is detected.
+    /// </summary>
+    /// <param name="e"></param>
+    public delegate void GestureCallback(GestureEventArgs e);
+    /// <summary>
+    /// GestureRecognizer Class
+    /// </summary>
     public class GestureRecognizer : Recognizer
     {
         #region Constructors

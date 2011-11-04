@@ -7,6 +7,9 @@ using Iava.Core;
 
 namespace Iava.Core
 {
+    /// <summary>
+    /// Recognizer Class.
+    /// </summary>
     public abstract class Recognizer : IRecognizer
     {
         #region Properties
@@ -29,6 +32,10 @@ namespace Iava.Core
             get;
             set;
         }
+        #endregion
+
+        #region Protected Properties
+        
         #endregion
 
         #region Static Events
