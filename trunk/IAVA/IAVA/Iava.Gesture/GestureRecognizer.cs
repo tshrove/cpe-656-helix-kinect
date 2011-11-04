@@ -27,16 +27,16 @@ namespace Iava.Gesture
         /// </summary>
         public override void Start()
         {
-            OnStarted(null, new EventArgs());
             Status = RecognizerStatus.Running;
+            OnStarted(this, new EventArgs());   
         }
         /// <summary>
         ///  Stops the recognizer.
         /// </summary>
         public override void Stop()
         {
-            OnStopped(null, new EventArgs());
             Status = RecognizerStatus.Ready;
+            OnStopped(this, new EventArgs()); 
         }
         #endregion
     }
