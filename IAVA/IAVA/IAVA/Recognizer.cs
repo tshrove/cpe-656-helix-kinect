@@ -77,6 +77,19 @@ namespace Iava.Core
         ///  Stops the recognizer.
         /// </summary>
         public abstract void Stop();
+        /// <summary>
+        /// Used to connect a given delegate to a specified gesture
+        /// given by the name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="d"></param>
+        //public abstract void Subscribe(string name, Delegate d);
+        /// <summary>
+        /// Unsubscribe the given delegate from the given delegate
+        /// by the name.
+        /// </summary>
+        /// <param name="name"></param>
+        //public abstract void Unsubscribe(string name);
         #endregion
 
         #region Protected Methods
