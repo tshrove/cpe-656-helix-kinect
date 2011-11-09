@@ -31,6 +31,14 @@ namespace Iava.Core
         /// Raises when the recognizer fails.
         /// </summary>
         event EventHandler<EventArgs> Failed;
+        /// <summary>
+        /// Raises when the recognizer is sycned.
+        /// </summary>
+        event EventHandler<EventArgs> Synced;
+        /// <summary>
+        /// Raises when the recognizer is unsynced.
+        /// </summary>
+        event EventHandler<EventArgs> Unsynced;
         #endregion
 
         #region Public Methods
