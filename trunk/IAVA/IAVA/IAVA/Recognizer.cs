@@ -18,7 +18,7 @@ namespace Iava.Core
         /// </summary>
         public RecognizerStatus Status
         {
-            get; 
+            get;
             protected set;
         }
         #endregion
@@ -34,7 +34,7 @@ namespace Iava.Core
         }
         #endregion
 
-        #region Static Events
+        #region Events
         /// <summary>
         /// Raises before the recognizer starts.
         /// </summary>
@@ -47,6 +47,14 @@ namespace Iava.Core
         /// Raises when the recognizer fails.
         /// </summary>
         public event EventHandler<EventArgs> Failed;
+        /// <summary>
+        /// Raises when the recognizer synced.
+        /// </summary>
+        public event EventHandler<EventArgs> Synced;
+        /// <summary>
+        /// Raises when the recognizer unsynced.
+        /// </summary>
+        public event EventHandler<EventArgs> Unsynced;
         #endregion
 
         #region Constructors
@@ -54,7 +62,7 @@ namespace Iava.Core
         /// Default Constructor.
         /// </summary>
         public Recognizer()
-            :this(null)
+            : this(null)
         {
             // Nothing to do.
         }
@@ -112,6 +120,26 @@ namespace Iava.Core
         {
             if (Failed != null)
                 Failed(sender, e);
+        }
+        /// <summary>
+        /// Raises when the recognizer is synced.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnSynced(object sender, EventArgs e)
+        {
+            if (Synced != null)
+                Synced(sender, e);
+        }
+        /// <summary>
+        /// Raises when the recognizer is unsynced.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnUnsynced(object sender, EventArgs e)
+        {
+            if (Unsynced != null)
+                Unsynced(sender, e);
         }
         #endregion
     }
