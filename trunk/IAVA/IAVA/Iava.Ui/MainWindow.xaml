@@ -1,14 +1,16 @@
 ﻿<Window x:Class="Iava.Ui.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="431" Width="669" xmlns:esri="http://schemas.esri.com/arcgis/client/2009">
+        Title="IAVA" Height="459" Width="731" xmlns:esri="http://schemas.esri.com/arcgis/client/2009" x:Name="Window" Background="Black">
     <Grid>
-        <esri:Map Background="White" HorizontalAlignment="Left" Name="map1" VerticalAlignment="Top" WrapAround="True" Height="392" Width="647">
+        <esri:Map Background="White" Name="map1" WrapAround="True" HorizontalAlignment="Left" Width="{Binding ElementName=Window,Path=ActualWidth}" Height="{Binding ElementName=Window,Path=ActualHeight}" VerticalAlignment="Top">
             <esri:Map.Layers>
                 <esri:LayerCollection>
                     <esri:ArcGISTiledMapServiceLayer Url="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
                 </esri:LayerCollection>
             </esri:Map.Layers>
         </esri:Map>
+        <ToolBar Margin="12,0,12,12" Name="toolBar1" Height="26" VerticalAlignment="Bottom">
+        </ToolBar>
     </Grid>
 </Window>

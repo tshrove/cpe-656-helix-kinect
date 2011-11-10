@@ -74,7 +74,7 @@ namespace Iava.Core
         public Recognizer(string filePath)
         {
             // TODO Check for correct file path and may want to do stuff with.
-            this.Configuration = new FileStream(filePath, FileMode.Open);
+            //this.Configuration = new FileStream(filePath, FileMode.Open);
             this.Status = RecognizerStatus.NotReady;
         }
         #endregion
