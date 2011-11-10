@@ -81,7 +81,8 @@ namespace Iava.Audio
         /// </summary>
         public override void Start()
         {
-            Task t = new Task(SetupAudioDevice, tokenSource.Token);
+            Thread t = new Thread(SetupAudioDevice);
+            t.SetApartmentState(ApartmentState.MTA);
             t.Start();
 
             OnStarted(this, new EventArgs());
@@ -114,7 +115,7 @@ namespace Iava.Audio
                 throw new ArgumentException("Name argument was either null or empty.", "name");
             }
 
-            if (this.AudioCallbacks.ContainsKey(name))
+            if (!this.AudioCallbacks.ContainsKey(name))
             {
                 AudioCallbacks.Add(name, callBack);
                 
@@ -249,7 +250,7 @@ namespace Iava.Audio
 
                         AudioCallbacks[command].Invoke(args);
                     }
-                    catch
+                    catch (Exception exception)
                     {
                         //TODO: Log message if this fails
                     }

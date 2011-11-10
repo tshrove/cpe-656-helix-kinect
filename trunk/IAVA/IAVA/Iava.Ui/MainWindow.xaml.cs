@@ -31,7 +31,8 @@ namespace Iava.Ui
             m_pAudioRecognizer = new Audio.AudioRecognizer(string.Empty);
 
             m_pGestureRecognizer.Subscribe("Zoom", GestureZoomCallback);
-            m_pAudioRecognizer.Subscribe("Zoom", AudioZoomCallback);
+            m_pAudioRecognizer.Subscribe("Zoom In", ZoomInCallback);
+            m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);           
         }
         /// <summary>
         /// The callback for when the zoom gesture is detected.
@@ -39,16 +40,47 @@ namespace Iava.Ui
         /// <param name="e"></param>
         private void GestureZoomCallback(GestureEventArgs e)
         {
-            this.ZoomCallback();
+            
         }
-        private void AudioZoomCallback(AudioEventArgs e)
+
+        /// <summary>
+        /// Occurs when a zoom out command was received.
+        /// </summary>
+        /// <param name="e">Audio event args</param>
+        private void ZoomOutCallback(AudioEventArgs e)
         {
-            this.ZoomCallback();
+            map1.Dispatcher.Invoke(new Action(() => map1.Zoom(0.5)));
         }
-        private void ZoomCallback()
+
+        /// <summary>
+        /// Occurs when a zoom in command was received.
+        /// </summary>
+        /// <param name="e">Audio event args</param>
+        private void ZoomInCallback(AudioEventArgs e)
         {
-            // TODO: This needs to be changed.
-            this.map1.Zoom(2.0);
+            map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2.0)));
+        }
+
+        /// <summary>
+        /// Occurs when the map is unloaded.
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event args</param>
+        private void OnMapUnloaded(object sender, RoutedEventArgs e)
+        {
+            m_pAudioRecognizer.Stop();
+            m_pGestureRecognizer.Stop();
+        }
+
+        /// <summary>
+        /// Occurs when the map is loaded.
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event args</param>
+        private void OnMapLoaded(object sender, RoutedEventArgs e)
+        {
+            m_pAudioRecognizer.Start();
+            //m_pGestureRecognizer.Start();
         }
     }
 }
