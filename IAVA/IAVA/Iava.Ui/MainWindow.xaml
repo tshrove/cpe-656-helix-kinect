@@ -1,9 +1,11 @@
 ﻿<Window x:Class="Iava.Ui.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="IAVA" Height="459" Width="731" xmlns:esri="http://schemas.esri.com/arcgis/client/2009" x:Name="Window" Background="Black">
+        xmlns:esri="http://schemas.esri.com/arcgis/client/2009"
+        Title="IAVA" Height="459" Width="731" x:Name="Window" Background="Black">
     <Grid>
-        <esri:Map Background="White" Name="map1" WrapAround="True" HorizontalAlignment="Left" Width="{Binding ElementName=Window,Path=ActualWidth}" Height="{Binding ElementName=Window,Path=ActualHeight}" VerticalAlignment="Top">
+        <esri:Map Background="White" Name="map1" WrapAround="True" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" 
+                  Unloaded="OnMapUnloaded" Loaded="OnMapLoaded">
             <esri:Map.Layers>
                 <esri:LayerCollection>
                     <esri:ArcGISTiledMapServiceLayer Url="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
