@@ -248,7 +248,10 @@ namespace Iava.Audio
                                 CommandWilcards = null
                             };
 
-                        AudioCallbacks[command].Invoke(args);
+                        if (e.Result.Confidence > 0.8f)
+                        {
+                            AudioCallbacks[command].Invoke(args);
+                        }
                     }
                     catch (Exception exception)
                     {

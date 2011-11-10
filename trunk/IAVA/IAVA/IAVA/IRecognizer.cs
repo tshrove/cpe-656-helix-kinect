@@ -18,7 +18,7 @@ namespace Iava.Core
         }
         #endregion
 
-        #region Static Events
+        #region Events
         /// <summary>
         /// Raises before the recognizer starts.
         /// </summary>
@@ -39,6 +39,10 @@ namespace Iava.Core
         /// Raises when the recognizer is unsynced.
         /// </summary>
         event EventHandler<EventArgs> Unsynced;
+        /// <summary>
+        /// Raises when the status of the recognizer is changed.
+        /// </summary>
+        event EventHandler<EventArgs> StatusChanged;
         #endregion
 
         #region Public Methods

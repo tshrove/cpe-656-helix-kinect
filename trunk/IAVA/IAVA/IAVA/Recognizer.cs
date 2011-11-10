@@ -12,14 +12,18 @@ namespace Iava.Core
     /// </summary>
     public abstract class Recognizer : IRecognizer
     {
+        #region Private Members
+        private RecognizerStatus m_pStatus = RecognizerStatus.NotReady;
+        #endregion
+
         #region Properties
         /// <summary>
         /// Gets the status of the cognizer.
         /// </summary>
         public RecognizerStatus Status
         {
-            get;
-            protected set;
+            get { return this.m_pStatus; }
+            protected set { this.m_pStatus = value; OnStatusChanged(this, new EventArgs()); }
         }
         #endregion
 
@@ -55,6 +59,10 @@ namespace Iava.Core
         /// Raises when the recognizer unsynced.
         /// </summary>
         public event EventHandler<EventArgs> Unsynced;
+        /// <summary>
+        /// Raises when the status of the recognizer is changed.
+        /// </summary>
+        public event EventHandler<EventArgs> StatusChanged;
         #endregion
 
         #region Constructors
@@ -75,7 +83,6 @@ namespace Iava.Core
         {
             // TODO Check for correct file path and may want to do stuff with.
             //this.Configuration = new FileStream(filePath, FileMode.Open);
-            this.Status = RecognizerStatus.NotReady;
         }
         #endregion
 
@@ -140,6 +147,16 @@ namespace Iava.Core
         {
             if (Unsynced != null)
                 Unsynced(sender, e);
+        }
+        /// <summary>
+        /// Raises when the status of the recognizer is changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnStatusChanged(object sender, EventArgs e)
+        {
+            if (StatusChanged != null)
+                StatusChanged(sender, e);
         }
         #endregion
     }
