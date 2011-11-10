@@ -4,7 +4,7 @@
         xmlns:esri="http://schemas.esri.com/arcgis/client/2009"
         Title="IAVA" Height="459" Width="731" x:Name="Window" Background="Black">
     <Grid>
-        <esri:Map Background="White" Name="map1" WrapAround="True" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" 
+        <esri:Map Width="{Binding ElementName=Window,Path=ActualWidth}" Height="{Binding ElementName=Window,Path=ActualHeight}" Background="White" Name="map1" WrapAround="True" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" 
                   Unloaded="OnMapUnloaded" Loaded="OnMapLoaded">
             <esri:Map.Layers>
                 <esri:LayerCollection>
