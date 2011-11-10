@@ -29,11 +29,16 @@ namespace Iava.Ui
             InitializeComponent();
             m_pGestureRecognizer = new Gesture.GestureRecognizer(string.Empty);
             m_pAudioRecognizer = new Audio.AudioRecognizer(string.Empty);
-
+            // Events
+            m_pAudioRecognizer.StatusChanged += new EventHandler<EventArgs>(m_pAudioRecognizer_StatusChanged);
+            m_pGestureRecognizer.StatusChanged += new EventHandler<EventArgs>(m_pGestureRecognizer_StatusChanged);
+            // Callbacks
             m_pGestureRecognizer.Subscribe("Zoom", GestureZoomCallback);
             m_pAudioRecognizer.Subscribe("Zoom In", ZoomInCallback);
             m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);           
         }
+
+        #region Gesture Callbacks
         /// <summary>
         /// The callback for when the zoom gesture is detected.
         /// </summary>
@@ -42,7 +47,9 @@ namespace Iava.Ui
         {
             
         }
+        #endregion
 
+        #region Audio Callbacks
         /// <summary>
         /// Occurs when a zoom out command was received.
         /// </summary>
@@ -60,7 +67,9 @@ namespace Iava.Ui
         {
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2.0)));
         }
+        #endregion
 
+        #region Event Handlers
         /// <summary>
         /// Occurs when the map is unloaded.
         /// </summary>
@@ -82,5 +91,25 @@ namespace Iava.Ui
             m_pAudioRecognizer.Start();
             //m_pGestureRecognizer.Start();
         }
+        
+        /// <summary>
+        /// Raises when the status of the audio recognizer is changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pAudioRecognizer_StatusChanged(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// Raises when the status of the gesture recognizer is changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pGestureRecognizer_StatusChanged(object sender, EventArgs e)
+        {
+            
+        }
+        #endregion
     }
 }
