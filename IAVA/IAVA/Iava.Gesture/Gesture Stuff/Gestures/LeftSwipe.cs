@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.Research.Kinect.Nui;
@@ -19,7 +20,7 @@ namespace Iava.Gesture.GestureStuff {
                     // //right hand right of right shoulder
                     if (skeleton.Joints[JointID.HandRight].Position.X > skeleton.Joints[JointID.ShoulderRight].Position.X)
                     {
-                        // Debug.WriteLine("GesturePart 0 - right hand right of right shoulder - PASS");
+                        Debug.WriteLine("Left Swipe Gesture - Segment 1 received.");
                         return GestureResult.Succeed;
                     }
 
@@ -51,7 +52,7 @@ namespace Iava.Gesture.GestureStuff {
                     // Debug.WriteLine("GesturePart 1 - right hand below shoulder height but above hip height - PASS");
                     // //right hand left of right shoulder & right of left shoulder
                     if (skeleton.Joints[JointID.HandRight].Position.X < skeleton.Joints[JointID.ShoulderRight].Position.X && skeleton.Joints[JointID.HandRight].Position.X > skeleton.Joints[JointID.ShoulderLeft].Position.X) {
-                        // Debug.WriteLine("GesturePart 1 - right hand left of right shoulder & right of left shoulder - PASS");
+                        Debug.WriteLine("Left Swipe Gesture - Segment 2 received.");
                         return GestureResult.Succeed;
                     }
 
@@ -83,7 +84,7 @@ namespace Iava.Gesture.GestureStuff {
                     // Debug.WriteLine("GesturePart 2 - right hand below shoulder height but above hip height - PASS");
                     // //right hand left of left Shoulder
                     if (skeleton.Joints[JointID.HandRight].Position.X < skeleton.Joints[JointID.ShoulderLeft].Position.X) {
-                        // Debug.WriteLine("GesturePart 2 - right hand left of left Shoulder - PASS");
+                        Debug.WriteLine("Left Swipe Gesture - Segment 3 received.");
                         return GestureResult.Succeed;
                     }
 
