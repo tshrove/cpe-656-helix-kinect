@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Effects;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Iava.Gesture;
@@ -23,6 +24,7 @@ namespace Iava.Ui
     {
         private Iava.Gesture.GestureRecognizer m_pGestureRecognizer;
         private Iava.Audio.AudioRecognizer m_pAudioRecognizer;
+        private System.Timers.Timer m_pTimer = new System.Timers.Timer();
 
         public MainWindow()
         {
@@ -32,6 +34,8 @@ namespace Iava.Ui
             // Events
             m_pAudioRecognizer.StatusChanged += new EventHandler<EventArgs>(m_pAudioRecognizer_StatusChanged);
             m_pGestureRecognizer.StatusChanged += new EventHandler<EventArgs>(m_pGestureRecognizer_StatusChanged);
+            m_pAudioRecognizer.Synced += new EventHandler<EventArgs>(m_pAudioRecognizer_Synced);
+            m_pGestureRecognizer.Synced += new EventHandler<EventArgs>(m_pGestureRecognizer_Synced);
             // Callbacks
             m_pGestureRecognizer.Subscribe("Zoom", GestureZoomCallback);
             m_pGestureRecognizer.Subscribe("Left Swipe", GestureLeftSwipeCallback);
@@ -91,7 +95,6 @@ namespace Iava.Ui
             m_pAudioRecognizer.Stop();
             m_pGestureRecognizer.Stop();
         }
-
         /// <summary>
         /// Occurs when the map is loaded.
         /// </summary>
@@ -100,9 +103,8 @@ namespace Iava.Ui
         private void OnMapLoaded(object sender, RoutedEventArgs e)
         {
             m_pAudioRecognizer.Start();
-            //m_pGestureRecognizer.Start();
-        }
-        
+            m_pGestureRecognizer.Start();
+        } 
         /// <summary>
         /// Raises when the status of the audio recognizer is changed.
         /// </summary>
@@ -110,7 +112,7 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pAudioRecognizer_StatusChanged(object sender, EventArgs e)
         {
-
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus("Audio Status: " + m_pAudioRecognizer.Status.ToString())));
         }
         /// <summary>
         /// Raises when the status of the gesture recognizer is changed.
@@ -119,7 +121,101 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pGestureRecognizer_StatusChanged(object sender, EventArgs e)
         {
-            
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus("Audio Status: " + m_pAudioRecognizer.Status.ToString())));
+        }
+        /// <summary>
+        /// Raises when the audio recognizer is synced.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pAudioRecognizer_Synced(object sender, EventArgs e)
+        {
+            /* myGlowEffect = new OuterGlowBitmapEffect();
+
+            // Set the size of the glow to 30 pixels.
+            myGlowEffect.GlowSize = 30;
+
+            // Set the color of the glow to blue.
+            Color myGlowColor = new Color();
+            myGlowColor.ScA = 1;
+            myGlowColor.ScB = 1;
+            myGlowColor.ScG = 0;
+            myGlowColor.ScR = 0;
+            myGlowEffect.GlowColor = myGlowColor;
+
+            // Set the noise of the effect to the maximum possible (range 0-1).
+            myGlowEffect.Noise = 1;
+
+            // Set the Opacity of the effect to 40%. Note that the same effect
+            // could be done by setting the ScA property of the Color to 0.4.
+            myGlowEffect.Opacity = 0.4;
+
+            // Apply the bitmap effect to the TextBox.
+
+            btnAudioSynced.BitmapEffect = myGlowEffect;*/
+        }
+        /// <summary>
+        /// Raises when the gesture recognizer is synced.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pGestureRecognizer_Synced(object sender, EventArgs e)
+        {
+            /*OuterGlowBitmapEffect myGlowEffect = new OuterGlowBitmapEffect();
+
+            // Set the size of the glow to 30 pixels.
+            myGlowEffect.GlowSize = 30;
+
+            // Set the color of the glow to blue.
+            Color myGlowColor = new Color();
+            myGlowColor.ScA = 1;
+            myGlowColor.ScB = 1;
+            myGlowColor.ScG = 0;
+            myGlowColor.ScR = 0;
+            myGlowEffect.GlowColor = myGlowColor;
+
+            // Set the noise of the effect to the maximum possible (range 0-1).
+            myGlowEffect.Noise = 1;
+
+            // Set the Opacity of the effect to 40%. Note that the same effect
+            // could be done by setting the ScA property of the Color to 0.4.
+            myGlowEffect.Opacity = 0.4;
+
+            // Apply the bitmap effect to the TextBox.
+
+            btnGestureSynced.BitmapEffect = myGlowEffect;*/
+        }
+        /// <summary>
+        /// Event used in junction with the display status function.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            popStatus.Dispatcher.Invoke(new Action(() => popStatus.IsOpen = false));
+        }
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Displays the pop status control with the auto close.
+        /// </summary>
+        /// <param name="text"></param>
+        private void DisplayStatus(string text)
+        {
+            if (!popStatus.IsOpen)
+            {
+                m_pTimer.Interval = 2000; // 2 seconds
+                m_pTimer.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed);
+                m_pTimer.Enabled = true;
+                popStatus.IsOpen = true;
+                lblStatus.Content = text;
+            }
+            else
+            {
+                m_pTimer.Interval = 2000;
+                lblStatus.Content = text;
+            }
         }
         #endregion
     }
