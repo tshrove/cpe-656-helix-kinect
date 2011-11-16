@@ -9,7 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Core", "IAVA\Iava.Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Ui", "Iava.Ui\Iava.Ui.csproj", "{E30DADBC-D79B-4CE1-AB21-3335CB5DF7E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Input", "Iava.Camera\Iava.Input.csproj", "{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}"
+EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -60,12 +66,18 @@ Global
 		{E30DADBC-D79B-4CE1-AB21-3335CB5DF7E3}.Release|Mixed Platforms.Build.0 = Release|x86
 		{E30DADBC-D79B-4CE1-AB21-3335CB5DF7E3}.Release|x86.ActiveCfg = Release|x86
 		{E30DADBC-D79B-4CE1-AB21-3335CB5DF7E3}.Release|x86.Build.0 = Release|x86
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
