@@ -8,9 +8,22 @@ using Microsoft.Research.Kinect.Nui;
 namespace Iava.Gesture
 {
     // We can change this class after the prototype
-    public class GestureEventArgs : EventArgs
-    {
-        #region Constructor
+    public class GestureEventArgs : EventArgs {
+
+        #region Public Properties
+        /*
+        public GestureType GestureType { get; set; }
+
+        public int TrackingID { get; set; }
+
+        public int UserID { get; set; }*/
+
+        public string Name { get; private set; }
+
+        #endregion Public Properties
+
+        #region Constructors
+        /*
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -27,19 +40,15 @@ namespace Iava.Gesture
             this.TrackingID  = trackingID;
             this.UserID      = userID;
         }
-        #endregion
+        */
 
-        #region Public Properties
+        public GestureEventArgs(string name) {
+            Name = name;
+        }
 
-        public GestureType GestureType { get; set; }
-
-        public int TrackingID { get; set; }
-
-        public int UserID { get; set; }
-
-        #endregion Public Properties
+        #endregion Constructors
     }
-
+    /*
     /// <summary>
     /// The skeleton frame event args
     /// </summary>
@@ -108,5 +117,5 @@ namespace Iava.Gesture
         public SkeletonData Skeleton { get; set; }
 
         #endregion Public Properties
-    }
+    }*/
 }

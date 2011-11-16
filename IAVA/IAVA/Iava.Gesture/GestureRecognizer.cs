@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Iava.Core;
+using Iava.Input.Camera;
 using Iava.Gesture.GestureStuff;
-using Microsoft.Research.Kinect.Nui;
 
 namespace Iava.Gesture 
 {
@@ -14,314 +14,140 @@ namespace Iava.Gesture
     /// </summary>
     /// <param name="e"></param>
     public delegate void GestureCallback(GestureEventArgs e);
+
     /// <summary>
     /// GestureRecognizer Class
     /// </summary>
-    public class GestureRecognizer : Recognizer
-    {
-        #region Constructors
+    public class GestureRecognizer : Recognizer {
+
+        #region Public Properties
+
         /// <summary>
-        /// Constructor.
+        /// Not sure if we want to make this public or not.
         /// </summary>
-        /// <param name="filePath"></param>
-        public GestureRecognizer(string filePath)
-            :base(filePath)
-        {
-            this.GestureCallbacks = new Dictionary<string, GestureCallback>();
-            // TODO Add the function to load the gestures to the dictionary.
+        public Camera Camera { get; private set; }
 
-            // Initialize the Kinect Camera
-            if (this.InitializeNui()) {
-                this.kinectRunTime.SkeletonFrameReady += new EventHandler<SkeletonFrameReadyEventArgs>(this.KinectRunTime_SkeletonFrameReady);
-                this.kinectRunTime.VideoFrameReady += new EventHandler<ImageFrameReadyEventArgs>(this.KinectRunTime_VideoFrameReady);
-
-                if (this.kinectRunTime.NuiCamera.ElevationAngle != cameraAngles[13]) {
-                    this.kinectRunTime.NuiCamera.ElevationAngle = cameraAngles[13];
-                    this.currentAngle = 12;
-                }
-            }
-            else {
-                throw new Exception("Error initialising Kinect sensor");
-            }
-
-        }
-        #endregion
-
-        #region Private Properties
-        /// <summary>
-        /// Holds the callbacks for each gesture.
-        /// </summary>
-        private Dictionary<string, GestureCallback> GestureCallbacks
-        {
-            get;
-            set;
-        }
-        #endregion
+        #endregion Public Properties
 
         #region Public Methods
+
         /// <summary>
         /// Starts the recognizer.
         /// </summary>
-        public override void Start()
-        {
+        public override void Start() {
             Status = RecognizerStatus.Running;
-            OnStarted(this, new EventArgs());   
+            OnStarted(this, new EventArgs());
         }
+
         /// <summary>
         ///  Stops the recognizer.
         /// </summary>
-        public override void Stop()
-        {
+        public override void Stop() {
             Status = RecognizerStatus.Ready;
-            OnStopped(this, new EventArgs()); 
+            OnStopped(this, new EventArgs());
         }
+
         /// <summary>
         /// Used to connect a given delegate to a specified gesture
         /// given by the name.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="d"></param>
-        public void Subscribe(string name, GestureCallback callBack)
-        {
-            if (this.GestureCallbacks.ContainsKey(name))
-            {
-                this.GestureCallbacks[name] = callBack;
+        public void Subscribe(string name, GestureCallback callBack) {
+            if (!GestureCallbacks.ContainsKey(name)) {
+                GestureCallbacks.Add(name, callBack);
             }
         }
+
         /// <summary>
         /// Unsubscribe the given delegate from the given delegate
         /// by the name.
         /// </summary>
         /// <param name="name"></param>
-        public void Unsubscribe(string name)
-        {
-            if (this.GestureCallbacks.ContainsKey(name))
-            {
-                this.GestureCallbacks[name] = null;
-            }
-        }
-        #endregion
-
-        // The following code can be vastly reworked after the prototype.
-
-        #region Gesture Recognition
-
-        /// <summary>
-        /// The list of all gestures we are currently looking for
-        /// </summary>
-        private List<Iava.Gesture.GestureStuff.Gesture> gestures = new List<Iava.Gesture.GestureStuff.Gesture>();
-
-        /// <summary>
-        /// Occurs when [gesture recognised].
-        /// </summary>
-        public event EventHandler<GestureEventArgs> GestureRecognised;
-
-        /// <summary>
-        /// Updates all gestures.
-        /// </summary>
-        /// <param name="data">The skeleton data.</param>
-        public void UpdateAllGestures(SkeletonData data) {
-            foreach (Iava.Gesture.GestureStuff.Gesture gesture in this.gestures) {
-                gesture.UpdateGesture(data);
+        public void Unsubscribe(string name) {
+            if (GestureCallbacks.ContainsKey(name)) {
+                GestureCallbacks[name] = null;
             }
         }
 
+        #endregion Public Methods
+
+        #region Constructors
+
         /// <summary>
-        /// Adds the gesture.
+        /// Constructor.
         /// </summary>
-        /// <param name="type">The gesture type.</param>
-        /// <param name="gestureDefinition">The gesture definition.</param>
-        public void AddGesture(GestureType type, IGestureSegment[] gestureDefinition) {
-            Iava.Gesture.GestureStuff.Gesture gesture = new Iava.Gesture.GestureStuff.Gesture(type, gestureDefinition);
-            gesture.GestureRecognised += new EventHandler<GestureEventArgs>(this.Gesture_GestureRecognised);
-            this.gestures.Add(gesture);
+        /// <param name="filePath"></param>
+        public GestureRecognizer(string filePath)
+            : base(filePath) {
+            // Try to connect to the camera first.  If this fails there is no point in continuing
+            try {
+                Camera = new Camera();
+            }
+            catch (Exception e) {
+                throw e;
+            }
+
+            // Initialize our collections...
+            GestureCallbacks = new Dictionary<string, GestureCallback>();
+            SupportedGestures = new List<GestureStuff.Gesture>();
+
+            // Register with some camera events
+            Camera.SkeletonReady += OnSkeletonReady;
+
+            // Read the gestures in from the config file
+            LoadGestures();
         }
 
+        #endregion Constructors
+
+        #region Private Properties
+
         /// <summary>
-        /// Handles the GestureRecognised event of the g control.
+        /// Holds the callbacks for each gesture.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="KinectSkeltonTracker.GestureEventArgs"/> instance containing the event data.</param>
-        private void Gesture_GestureRecognised(object sender, GestureEventArgs e) {
-            if (this.GestureRecognised != null) {
-                this.GestureRecognised(this, e);
+        private Dictionary<string, GestureCallback> GestureCallbacks { get; set; }
+
+        /// <summary>
+        /// Holds all the gestures this recognizer supports in a Name, Gesture pair
+        /// </summary>
+        private List<Gesture.GestureStuff.Gesture> SupportedGestures { get; set; }
+
+        #endregion Private Properties
+
+        #region Private Methods
+
+        private void LoadGestures() {
+            // TODO: Reading in the config file needs to happen here
+
+            // NEM: For the prototype we will manually load hard-coded gestures
+            List<IGestureSegment> segments = new List<IGestureSegment>();
+            segments.Add(new LeftSwipeSegment1());
+            segments.Add(new LeftSwipeSegment2());
+            segments.Add(new LeftSwipeSegment3());
+
+            // Add the gesture to our supported types and register for its recognized event
+            SupportedGestures.Add(new GestureStuff.Gesture("Left Swipe", segments));
+            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
+        }
+        
+        private void OnGestureRecognized(object sender, GestureEventArgs e) {
+            if (GestureCallbacks.ContainsKey(e.Name)) {
+                GestureCallbacks[e.Name].Invoke(e);
+
+                // Reset all the gesture states to be ready for the next one
             }
 
-            foreach (Iava.Gesture.GestureStuff.Gesture g in this.gestures) {
-                g.Reset();
-            }
+            else { /* No one cares about this gesture */ }
         }
 
-        #endregion Gesture Recognition
-
-        #region Kinect Initialization
-
-        /// <summary>
-        /// The list of approved camera angles
-        /// </summary>
-        private static readonly int[] cameraAngles = { -25, -23, -21, -19, -17, -15, -13, -11, -9, -7, -5, -3, -1, 0, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25 };
-
-        /// <summary>
-        /// The Kinect run time
-        /// </summary>
-        private Runtime kinectRunTime = new Runtime();
-
-        /// <summary>
-        /// The current index of the angle that the sensor is at
-        /// </summary>
-        private int currentAngle;
-       
-
-        /// <summary>
-        /// Occurs when [skeleton ready].
-        /// </summary>
-        public event EventHandler<SkeletonEventArgs> SkeletonReady;
-
-        /// <summary>
-        /// Occurs when [image frame ready].
-        /// </summary>
-        public event EventHandler<ImageFrameReadyEventArgs> ImageFrameReady;
-
-        /// <summary>
-        /// Occurs when [skeleton frame complete].
-        /// </summary>
-        public event EventHandler<SkeletonFrameEventArgs> SkeletonFrameComplete;
-
-        /// <summary>
-        /// Tilts the camera up.
-        /// </summary>
-        /// <returns> bool value true if the sensore moved</returns>
-        public bool TiltUp()
-        {
-            if (this.currentAngle >= cameraAngles.Length)
-            {
-                return false;
-            }
-
-            try
-            {
-                this.currentAngle += 1;
-                this.kinectRunTime.NuiCamera.ElevationAngle = cameraAngles[this.currentAngle];
-                return true;
-            }
-            catch (InvalidOperationException)
-            {
-                this.currentAngle -= 1;
-                return false;
+        private void OnSkeletonReady(object sender, SkeletonEventArgs e) {
+            // Check to see if this skeleton frame completes one of our supported gestures
+            foreach (Gesture.GestureStuff.Gesture gesture in SupportedGestures) {
+                gesture.CheckForGesture(e.Skeleton);
             }
         }
 
-        /// <summary>
-        /// Tilts the camera down.
-        /// </summary>
-        /// <returns>bool value true if the sensore moved</returns>
-        public bool TiltDown()
-        {
-            if (this.currentAngle <= 0)
-            {
-                return false;
-            }
-
-            try
-            {
-                this.currentAngle -= 1;
-                this.kinectRunTime.NuiCamera.ElevationAngle = cameraAngles[this.currentAngle];
-                return true;
-            }
-            catch (InvalidOperationException)
-            {
-                this.currentAngle += 1;
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Handles the VideoFrameReady event of the kinectRunTime control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Microsoft.Research.Kinect.Nui.ImageFrameReadyEventArgs"/> instance containing the event data.</param>
-        private void KinectRunTime_VideoFrameReady(object sender, ImageFrameReadyEventArgs e)
-        {
-            if (this.ImageFrameReady != null)
-            {
-                this.ImageFrameReady(this, e);
-            }
-        }
-
-        /// <summary>
-        /// Handles the SkeletonFrameReady event of the kinectRunTime control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs"/> instance containing the event data.</param>
-        private void KinectRunTime_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
-        {
-            List<int> idValues = new List<int>();
-
-            if (e.SkeletonFrame.Skeletons.Length >= 1)
-            {
-                int trackingCount = 0;
-              
-                while (trackingCount < e.SkeletonFrame.Skeletons.Length)
-                {
-                    if (e.SkeletonFrame.Skeletons[trackingCount].TrackingState == SkeletonTrackingState.Tracked)
-                    {
-                        if (this.SkeletonReady != null)
-                        {
-                            this.SkeletonReady(this, new SkeletonEventArgs(e.SkeletonFrame.Skeletons[trackingCount]));
-                        }
-                        
-                        idValues.Add(e.SkeletonFrame.Skeletons[trackingCount].TrackingID);
-                    }
-
-                    trackingCount++;
-                    
-                    if (this.SkeletonFrameComplete != null)
-                    {
-                        this.SkeletonFrameComplete(this, new SkeletonFrameEventArgs(idValues, e.SkeletonFrame.TimeStamp));
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Initializes the Kinect sensor.
-        /// </summary>
-        /// <returns>bool value true if the sensor initialised correctly</returns>
-        private bool InitializeNui()
-        {
-            if (this.kinectRunTime == null)
-            {
-                return false;
-            }
-
-            try
-            {
-                this.kinectRunTime.Initialize(RuntimeOptions.UseDepth | RuntimeOptions.UseSkeletalTracking | RuntimeOptions.UseColor);
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.ToString());
-                return false;
-            }
-
-            this.kinectRunTime.VideoStream.Open(ImageStreamType.Video, 2, ImageResolution.Resolution640x480, ImageType.Color);
-
-            this.kinectRunTime.SkeletonEngine.TransformSmooth = true;
-
-            var parameters = new TransformSmoothParameters
-            {
-                Smoothing = 0.75f,
-                Correction = 0.0f,
-                Prediction = 0.0f,
-                JitterRadius = 0.05f,
-                MaxDeviationRadius = 0.04f
-            };
-
-            this.kinectRunTime.SkeletonEngine.SmoothParameters = parameters;
-
-            return true;
-        }
-
-        #endregion Kinect Initiialization
+        #endregion Private Methods
     }
 }
