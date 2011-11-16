@@ -58,9 +58,7 @@ namespace Iava.Ui
         /// </summary>
         /// <param name="e"></param>
         private void GestureLeftSwipeCallback(GestureEventArgs e) {
-            //map1.Dispatcher.Invoke(new Action(() => map1.PanTo());
-            Console.WriteLine("Gesture Swipe Left Detected");
-
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
         }
         #endregion
 
