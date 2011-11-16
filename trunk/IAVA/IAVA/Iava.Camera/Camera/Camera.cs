@@ -6,7 +6,7 @@ namespace Iava.Input.Camera {
     /// <summary>
     /// Wraps the Kinect Camera Sensor
     /// </summary>
-    sealed class Camera {
+    public class Camera {
 
         #region Public Events
 
@@ -84,8 +84,11 @@ namespace Iava.Input.Camera {
         /// </summary>
         /// <returns>bool value indicating whether the Camera initialized correctly</returns>
         private bool InitializeNui() {
-            // Can't do anything without the Runtime object...
-            if (this.m_kinectRuntime == null) { return false; }
+            // Create the Kinect Runtime object...
+            this.m_kinectRuntime = new Runtime();
+
+            // Odds are a Kinect camera is not plugged in...
+            if (this.m_kinectRuntime == null) { Console.WriteLine("Kinect camera not detected!"); return false; }
 
             try {
                 // Initialize the Depth, Skeleton, and RGB cameras
