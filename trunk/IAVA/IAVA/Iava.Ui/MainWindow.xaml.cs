@@ -34,6 +34,7 @@ namespace Iava.Ui
             m_pGestureRecognizer.StatusChanged += new EventHandler<EventArgs>(m_pGestureRecognizer_StatusChanged);
             // Callbacks
             m_pGestureRecognizer.Subscribe("Zoom", GestureZoomCallback);
+            m_pGestureRecognizer.Subscribe("Left Swipe", GestureLeftSwipeCallback);
             m_pAudioRecognizer.Subscribe("Zoom In", ZoomInCallback);
             m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);           
         }
@@ -46,6 +47,16 @@ namespace Iava.Ui
         private void GestureZoomCallback(GestureEventArgs e)
         {
             
+        }
+
+        /// <summary>
+        /// The callback for when the Left Swipe gesture is detected.
+        /// </summary>
+        /// <param name="e"></param>
+        private void GestureLeftSwipeCallback(GestureEventArgs e) {
+            //map1.Dispatcher.Invoke(new Action(() => map1.PanTo());
+            Console.WriteLine("Gesture Swipe Left Detected");
+
         }
         #endregion
 
