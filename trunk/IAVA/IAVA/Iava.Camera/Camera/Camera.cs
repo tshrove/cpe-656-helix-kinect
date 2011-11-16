@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Research.Kinect.Nui;
 
-namespace Iava.Input {
+namespace Iava.Input.Camera {
     /// <summary>
     /// Wraps the Kinect Camera Sensor
     /// </summary>

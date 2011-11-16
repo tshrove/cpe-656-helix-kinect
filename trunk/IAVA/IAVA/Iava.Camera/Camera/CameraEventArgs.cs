@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Research.Kinect.Nui;
 
-namespace Iava.Input {
+namespace Iava.Input.Camera {
 
     /// <summary>
     /// The SkeletonEventArgs class
