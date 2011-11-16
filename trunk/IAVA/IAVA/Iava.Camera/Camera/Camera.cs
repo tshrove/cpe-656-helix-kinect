@@ -45,8 +45,8 @@ namespace Iava.Input.Camera {
         /// Tilts the camera up 1 degree
         /// </summary>
         public void TiltDown() {
-            // Valid Camera angle range is -25 to 25 degrees
-            if (TiltAngle != -25) {
+            // Valid Camera angle range is -27 to 27 degrees
+            if (TiltAngle > -27) {
                 TiltAngle--;
             }
         }
@@ -56,7 +56,7 @@ namespace Iava.Input.Camera {
         /// </summary>
         public void TiltUp() {
             // Valid Camera angle range is -25 to 25 degrees
-            if (TiltAngle != 25) {
+            if (TiltAngle < 27) {
                 TiltAngle++;
             }
         }
