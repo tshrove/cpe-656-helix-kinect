@@ -57,7 +57,8 @@ namespace Iava.Ui
         /// The callback for when the Left Swipe gesture is detected.
         /// </summary>
         /// <param name="e"></param>
-        private void GestureLeftSwipeCallback(GestureEventArgs e) {
+        private void GestureLeftSwipeCallback(GestureEventArgs e) 
+        {
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
         }
         #endregion
@@ -69,6 +70,7 @@ namespace Iava.Ui
         /// <param name="e">Audio event args</param>
         private void ZoomOutCallback(AudioEventArgs e)
         {
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(0.5)));
         }
 
@@ -78,6 +80,7 @@ namespace Iava.Ui
         /// <param name="e">Audio event args</param>
         private void ZoomInCallback(AudioEventArgs e)
         {
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2.0)));
         }
         #endregion
