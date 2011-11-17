@@ -36,9 +36,13 @@ namespace Iava.Ui
             m_pGestureRecognizer.StatusChanged += new EventHandler<EventArgs>(m_pGestureRecognizer_StatusChanged);
             m_pAudioRecognizer.Synced += new EventHandler<EventArgs>(m_pAudioRecognizer_Synced);
             m_pGestureRecognizer.Synced += new EventHandler<EventArgs>(m_pGestureRecognizer_Synced);
-            // Callbacks
+            // Gesture Callbacks
             m_pGestureRecognizer.Subscribe("Zoom", GestureZoomCallback);
             m_pGestureRecognizer.Subscribe("Left Swipe", GestureLeftSwipeCallback);
+            m_pGestureRecognizer.Subscribe("Right Swipe", GestureLeftSwipeCallback);
+            m_pGestureRecognizer.Subscribe("Up Swipe", GestureUpSwipeCallback);
+            m_pGestureRecognizer.Subscribe("Down Swipe", GestureDownSwipeCallback);
+            // Audio Callbacks
             m_pAudioRecognizer.Subscribe("Zoom In", ZoomInCallback);
             m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);           
         }
@@ -50,14 +54,42 @@ namespace Iava.Ui
         /// <param name="e"></param>
         private void GestureZoomCallback(GestureEventArgs e)
         {
-            
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
         }
-
         /// <summary>
         /// The callback for when the Left Swipe gesture is detected.
         /// </summary>
         /// <param name="e"></param>
         private void GestureLeftSwipeCallback(GestureEventArgs e) 
+        {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.X = screen.X + 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+        }
+        /// <summary>
+        /// The callback for when the Right Swipe gesture is detected.
+        /// </summary>
+        /// <param name="e"></param>
+        private void GestureRightSwipeCallback(GestureEventArgs e)
+        {
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+        }
+        /// <summary>
+        /// The callback for when the Up Swipe gesture is detected.
+        /// </summary>
+        /// <param name="e"></param>
+        private void GestureUpSwipeCallback(GestureEventArgs e)
+        {
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+        }
+        /// <summary>
+        /// The callback for when the Down Swipe gesture is detected.
+        /// </summary>
+        /// <param name="e"></param>
+        private void GestureDownSwipeCallback(GestureEventArgs e)
         {
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
         }
