@@ -233,13 +233,12 @@ namespace Iava.Ui
             m_bAudioSyncedToggle = !m_bAudioSyncedToggle;
             if (m_bAudioSyncedToggle)
             {
-                this.audioSync.Dispatcher.Invoke(new Action(() => this.audioSync.Foreground = Brushes.Red));
-                //this.audioSync.Dispatcher.Invoke(new Action(() => this.audioSync.FontWeight = FontWeights.Bold));
+                this.AudioSyncIcon.Dispatcher.Invoke(new Action(() => this.AudioSyncIcon.Visibility = System.Windows.Visibility.Visible));
             }
             else
             {
-                this.audioSync.Dispatcher.Invoke(new Action(() => this.audioSync.Foreground = Brushes.Black));
-                //this.audioSync.Dispatcher.Invoke(new Action(() => this.audioSync.FontWeight = FontWeights.Normal));
+
+                this.AudioSyncIcon.Dispatcher.Invoke(new Action(() => this.AudioSyncIcon.Visibility = System.Windows.Visibility.Hidden));
             }
         }
         /// <summary>
@@ -252,13 +251,11 @@ namespace Iava.Ui
             m_bGestureSyncedToggle = !m_bGestureSyncedToggle;
             if (m_bGestureSyncedToggle)
             {
-                this.gestureSync.Dispatcher.Invoke(new Action(() => this.gestureSync.Foreground = Brushes.Red));
-                //this.gestureSync.Dispatcher.Invoke(new Action(() => this.gestureSync.FontWeight = FontWeights.Bold));
+                this.GestureSyncIcon.Dispatcher.Invoke(new Action(() => this.GestureSyncIcon.Visibility = System.Windows.Visibility.Visible));
             }
             else
             {
-                this.gestureSync.Dispatcher.Invoke(new Action(() => this.gestureSync.Foreground = Brushes.Black));
-                //this.gestureSync.Dispatcher.Invoke(new Action(() => this.gestureSync.FontWeight = FontWeights.Normal));
+                this.GestureSyncIcon.Dispatcher.Invoke(new Action(() => this.GestureSyncIcon.Visibility = System.Windows.Visibility.Hidden));
             }
         }
         #endregion

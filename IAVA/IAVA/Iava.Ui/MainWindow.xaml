@@ -19,11 +19,11 @@
                 </esri:LayerCollection>
             </esri:Map.Layers>
         </esri:Map>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10,10,10,0">
-            <Label Name="audioSync" Content="A" FontSize="30" Foreground="Black" />
-            <Label Name="gestureSync" Content="G" FontSize="30" Foreground="Black" />
+        <StackPanel Orientation="Horizontal" Height="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,0,0,10" Background="Black" Opacity="0.65">
+            <Image Name="AudioSyncIcon" Source="Images/audio.png" Width="20" Height="20" Margin="2" Visibility="Hidden" />
+            <Image Name="GestureSyncIcon" Source="Images/Hand.png" Width="20" Height="20" Margin="2" Visibility="Hidden" />
         </StackPanel>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10,10,10,0">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10,30,10,10">
             <Image Name="kinectVideoFeed" Width="160" Height="120" />
         </StackPanel>
         <Popup x:Name="popStatus" 
