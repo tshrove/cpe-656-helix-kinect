@@ -41,6 +41,8 @@ namespace Iava.Ui
             m_pGestureRecognizer.StatusChanged += new EventHandler<EventArgs>(m_pGestureRecognizer_StatusChanged);
             m_pAudioRecognizer.Synced += new EventHandler<EventArgs>(m_pAudioRecognizer_Synced);
             m_pGestureRecognizer.Synced += new EventHandler<EventArgs>(m_pGestureRecognizer_Synced);
+            m_pAudioRecognizer.Unsynced += new EventHandler<EventArgs>(m_pAudioRecognizer_Unsynced);
+            m_pGestureRecognizer.Unsynced += new EventHandler<EventArgs>(m_pGestureRecognizer_Unsynced);
             // Gesture Callbacks
             m_pGestureRecognizer.Subscribe("Zoom", GestureZoomCallback);
             m_pGestureRecognizer.Subscribe("Left Swipe", GestureLeftSwipeCallback);
@@ -257,6 +259,26 @@ namespace Iava.Ui
             {
                 this.GestureSyncIcon.Dispatcher.Invoke(new Action(() => this.GestureSyncIcon.Visibility = System.Windows.Visibility.Hidden));
             }
+        }
+        /// <summary>
+        /// Raises when the gesture recognizer becomes unsynced.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pGestureRecognizer_Unsynced(object sender, EventArgs e)
+        {
+            this.Window.Dispatcher.Invoke(new Action(() => this.m_pGestureSycnedTimer.Enabled = false));
+            this.GestureSyncIcon.Dispatcher.Invoke(new Action(() => this.GestureSyncIcon.Visibility = System.Windows.Visibility.Hidden));
+        }
+        /// <summary>
+        /// Raises when the audio recognizer becomes unsycned.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pAudioRecognizer_Unsynced(object sender, EventArgs e)
+        {
+            this.Window.Dispatcher.Invoke(new Action(() => this.m_pAudioSycnedTimer.Enabled = false));
+            this.AudioSyncIcon.Dispatcher.Invoke(new Action(() => this.AudioSyncIcon.Visibility = System.Windows.Visibility.Hidden));
         }
         #endregion
 
