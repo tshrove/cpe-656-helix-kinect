@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Iava.Gesture;
 using Iava.Audio;
+using Microsoft.Research.Kinect.Nui;
 
 namespace Iava.Ui
 {
@@ -44,7 +45,9 @@ namespace Iava.Ui
             m_pGestureRecognizer.Subscribe("Down Swipe", GestureDownSwipeCallback);
             // Audio Callbacks
             m_pAudioRecognizer.Subscribe("Zoom In", ZoomInCallback);
-            m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);           
+            m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);
+
+            m_pGestureRecognizer.Camera.ImageFrameReady += new EventHandler<ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
         }
 
         #region Gesture Callbacks
@@ -178,29 +181,7 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pAudioRecognizer_Synced(object sender, EventArgs e)
         {
-            /* myGlowEffect = new OuterGlowBitmapEffect();
-
-            // Set the size of the glow to 30 pixels.
-            myGlowEffect.GlowSize = 30;
-
-            // Set the color of the glow to blue.
-            Color myGlowColor = new Color();
-            myGlowColor.ScA = 1;
-            myGlowColor.ScB = 1;
-            myGlowColor.ScG = 0;
-            myGlowColor.ScR = 0;
-            myGlowEffect.GlowColor = myGlowColor;
-
-            // Set the noise of the effect to the maximum possible (range 0-1).
-            myGlowEffect.Noise = 1;
-
-            // Set the Opacity of the effect to 40%. Note that the same effect
-            // could be done by setting the ScA property of the Color to 0.4.
-            myGlowEffect.Opacity = 0.4;
-
-            // Apply the bitmap effect to the TextBox.
-
-            btnAudioSynced.BitmapEffect = myGlowEffect;*/
+            
         }
         /// <summary>
         /// Raises when the gesture recognizer is synced.
@@ -209,29 +190,20 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pGestureRecognizer_Synced(object sender, EventArgs e)
         {
-            /*OuterGlowBitmapEffect myGlowEffect = new OuterGlowBitmapEffect();
+            
+        }
+        /// <summary>
+        /// Raises when the camera frame is ready to be viewed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Camera_ImageFrameReady(object sender, ImageFrameReadyEventArgs e)
+        {
+            PlanarImage Image = e.ImageFrame.Image;
 
-            // Set the size of the glow to 30 pixels.
-            myGlowEffect.GlowSize = 30;
-
-            // Set the color of the glow to blue.
-            Color myGlowColor = new Color();
-            myGlowColor.ScA = 1;
-            myGlowColor.ScB = 1;
-            myGlowColor.ScG = 0;
-            myGlowColor.ScR = 0;
-            myGlowEffect.GlowColor = myGlowColor;
-
-            // Set the noise of the effect to the maximum possible (range 0-1).
-            myGlowEffect.Noise = 1;
-
-            // Set the Opacity of the effect to 40%. Note that the same effect
-            // could be done by setting the ScA property of the Color to 0.4.
-            myGlowEffect.Opacity = 0.4;
-
-            // Apply the bitmap effect to the TextBox.
-
-            btnGestureSynced.BitmapEffect = myGlowEffect;*/
+            kinectVideoFeed.Source = BitmapSource.Create(
+                Image.Width, Image.Height, 96, 96, PixelFormats.Bgr32, null,
+                Image.Bits, Image.Width * Image.BytesPerPixel);
         }
         /// <summary>
         /// Event used in junction with the display status function.

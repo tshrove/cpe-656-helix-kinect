@@ -32,6 +32,8 @@ namespace Iava.Audio
             :base(filePath)
         {
             this.AudioCallbacks = new Dictionary<string, AudioCallback>();
+            // TODO This is temporary for prototype.
+            this.AudioCallbacks.Add("Helix", null);
             // TODO Add the function to load the gestures to the dictionary.
         }
 
@@ -238,27 +240,35 @@ namespace Iava.Audio
             Console.Write("\rSpeech Recognized: \t{0}\tConfidence:\t{1}", e.Result.Text, e.Result.Confidence);
             foreach (string command in AudioCallbacks.Keys)
             {
-                if (e.Result.Text.Contains(command))
+                if (e.Result.Text.Contains("Helix"))
                 {
-                    try
+                    // Found the sync command
+                    OnSynced(this, new EventArgs());
+                }
+                else
+                {
+                    if (e.Result.Text.Contains(command))
                     {
-                        AudioEventArgs args = new AudioEventArgs
-                            {
-                                Command = command,
-                                CommandWilcards = null
-                            };
-
-                        if (e.Result.Confidence > 0.8f)
+                        try
                         {
-                            AudioCallbacks[command].Invoke(args);
-                        }
-                    }
-                    catch (Exception exception)
-                    {
-                        //TODO: Log message if this fails
-                    }
+                            AudioEventArgs args = new AudioEventArgs
+                                {
+                                    Command = command,
+                                    CommandWilcards = null
+                                };
 
-                    break;
+                            if (e.Result.Confidence > 0.8f)
+                            {
+                                AudioCallbacks[command].Invoke(args);
+                            }
+                        }
+                        catch (Exception exception)
+                        {
+                            //TODO: Log message if this fails
+                        }
+
+                        break;
+                    }
                 }
             }
         }
