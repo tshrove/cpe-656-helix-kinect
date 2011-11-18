@@ -126,6 +126,17 @@ namespace Iava.Gesture
             // TODO: Reading in the config file needs to happen here
 
             // NEM: For the prototype we will manually load hard-coded gestures
+
+            // Sync Gesture (NOT THE ACTUAL ONE ATM)
+            List<IGestureSegment> syncSegments = new List<IGestureSegment>();
+            syncSegments.Add(new LeftSwipeSegment1());
+            syncSegments.Add(new RightSwipeSegment1());
+            syncSegments.Add(new UpSwipeSegment1());
+            syncSegments.Add(new DownSwipeSegment1());
+
+            // Add the gesture as our Sync Gestyre
+            SyncGesture = new GestureStuff.Gesture("Sync", syncSegments);
+            
             // Left Swipe
             List<IGestureSegment> leftSwipeSegments = new List<IGestureSegment>();
             leftSwipeSegments.Add(new LeftSwipeSegment1());
