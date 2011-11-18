@@ -173,6 +173,9 @@ namespace Iava.Gesture
             if (e.Name == SyncGesture.Name) { OnSynced(this, e); return; }
 
             if (GestureCallbacks.ContainsKey(e.Name)) {
+                // We found a command, reset the timer
+                ResetTimer();
+
                 GestureCallbacks[e.Name].Invoke(e);
 
                 // Reset all the gesture states
