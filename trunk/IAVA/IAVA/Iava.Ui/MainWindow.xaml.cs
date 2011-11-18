@@ -39,7 +39,7 @@ namespace Iava.Ui
             // Gesture Callbacks
             m_pGestureRecognizer.Subscribe("Zoom", GestureZoomCallback);
             m_pGestureRecognizer.Subscribe("Left Swipe", GestureLeftSwipeCallback);
-            m_pGestureRecognizer.Subscribe("Right Swipe", GestureLeftSwipeCallback);
+            m_pGestureRecognizer.Subscribe("Right Swipe", GestureRightSwipeCallback);
             m_pGestureRecognizer.Subscribe("Up Swipe", GestureUpSwipeCallback);
             m_pGestureRecognizer.Subscribe("Down Swipe", GestureDownSwipeCallback);
             // Audio Callbacks
@@ -64,7 +64,7 @@ namespace Iava.Ui
         {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
             Point screen = map1.MapToScreen(center);
-            screen.X = screen.X + 300;
+            screen.X += 300;
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
             map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
@@ -75,7 +75,12 @@ namespace Iava.Ui
         /// <param name="e"></param>
         private void GestureRightSwipeCallback(GestureEventArgs e)
         {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.X -= 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
         }
         /// <summary>
         /// The callback for when the Up Swipe gesture is detected.
@@ -83,7 +88,12 @@ namespace Iava.Ui
         /// <param name="e"></param>
         private void GestureUpSwipeCallback(GestureEventArgs e)
         {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.Y += 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
         }
         /// <summary>
         /// The callback for when the Down Swipe gesture is detected.
@@ -91,7 +101,12 @@ namespace Iava.Ui
         /// <param name="e"></param>
         private void GestureDownSwipeCallback(GestureEventArgs e)
         {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.Y -= 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
         }
         #endregion
 
