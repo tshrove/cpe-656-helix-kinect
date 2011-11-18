@@ -13,8 +13,14 @@ namespace Iava.Core
     public abstract class Recognizer : IRecognizer
     {
         #region Private Members
+
         private RecognizerStatus m_pStatus = RecognizerStatus.NotReady;
-        #endregion
+
+        protected bool m_isSynced = false;
+
+        protected System.Timers.Timer m_timeoutTimer = new System.Timers.Timer(30000);
+
+        #endregion Private Members
 
         #region Properties
         /// <summary>
@@ -66,6 +72,7 @@ namespace Iava.Core
         #endregion
 
         #region Constructors
+        
         /// <summary>
         /// Default Constructor.
         /// </summary>
@@ -74,6 +81,7 @@ namespace Iava.Core
         {
             // Nothing to do.
         }
+        
         /// <summary>
         /// Constructor that takes the file and creates the recognizer based on
         /// the file input.
@@ -83,8 +91,11 @@ namespace Iava.Core
         {
             // TODO Check for correct file path and may want to do stuff with.
             //this.Configuration = new FileStream(filePath, FileMode.Open);
+
+            m_timeoutTimer.Elapsed += OnTimerEllapsed;
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Public Methods
         /// <summary>
@@ -98,6 +109,7 @@ namespace Iava.Core
         #endregion
 
         #region Protected Methods
+        
         /// <summary>
         /// Raises before the recognizer starts.
         /// </summary>
@@ -108,6 +120,7 @@ namespace Iava.Core
             if (Started != null)
                 Started(sender, e);
         }
+        
         /// <summary>
         /// Raises before the recognizer stops.
         /// </summary>
@@ -118,6 +131,7 @@ namespace Iava.Core
             if (Stopped != null)
                 Stopped(sender, e);
         }
+        
         /// <summary>
         /// Raises before the recognizer fails.
         /// </summary>
@@ -128,6 +142,7 @@ namespace Iava.Core
             if (Failed != null)
                 Failed(sender, e);
         }
+        
         /// <summary>
         /// Raises when the recognizer is synced.
         /// </summary>
@@ -135,9 +150,12 @@ namespace Iava.Core
         /// <param name="e"></param>
         protected void OnSynced(object sender, EventArgs e)
         {
+            m_isSynced = true;
+
             if (Synced != null)
                 Synced(sender, e);
         }
+        
         /// <summary>
         /// Raises when the recognizer is unsynced.
         /// </summary>
@@ -145,9 +163,12 @@ namespace Iava.Core
         /// <param name="e"></param>
         protected void OnUnsynced(object sender, EventArgs e)
         {
+            m_isSynced = false;
+
             if (Unsynced != null)
                 Unsynced(sender, e);
         }
+        
         /// <summary>
         /// Raises when the status of the recognizer is changed.
         /// </summary>
@@ -158,6 +179,15 @@ namespace Iava.Core
             if (StatusChanged != null)
                 StatusChanged(sender, e);
         }
-        #endregion
+
+        /// <summary>
+        /// Raised when the Timeout Timer expires.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void OnTimerEllapsed(object sender, System.Timers.ElapsedEventArgs e) {
+            OnUnsynced(this, e);
+        }
+        #endregion Protected Methods
     }
 }

@@ -113,6 +113,11 @@ namespace Iava.Gesture
         /// </summary>
         private List<Gesture.GestureStuff.Gesture> SupportedGestures { get; set; }
 
+        /// <summary>
+        /// The sync gesture
+        /// </summary>
+        private Gesture.GestureStuff.Gesture SyncGesture { get; set; }
+
         #endregion Private Properties
 
         #region Private Methods
@@ -164,20 +169,31 @@ namespace Iava.Gesture
         }
         
         private void OnGestureRecognized(object sender, GestureEventArgs e) {
+            // If we just synced, set the flag and return
+            if (e.Name == SyncGesture.Name) { OnSynced(this, e); return; }
+
             if (GestureCallbacks.ContainsKey(e.Name)) {
                 GestureCallbacks[e.Name].Invoke(e);
 
-                // Reset all the gesture states to be ready for the next one
+                // Reset all the gesture states
+                SupportedGestures.ForEach(x => x.Reset());
             }
 
-            else { /* No one cares about this gesture */ }
+            else { /* No one cares about this gesture =( */ }
         }
 
         private void OnSkeletonReady(object sender, SkeletonEventArgs e) {
-            // Check to see if this skeleton frame completes one of our supported gestures
-            foreach (Gesture.GestureStuff.Gesture gesture in SupportedGestures) {
-                gesture.CheckForGesture(e.Skeleton);
+
+            // If we're synced up look for gestures
+            if (m_isSynced) {
+                // Check to see if this skeleton frame completes one of our supported gestures
+                foreach (Gesture.GestureStuff.Gesture gesture in SupportedGestures) {
+                    gesture.CheckForGesture(e.Skeleton);
+                }
             }
+
+            // Check for the sync gesture
+            else { SyncGesture.CheckForGesture(e.Skeleton); }
         }
 
         #endregion Private Methods
