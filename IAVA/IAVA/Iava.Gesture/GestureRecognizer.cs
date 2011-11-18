@@ -130,12 +130,12 @@ namespace Iava.Gesture
             // Sync Gesture (NOT THE ACTUAL ONE ATM)
             List<IGestureSegment> syncSegments = new List<IGestureSegment>();
             syncSegments.Add(new LeftSwipeSegment1());
-            syncSegments.Add(new RightSwipeSegment1());
-            syncSegments.Add(new UpSwipeSegment1());
-            syncSegments.Add(new DownSwipeSegment1());
+            syncSegments.Add(new LeftSwipeSegment2());
+            syncSegments.Add(new LeftSwipeSegment3());
 
             // Add the gesture as our Sync Gestyre
             SyncGesture = new GestureStuff.Gesture("Sync", syncSegments);
+            SyncGesture.GestureRecognized += OnGestureRecognized;
             
             // Left Swipe
             List<IGestureSegment> leftSwipeSegments = new List<IGestureSegment>();
