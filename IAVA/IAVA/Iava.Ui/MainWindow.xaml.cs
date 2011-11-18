@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Iava.Gesture;
 using Iava.Audio;
-using Microsoft.Research.Kinect.Nui;
+using Iava.Input.Camera;
 
 namespace Iava.Ui
 {
@@ -26,6 +26,10 @@ namespace Iava.Ui
         private Iava.Gesture.GestureRecognizer m_pGestureRecognizer;
         private Iava.Audio.AudioRecognizer m_pAudioRecognizer;
         private System.Timers.Timer m_pTimer = new System.Timers.Timer();
+        private System.Timers.Timer m_pGestureSycnedTimer = new System.Timers.Timer();
+        private System.Timers.Timer m_pAudioSycnedTimer = new System.Timers.Timer();
+        private bool m_bGestureSyncedToggle = false;
+        private bool m_bAudioSyncedToggle = false;
 
         public MainWindow()
         {
@@ -48,6 +52,9 @@ namespace Iava.Ui
             m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);
 
             m_pGestureRecognizer.Camera.ImageFrameReady += new EventHandler<ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
+
+            m_pGestureSycnedTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_pGestureSycnedTimer_Elapsed);
+            m_pAudioSycnedTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_pAudioSycnedTimer_Elapsed);
         }
 
         #region Gesture Callbacks
@@ -181,7 +188,8 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pAudioRecognizer_Synced(object sender, EventArgs e)
         {
-            
+            this.m_pAudioSycnedTimer.Interval = 1000;
+            this.m_pAudioSycnedTimer.Enabled = true;
         }
         /// <summary>
         /// Raises when the gesture recognizer is synced.
@@ -190,7 +198,8 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pGestureRecognizer_Synced(object sender, EventArgs e)
         {
-            
+            this.m_pGestureSycnedTimer.Interval = 1000;
+            this.m_pGestureSycnedTimer.Enabled = true;
         }
         /// <summary>
         /// Raises when the camera frame is ready to be viewed.
@@ -213,6 +222,44 @@ namespace Iava.Ui
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             popStatus.Dispatcher.Invoke(new Action(() => popStatus.IsOpen = false));
+        }
+        /// <summary>
+        /// Raises when the audio synced timer has been elapsed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pAudioSycnedTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            m_bAudioSyncedToggle = !m_bAudioSyncedToggle;
+            if (m_bAudioSyncedToggle)
+            {
+                this.audioSync.Dispatcher.Invoke(new Action(() => this.audioSync.Foreground = Brushes.Red));
+                //this.audioSync.Dispatcher.Invoke(new Action(() => this.audioSync.FontWeight = FontWeights.Bold));
+            }
+            else
+            {
+                this.audioSync.Dispatcher.Invoke(new Action(() => this.audioSync.Foreground = Brushes.Black));
+                //this.audioSync.Dispatcher.Invoke(new Action(() => this.audioSync.FontWeight = FontWeights.Normal));
+            }
+        }
+        /// <summary>
+        /// Raises when the gesture synced timer has been elasped.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pGestureSycnedTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            m_bGestureSyncedToggle = !m_bGestureSyncedToggle;
+            if (m_bGestureSyncedToggle)
+            {
+                this.gestureSync.Dispatcher.Invoke(new Action(() => this.gestureSync.Foreground = Brushes.Red));
+                //this.gestureSync.Dispatcher.Invoke(new Action(() => this.gestureSync.FontWeight = FontWeights.Bold));
+            }
+            else
+            {
+                this.gestureSync.Dispatcher.Invoke(new Action(() => this.gestureSync.Foreground = Brushes.Black));
+                //this.gestureSync.Dispatcher.Invoke(new Action(() => this.gestureSync.FontWeight = FontWeights.Normal));
+            }
         }
         #endregion
 
