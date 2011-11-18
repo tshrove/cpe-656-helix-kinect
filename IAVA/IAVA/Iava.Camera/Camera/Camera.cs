@@ -102,7 +102,9 @@ namespace Iava.Input.Camera {
             }
 
             // Open the RGB camera
-            this.m_kinectRuntime.VideoStream.Open(ImageStreamType.Video, 2, ImageResolution.Resolution640x480, ImageType.Color);
+            this.m_kinectRuntime.VideoStream.Open((Microsoft.Research.Kinect.Nui.ImageStreamType)ImageStreamType.Video, 2,
+                                                  (Microsoft.Research.Kinect.Nui.ImageResolution)ImageResolution.Resolution640x480,
+                                                  (Microsoft.Research.Kinect.Nui.ImageType)ImageType.Color);
 
             // Create our smoothing parameters
             var smoothingParams = new TransformSmoothParameters
@@ -155,8 +157,8 @@ namespace Iava.Input.Camera {
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Microsoft.Research.Kinect.Nui.ImageFrameReadyEventArgs"/> instance containing the event data.</param>
-        private void OnVideoFrameReady(object sender, ImageFrameReadyEventArgs e) {
-            if (this.ImageFrameReady != null) { this.ImageFrameReady(this, e); }
+        private void OnVideoFrameReady(object sender, Microsoft.Research.Kinect.Nui.ImageFrameReadyEventArgs e) {
+            if (this.ImageFrameReady != null) { this.ImageFrameReady(this, (ImageFrameReadyEventArgs)e); }
         }
 
         #endregion Private Methods

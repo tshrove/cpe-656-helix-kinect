@@ -65,6 +65,30 @@ namespace Iava.Input.Camera {
         }
 
         #endregion Constructors
+    }
 
+    public sealed class ImageFrameReadyEventArgs : EventArgs {
+
+        #region Public Properties
+
+        public ImageFrame ImageFrame { get; private set; }
+
+        #endregion Pulbic Properties
+        
+        #region Constructors
+
+        public ImageFrameReadyEventArgs(ImageFrame imageFrame) {
+            ImageFrame = imageFrame;
+        }
+
+        #endregion Constructors
+
+        #region Operator Overloads
+
+        public static implicit operator ImageFrameReadyEventArgs(Microsoft.Research.Kinect.Nui.ImageFrameReadyEventArgs value) {
+            return new ImageFrameReadyEventArgs(value.ImageFrame);
+        }
+
+        #endregion Operator Overloads
     }
 }
