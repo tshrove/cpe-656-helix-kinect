@@ -121,14 +121,46 @@ namespace Iava.Gesture
             // TODO: Reading in the config file needs to happen here
 
             // NEM: For the prototype we will manually load hard-coded gestures
-            List<IGestureSegment> segments = new List<IGestureSegment>();
-            segments.Add(new LeftSwipeSegment1());
-            segments.Add(new LeftSwipeSegment2());
-            segments.Add(new LeftSwipeSegment3());
+            // Left Swipe
+            List<IGestureSegment> leftSwipeSegments = new List<IGestureSegment>();
+            leftSwipeSegments.Add(new LeftSwipeSegment1());
+            leftSwipeSegments.Add(new LeftSwipeSegment2());
+            leftSwipeSegments.Add(new LeftSwipeSegment3());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Left Swipe", segments));
+            SupportedGestures.Add(new GestureStuff.Gesture("Left Swipe", leftSwipeSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
+
+            // Right Swipe
+            List<IGestureSegment> rightSwipeSegments = new List<IGestureSegment>();
+            rightSwipeSegments.Add(new RightSwipeSegment1());
+            rightSwipeSegments.Add(new RightSwipeSegment2());
+            rightSwipeSegments.Add(new RightSwipeSegment3());
+
+            // Add the gesture to our supported types and register for its recognized event
+            SupportedGestures.Add(new GestureStuff.Gesture("Right Swipe", rightSwipeSegments));
+            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
+
+            // Up Swipe
+            List<IGestureSegment> upSwipeSegments = new List<IGestureSegment>();
+            upSwipeSegments.Add(new UpSwipeSegment1());
+            upSwipeSegments.Add(new UpSwipeSegment2());
+            upSwipeSegments.Add(new UpSwipeSegment3());
+
+            // Add the gesture to our supported types and register for its recognized event
+            SupportedGestures.Add(new GestureStuff.Gesture("Up Swipe", upSwipeSegments));
+            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
+
+            // Down Swipe
+            List<IGestureSegment> downSwipeSegments = new List<IGestureSegment>();
+            downSwipeSegments.Add(new DownSwipeSegment1());
+            downSwipeSegments.Add(new DownSwipeSegment2());
+            downSwipeSegments.Add(new DownSwipeSegment3());
+
+            // Add the gesture to our supported types and register for its recognized event
+            SupportedGestures.Add(new GestureStuff.Gesture("Down Swipe", downSwipeSegments));
+            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
+
         }
         
         private void OnGestureRecognized(object sender, GestureEventArgs e) {
