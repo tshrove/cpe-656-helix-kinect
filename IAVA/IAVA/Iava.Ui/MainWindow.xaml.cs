@@ -26,11 +26,11 @@ namespace Iava.Ui
         private Iava.Gesture.GestureRecognizer m_pGestureRecognizer;
         private Iava.Audio.AudioRecognizer m_pAudioRecognizer;
         private System.Timers.Timer m_pTimer = new System.Timers.Timer();
-        private System.Timers.Timer m_pGestureSycnedTimer = new System.Timers.Timer();
-        private System.Timers.Timer m_pAudioSycnedTimer = new System.Timers.Timer();
-        private bool m_bGestureSyncedToggle = false;
-        private bool m_bAudioSyncedToggle = false;
 
+        #region Constructor
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -54,10 +54,8 @@ namespace Iava.Ui
             m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);
 
             m_pGestureRecognizer.Camera.ImageFrameReady += new EventHandler<ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
-
-            m_pGestureSycnedTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_pGestureSycnedTimer_Elapsed);
-            m_pAudioSycnedTimer.Elapsed += new System.Timers.ElapsedEventHandler(m_pAudioSycnedTimer_Elapsed);
         }
+        #endregion
 
         #region Gesture Callbacks
         /// <summary>
@@ -190,8 +188,8 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pAudioRecognizer_Synced(object sender, EventArgs e)
         {
-            this.m_pAudioSycnedTimer.Interval = 1000;
-            this.m_pAudioSycnedTimer.Enabled = true;
+            this.lblAudioStatus.Dispatcher.Invoke(new Action(() => this.lblAudioStatus.Content = "Audio Status: Synced"));
+            this.lblAudioStatus.Dispatcher.Invoke(new Action(() => this.lblAudioStatus.Background = Brushes.Green));
         }
         /// <summary>
         /// Raises when the gesture recognizer is synced.
@@ -200,8 +198,8 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pGestureRecognizer_Synced(object sender, EventArgs e)
         {
-            this.m_pGestureSycnedTimer.Interval = 1000;
-            this.m_pGestureSycnedTimer.Enabled = true;
+            this.lblGestureStatus.Dispatcher.Invoke(new Action(() => this.lblGestureStatus.Content = "Gesture Status: Synced"));
+            this.lblGestureStatus.Dispatcher.Invoke(new Action(() => this.lblGestureStatus.Background = Brushes.Green));
         }
         /// <summary>
         /// Raises when the camera frame is ready to be viewed.
@@ -226,49 +224,14 @@ namespace Iava.Ui
             popStatus.Dispatcher.Invoke(new Action(() => popStatus.IsOpen = false));
         }
         /// <summary>
-        /// Raises when the audio synced timer has been elapsed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void m_pAudioSycnedTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            m_bAudioSyncedToggle = !m_bAudioSyncedToggle;
-            if (m_bAudioSyncedToggle)
-            {
-                this.AudioSyncIcon.Dispatcher.Invoke(new Action(() => this.AudioSyncIcon.Visibility = System.Windows.Visibility.Visible));
-            }
-            else
-            {
-
-                this.AudioSyncIcon.Dispatcher.Invoke(new Action(() => this.AudioSyncIcon.Visibility = System.Windows.Visibility.Hidden));
-            }
-        }
-        /// <summary>
-        /// Raises when the gesture synced timer has been elasped.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void m_pGestureSycnedTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            m_bGestureSyncedToggle = !m_bGestureSyncedToggle;
-            if (m_bGestureSyncedToggle)
-            {
-                this.GestureSyncIcon.Dispatcher.Invoke(new Action(() => this.GestureSyncIcon.Visibility = System.Windows.Visibility.Visible));
-            }
-            else
-            {
-                this.GestureSyncIcon.Dispatcher.Invoke(new Action(() => this.GestureSyncIcon.Visibility = System.Windows.Visibility.Hidden));
-            }
-        }
-        /// <summary>
         /// Raises when the gesture recognizer becomes unsynced.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         void m_pGestureRecognizer_Unsynced(object sender, EventArgs e)
         {
-            this.Window.Dispatcher.Invoke(new Action(() => this.m_pGestureSycnedTimer.Enabled = false));
-            this.GestureSyncIcon.Dispatcher.Invoke(new Action(() => this.GestureSyncIcon.Visibility = System.Windows.Visibility.Hidden));
+            this.lblGestureStatus.Dispatcher.Invoke(new Action(() => this.lblGestureStatus.Content = "Gesture Status: Unsynced"));
+            this.lblGestureStatus.Dispatcher.Invoke(new Action(() => this.lblGestureStatus.Background = Brushes.Orange)); 
         }
         /// <summary>
         /// Raises when the audio recognizer becomes unsycned.
@@ -277,8 +240,8 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pAudioRecognizer_Unsynced(object sender, EventArgs e)
         {
-            this.Window.Dispatcher.Invoke(new Action(() => this.m_pAudioSycnedTimer.Enabled = false));
-            this.AudioSyncIcon.Dispatcher.Invoke(new Action(() => this.AudioSyncIcon.Visibility = System.Windows.Visibility.Hidden));
+            this.lblAudioStatus.Dispatcher.Invoke(new Action(() => this.lblAudioStatus.Content = "Audio Status: Unsyned"));
+            this.lblAudioStatus.Dispatcher.Invoke(new Action(() => this.lblAudioStatus.Background = Brushes.Orange));
         }
         #endregion
 
