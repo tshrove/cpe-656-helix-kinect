@@ -26,6 +26,7 @@ namespace Iava.Ui
         private Iava.Gesture.GestureRecognizer m_pGestureRecognizer;
         private Iava.Audio.AudioRecognizer m_pAudioRecognizer;
         private System.Timers.Timer m_pTimer = new System.Timers.Timer();
+        private TextBoxStreamWriter m_pConsoleTxtBox = null;
 
         #region Constructor
         /// <summary>
@@ -54,6 +55,9 @@ namespace Iava.Ui
             m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);
 
             m_pGestureRecognizer.Camera.ImageFrameReady += new EventHandler<ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
+
+            m_pConsoleTxtBox = new TextBoxStreamWriter(this.txtConsole);
+            Console.SetOut(m_pConsoleTxtBox);
         }
         #endregion
 
