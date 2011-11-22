@@ -23,6 +23,12 @@ namespace Iava.Ui
             _text.Dispatcher.Invoke(new Action(() => _text.ScrollToEnd()));
         }
 
+        public override void WriteLine(string value) {
+            base.WriteLine(value);
+            _text.Dispatcher.Invoke(new Action(() => _text.AppendText(value + '\n')));
+            _text.Dispatcher.Invoke(new Action(() => _text.ScrollToEnd()));
+        }
+
         public override Encoding Encoding
         {
             get { return System.Text.Encoding.UTF8; }
