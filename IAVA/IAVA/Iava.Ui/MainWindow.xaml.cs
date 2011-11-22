@@ -45,7 +45,8 @@ namespace Iava.Ui
             m_pAudioRecognizer.Unsynced += new EventHandler<EventArgs>(m_pAudioRecognizer_Unsynced);
             m_pGestureRecognizer.Unsynced += new EventHandler<EventArgs>(m_pGestureRecognizer_Unsynced);
             // Gesture Callbacks
-            m_pGestureRecognizer.Subscribe("Zoom", GestureZoomCallback);
+            m_pGestureRecognizer.Subscribe("Zoom In", GestureZoomInCallback);
+            m_pGestureRecognizer.Subscribe("Zoom Out", GestureZoomOutCallback);
             m_pGestureRecognizer.Subscribe("Left Swipe", GestureLeftSwipeCallback);
             m_pGestureRecognizer.Subscribe("Right Swipe", GestureRightSwipeCallback);
             m_pGestureRecognizer.Subscribe("Up Swipe", GestureUpSwipeCallback);
@@ -53,6 +54,10 @@ namespace Iava.Ui
             // Audio Callbacks
             m_pAudioRecognizer.Subscribe("Zoom In", ZoomInCallback);
             m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);
+            m_pAudioRecognizer.Subscribe("Move North", MoveNorthCallback);
+            m_pAudioRecognizer.Subscribe("Move South", MoveSouthCallback);
+            m_pAudioRecognizer.Subscribe("Move East", MoveEastCallback);
+            m_pAudioRecognizer.Subscribe("Move West", MoveWestCallback);
 
             m_pGestureRecognizer.Camera.ImageFrameReady += new EventHandler<ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
 
@@ -66,10 +71,27 @@ namespace Iava.Ui
         /// The callback for when the zoom gesture is detected.
         /// </summary>
         /// <param name="e"></param>
-        private void GestureZoomCallback(GestureEventArgs e)
+        private void GestureZoomInCallback(GestureEventArgs e)
         {
+            // Zoom In
+            map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2)));
+
+            // Write Detected Gesure to screen
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
         }
+
+        /// <summary>
+        /// The callback for when the zoom gesture is detected.
+        /// </summary>
+        /// <param name="e"></param>
+        private void GestureZoomOutCallback(GestureEventArgs e) {
+            // Zoom Out
+            map1.Dispatcher.Invoke(new Action(() => map1.Zoom(0.5)));
+
+            // Write Detected Gesure to screen
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+        }
+
         /// <summary>
         /// The callback for when the Left Swipe gesture is detected.
         /// </summary>
@@ -143,6 +165,42 @@ namespace Iava.Ui
         {
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2.0)));
+        }
+
+        private void MoveNorthCallback(AudioEventArgs e) {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.Y -= 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
+            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+        }
+
+        private void MoveSouthCallback(AudioEventArgs e) {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.Y += 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
+            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+        }
+
+        private void MoveEastCallback(AudioEventArgs e) {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.X += 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
+            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+        }
+
+        private void MoveWestCallback(AudioEventArgs e) {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.X -= 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
+            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
         }
         #endregion
 
