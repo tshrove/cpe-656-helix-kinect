@@ -127,11 +127,9 @@ namespace Iava.Gesture
 
             // NEM: For the prototype we will manually load hard-coded gestures
 
-            // Sync Gesture (NOT THE ACTUAL ONE ATM)
+            // Sync Gesture
             List<IGestureSegment> syncSegments = new List<IGestureSegment>();
-            syncSegments.Add(new LeftSwipeSegment1());
-            syncSegments.Add(new LeftSwipeSegment2());
-            syncSegments.Add(new LeftSwipeSegment3());
+            for (int i = 0; i < 20; i++) { syncSegments.Add(new SyncSegment()); }
 
             // Add the gesture as our Sync Gestyre
             SyncGesture = new GestureStuff.Gesture("Sync", syncSegments);
@@ -177,6 +175,23 @@ namespace Iava.Gesture
             SupportedGestures.Add(new GestureStuff.Gesture("Down Swipe", downSwipeSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
+            // Zoom In
+            List<IGestureSegment> zoomInSwipeSegments = new List<IGestureSegment>();
+            zoomInSwipeSegments.Add(new ZoomInSegment1());
+            zoomInSwipeSegments.Add(new ZoomInSegment2());
+
+            // Add the gesture to our supported types and register for its recognized event
+            SupportedGestures.Add(new GestureStuff.Gesture("Zoom In", zoomInSwipeSegments));
+            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
+
+            // Zoom Out
+            List<IGestureSegment> zoomOutSwipeSegments = new List<IGestureSegment>();
+            zoomOutSwipeSegments.Add(new ZoomOutSegment1());
+            zoomOutSwipeSegments.Add(new ZoomOutSegment2());
+
+            // Add the gesture to our supported types and register for its recognized event
+            SupportedGestures.Add(new GestureStuff.Gesture("Zoom Out", zoomOutSwipeSegments));
+            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
         }
         
         private void OnGestureRecognized(object sender, GestureEventArgs e) {
