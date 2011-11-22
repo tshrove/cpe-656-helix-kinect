@@ -58,6 +58,7 @@ namespace Iava.Ui
             m_pAudioRecognizer.Subscribe("Move South", MoveSouthCallback);
             m_pAudioRecognizer.Subscribe("Move East", MoveEastCallback);
             m_pAudioRecognizer.Subscribe("Move West", MoveWestCallback);
+            m_pAudioRecognizer.Subscribe("Blow Up", BlowUp);
 
             m_pGestureRecognizer.Camera.ImageFrameReady += new EventHandler<ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
 
@@ -79,7 +80,6 @@ namespace Iava.Ui
             // Write Detected Gesure to screen
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
         }
-
         /// <summary>
         /// The callback for when the zoom gesture is detected.
         /// </summary>
@@ -91,7 +91,6 @@ namespace Iava.Ui
             // Write Detected Gesure to screen
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
         }
-
         /// <summary>
         /// The callback for when the Left Swipe gesture is detected.
         /// </summary>
@@ -156,7 +155,6 @@ namespace Iava.Ui
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(0.5)));
         }
-
         /// <summary>
         /// Occurs when a zoom in command was received.
         /// </summary>
@@ -166,41 +164,45 @@ namespace Iava.Ui
             Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2.0)));
         }
-
-        private void MoveNorthCallback(AudioEventArgs e) {
-            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
-            Point screen = map1.MapToScreen(center);
-            screen.Y -= 300;
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
-            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+        /// <summary>
+        /// Occurs when a move north command was received.
+        /// </summary>
+        /// <param name="e"></param>
+        private void MoveNorthCallback(AudioEventArgs e) 
+        {
+            Window.Dispatcher.Invoke(new Action(() => MoveNorth(e)));
         }
-
-        private void MoveSouthCallback(AudioEventArgs e) {
-            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
-            Point screen = map1.MapToScreen(center);
-            screen.Y += 300;
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
-            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+        /// <summary>
+        /// Occurs when a move south command was received.
+        /// </summary>
+        /// <param name="e"></param>
+        private void MoveSouthCallback(AudioEventArgs e) 
+        {
+            Window.Dispatcher.Invoke(new Action(() => MoveSouth(e)));
         }
-
-        private void MoveEastCallback(AudioEventArgs e) {
-            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
-            Point screen = map1.MapToScreen(center);
-            screen.X += 300;
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
-            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+        /// <summary>
+        /// Occurs when a move east command was received.
+        /// </summary>
+        /// <param name="e"></param>
+        private void MoveEastCallback(AudioEventArgs e) 
+        {
+            Window.Dispatcher.Invoke(new Action(() => MoveEast(e)));
         }
-
-        private void MoveWestCallback(AudioEventArgs e) {
-            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
-            Point screen = map1.MapToScreen(center);
-            screen.X -= 300;
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
-            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+        /// <summary>
+        /// Occurs when a move west command was received.
+        /// </summary>
+        /// <param name="e"></param>
+        private void MoveWestCallback(AudioEventArgs e) 
+        {
+            Window.Dispatcher.Invoke(new Action(() => MoveWest(e)));
+        }
+        /// <summary>
+        /// Occurs when a blow up command was received.
+        /// </summary>
+        /// <param name="e"></param>
+        private void BlowUp(AudioEventArgs e)
+        {
+            Window.Dispatcher.Invoke(new Action(() => this.Window.Close()));
         }
         #endregion
 
@@ -327,6 +329,62 @@ namespace Iava.Ui
                 m_pTimer.Interval = 2000;
                 lblStatus.Content = text;
             }
+        }
+        /// <summary>
+        /// Helper function for Move North Callback.
+        /// </summary>
+        /// <param name="e"></param>
+        private void MoveNorth(AudioEventArgs e)
+        {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
+            center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.Y -= 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+            map1.PanTo(newCenter);
+        }
+        /// <summary>
+        /// Helper function for Move South Callback.
+        /// </summary>
+        /// <param name="e"></param>
+        private void MoveSouth(AudioEventArgs e)
+        {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
+            center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.Y += 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+            map1.PanTo(newCenter);
+        }
+        /// <summary>
+        /// Helper function for Move East Callback.
+        /// </summary>
+        /// <param name="e"></param>
+        private void MoveEast(AudioEventArgs e)
+        {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
+            center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.X += 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+            map1.PanTo(newCenter);
+        }
+        /// <summary>
+        /// Helper function for Move West Callback.
+        /// </summary>
+        /// <param name="e"></param>
+        private void MoveWest(AudioEventArgs e)
+        {
+            ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
+            center = map1.Extent.GetCenter();
+            Point screen = map1.MapToScreen(center);
+            screen.X -= 300;
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+            map1.PanTo(newCenter);
         }
         #endregion
     }
