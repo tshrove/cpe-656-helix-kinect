@@ -47,10 +47,10 @@ namespace Iava.Ui
             // Gesture Callbacks
             m_pGestureRecognizer.Subscribe("Zoom In", GestureZoomInCallback);
             m_pGestureRecognizer.Subscribe("Zoom Out", GestureZoomOutCallback);
-            m_pGestureRecognizer.Subscribe("Left Swipe", GestureLeftSwipeCallback);
-            m_pGestureRecognizer.Subscribe("Right Swipe", GestureRightSwipeCallback);
-            m_pGestureRecognizer.Subscribe("Up Swipe", GestureUpSwipeCallback);
-            m_pGestureRecognizer.Subscribe("Down Swipe", GestureDownSwipeCallback);
+            m_pGestureRecognizer.Subscribe("Swipe Left", GestureSwipeLeftCallback);
+            m_pGestureRecognizer.Subscribe("Swipe Right", GestureSwipeRightCallback);
+            m_pGestureRecognizer.Subscribe("Swipe Up", GestureSwipeUpCallback);
+            m_pGestureRecognizer.Subscribe("Swipe Down", GestureSwipeDownCallback);
             // Audio Callbacks
             m_pAudioRecognizer.Subscribe("Zoom In", ZoomInCallback);
             m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);
@@ -95,7 +95,7 @@ namespace Iava.Ui
         /// The callback for when the Left Swipe gesture is detected.
         /// </summary>
         /// <param name="e"></param>
-        private void GestureLeftSwipeCallback(GestureEventArgs e) 
+        private void GestureSwipeLeftCallback(GestureEventArgs e) 
         {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
             Point screen = map1.MapToScreen(center);
@@ -108,7 +108,7 @@ namespace Iava.Ui
         /// The callback for when the Right Swipe gesture is detected.
         /// </summary>
         /// <param name="e"></param>
-        private void GestureRightSwipeCallback(GestureEventArgs e)
+        private void GestureSwipeRightCallback(GestureEventArgs e)
         {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
             Point screen = map1.MapToScreen(center);
@@ -121,7 +121,7 @@ namespace Iava.Ui
         /// The callback for when the Up Swipe gesture is detected.
         /// </summary>
         /// <param name="e"></param>
-        private void GestureUpSwipeCallback(GestureEventArgs e)
+        private void GestureSwipeUpCallback(GestureEventArgs e)
         {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
             Point screen = map1.MapToScreen(center);
@@ -134,7 +134,7 @@ namespace Iava.Ui
         /// The callback for when the Down Swipe gesture is detected.
         /// </summary>
         /// <param name="e"></param>
-        private void GestureDownSwipeCallback(GestureEventArgs e)
+        private void GestureSwipeDownCallback(GestureEventArgs e)
         {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
             Point screen = map1.MapToScreen(center);

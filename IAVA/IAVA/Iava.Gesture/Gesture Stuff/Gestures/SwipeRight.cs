@@ -6,7 +6,7 @@ using System.Text;
 using Microsoft.Research.Kinect.Nui;
 
 namespace Iava.Gesture.GestureStuff {
-    public class RightSwipeSegment1 : IGestureSegment {
+    public class SwipeRightSegment1 : IGestureSegment {
         public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
             // Left hand in front of Left shoulder
             if (skeleton.Joints[JointID.HandLeft].Position.Z < skeleton.Joints[JointID.ElbowLeft].Position.Z && skeleton.Joints[JointID.HandRight].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y) {
@@ -16,24 +16,24 @@ namespace Iava.Gesture.GestureStuff {
                     // Console.WriteLine("GesturePart 0 - Left hand below shoulder height but above hip height - PASS");
                     // Left hand Left of Left shoulder
                     if (skeleton.Joints[JointID.HandLeft].Position.X < skeleton.Joints[JointID.ShoulderLeft].Position.X) {
-                        Console.WriteLine("Right Swipe Gesture - Segment 1 received.");
+                        Console.WriteLine("Swipe Right Gesture - Segment 1 received.");
                         return GestureResult.Succeed;
                     }
 
-                    // Console.WriteLine("Right Swipe Gesture Segment 1 - Left hand Left of Left shoulder - UNDETERMINED");
+                    // Console.WriteLine("Swipe Right Gesture Segment 1 - Left hand Left of Left shoulder - UNDETERMINED");
                     return GestureResult.Pause;
                 }
 
-                // Console.WriteLine("Right Swipe Gesture Segment 1 - Left hand below shoulder height but above hip height - FAIL");
+                // Console.WriteLine("Swipe Right Gesture Segment 1 - Left hand below shoulder height but above hip height - FAIL");
                 return GestureResult.Fail;
             }
 
-            // Console.WriteLine("Right Swipe Gesture Segment 1 - Left hand in front of Left shoulder - FAIL");
+            // Console.WriteLine("Swipe Right Gesture Segment 1 - Left hand in front of Left shoulder - FAIL");
             return GestureResult.Fail;
         }
     }
 
-    public class RightSwipeSegment2 : IGestureSegment {
+    public class SwipeRightSegment2 : IGestureSegment {
         /// <summary>
         /// Checks the gesture.
         /// </summary>
@@ -48,24 +48,24 @@ namespace Iava.Gesture.GestureStuff {
                     // Console.WriteLine("GesturePart 0 - Left hand below shoulder height but above hip height - PASS");
                     // Left hand Right of Left shoulder & Left of Right shoulder
                     if (skeleton.Joints[JointID.HandLeft].Position.X > skeleton.Joints[JointID.ShoulderLeft].Position.X && skeleton.Joints[JointID.HandLeft].Position.X < skeleton.Joints[JointID.ShoulderRight].Position.X) {
-                        Console.WriteLine("Right Swipe Gesture - Segment 2 received.");
+                        Console.WriteLine("Swipe Right Gesture - Segment 2 received.");
                         return GestureResult.Succeed;
                     }
 
-                    // Console.WriteLine("Right Swipe Gesture Segment 2 - Left hand Right of Left shoulder & Left of Right shoulder - UNDETERMINED");
+                    // Console.WriteLine("Swipe Right Gesture Segment 2 - Left hand Right of Left shoulder & Left of Right shoulder - UNDETERMINED");
                     return GestureResult.Pause;
                 }
 
-                // Console.WriteLine("Right Swipe Gesture Segment 2 - Left hand below shoulder height but above hip height - FAIL");
+                // Console.WriteLine("Swipe Right Gesture Segment 2 - Left hand below shoulder height but above hip height - FAIL");
                 return GestureResult.Fail;
             }
 
-            // Console.WriteLine("Right Swipe Gesture Segment 2 - Left hand in front of Left shoulder - FAIL");
+            // Console.WriteLine("Swipe Right Gesture Segment 2 - Left hand in front of Left shoulder - FAIL");
             return GestureResult.Fail;
         }
     }
 
-    public class RightSwipeSegment3 : IGestureSegment {
+    public class SwipeRightSegment3 : IGestureSegment {
         /// <summary>
         /// Checks the gesture.
         /// </summary>
@@ -80,19 +80,19 @@ namespace Iava.Gesture.GestureStuff {
                     // Console.WriteLine("GesturePart 0 - Left hand below shoulder height but above hip height - PASS");
                     // Left hand Right of Right Shoulder
                     if (skeleton.Joints[JointID.HandLeft].Position.X > skeleton.Joints[JointID.ShoulderRight].Position.X) {
-                        Console.WriteLine("Right Swipe Gesture - Segment 3 received.");
+                        Console.WriteLine("Swipe Right Gesture - Segment 3 received.");
                         return GestureResult.Succeed;
                     }
 
-                    // Console.WriteLine("Right Swipe Gesture Segment 3 - Left hand Right of Right Shoulder - UNDETERMINED");
+                    // Console.WriteLine("Swipe Right Gesture Segment 3 - Left hand Right of Right Shoulder - UNDETERMINED");
                     return GestureResult.Pause;
                 }
 
-                // Console.WriteLine("Right Swipe Gesture Segment 3 - Left hand below shoulder height but above hip height - FAIL");
+                // Console.WriteLine("Swipe Right Gesture Segment 3 - Left hand below shoulder height but above hip height - FAIL");
                 return GestureResult.Fail;
             }
 
-            // Console.WriteLine("Right Swipe Gesture Segment 3 - Left hand in front of Left Shoulder - FAIL");
+            // Console.WriteLine("Swipe Right Gesture Segment 3 - Left hand in front of Left Shoulder - FAIL");
             return GestureResult.Fail;
         }
     }
