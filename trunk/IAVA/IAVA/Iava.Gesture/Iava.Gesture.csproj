@@ -43,14 +43,14 @@
   <ItemGroup>
     <Compile Include="Gesture Stuff\Enums.cs" />
     <Compile Include="Gesture Stuff\Gesture.cs" />
-    <Compile Include="Gesture Stuff\Gestures\DownSwipe.cs" />
-    <Compile Include="Gesture Stuff\Gestures\RightSwipe.cs" />
+    <Compile Include="Gesture Stuff\Gestures\SwipeDown.cs" />
+    <Compile Include="Gesture Stuff\Gestures\SwipeRight.cs" />
     <Compile Include="Gesture Stuff\Gestures\Sync.cs" />
-    <Compile Include="Gesture Stuff\Gestures\UpSwipe.cs" />
+    <Compile Include="Gesture Stuff\Gestures\SwipeUp.cs" />
     <Compile Include="Gesture Stuff\Gestures\ZoomIn.cs" />
     <Compile Include="Gesture Stuff\Gestures\ZoomOut.cs" />
     <Compile Include="Gesture Stuff\IGestureSegment.cs" />
-    <Compile Include="Gesture Stuff\Gestures\LeftSwipe.cs" />
+    <Compile Include="Gesture Stuff\Gestures\SwipeLeft.cs" />
     <Compile Include="GestureEventArgs.cs" />
     <Compile Include="GestureRecognizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

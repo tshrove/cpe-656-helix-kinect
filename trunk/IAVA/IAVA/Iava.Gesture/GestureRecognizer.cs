@@ -136,43 +136,43 @@ namespace Iava.Gesture
             SyncGesture.GestureRecognized += OnGestureRecognized;
             
             // Left Swipe
-            List<IGestureSegment> leftSwipeSegments = new List<IGestureSegment>();
-            leftSwipeSegments.Add(new LeftSwipeSegment1());
-            leftSwipeSegments.Add(new LeftSwipeSegment2());
-            leftSwipeSegments.Add(new LeftSwipeSegment3());
+            List<IGestureSegment> swipeLeftSegments = new List<IGestureSegment>();
+            swipeLeftSegments.Add(new SwipeLeftSegment1());
+            swipeLeftSegments.Add(new SwipeLeftSegment2());
+            swipeLeftSegments.Add(new SwipeLeftSegment3());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Left Swipe", leftSwipeSegments));
+            SupportedGestures.Add(new GestureStuff.Gesture("Swipe Left", swipeLeftSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
             // Right Swipe
-            List<IGestureSegment> rightSwipeSegments = new List<IGestureSegment>();
-            rightSwipeSegments.Add(new RightSwipeSegment1());
-            rightSwipeSegments.Add(new RightSwipeSegment2());
-            rightSwipeSegments.Add(new RightSwipeSegment3());
+            List<IGestureSegment> swipeRightSegments = new List<IGestureSegment>();
+            swipeRightSegments.Add(new SwipeRightSegment1());
+            swipeRightSegments.Add(new SwipeRightSegment2());
+            swipeRightSegments.Add(new SwipeRightSegment3());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Right Swipe", rightSwipeSegments));
+            SupportedGestures.Add(new GestureStuff.Gesture("Swipe Right", swipeRightSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
             // Up Swipe
-            List<IGestureSegment> upSwipeSegments = new List<IGestureSegment>();
-            upSwipeSegments.Add(new UpSwipeSegment1());
-            upSwipeSegments.Add(new UpSwipeSegment2());
-            upSwipeSegments.Add(new UpSwipeSegment3());
+            List<IGestureSegment> swipeUpSegments = new List<IGestureSegment>();
+            swipeUpSegments.Add(new SwipeUpSegment1());
+            swipeUpSegments.Add(new SwipeUpSegment2());
+            swipeUpSegments.Add(new SwipeUpSegment3());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Up Swipe", upSwipeSegments));
+            SupportedGestures.Add(new GestureStuff.Gesture("Swipe Up", swipeUpSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
             // Down Swipe
-            List<IGestureSegment> downSwipeSegments = new List<IGestureSegment>();
-            downSwipeSegments.Add(new DownSwipeSegment1());
-            downSwipeSegments.Add(new DownSwipeSegment2());
-            downSwipeSegments.Add(new DownSwipeSegment3());
+            List<IGestureSegment> swipeDownSegments = new List<IGestureSegment>();
+            swipeDownSegments.Add(new SwipeDownSegment1());
+            swipeDownSegments.Add(new SwipeDownSegment2());
+            swipeDownSegments.Add(new SwipeDownSegment3());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Down Swipe", downSwipeSegments));
+            SupportedGestures.Add(new GestureStuff.Gesture("Swipe Down", swipeDownSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
             // Zoom In
