@@ -45,7 +45,7 @@ namespace Iava.Core {
 
         #endregion Public Events
 
-        #region Public Properties
+        #region Public Properties and Constants
 
         /// <summary>
         /// Gets the status of the cognizer.
@@ -55,7 +55,12 @@ namespace Iava.Core {
             protected set { this.m_pStatus = value; OnStatusChanged(this, new EventArgs()); }
         }
 
-        #endregion Public Properties
+        /// <summary>
+        /// The timeout value (in milliseconds) to wait until the recognizer unsyncs.
+        /// </summary>
+        public const int SyncTimeoutValue = 30000;
+
+        #endregion Public Properties and Constants
 
         #region Public Methods
 
@@ -90,7 +95,7 @@ namespace Iava.Core {
             // TODO Check for correct file path and may want to do stuff with.
             //this.Configuration = new FileStream(filePath, FileMode.Open);
 
-            m_timeoutTimer.Elapsed += OnTimerEllapsed;
+            m_timeoutTimer.Elapsed += OnTimerElapsed;
         }
 
         #endregion Constructors
@@ -169,7 +174,7 @@ namespace Iava.Core {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnTimerEllapsed(object sender, System.Timers.ElapsedEventArgs e) {
+        protected void OnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e) {
             OnUnsynced(this, e);
         }
 
@@ -201,7 +206,7 @@ namespace Iava.Core {
 
         protected bool m_isSynced = false;
 
-        protected System.Timers.Timer m_timeoutTimer = new System.Timers.Timer(30000);
+        protected System.Timers.Timer m_timeoutTimer = new System.Timers.Timer(SyncTimeoutValue);
 
         #endregion Private Fields
     }
