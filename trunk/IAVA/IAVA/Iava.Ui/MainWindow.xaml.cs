@@ -26,6 +26,10 @@ namespace Iava.Ui
         private Iava.Gesture.GestureRecognizer m_pGestureRecognizer;
         private Iava.Audio.AudioRecognizer m_pAudioRecognizer;
         private System.Timers.Timer m_pTimer = new System.Timers.Timer();
+        private System.Timers.Timer m_pAudioSyncTimer;
+        private TimeSpan m_sAudioSyncTime;
+        private System.Timers.Timer m_pGestureSyncTimer;
+        private TimeSpan m_sGestureSyncTime;
         private TextBoxStreamWriter m_pConsoleTxtBox = null;
 
         #region Constructor
@@ -252,8 +256,30 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pAudioRecognizer_Synced(object sender, EventArgs e)
         {
-            this.lblAudioStatus.Dispatcher.Invoke(new Action(() => this.lblAudioStatus.Content = "Audio Status: Synced"));
-            this.lblAudioStatus.Dispatcher.Invoke(new Action(() => this.lblAudioStatus.Background = Brushes.Green));
+            this.lblAudioStatus.Dispatcher.Invoke(new Action(() =>
+                {
+                    this.lblAudioStatus.Content = "Audio Status: Synced";
+                    this.lblAudioStatus.Background = Brushes.Green;
+                    this.m_pAudioSyncTimer = new System.Timers.Timer(1000);
+
+                    this.m_sAudioSyncTime = new TimeSpan(0, 0, 0, 0, Iava.Core.Recognizer.SyncTimeoutValue);
+                    this.m_pAudioSyncTimer.Elapsed += m_pAudioSyncTimer_Elapsed;
+                    this.m_pAudioSyncTimer.Enabled = true;
+                }));
+        }
+        /// <summary>
+        /// Occurs when the audio sync timer elapses.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pAudioSyncTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            // Update the audio sync time label
+            this.lblAudioSyncTime.Dispatcher.Invoke(new Action(() =>
+                {
+                    this.m_sAudioSyncTime -= new TimeSpan(0, 0, 1);
+                    this.lblAudioSyncTime.Content = this.m_sAudioSyncTime.ToString(@"hh\:mm\:ss");
+                }));            
         }
         /// <summary>
         /// Raises when the gesture recognizer is synced.
@@ -262,8 +288,30 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pGestureRecognizer_Synced(object sender, EventArgs e)
         {
-            this.lblGestureStatus.Dispatcher.Invoke(new Action(() => this.lblGestureStatus.Content = "Gesture Status: Synced"));
-            this.lblGestureStatus.Dispatcher.Invoke(new Action(() => this.lblGestureStatus.Background = Brushes.Green));
+            this.lblGestureStatus.Dispatcher.Invoke(new Action(() =>
+                {
+                    this.lblGestureStatus.Content = "Gesture Status: Synced";
+                    this.lblGestureStatus.Background = Brushes.Green;
+                    this.m_pGestureSyncTimer = new System.Timers.Timer(1000);
+
+                    this.m_sGestureSyncTime = new TimeSpan(0, 0, 0, 0, Iava.Core.Recognizer.SyncTimeoutValue);
+                    this.m_pGestureSyncTimer.Elapsed += m_pGestureSyncTimer_Elapsed;
+                    this.m_pGestureSyncTimer.Enabled = true;
+                }));
+        }
+        /// <summary>
+        /// Occurs when the gesture sync timer elapses.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void m_pGestureSyncTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            // Update the audio sync time label
+            this.lblGestureSyncTime.Dispatcher.Invoke(new Action(() =>
+            {
+                this.m_sGestureSyncTime -= new TimeSpan(0, 0, 1);
+                this.lblGestureSyncTime.Content = this.m_sGestureSyncTime.ToString(@"hh\:mm\:ss");
+            }));
         }
         /// <summary>
         /// Raises when the camera frame is ready to be viewed.
@@ -294,8 +342,13 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pGestureRecognizer_Unsynced(object sender, EventArgs e)
         {
-            this.lblGestureStatus.Dispatcher.Invoke(new Action(() => this.lblGestureStatus.Content = "Gesture Status: Unsynced"));
-            this.lblGestureStatus.Dispatcher.Invoke(new Action(() => this.lblGestureStatus.Background = Brushes.Orange)); 
+            this.lblGestureStatus.Dispatcher.Invoke(new Action(() => 
+                {
+                    this.lblGestureStatus.Content = "Gesture Status: Unsynced";
+                    this.lblGestureStatus.Background = Brushes.Orange;
+                    this.m_pGestureSyncTimer.Enabled = false;
+                    this.lblGestureSyncTime.Content = "00:00:00";
+                }));
         }
         /// <summary>
         /// Raises when the audio recognizer becomes unsycned.
@@ -304,8 +357,13 @@ namespace Iava.Ui
         /// <param name="e"></param>
         void m_pAudioRecognizer_Unsynced(object sender, EventArgs e)
         {
-            this.lblAudioStatus.Dispatcher.Invoke(new Action(() => this.lblAudioStatus.Content = "Audio Status: Unsyned"));
-            this.lblAudioStatus.Dispatcher.Invoke(new Action(() => this.lblAudioStatus.Background = Brushes.Orange));
+            this.lblAudioStatus.Dispatcher.Invoke(new Action(() =>
+                {
+                    this.lblAudioStatus.Content = "Audio Status: Unsyned";
+                    this.lblAudioStatus.Background = Brushes.Orange;
+                    this.m_pAudioSyncTimer.Enabled = false;
+                    this.lblAudioSyncTime.Content = "00:00:00";
+                }));
         }
         #endregion
 

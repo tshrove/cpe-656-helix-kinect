@@ -12,10 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Input", "Iava.Camera\Iava.Input.csproj", "{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -30,6 +26,7 @@ Global
 		{7B781211-504F-4752-AE5B-822A6829FC23}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{7B781211-504F-4752-AE5B-822A6829FC23}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{7B781211-504F-4752-AE5B-822A6829FC23}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B781211-504F-4752-AE5B-822A6829FC23}.Debug|x86.Build.0 = Debug|Any CPU
 		{7B781211-504F-4752-AE5B-822A6829FC23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B781211-504F-4752-AE5B-822A6829FC23}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B781211-504F-4752-AE5B-822A6829FC23}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -40,6 +37,7 @@ Global
 		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Debug|x86.Build.0 = Debug|Any CPU
 		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -50,6 +48,7 @@ Global
 		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|x86.Build.0 = Debug|Any CPU
 		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -71,6 +70,7 @@ Global
 		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Debug|x86.Build.0 = Debug|Any CPU
 		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -79,5 +79,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
