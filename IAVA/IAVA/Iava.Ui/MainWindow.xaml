@@ -23,10 +23,10 @@
         <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10,10,10,10">
             <Image Name="kinectVideoFeed" Width="320" Height="240" />
             <StackPanel>
-                <Label Name="lblAudioStatus" HorizontalAlignment="Stretch" Content="Audio Status: Unsycned" HorizontalContentAlignment="Center" Background="Orange" Foreground="#2E3436" FontSize="22" FontWeight="SemiBold" FontFamily="Calibri" BorderBrush="#2E3436" BorderThickness="2"/>
+                <Label Name="lblAudioStatus" HorizontalAlignment="Stretch" Content="Audio Status: Unsynced" HorizontalContentAlignment="Center" Background="Orange" Foreground="#2E3436" FontSize="22" FontWeight="SemiBold" FontFamily="Calibri" BorderBrush="#2E3436" BorderThickness="2"/>
                 <Label Name="lblAudioTTL" HorizontalAlignment="Stretch" Content="Time to Unsync:" HorizontalContentAlignment="Center" Background="#333" Foreground="WhiteSmoke" FontSize="22" FontWeight="SemiBold" FontFamily="Calibri" BorderBrush="#2E3436" BorderThickness="2"/>
                 <Label Name="lblAudioSyncTime" HorizontalAlignment="Stretch" Content="00:00:00" HorizontalContentAlignment="Center" Background="#222" Foreground="WhiteSmoke" FontSize="22" FontWeight="Light" FontFamily="Calibri" BorderBrush="#2E3436"  BorderThickness="2"/>
-                <Label Name="lblGestureStatus" HorizontalAlignment="Stretch" Content="Gesture Status: Unsycned" HorizontalContentAlignment="Center" Background="Orange" Foreground="#2E3436" FontSize="22" FontWeight="SemiBold" FontFamily="Calibri" BorderBrush="#2E3436"  BorderThickness="2"/>
+                <Label Name="lblGestureStatus" HorizontalAlignment="Stretch" Content="Gesture Status: Unsynced" HorizontalContentAlignment="Center" Background="Orange" Foreground="#2E3436" FontSize="22" FontWeight="SemiBold" FontFamily="Calibri" BorderBrush="#2E3436"  BorderThickness="2"/>
                 <Label Name="lblGestureTTL" HorizontalAlignment="Stretch" Content="Time to Unsync:" HorizontalContentAlignment="Center" Background="#333" Foreground="WhiteSmoke" FontSize="22" FontWeight="SemiBold" FontFamily="Calibri" BorderBrush="#2E3436" BorderThickness="2"/>
                 <Label Name="lblGestureSyncTime" HorizontalAlignment="Stretch" Content="00:00:00" HorizontalContentAlignment="Center" Background="#222" Foreground="WhiteSmoke" FontSize="22" FontWeight="Light" FontFamily="Calibri" BorderBrush="#2E3436" BorderThickness="2"/>
             </StackPanel>
