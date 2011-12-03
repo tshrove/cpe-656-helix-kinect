@@ -56,8 +56,14 @@ namespace Iava.Ui {
 
             m_pGestureRecognizer.Camera.ImageFrameReady += new EventHandler<ImageFrameReadyEventArgs>(OnCameraImageFrameReady);
 
+            m_pAudioSyncTimer = new System.Timers.Timer(1000);
+            m_pAudioSyncTimer.Elapsed += OnAudioSyncTimerElapsed;
+
+            m_pGestureSyncTimer = new System.Timers.Timer(1000);
+            m_pGestureSyncTimer.Elapsed += OnGestureSyncTimerElapsed;
+
             m_pConsoleTxtBox = new TextBoxStreamWriter(this.txtConsole);
-            Console.SetOut(m_pConsoleTxtBox);
+            Console.SetOut(m_pConsoleTxtBox);            
 
             // UI theme stuff...
             lblAudioStatus.Background = lblGestureStatus.Background = unsyncedBrush;
@@ -76,7 +82,10 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void BlowUp(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => this.Window.Close()));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    this.Window.Close();
+                }));
         }
 
         /// <summary>
@@ -84,7 +93,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void MoveEastCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => MoveEast(e)));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    MoveEast(e);
+                    ResetAudioSyncTime();
+                }));
         }
 
         /// <summary>
@@ -92,7 +105,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void MoveNorthCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => MoveNorth(e)));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    MoveNorth(e);
+                    ResetAudioSyncTime();
+                }));
         }
 
         /// <summary>
@@ -100,7 +117,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void MoveSouthCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => MoveSouth(e)));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    MoveSouth(e);
+                    ResetAudioSyncTime();
+                }));
         }
 
         /// <summary>
@@ -108,7 +129,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void MoveWestCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => MoveWest(e)));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    MoveWest(e);
+                    ResetAudioSyncTime();
+                }));
         }
 
         /// <summary>
@@ -116,7 +141,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e">Audio event args</param>
         private void ZoomInCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
+            Window.Dispatcher.Invoke(new Action(() => 
+                {
+                    DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+                    ResetAudioSyncTime();
+                }));
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2.0)));
         }
 
@@ -125,7 +154,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e">Audio event args</param>
         private void ZoomOutCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Audio: {0} Detected", e.Command))));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+                    ResetAudioSyncTime(); 
+                }));
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(0.5)));
         }
 
@@ -142,7 +175,11 @@ namespace Iava.Ui {
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2)));
 
             // Write Detected Gesure to screen
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+                    ResetGestureSyncTime();
+                }));
         }
 
         /// <summary>
@@ -154,7 +191,11 @@ namespace Iava.Ui {
             map1.Dispatcher.Invoke(new Action(() => map1.Zoom(0.5)));
 
             // Write Detected Gesure to screen
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+                    ResetGestureSyncTime();
+                }));
         }
 
         /// <summary>
@@ -166,7 +207,11 @@ namespace Iava.Ui {
             Point screen = map1.MapToScreen(center);
             screen.X += 300;
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+                    ResetGestureSyncTime();
+                }));
             map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
         }
 
@@ -179,7 +224,11 @@ namespace Iava.Ui {
             Point screen = map1.MapToScreen(center);
             screen.X -= 300;
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+                    ResetGestureSyncTime();
+                }));
             map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
         }
 
@@ -192,7 +241,11 @@ namespace Iava.Ui {
             Point screen = map1.MapToScreen(center);
             screen.Y += 300;
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+                    ResetGestureSyncTime();
+                }));
             map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
         }
 
@@ -205,7 +258,11 @@ namespace Iava.Ui {
             Point screen = map1.MapToScreen(center);
             screen.Y -= 300;
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus(String.Format("Gesture: {0} Detected", e.Name))));
+            Window.Dispatcher.Invoke(new Action(() =>
+                {
+                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+                    ResetGestureSyncTime();
+                }));
             map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
         }
 
@@ -232,10 +289,8 @@ namespace Iava.Ui {
             {
                 this.lblAudioStatus.Content = "Audio Status: Synced";
                 this.lblAudioStatus.Background = syncedBrush;
-                this.m_pAudioSyncTimer = new System.Timers.Timer(1000);
-
-                this.m_sAudioSyncTime = new TimeSpan(0, 0, 0, 0, Iava.Core.Recognizer.SyncTimeoutValue);
-                this.m_pAudioSyncTimer.Elapsed += OnAudioSyncTimerElapsed;
+               
+                ResetAudioSyncTime();
                 this.m_pAudioSyncTimer.Enabled = true;
             }));
         }
@@ -248,7 +303,7 @@ namespace Iava.Ui {
         private void OnAudioRecognizerUnsynced(object sender, EventArgs e) {
             this.lblAudioStatus.Dispatcher.Invoke(new Action(() =>
             {
-                this.lblAudioStatus.Content = "Audio Status: Unsyned";
+                this.lblAudioStatus.Content = "Audio Status: Unsynced";
                 this.lblAudioStatus.Background = unsyncedBrush;
                 this.m_pAudioSyncTimer.Enabled = false;
                 this.lblAudioSyncTime.Content = "00:00:00";
@@ -301,10 +356,8 @@ namespace Iava.Ui {
             {
                 this.lblGestureStatus.Content = "Gesture Status: Synced";
                 this.lblGestureStatus.Background = syncedBrush;
-                this.m_pGestureSyncTimer = new System.Timers.Timer(1000);
-
-                this.m_sGestureSyncTime = new TimeSpan(0, 0, 0, 0, Iava.Core.Recognizer.SyncTimeoutValue);
-                this.m_pGestureSyncTimer.Elapsed += OnGestureSyncTimerElapsed;
+                 
+                ResetGestureSyncTime();
                 this.m_pGestureSyncTimer.Enabled = true;
             }));
         }
@@ -368,6 +421,22 @@ namespace Iava.Ui {
         }
 
         #endregion Event Handlers
+
+        /// <summary>
+        /// Resets the audio sync time.
+        /// </summary>
+        private void ResetAudioSyncTime()
+        {
+            this.m_sAudioSyncTime = new TimeSpan(0, 0, 0, 0, Iava.Core.Recognizer.SyncTimeoutValue);                     
+        }
+
+        /// <summary>
+        /// Resets the gesture sync time.
+        /// </summary>
+        private void ResetGestureSyncTime()
+        {
+            this.m_sGestureSyncTime = new TimeSpan(0, 0, 0, 0, Iava.Core.Recognizer.SyncTimeoutValue);
+        }
 
         /// <summary>
         /// Displays the pop status control with the auto close.
