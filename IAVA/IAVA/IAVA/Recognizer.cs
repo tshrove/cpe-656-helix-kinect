@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Threading;
 using Iava.Core;
 
 namespace Iava.Core {
@@ -83,7 +84,7 @@ namespace Iava.Core {
         /// </summary>
         public Recognizer()
             : this(null) {
-            // Nothing to do.
+           // Nothing to do.
         }
 
         /// <summary>
@@ -96,6 +97,13 @@ namespace Iava.Core {
             //this.Configuration = new FileStream(filePath, FileMode.Open);
 
             m_timeoutTimer.Elapsed += OnTimerElapsed;
+
+            // Set the SynchronizationContext
+            m_syncContext = SynchronizationContext.Current;
+
+            if (m_syncContext == null) {
+                // not good...
+            }
         }
 
         #endregion Constructors
@@ -109,7 +117,7 @@ namespace Iava.Core {
         /// <param name="e"></param>
         protected void OnStarted(object sender, EventArgs e) {
             if (Started != null)
-                Started(sender, e);
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { Started(this, e); }), null);
         }
 
         /// <summary>
@@ -119,7 +127,7 @@ namespace Iava.Core {
         /// <param name="e"></param>
         protected void OnStopped(object sender, EventArgs e) {
             if (Stopped != null)
-                Stopped(sender, e);
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { Stopped(this, e); }), null);
         }
 
         /// <summary>
@@ -129,7 +137,7 @@ namespace Iava.Core {
         /// <param name="e"></param>
         protected void OnFailed(object sender, EventArgs e) {
             if (Failed != null)
-                Failed(sender, e);
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { Failed(this, e); }), null);
         }
 
         /// <summary>
@@ -139,7 +147,9 @@ namespace Iava.Core {
         /// <param name="e"></param>
         protected void OnSynced(object sender, EventArgs e) {
             // Only throw the event if we were previously unsynced
-            if (!m_isSynced && (Synced != null)) { Synced(sender, e); }
+            if (!m_isSynced && (Synced != null)) {
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { Synced(this, e); }), null);
+            }
 
             m_isSynced = true;
 
@@ -154,7 +164,9 @@ namespace Iava.Core {
         /// <param name="e"></param>
         protected void OnUnsynced(object sender, EventArgs e) {
             // Only throw the event if we were previously synced
-            if (m_isSynced && (Unsynced != null)) { Unsynced(sender, e); }
+            if (m_isSynced && (Unsynced != null)) {
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { Unsynced(this, e); }), null);
+            }
 
             m_isSynced = false;
         }
@@ -165,8 +177,9 @@ namespace Iava.Core {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         protected void OnStatusChanged(object sender, EventArgs e) {
-            if (StatusChanged != null)
-                StatusChanged(sender, e);
+            if (StatusChanged != null) {
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { StatusChanged(this, e); }), null);
+            }
         }
 
         /// <summary>
@@ -207,6 +220,10 @@ namespace Iava.Core {
         protected bool m_isSynced = false;
 
         protected System.Timers.Timer m_timeoutTimer = new System.Timers.Timer(SyncTimeoutValue);
+
+        protected Thread m_thread;
+
+        protected SynchronizationContext m_syncContext;
 
         #endregion Private Fields
     }

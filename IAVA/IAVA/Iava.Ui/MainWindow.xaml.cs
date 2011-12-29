@@ -32,12 +32,13 @@ namespace Iava.Ui {
             m_pGestureRecognizer = new Gesture.GestureRecognizer(string.Empty);
             m_pAudioRecognizer = new Audio.AudioRecognizer(string.Empty);
             // Events
-            m_pAudioRecognizer.StatusChanged += new EventHandler<EventArgs>(OnAudioRecognizerStatusChanged);
-            m_pGestureRecognizer.StatusChanged += new EventHandler<EventArgs>(OnGestureRecognizerStatusChanged);
-            m_pAudioRecognizer.Synced += new EventHandler<EventArgs>(OnAudioRecognizerSynced);
-            m_pGestureRecognizer.Synced += new EventHandler<EventArgs>(OnGestureRecognizerSynced);
-            m_pAudioRecognizer.Unsynced += new EventHandler<EventArgs>(OnAudioRecognizerUnsynced);
-            m_pGestureRecognizer.Unsynced += new EventHandler<EventArgs>(OnGestureRecognizerUnsynced);
+            m_pAudioRecognizer.StatusChanged    += OnAudioRecognizerStatusChanged;
+            m_pGestureRecognizer.StatusChanged  += OnGestureRecognizerStatusChanged;
+            m_pAudioRecognizer.Synced           += OnAudioRecognizerSynced;
+            m_pGestureRecognizer.Synced         += OnGestureRecognizerSynced;
+            m_pAudioRecognizer.Unsynced         += OnAudioRecognizerUnsynced;
+            m_pGestureRecognizer.Unsynced       += OnGestureRecognizerUnsynced;
+
             // Gesture Callbacks
             m_pGestureRecognizer.Subscribe("Zoom In", GestureZoomInCallback);
             m_pGestureRecognizer.Subscribe("Zoom Out", GestureZoomOutCallback);
@@ -45,6 +46,7 @@ namespace Iava.Ui {
             m_pGestureRecognizer.Subscribe("Swipe Right", GestureSwipeRightCallback);
             m_pGestureRecognizer.Subscribe("Swipe Up", GestureSwipeUpCallback);
             m_pGestureRecognizer.Subscribe("Swipe Down", GestureSwipeDownCallback);
+
             // Audio Callbacks
             m_pAudioRecognizer.Subscribe("Zoom In", ZoomInCallback);
             m_pAudioRecognizer.Subscribe("Zoom Out", ZoomOutCallback);
@@ -82,10 +84,7 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void BlowUp(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    this.Window.Close();
-                }));
+            this.Window.Close();
         }
 
         /// <summary>
@@ -93,11 +92,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void MoveEastCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    MoveEast(e);
-                    ResetAudioSyncTime();
-                }));
+            MoveEast();
+
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
+            ResetAudioSyncTime();
         }
 
         /// <summary>
@@ -105,11 +104,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void MoveNorthCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    MoveNorth(e);
-                    ResetAudioSyncTime();
-                }));
+            MoveNorth();
+
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
+            ResetAudioSyncTime();
         }
 
         /// <summary>
@@ -117,11 +116,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void MoveSouthCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    MoveSouth(e);
-                    ResetAudioSyncTime();
-                }));
+            MoveSouth();
+
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
+            ResetAudioSyncTime();
         }
 
         /// <summary>
@@ -129,11 +128,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void MoveWestCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    MoveWest(e);
-                    ResetAudioSyncTime();
-                }));
+            MoveWest();
+
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
+            ResetAudioSyncTime();
         }
 
         /// <summary>
@@ -141,12 +140,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e">Audio event args</param>
         private void ZoomInCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => 
-                {
-                    DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
-                    ResetAudioSyncTime();
-                }));
-            map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2.0)));
+            ZoomIn();
+
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
+            ResetAudioSyncTime();
         }
 
         /// <summary>
@@ -154,12 +152,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e">Audio event args</param>
         private void ZoomOutCallback(AudioEventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
-                    ResetAudioSyncTime(); 
-                }));
-            map1.Dispatcher.Invoke(new Action(() => map1.Zoom(0.5)));
+            ZoomOut();
+
+            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
+            ResetAudioSyncTime();
         }
 
         #endregion Audio Callbacks
@@ -171,15 +168,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void GestureZoomInCallback(GestureEventArgs e) {
-            // Zoom In
-            map1.Dispatcher.Invoke(new Action(() => map1.Zoom(2)));
+            ZoomIn();
 
-            // Write Detected Gesure to screen
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
-                    ResetGestureSyncTime();
-                }));
+            DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+
+            ResetGestureSyncTime();
         }
 
         /// <summary>
@@ -187,15 +180,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void GestureZoomOutCallback(GestureEventArgs e) {
-            // Zoom Out
-            map1.Dispatcher.Invoke(new Action(() => map1.Zoom(0.5)));
+            ZoomOut();
 
-            // Write Detected Gesure to screen
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
-                    ResetGestureSyncTime();
-                }));
+            DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+
+            ResetGestureSyncTime();
         }
 
         /// <summary>
@@ -203,16 +192,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void GestureSwipeLeftCallback(GestureEventArgs e) {
-            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
-            Point screen = map1.MapToScreen(center);
-            screen.X += 300;
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
-                    ResetGestureSyncTime();
-                }));
-            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+            MoveEast();
+
+            DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+
+            ResetGestureSyncTime();
         }
 
         /// <summary>
@@ -220,16 +204,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void GestureSwipeRightCallback(GestureEventArgs e) {
-            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
-            Point screen = map1.MapToScreen(center);
-            screen.X -= 300;
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
-                    ResetGestureSyncTime();
-                }));
-            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+            MoveWest();
+
+            DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+
+            ResetGestureSyncTime();
         }
 
         /// <summary>
@@ -237,16 +216,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void GestureSwipeUpCallback(GestureEventArgs e) {
-            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
-            Point screen = map1.MapToScreen(center);
-            screen.Y += 300;
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
-                    ResetGestureSyncTime();
-                }));
-            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+            MoveSouth();
+
+            DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+
+            ResetGestureSyncTime();
         }
 
         /// <summary>
@@ -254,16 +228,11 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="e"></param>
         private void GestureSwipeDownCallback(GestureEventArgs e) {
-            ESRI.ArcGIS.Client.Geometry.MapPoint center = map1.Extent.GetCenter();
-            Point screen = map1.MapToScreen(center);
-            screen.Y -= 300;
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            Window.Dispatcher.Invoke(new Action(() =>
-                {
-                    DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
-                    ResetGestureSyncTime();
-                }));
-            map1.Dispatcher.Invoke(new Action(() => map1.PanTo(newCenter)));
+            MoveNorth();
+
+            DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+
+            ResetGestureSyncTime();
         }
 
         #endregion Gesture Callbacks
@@ -276,7 +245,7 @@ namespace Iava.Ui {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnAudioRecognizerStatusChanged(object sender, EventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus("Audio Status: " + m_pAudioRecognizer.Status.ToString())));
+            DisplayStatus("Audio Status: " + m_pAudioRecognizer.Status.ToString());
         }
 
         /// <summary>
@@ -285,14 +254,11 @@ namespace Iava.Ui {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnAudioRecognizerSynced(object sender, EventArgs e) {
-            this.lblAudioStatus.Dispatcher.Invoke(new Action(() =>
-            {
-                this.lblAudioStatus.Content = "Audio Status: Synced";
-                this.lblAudioStatus.Background = syncedBrush;
-               
-                ResetAudioSyncTime();
-                this.m_pAudioSyncTimer.Enabled = true;
-            }));
+            this.lblAudioStatus.Content = "Audio Status: Synced";
+            this.lblAudioStatus.Background = syncedBrush;
+
+            ResetAudioSyncTime();
+            this.m_pAudioSyncTimer.Enabled = true;
         }
 
         /// <summary>
@@ -301,13 +267,10 @@ namespace Iava.Ui {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnAudioRecognizerUnsynced(object sender, EventArgs e) {
-            this.lblAudioStatus.Dispatcher.Invoke(new Action(() =>
-            {
-                this.lblAudioStatus.Content = "Audio Status: Unsynced";
-                this.lblAudioStatus.Background = unsyncedBrush;
-                this.m_pAudioSyncTimer.Enabled = false;
-                this.lblAudioSyncTime.Content = "00:00:00";
-            }));
+            this.lblAudioStatus.Content = "Audio Status: Unsynced";
+            this.lblAudioStatus.Background = unsyncedBrush;
+            this.m_pAudioSyncTimer.Enabled = false;
+            this.lblAudioSyncTime.Content = "00:00:00";
         }
 
         /// <summary>
@@ -343,7 +306,7 @@ namespace Iava.Ui {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnGestureRecognizerStatusChanged(object sender, EventArgs e) {
-            Window.Dispatcher.Invoke(new Action(() => DisplayStatus("Audio Status: " + m_pAudioRecognizer.Status.ToString())));
+            DisplayStatus("Audio Status: " + m_pAudioRecognizer.Status.ToString());
         }
 
         /// <summary>
@@ -352,14 +315,11 @@ namespace Iava.Ui {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnGestureRecognizerSynced(object sender, EventArgs e) {
-            this.lblGestureStatus.Dispatcher.Invoke(new Action(() =>
-            {
-                this.lblGestureStatus.Content = "Gesture Status: Synced";
-                this.lblGestureStatus.Background = syncedBrush;
-                 
-                ResetGestureSyncTime();
-                this.m_pGestureSyncTimer.Enabled = true;
-            }));
+            this.lblGestureStatus.Content = "Gesture Status: Synced";
+            this.lblGestureStatus.Background = syncedBrush;
+
+            ResetGestureSyncTime();
+            this.m_pGestureSyncTimer.Enabled = true;
         }
 
         /// <summary>
@@ -368,13 +328,10 @@ namespace Iava.Ui {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnGestureRecognizerUnsynced(object sender, EventArgs e) {
-            this.lblGestureStatus.Dispatcher.Invoke(new Action(() =>
-            {
-                this.lblGestureStatus.Content = "Gesture Status: Unsynced";
-                this.lblGestureStatus.Background = unsyncedBrush;
-                this.m_pGestureSyncTimer.Enabled = false;
-                this.lblGestureSyncTime.Content = "00:00:00";
-            }));
+            this.lblGestureStatus.Content = "Gesture Status: Unsynced";
+            this.lblGestureStatus.Background = unsyncedBrush;
+            this.m_pGestureSyncTimer.Enabled = false;
+            this.lblGestureSyncTime.Content = "00:00:00";
         }
 
         /// <summary>
@@ -460,13 +417,15 @@ namespace Iava.Ui {
         /// Helper function for Move East Callback.
         /// </summary>
         /// <param name="e"></param>
-        private void MoveEast(AudioEventArgs e) {
+        private void MoveEast() {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
             center = map1.Extent.GetCenter();
+
             Point screen = map1.MapToScreen(center);
             screen.X += 300;
+
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
             map1.PanTo(newCenter);
         }
 
@@ -474,13 +433,15 @@ namespace Iava.Ui {
         /// Helper function for Move North Callback.
         /// </summary>
         /// <param name="e"></param>
-        private void MoveNorth(AudioEventArgs e) {
+        private void MoveNorth() {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
             center = map1.Extent.GetCenter();
+
             Point screen = map1.MapToScreen(center);
             screen.Y -= 300;
+
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+            
             map1.PanTo(newCenter);
         }
 
@@ -488,13 +449,15 @@ namespace Iava.Ui {
         /// Helper function for Move South Callback.
         /// </summary>
         /// <param name="e"></param>
-        private void MoveSouth(AudioEventArgs e) {
+        private void MoveSouth() {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
             center = map1.Extent.GetCenter();
+
             Point screen = map1.MapToScreen(center);
             screen.Y += 300;
+
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
             map1.PanTo(newCenter);
         }
 
@@ -502,14 +465,24 @@ namespace Iava.Ui {
         /// Helper function for Move West Callback.
         /// </summary>
         /// <param name="e"></param>
-        private void MoveWest(AudioEventArgs e) {
+        private void MoveWest() {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
             center = map1.Extent.GetCenter();
+
             Point screen = map1.MapToScreen(center);
             screen.X -= 300;
+
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-            DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
             map1.PanTo(newCenter);
+        }
+
+        private void ZoomIn() {
+            map1.Zoom(2.0);
+        }
+
+        private void ZoomOut() {
+            map1.Zoom(0.5);
         }
 
         #endregion Private Methods

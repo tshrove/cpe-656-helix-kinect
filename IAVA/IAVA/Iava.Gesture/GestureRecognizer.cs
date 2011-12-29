@@ -6,11 +6,12 @@ using System.IO;
 using Iava.Core;
 using Iava.Input.Camera;
 using Iava.Gesture.GestureStuff;
+using System.Threading;
 
 namespace Iava.Gesture 
 {
     /// <summary>
-    /// Audio Callback for when a audio command is detected.
+    /// Audio Callback for when a gesture command is detected.
     /// </summary>
     /// <param name="e"></param>
     public delegate void GestureCallback(GestureEventArgs e);
@@ -35,7 +36,8 @@ namespace Iava.Gesture
         /// Starts the recognizer.
         /// </summary>
         public override void Start() {
-            Status = RecognizerStatus.Running;
+            m_thread.Start();
+
             OnStarted(this, new EventArgs());
         }
 
@@ -80,23 +82,19 @@ namespace Iava.Gesture
         /// <param name="filePath"></param>
         public GestureRecognizer(string filePath)
             : base(filePath) {
-            // Try to connect to the camera first.  If this fails there is no point in continuing
-            try {
-                Camera = new Camera();
-            }
-            catch (Exception e) {
-                throw e;
-            }
+
+            // Don't really like this here, but the UI
+            // depends on this property being set in
+            // the constructor...
+            Camera = new Camera();
 
             // Initialize our collections...
             GestureCallbacks = new Dictionary<string, GestureCallback>();
             SupportedGestures = new List<GestureStuff.Gesture>();
 
-            // Register with some camera events
-            Camera.SkeletonReady += OnSkeletonReady;
-
-            // Read the gestures in from the config file
-            LoadGestures();
+            // Set up the thread
+            m_thread = new Thread(SetupGestureDevice);
+            m_thread.Name = "GestureRecognizerThread";
         }
 
         #endregion Constructors
@@ -196,13 +194,17 @@ namespace Iava.Gesture
         
         private void OnGestureRecognized(object sender, GestureEventArgs e) {
             // If we just synced, set the flag and return
-            if (e.Name == SyncGesture.Name) { OnSynced(this, e); return; }
+            if (e.Name == SyncGesture.Name) {
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { OnSynced(this, e); }), null);
+                return;
+            }
 
             if (GestureCallbacks.ContainsKey(e.Name)) {
                 // We found a command, reset the timer
                 ResetTimer();
 
-                GestureCallbacks[e.Name].Invoke(e);
+                // Throw the gesture event
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { GestureCallbacks[e.Name].Invoke(e); }), null);
 
                 // Reset all the gesture states
                 SupportedGestures.ForEach(x => x.Reset());
@@ -223,6 +225,25 @@ namespace Iava.Gesture
 
             // Check for the sync gesture
             else { SyncGesture.CheckForGesture(e.Skeleton); }
+        }
+
+        private void SetupGestureDevice() {
+            // Try to connect to the camera first.  If this fails there is no point in continuing
+            try {
+                //Camera = new Camera();
+
+                // Register with some camera events
+                Camera.SkeletonReady += OnSkeletonReady;
+
+                // Read the gestures in from the config file
+                LoadGestures();
+
+                Status = RecognizerStatus.Running;
+            }
+            catch (Exception e) {
+                // TODO: Log message.  Failed to detect Kinect or start Camera
+                Status = RecognizerStatus.Error;
+            }
         }
 
         #endregion Private Methods
