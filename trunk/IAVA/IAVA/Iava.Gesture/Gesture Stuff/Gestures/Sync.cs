@@ -17,7 +17,7 @@ namespace Iava.Gesture.GestureStuff {
                 // Hands outside of shoulders
                 if (skeleton.Joints[JointID.HandRight].Position.X > skeleton.Joints[JointID.ShoulderRight].Position.X &&
                     skeleton.Joints[JointID.HandLeft].Position.X  < skeleton.Joints[JointID.ShoulderLeft].Position.X) {
-                    Console.WriteLine("Gesture Gesture - Segment 1 received.");
+                    Console.WriteLine("Sync Gesture - Segment 1 received.");
                     return GestureResult.Succeed;
                 }
 
