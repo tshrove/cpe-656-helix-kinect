@@ -5,7 +5,7 @@ using System.Text;
 using System.Diagnostics;
 using Microsoft.Research.Kinect.Nui;
 
-namespace Iava.Gesture.GestureStuff {
+namespace Iava.Gesture.GestureStuff{ 
     class SyncSegment : IGestureSegment {
         public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
             // Hands below head and above gut
