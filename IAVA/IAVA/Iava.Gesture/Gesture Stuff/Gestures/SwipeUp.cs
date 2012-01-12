@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-using Microsoft.Research.Kinect.Nui;
+//using Microsoft.Research.Kinect.Nui;
+
+using Iava.Input.Camera;
 
 namespace Iava.Gesture.GestureStuff {
     class SwipeUpSegment1 : IGestureSegment {
-        public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
+        public GestureResult CheckGesture(SkeletonData skeleton) {
             // Right hand in front of body with Left hand hanging at the side
             if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ShoulderCenter].Position.Z && skeleton.Joints[JointID.HandLeft].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y) {
                 // Console.WriteLine("GesturePart 0 - Right hand in front of body - PASS");
@@ -34,7 +36,7 @@ namespace Iava.Gesture.GestureStuff {
     }
     
     class SwipeUpSegment2 : IGestureSegment {
-        public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
+        public GestureResult CheckGesture(SkeletonData skeleton) {
             // Right hand in front of body with Left hand hanging at the side
             if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ShoulderCenter].Position.Z && skeleton.Joints[JointID.HandLeft].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y) {
                 // Console.WriteLine("GesturePart 0 - Right hand in front of body - PASS");
@@ -61,7 +63,7 @@ namespace Iava.Gesture.GestureStuff {
     }
 
     class SwipeUpSegment3 : IGestureSegment {
-        public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
+        public GestureResult CheckGesture(SkeletonData skeleton) {
             // Right hand in front of body with Left hand hanging at the side
             if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ShoulderCenter].Position.Z && skeleton.Joints[JointID.HandLeft].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y) {
                 // Console.WriteLine("GesturePart 0 - Right hand in front of body - PASS");

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-using Microsoft.Research.Kinect.Nui;
+//using Microsoft.Research.Kinect.Nui;
+
+using Iava.Input.Camera;
 
 namespace Iava.Gesture.GestureStuff{ 
     class SyncSegment : IGestureSegment {
-        public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
+        public GestureResult CheckGesture(SkeletonData skeleton) {
             // Hands below head and above gut
             if (skeleton.Joints[JointID.HandRight].Position.Y < skeleton.Joints[JointID.Head].Position.Y  &&
                 skeleton.Joints[JointID.HandRight].Position.Y > skeleton.Joints[JointID.Spine].Position.Y &&
