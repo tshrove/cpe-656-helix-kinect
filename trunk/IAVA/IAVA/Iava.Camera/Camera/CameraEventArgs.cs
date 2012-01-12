@@ -30,7 +30,20 @@ namespace Iava.Input.Camera {
             this.Skeleton = skeleton;
         }
 
+        public SkeletonEventArgs(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
+            this.Skeleton = (SkeletonData)skeleton;
+        }
+
         #endregion Constructors
+
+        #region Operator Overloads
+        /*
+        public static implicit operator SkeletonEventArgs(Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs arg) {
+            //Microsoft.Research.Kinect.Nui.
+            arg.SkeletonFrame.
+        }
+        */
+        #endregion Operator Overloads
     }
 
     /// <summary>
@@ -87,6 +100,31 @@ namespace Iava.Input.Camera {
 
         public static implicit operator ImageFrameReadyEventArgs(Microsoft.Research.Kinect.Nui.ImageFrameReadyEventArgs value) {
             return new ImageFrameReadyEventArgs(value.ImageFrame);
+        }
+
+        #endregion Operator Overloads
+    }
+
+    public sealed class SkeletonFrameReadyEventArgs : EventArgs {
+
+        #region Public Properties
+
+        public SkeletonFrame SkeletonFrame { get; private set; }
+
+        #endregion Public Properties
+
+        #region Constructors
+
+        public SkeletonFrameReadyEventArgs(SkeletonFrame skeletonFrame) {
+            SkeletonFrame = skeletonFrame;
+        }
+
+        #endregion Constructors
+
+        #region Operator Overloads
+
+        public static implicit operator SkeletonFrameReadyEventArgs(Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs value) {
+            return new SkeletonFrameReadyEventArgs(value.SkeletonFrame);
         }
 
         #endregion Operator Overloads

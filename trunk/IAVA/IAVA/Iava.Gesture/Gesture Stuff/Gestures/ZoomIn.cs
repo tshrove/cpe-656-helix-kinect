@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-using Microsoft.Research.Kinect.Nui;
+//using Microsoft.Research.Kinect.Nui;
+
+using Iava.Input.Camera;
 
 namespace Iava.Gesture.GestureStuff {
     class ZoomInSegment1 : IGestureSegment {
-        public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
+        public GestureResult CheckGesture(SkeletonData skeleton) {
             // Hands in front of body
             if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ShoulderRight].Position.Z &&
                 skeleton.Joints[JointID.HandLeft].Position.Z  < skeleton.Joints[JointID.ShoulderLeft].Position.Z) {
@@ -40,7 +42,7 @@ namespace Iava.Gesture.GestureStuff {
     }
 
     class ZoomInSegment2 : IGestureSegment {
-        public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
+        public GestureResult CheckGesture(SkeletonData skeleton) {
             // Hands in front of body
             if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ShoulderRight].Position.Z &&
                 skeleton.Joints[JointID.HandLeft].Position.Z  < skeleton.Joints[JointID.ShoulderLeft].Position.Z) {

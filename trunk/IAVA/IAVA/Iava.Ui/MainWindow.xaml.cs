@@ -56,7 +56,8 @@ namespace Iava.Ui {
             m_pAudioRecognizer.Subscribe("Move West", MoveWestCallback);
             m_pAudioRecognizer.Subscribe("Blow Up", BlowUp);
 
-            m_pGestureRecognizer.Camera.ImageFrameReady += new EventHandler<ImageFrameReadyEventArgs>(OnCameraImageFrameReady);
+            m_pGestureRecognizer.Camera.ImageFrameReady += OnCameraImageFrameReady;
+            m_pGestureRecognizer.Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
 
             m_pAudioSyncTimer = new System.Timers.Timer(1000);
             m_pAudioSyncTimer.Elapsed += OnAudioSyncTimerElapsed;
@@ -72,6 +73,8 @@ namespace Iava.Ui {
             lblAudioSyncTime.Background = lblGestureSyncTime.Background = backgroundBrush;
             lblAudioTTL.Background = lblGestureTTL.Background = backgroundBrush;
         }
+
+        
 
         #endregion Constructors
 
@@ -300,6 +303,48 @@ namespace Iava.Ui {
                 Image.Bits, Image.Width * Image.BytesPerPixel);
         }
 
+        void OnCameraSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e) {
+            Iava.Input.Camera.SkeletonFrame skeletonFrame = e.SkeletonFrame;
+
+            //KinectSDK TODO: this shouldn't be needed, but if power is removed from the Kinect, you may still get an event here, but skeletonFrame will be null.
+            //if (skeletonFrame == null) { return; }
+
+            int iSkeleton = 0;
+            Brush[] brushes = new Brush[6];
+            brushes[0] = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            brushes[1] = new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            brushes[2] = new SolidColorBrush(Color.FromRgb(64, 255, 255));
+            brushes[3] = new SolidColorBrush(Color.FromRgb(255, 255, 64));
+            brushes[4] = new SolidColorBrush(Color.FromRgb(255, 64, 255));
+            brushes[5] = new SolidColorBrush(Color.FromRgb(128, 128, 255));
+
+            kinectSkeletonFeed.Children.Clear();
+            foreach (SkeletonData data in skeletonFrame.Skeletons) {
+                if (SkeletonTrackingState.Tracked == data.TrackingState) {
+                    // Draw bones
+                    Brush brush = brushes[iSkeleton % brushes.Length];
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.HipCenter, JointID.Spine, JointID.ShoulderCenter, JointID.Head));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.ShoulderCenter, JointID.ShoulderLeft, JointID.ElbowLeft, JointID.WristLeft, JointID.HandLeft));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.ShoulderCenter, JointID.ShoulderRight, JointID.ElbowRight, JointID.WristRight, JointID.HandRight));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.HipCenter, JointID.HipLeft, JointID.KneeLeft, JointID.AnkleLeft, JointID.FootLeft));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.HipCenter, JointID.HipRight, JointID.KneeRight, JointID.AnkleRight, JointID.FootRight));
+
+                    // Draw joints
+                    foreach (Joint joint in data.Joints) {
+                        Point jointPos = new Point(joint.Position.X, joint.Position.Y);
+                        Line jointLine = new Line();
+                        jointLine.X1 = jointPos.X - 3;
+                        jointLine.X2 = jointLine.X1 + 6;
+                        jointLine.Y1 = jointLine.Y2 = jointPos.Y;
+                        //jointLine.Stroke = jointColors[joint.ID];
+                        jointLine.StrokeThickness = 6;
+                        kinectSkeletonFeed.Children.Add(jointLine);
+                    }
+                }
+                iSkeleton++;
+            } // for each skeleton
+        }
+
         /// <summary>
         /// Raises when the status of the gesture recognizer is changed.
         /// </summary>
@@ -378,6 +423,33 @@ namespace Iava.Ui {
         }
 
         #endregion Event Handlers
+
+        private Polyline GetBodySegment(JointsCollection joints, Brush brush, params JointID[] jointIDs) {
+            PointCollection points = new PointCollection(jointIDs.Length);
+            for (int i = 0; i < jointIDs.Length; ++i) {
+                points.Add(new Point(joints[jointIDs[i]].Position.X * kinectSkeletonFeed.Width, joints[jointIDs[i]].Position.Y * kinectSkeletonFeed.Height));
+            }
+
+            Polyline polyline = new Polyline();
+            polyline.Points = points;
+            polyline.Stroke = brush;
+            polyline.StrokeThickness = 5;
+            return polyline;
+        }
+        /*
+        private Point GetDisplayPosition(Joint joint) {
+            float depthX, depthY;
+            Kinect.SkeletonEngine.SkeletonToDepthImage(joint.Position, out depthX, out depthY);  // I'm not gonna wrap this call
+            depthX = depthX * 320; //convert to 320, 240 space
+            depthY = depthY * 240; //convert to 320, 240 space
+            int colorX, colorY;
+            ImageViewArea iv = new ImageViewArea();
+            // only ImageResolution.Resolution640x480 is supported at this point
+            m_pGestureRecognizer.Camera.GetColorPixelCoordinatesFromDepthPixel(ImageResolution.Resolution640x480, iv, (int)depthX, (int)depthY, (short)0, out colorX, out colorY);
+
+            // map back to skeleton.Width & skeleton.Height
+            return new Point((int)(kinectSkeletonFeed.Width * colorX / 640.0), (int)(kinectSkeletonFeed.Height * colorY / 480));
+        }*/
 
         /// <summary>
         /// Resets the audio sync time.

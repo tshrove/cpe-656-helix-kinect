@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:esri="http://schemas.esri.com/arcgis/client/2009"
-        Title="IAVA" Height="541" Width="800" x:Name="Window" Background="Black" WindowState="Maximized">
+        Title="IAVA" Height="900" Width="800" x:Name="Window" Background="Black" WindowState="Maximized">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,6 +22,11 @@
         <TextBox Name="txtConsole" Height="100" VerticalAlignment="Bottom" Background="#222" Foreground="White" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Opacity="0.65" Margin="10,10,10,10"/>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="10,10,10,10">
             <Image Name="kinectVideoFeed" Width="320" Height="240" />
+            <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Name="kinectSkeletonFeed" Width="320" Height="240" Background="Black">
+                <Canvas.RenderTransform>
+                    <ScaleTransform CenterX="160" CenterY="120" ScaleX="1" ScaleY="-1" />
+                </Canvas.RenderTransform>
+            </Canvas>
             <StackPanel>
                 <Label Name="lblAudioStatus" HorizontalAlignment="Stretch" Content="Audio Status: Unsynced" HorizontalContentAlignment="Center" Background="Orange" Foreground="#2E3436" FontSize="22" FontWeight="SemiBold" FontFamily="Calibri" BorderBrush="#2E3436" BorderThickness="2"/>
                 <Label Name="lblAudioTTL" HorizontalAlignment="Stretch" Content="Time to Unsync:" HorizontalContentAlignment="Center" Background="#333" Foreground="WhiteSmoke" FontSize="22" FontWeight="SemiBold" FontFamily="Calibri" BorderBrush="#2E3436" BorderThickness="2"/>

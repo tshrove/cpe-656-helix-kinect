@@ -25,6 +25,8 @@ namespace Iava.Input.Camera {
         /// </summary>
         public event EventHandler<SkeletonFrameEventArgs> SkeletonFrameComplete;
 
+        public event EventHandler<SkeletonFrameReadyEventArgs> SkeletonFrameReady;
+
         #endregion Public Events
 
         #region Public Properties
@@ -40,6 +42,18 @@ namespace Iava.Input.Camera {
         #endregion Public Properties
 
         #region Public Methods
+
+        public void GetColorPixelCoordinatesFromDepthPixel(ImageResolution colorResolution, ImageViewArea viewArea, int depthX, int depthY, short depthValue, out int colorX, out int colorY) {
+            // Wrapping a needed NuiCamera method...
+            // This is getting ugly.  What to do?
+            Microsoft.Research.Kinect.Nui.ImageViewArea viewArea2;
+            viewArea2.CenterX = viewArea.CenterX;
+            viewArea2.CenterY = viewArea.CenterY;
+            viewArea2.Zoom = (Microsoft.Research.Kinect.Nui.ImageDigitalZoom)viewArea.Zoom;
+            m_kinectRuntime.NuiCamera.GetColorPixelCoordinatesFromDepthPixel((Microsoft.Research.Kinect.Nui.ImageResolution)colorResolution,
+                                                                             viewArea2,
+                                                                             depthX, depthY, depthValue, out colorX, out colorY);
+        }
 
         /// <summary>
         /// Tilts the camera up 1 degree
@@ -85,7 +99,7 @@ namespace Iava.Input.Camera {
         /// <returns>bool value indicating whether the Camera initialized correctly</returns>
         private bool InitializeNui() {
             // Create the Kinect Runtime object...
-            this.m_kinectRuntime = new Runtime();
+            this.m_kinectRuntime = Runtime.Kinects[0];
 
             // Odds are a Kinect camera is not plugged in...
             if (this.m_kinectRuntime == null) { Console.WriteLine("Kinect camera not detected!"); return false; }
@@ -116,8 +130,8 @@ namespace Iava.Input.Camera {
                 MaxDeviationRadius = 0.04f
             };
 
-            this.m_kinectRuntime.SkeletonEngine.SmoothParameters = smoothingParams;
             this.m_kinectRuntime.SkeletonEngine.TransformSmooth = true;
+            this.m_kinectRuntime.SkeletonEngine.SmoothParameters = smoothingParams;
 
             // If we've made it here we're good.
             return true;
@@ -128,8 +142,13 @@ namespace Iava.Input.Camera {
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs"/> instance containing the event data.</param>
-        private void OnSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e) {
+        private void OnSkeletonFrameReady(object sender, Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs e) {
+            // Rethrow this event if someone needs it...
+            this.SkeletonFrameReady(this, new SkeletonFrameReadyEventArgs(e.SkeletonFrame));
+
             List<int> idValues = new List<int>();
+
+            if (e.SkeletonFrame == null) { return; }
 
             if (e.SkeletonFrame.Skeletons.Length > 0) {
                 // Process each skeleton in the event...
@@ -144,6 +163,7 @@ namespace Iava.Input.Camera {
                         idValues.Add(skeleton.TrackingID);
 
                         // NEM: Not sure why we don't wait until we're out of the loop on this...
+                        // This event is never used...
                         if (this.SkeletonFrameComplete != null) {
                             this.SkeletonFrameComplete(this, new SkeletonFrameEventArgs(idValues, e.SkeletonFrame.TimeStamp));
                         }

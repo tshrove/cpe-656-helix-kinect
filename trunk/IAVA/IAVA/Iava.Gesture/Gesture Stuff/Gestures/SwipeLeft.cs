@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Microsoft.Research.Kinect.Nui;
+//using Microsoft.Research.Kinect.Nui;
+
+using Iava.Input.Camera;
 
 namespace Iava.Gesture.GestureStuff {
     public class SwipeLeftSegment1 : IGestureSegment {
-        public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton)
+        public GestureResult CheckGesture(SkeletonData skeleton)
         {
             // Right hand in front of Right shoulder
             if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ElbowRight].Position.Z && skeleton.Joints[JointID.HandLeft].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y)
@@ -43,7 +45,7 @@ namespace Iava.Gesture.GestureStuff {
         /// </summary>
         /// <param name="skeleton">The skeleton.</param>
         /// <returns>GesturePartResult based on if the gesture part has been completed</returns>
-        public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
+        public GestureResult CheckGesture(SkeletonData skeleton) {
             // //Right hand in front of Right shoulder
             if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ElbowRight].Position.Z && skeleton.Joints[JointID.HandLeft].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y) {
                 // Console.WriteLine("GesturePart 1 - Right hand in front of Right shoulder - PASS");
@@ -75,7 +77,7 @@ namespace Iava.Gesture.GestureStuff {
         /// </summary>
         /// <param name="skeleton">The skeleton.</param>
         /// <returns>GesturePartResult based on if the gesture part has been completed</returns>
-        public GestureResult CheckGesture(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
+        public GestureResult CheckGesture(SkeletonData skeleton) {
             // //Right hand in front of Right Shoulder
             if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ElbowRight].Position.Z && skeleton.Joints[JointID.HandLeft].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y) {
                 // Console.WriteLine("GesturePart 2 - Right hand in front of Right shoulder - PASS");
