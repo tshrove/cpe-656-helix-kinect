@@ -303,11 +303,13 @@ namespace Iava.Ui {
                 Image.Bits, Image.Width * Image.BytesPerPixel);
         }
 
-        void OnCameraSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e) {
+        /// <summary>
+        /// Raised when a full skeleton frame is ready to be viewed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnCameraSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e) {
             Iava.Input.Camera.SkeletonFrame skeletonFrame = e.SkeletonFrame;
-
-            //KinectSDK TODO: this shouldn't be needed, but if power is removed from the Kinect, you may still get an event here, but skeletonFrame will be null.
-            //if (skeletonFrame == null) { return; }
 
             int iSkeleton = 0;
             Brush[] brushes = new Brush[6];
@@ -427,7 +429,7 @@ namespace Iava.Ui {
         private Polyline GetBodySegment(JointsCollection joints, Brush brush, params JointID[] jointIDs) {
             PointCollection points = new PointCollection(jointIDs.Length);
             for (int i = 0; i < jointIDs.Length; ++i) {
-                points.Add(new Point(joints[jointIDs[i]].Position.X * kinectSkeletonFeed.Width, joints[jointIDs[i]].Position.Y * kinectSkeletonFeed.Height));
+                points.Add(ScalePoint(joints[jointIDs[i]].Position.X, joints[jointIDs[i]].Position.Y, kinectSkeletonFeed.Width, kinectSkeletonFeed.Height));
             }
 
             Polyline polyline = new Polyline();
@@ -436,6 +438,36 @@ namespace Iava.Ui {
             polyline.StrokeThickness = 5;
             return polyline;
         }
+
+        /// <summary>
+        /// Scales a point between -1 and 1 and scales it up to the Max X and Max Y
+        /// </summary>
+        /// <param name="xPos">the X position of the point to scale</param>
+        /// <param name="yPos">the Y position of the point to scale</param>
+        /// <param name="maxX">the largest allowed X value after scale</param>
+        /// <param name="maxY">the largest allowed Y value after scale</param>
+        /// <returns>Point with the new X,Y values</returns>
+        private Point ScalePoint(double xPos, double yPos, double maxX, double maxY) {
+            double newX, newY;
+
+            double temp = ((maxX / 2.0) * xPos) + (maxX / 2.0);
+
+            // Scale the X value
+            if (temp > maxX)     { newX = maxX; }
+            else if (temp < 0.0) { newX = 0.0;  }
+            else                 { newX = temp; }
+
+            temp = ((maxY / 2.0) * yPos) + (maxY / 2.0);
+
+            // Scale the Y value
+            if (temp > maxY)     { newY = maxY; }
+            else if (temp < 0.0) { newY = 0.0; }
+            else                 { newY = temp; }
+            
+            // Return the new point
+            return new Point(newX, newY);
+        }
+
         /*
         private Point GetDisplayPosition(Joint joint) {
             float depthX, depthY;
