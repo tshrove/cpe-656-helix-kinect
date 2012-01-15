@@ -66,6 +66,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Gesture Class Diagrams.cd" />
     <None Include="Iava.Gesture.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
