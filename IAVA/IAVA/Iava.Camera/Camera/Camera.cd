@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Need to figure out a way to logically organize all this crap.">
+    <Position X="0.5" Y="4.969" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="Iava.Input.Camera.Camera">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAACAAsgAAAAAgAAAAIAAABgAAACAAAAAAA=</HashCode>
+      <FileName>Camera\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Iava.Input.Camera.ImageFrame" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAiABAACQAAAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Iava.Input.Camera.SkeletonFrame" Collapsed="true">
+    <Position X="2.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAQACAAAAAAABIAAAAAAAAAAACAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Iava.Input.Camera.SkeletonData" Collapsed="true">
+    <Position X="4.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAADhABAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Iava.Input.Camera.JointsCollection" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAACAAAAAQAAAAAAAAAAAABACAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Iava.Input.Camera.SkeletonEventArgs" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera\CameraEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Iava.Input.Camera.SkeletonFrameEventArgs" Collapsed="true">
+    <Position X="4.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera\CameraEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Iava.Input.Camera.ImageFrameReadyEventArgs" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera\CameraEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Iava.Input.Camera.SkeletonFrameReadyEventArgs" Collapsed="true">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAAA=</HashCode>
+      <FileName>Camera\CameraEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Iava.Input.Camera.PlanarImage" Collapsed="true">
+    <Position X="6" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABQAAAAAAAAAAAGAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Iava.Input.Camera.ImageViewArea" Collapsed="true">
+    <Position X="2.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Iava.Input.Camera.Joint" Collapsed="true">
+    <Position X="4.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQACAAAAAAAAgAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Iava.Input.Camera.Vector" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAIYAE=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Iava.Input.Camera.ImageResolution" Collapsed="true">
+    <Position X="4.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAIAAAEAAAgAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Iava.Input.Camera.ImageType" Collapsed="true">
+    <Position X="6" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAABAAAAAAAAAAgAAAAwAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Iava.Input.Camera.ImageDigitalZoom" Collapsed="true">
+    <Position X="2.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAI=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Iava.Input.Camera.SkeletonFrameQuality" Collapsed="true">
+    <Position X="6" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIACAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Iava.Input.Camera.JointTrackingState" Collapsed="true">
+    <Position X="4.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Iava.Input.Camera.SkeletonTrackingState" Collapsed="true">
+    <Position X="2.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Iava.Input.Camera.JointID" Collapsed="true">
+    <Position X="2.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAYBAGAAAIAIBpAAAAQIIBABFAEAAAACAAAAAAA=</HashCode>
+      <FileName>Camera\Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
