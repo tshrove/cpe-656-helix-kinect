@@ -49,7 +49,7 @@ namespace Iava.Core {
         #region Public Properties and Constants
 
         /// <summary>
-        /// Gets the status of the cognizer.
+        /// Gets the status of the recognizer.
         /// </summary>
         public RecognizerStatus Status {
             get { return this.m_pStatus; }
