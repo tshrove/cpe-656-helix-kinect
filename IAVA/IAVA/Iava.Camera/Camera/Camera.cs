@@ -23,7 +23,7 @@ namespace Iava.Input.Camera {
         /// <summary>
         /// Occurs when [skeleton frame complete].
         /// </summary>
-        public event EventHandler<SkeletonFrameEventArgs> SkeletonFrameComplete;
+        //public event EventHandler<SkeletonFrameEventArgs> SkeletonFrameComplete;
 
         public event EventHandler<SkeletonFrameReadyEventArgs> SkeletonFrameReady;
 
@@ -161,12 +161,12 @@ namespace Iava.Input.Camera {
                         }
                         // Add the Tracking ID to our watch list...
                         idValues.Add(skeleton.TrackingID);
-
+                        /*
                         // NEM: Not sure why we don't wait until we're out of the loop on this...
                         // This event is never used...
                         if (this.SkeletonFrameComplete != null) {
                             this.SkeletonFrameComplete(this, new SkeletonFrameEventArgs(idValues, e.SkeletonFrame.TimeStamp));
-                        }
+                        }*/
                     }
                 }
             }
