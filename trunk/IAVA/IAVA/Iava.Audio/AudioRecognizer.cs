@@ -197,7 +197,7 @@ namespace Iava.Audio
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>
-        void SpeechRecognized(object sender, SpeechRecognizedEventArgs e) 
+        private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e) 
         {
             Console.Write("\rSpeech Recognized: \t{0}\tConfidence:\t{1}", e.Result.Text, e.Result.Confidence);
 
@@ -244,7 +244,7 @@ namespace Iava.Audio
         /// </summary>
         /// <param name="sender">Object that send the event</param>
         /// <param name="e">Event args</param>
-        void SpeechRejected(object sender, SpeechRecognitionRejectedEventArgs e) {
+        private void SpeechRejected(object sender, SpeechRecognitionRejectedEventArgs e) {
             Console.WriteLine("\nSpeech Rejected: \t{0}", e.Result.Text);
         }
 
@@ -253,7 +253,7 @@ namespace Iava.Audio
         /// </summary>
         /// <param name="sender">Object that send the event</param>
         /// <param name="e">Event args</param>
-        void SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e) {
+        private void SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e) {
             Console.Write("\rSpeech Hypothesized: \t{0}\tConfidence:\t{1}", e.Result.Text, e.Result.Confidence);
         }
 
