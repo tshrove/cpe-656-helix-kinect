@@ -6,7 +6,7 @@
   <Class Name="Iava.Input.Camera.Camera">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAACAAsgAAAAAgAAAAIAAABgAAACAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAgAAACAAsgAAAAAgAAAAAAAABgAAACAAAAAAA=</HashCode>
       <FileName>Camera\Camera.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -39,15 +39,15 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Iava.Input.Camera.SkeletonEventArgs" Collapsed="true">
-    <Position X="6" Y="1.5" Width="1.5" />
+  <Class Name="Iava.Input.Camera.SkeletonEventArgs">
+    <Position X="7.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Camera\CameraEventArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Iava.Input.Camera.SkeletonFrameEventArgs" Collapsed="true">
-    <Position X="4.25" Y="2.5" Width="1.5" />
+    <Position X="6" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Camera\CameraEventArgs.cs</FileName>
@@ -61,7 +61,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Iava.Input.Camera.SkeletonFrameReadyEventArgs" Collapsed="true">
-    <Position X="6" Y="2.5" Width="1.5" />
+    <Position X="4.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAAAAA=</HashCode>
       <FileName>Camera\CameraEventArgs.cs</FileName>
