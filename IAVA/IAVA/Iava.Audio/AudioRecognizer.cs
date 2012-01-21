@@ -27,7 +27,9 @@ namespace Iava.Audio
         /// Starts the recognizer.
         /// </summary>
         public override void Start() {
-            m_thread.Start();
+            //m_thread.Start(tokenSource.Token);
+
+            Task.Factory.StartNew(() => SetupAudioDevice(tokenSource.Token), tokenSource.Token);
 
             OnStarted(this, new EventArgs());
         }
@@ -44,8 +46,8 @@ namespace Iava.Audio
             OnStopped(this, new EventArgs());
         }
         /// <summary>
-        /// Used to connect a given delegate to a specified gesture
-        /// given by the name.
+        /// Used to map a spoken command to a callback.  When the command is recognized, 
+        /// the callback is invoked.
         /// </summary>
         /// <param name="name">The audio command to listen for.</param>
         /// <param name="callBack">The method to invoke when the spoken command is recognized.</param>
@@ -54,6 +56,11 @@ namespace Iava.Audio
             if (string.IsNullOrEmpty(name)) 
             {
                 throw new ArgumentException("Name argument was either null or empty.", "name");
+            }
+
+            if (callBack == null)
+            {
+                throw new ArgumentException("Callback argument was null.", "callback");
             }
 
             if (!this.AudioCallbacks.ContainsKey(name)) 
@@ -98,13 +105,14 @@ namespace Iava.Audio
         {
             this.AudioCallbacks = new Dictionary<string, AudioCallback>();
             // TODO This is temporary for prototype.
-            this.AudioCallbacks.Add("IAVA", null);
+            this.AudioCallbacks.Add(syncCommand, null);
             // TODO Add the function to load the gestures to the dictionary.
 
             // Set up the thread
-            m_thread = new Thread(SetupAudioDevice);
-            m_thread.Name = "AudioRecognizerThread";
+            //m_thread = new Thread(SetupAudioDevice);
+            //m_thread.Name = "AudioRecognizerThread";
         }
+
         #endregion
 
         #region Private Properties
@@ -125,7 +133,8 @@ namespace Iava.Audio
         /// <summary>
         /// Sets up the Kinect Audio Source.
         /// </summary>
-        private void SetupAudioDevice() 
+        /// <param name="token">Cancellation token argument</param>
+        private void SetupAudioDevice(CancellationToken token) 
         {
             try {
                 RecognizerInfo ri = SpeechRecognitionEngine.InstalledRecognizers().Where(
@@ -143,19 +152,22 @@ namespace Iava.Audio
                 speechEngine.SpeechHypothesized += SpeechHypothesized;
                 speechEngine.SpeechRecognitionRejected += SpeechRejected;
 
-                audioSource = new KinectAudioSource();
-                audioSource.SystemMode = SystemMode.OptibeamArrayOnly;
-                audioSource.FeatureMode = true;
-                audioSource.AutomaticGainControl = false;
-                audioSource.MicArrayMode = MicArrayMode.MicArrayAdaptiveBeam;
+                if (!token.IsCancellationRequested)
+                {
+                    audioSource = new KinectAudioSource();
+                    audioSource.SystemMode = SystemMode.OptibeamArrayOnly;
+                    audioSource.FeatureMode = true;
+                    audioSource.AutomaticGainControl = false;
+                    audioSource.MicArrayMode = MicArrayMode.MicArrayAdaptiveBeam;
 
-                var kinectStream = audioSource.Start();
-                speechEngine.SetInputToAudioStream(kinectStream, new SpeechAudioFormatInfo(
-                                                      EncodingFormat.Pcm, 16000, 16, 1,
-                                                      32000, 2, null));
-                speechEngine.RecognizeAsync(RecognizeMode.Multiple);
+                    var kinectStream = audioSource.Start();
+                    speechEngine.SetInputToAudioStream(kinectStream, new SpeechAudioFormatInfo(
+                                                          EncodingFormat.Pcm, 16000, 16, 1,
+                                                          32000, 2, null));
+                    speechEngine.RecognizeAsync(RecognizeMode.Multiple);
 
-                Status = RecognizerStatus.Running;
+                    Status = RecognizerStatus.Running;
+                }
             }
             catch (OperationCanceledException) {
                 Status = RecognizerStatus.Error;
@@ -202,7 +214,8 @@ namespace Iava.Audio
             Console.Write("\rSpeech Recognized: \t{0}\tConfidence:\t{1}", e.Result.Text, e.Result.Confidence);
 
             // If we just synced, set the flag and return
-            if (e.Result.Text.Contains("IAVA")) {
+            if (e.Result.Text.Contains(syncCommand))
+            {
                 m_syncContext.Post(new SendOrPostCallback(delegate(object state) { OnSynced(this, e); }), null);
                 return;
             }
@@ -280,6 +293,11 @@ namespace Iava.Audio
         /// Token source used to stop any background tasks.
         /// </summary>
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
+
+        /// <summary>
+        /// The sync command.
+        /// </summary>
+        private string syncCommand = "IAVA";
 
         #endregion Private Fields
     }

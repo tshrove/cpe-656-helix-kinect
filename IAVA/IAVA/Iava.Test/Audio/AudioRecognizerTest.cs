@@ -74,5 +74,32 @@ namespace Iava.Test.Audio
 
             //TODO: Implement tests
         }
+
+        /// <summary>
+        /// Tests the Stop method.
+        /// </summary>
+        [TestMethod]
+        public void StopTest()
+        {
+
+        }
+
+        /// <summary>
+        /// Tests the Subscribe method.
+        /// </summary>
+        [TestMethod]
+        public void SubscribeTest()
+        {
+
+        }
+
+        /// <summary>
+        /// Tests the Unsubscribe method.
+        /// </summary>
+        [TestMethod]
+        public void UnsubscribeTest()
+        {
+
+        }
     }
 }
