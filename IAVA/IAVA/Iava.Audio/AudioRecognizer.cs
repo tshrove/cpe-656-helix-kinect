@@ -29,9 +29,13 @@ namespace Iava.Audio
         public override void Start() {
             //m_thread.Start(tokenSource.Token);
 
-            Task.Factory.StartNew(() => SetupAudioDevice(tokenSource.Token), tokenSource.Token);
+            if (Status != RecognizerStatus.Running)
+            {
+                Task.Factory.StartNew(() => SetupAudioDevice(tokenSource.Token), tokenSource.Token);
 
-            OnStarted(this, new EventArgs());
+                // TODO: Should this be called inside the task?
+                OnStarted(this, new EventArgs());
+            }
         }
         /// <summary>
         ///  Stops the recognizer.
@@ -74,15 +78,17 @@ namespace Iava.Audio
                     Start();
                 }
             }
+            // TODO: throw exception if key already exists?
+            // TODO: make this method and unsubscribe method return boolean value?
         }
         /// <summary>
-        /// Unsubscribe the given delegate from the given delegate
-        /// by the name.
+        /// Unsubscribe the spoken command from being recognized.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">Spoken command to stop being recognized.</param>
         public void Unsubscribe(string name) 
         {
-            if (this.AudioCallbacks.ContainsKey(name)) 
+            if (!string.IsNullOrEmpty(name) &&
+                this.AudioCallbacks.ContainsKey(name)) 
             {
                 AudioCallbacks.Remove(name);
                 // To update the grammar the recognizer needs to be restarted
