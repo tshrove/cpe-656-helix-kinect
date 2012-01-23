@@ -102,7 +102,8 @@ namespace Iava.Core {
             m_syncContext = SynchronizationContext.Current;
 
             if (m_syncContext == null) {
-                // not good...
+                // This situation occurs during testing so create a new context
+                m_syncContext = new SynchronizationContext();
             }
         }
 
