@@ -125,9 +125,16 @@ namespace Iava.Test.Gesture
         /// Tests the Subscribe method.
         /// </summary>
         [TestMethod]
+        [DeploymentItem("Iava.Gesture.dll")]
         public void SubscribeTest()
         {
-            
+            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
+            GestureRecognizer_Accessor target = new GestureRecognizer_Accessor(param0); // TODO: Initialize to an appropriate value
+            Dictionary<string, GestureCallback> expected = null; // TODO: Initialize to an appropriate value
+            Dictionary<string, GestureCallback> actual;
+            target.GestureCallbacks = expected;
+            actual = target.GestureCallbacks;
+            Assert.AreEqual(expected, actual);
         }
 
         /// <summary>
