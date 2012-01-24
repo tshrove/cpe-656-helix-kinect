@@ -140,7 +140,16 @@ namespace Iava.Test.Gesture
                 recognizer.Subscribe("Sync", GestureRecognizedCallback);
                 actual = recognizer.GestureCallbacks;
                 // Test the actual vs expected.
-                Assert.AreEqual(expected, actual);
+                int actualCount = actual.Count;
+                int expectedCount = expected.Count;
+                Assert.AreEqual(expectedCount, actualCount);
+                foreach (var pair in actual)
+                {
+                    string key = pair.Key;
+                    bool contains = expected.ContainsKey(key);
+                    Assert.IsTrue(contains);
+                    Assert.AreEqual(expected[key], actual[key]);
+                }
             }
             catch (Exception ex)
             {
