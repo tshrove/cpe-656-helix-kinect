@@ -128,22 +128,58 @@ namespace Iava.Test.Gesture
         [DeploymentItem("Iava.Gesture.dll")]
         public void SubscribeTest()
         {
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            GestureRecognizer_Accessor target = new GestureRecognizer_Accessor(param0); // TODO: Initialize to an appropriate value
-            Dictionary<string, GestureCallback> expected = null; // TODO: Initialize to an appropriate value
-            Dictionary<string, GestureCallback> actual;
-            target.GestureCallbacks = expected;
-            actual = target.GestureCallbacks;
-            Assert.AreEqual(expected, actual);
+            try
+            {
+                GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+                // Create our expected value of the gesture callbacks.
+                Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
+                expected.Add("Sync", GestureRecognizedCallback);
+                // Not get the actual gesture callbacks after the subscribe function test.
+                Dictionary<string, GestureCallback> actual;
+                // Call the subscribe function.
+                recognizer.Subscribe("Sync", GestureRecognizedCallback);
+                actual = recognizer.GestureCallbacks;
+                // Test the actual vs expected.
+                Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
         }
 
         /// <summary>
         /// Tests the Unsubscribe method.
         /// </summary>
         [TestMethod]
+        [DeploymentItem("Iava.Gesture.dll")]
         public void UnsubscribeTest()
         {
-            
+            try
+            {
+                GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+                // Create our expected value of the gesture callbacks.
+                Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
+                expected.Add("Sync", GestureRecognizedCallback);
+                // Not get the actual gesture callbacks after the subscribe function test.
+                Dictionary<string, GestureCallback> actual;
+                // Call the subscribe function.
+                recognizer.Subscribe("Sync", GestureRecognizedCallback);
+                actual = recognizer.GestureCallbacks;
+                // Test the actual vs expected.
+                Assert.AreEqual(expected, actual);
+                // Reset the expected.
+                expected = new Dictionary<string, GestureCallback>();
+                // Call the unsubscribe function to test.
+                recognizer.Unsubscribe("Sync");
+                actual = recognizer.GestureCallbacks;
+                // Test the actual vs expected.
+                Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
         }
     }
 }
