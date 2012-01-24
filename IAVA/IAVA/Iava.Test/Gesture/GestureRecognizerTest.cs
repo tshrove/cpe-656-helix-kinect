@@ -9,9 +9,40 @@ namespace Iava.Test.Gesture
     [TestClass]
     public class GestureRecognizerTest
     {
+        /// <summary>
+        /// Tests the Start method.
+        /// </summary>
         [TestMethod]
-        public void TestMethod1()
+        public void StartTest()
         {
+            
+        }
+
+        /// <summary>
+        /// Tests the Stop method.
+        /// </summary>
+        [TestMethod]
+        public void StopTest()
+        {
+            
+        }
+
+        /// <summary>
+        /// Tests the Subscribe method.
+        /// </summary>
+        [TestMethod]
+        public void SubscribeTest()
+        {
+            
+        }
+
+        /// <summary>
+        /// Tests the Unsubscribe method.
+        /// </summary>
+        [TestMethod]
+        public void UnsubscribeTest()
+        {
+            
         }
     }
 }
