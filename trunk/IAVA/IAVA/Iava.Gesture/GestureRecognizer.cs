@@ -7,6 +7,7 @@ using Iava.Core;
 using Iava.Input.Camera;
 using Iava.Gesture.GestureStuff;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Iava.Gesture 
 {
@@ -36,20 +37,23 @@ namespace Iava.Gesture
         /// Starts the recognizer.
         /// </summary>
         public override void Start() {
-            if (m_thread.ThreadState == ThreadState.Stopped)
-            {
-                m_thread = new Thread(SetupGestureDevice);
-                m_thread.Name = "GestureRecognizerThread";
+            if (Status != RecognizerStatus.Running) {
+                Task.Factory.StartNew(() => SetupGestureDevice(tokenSource.Token), tokenSource.Token);
+
+                // TODO: Should this be called inside the task?
+                OnStarted(this, new EventArgs());
             }
-            m_thread.Start();
-            OnStarted(this, new EventArgs());
         }
 
         /// <summary>
         ///  Stops the recognizer.
         /// </summary>
         public override void Stop() {
+            tokenSource.Cancel();
+            tokenSource = new CancellationTokenSource();
+
             Status = RecognizerStatus.Ready;
+
             OnStopped(this, new EventArgs());
         }
 
@@ -103,10 +107,6 @@ namespace Iava.Gesture
             // Initialize our collections...
             GestureCallbacks = new Dictionary<string, GestureCallback>();
             SupportedGestures = new List<GestureStuff.Gesture>();
-
-            // Set up the thread
-            m_thread = new Thread(SetupGestureDevice);
-            m_thread.Name = "GestureRecognizerThread";
         }
 
         #endregion Constructors
@@ -239,22 +239,25 @@ namespace Iava.Gesture
             else { SyncGesture.CheckForGesture(e.Skeleton); }
         }
 
-        private void SetupGestureDevice() {
-            // Try to connect to the camera first.  If this fails there is no point in continuing
-            try {
-                //Camera = new Camera();
+        private void SetupGestureDevice(CancellationToken token) {
+            // I probably want to instatiate a Camera in here instead of the constructor...
+            if (!token.IsCancellationRequested) {
+                // Try to connect to the camera first.  If this fails there is no point in continuing
+                try {
+                    //Camera = new Camera();
 
-                // Register with some camera events
-                Camera.SkeletonReady += OnSkeletonReady;
+                    // Register with some camera events
+                    Camera.SkeletonReady += OnSkeletonReady;
 
-                // Read the gestures in from the config file
-                LoadGestures();
+                    // Read the gestures in from the config file
+                    LoadGestures();
 
-                Status = RecognizerStatus.Running;
-            }
-            catch (Exception e) {
-                // TODO: Log message.  Failed to detect Kinect or start Camera
-                Status = RecognizerStatus.Error;
+                    Status = RecognizerStatus.Running;
+                }
+                catch (Exception e) {
+                    // TODO: Log message.  Failed to detect Kinect or start Camera
+                    Status = RecognizerStatus.Error;
+                }
             }
         }
 
