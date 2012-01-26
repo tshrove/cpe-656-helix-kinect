@@ -353,7 +353,7 @@ namespace Iava.Ui {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnGestureRecognizerStatusChanged(object sender, EventArgs e) {
-            DisplayStatus("Audio Status: " + m_pAudioRecognizer.Status.ToString());
+            DisplayStatus("Gesture Status: " + m_pAudioRecognizer.Status.ToString());
         }
 
         /// <summary>

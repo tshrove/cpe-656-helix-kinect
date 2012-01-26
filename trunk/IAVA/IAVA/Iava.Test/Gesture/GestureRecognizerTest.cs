@@ -64,8 +64,6 @@ namespace Iava.Test.Gesture
         {
             // The recognizerCallbackInvoked variable is set to false automatically.
             GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
-            recognizer.Camera.ImageFrameReady += new EventHandler<Input.Camera.ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
-            recognizer.Camera.SkeletonFrameReady += new EventHandler<Input.Camera.SkeletonFrameReadyEventArgs>(Camera_SkeletonFrameReady);
             Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
             recognizer.Started += new EventHandler<EventArgs>(recognizerCallback);
             try
@@ -108,8 +106,8 @@ namespace Iava.Test.Gesture
         {
             // The recognizerCallbackInvoked variable is set to false automatically.
             GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
-            recognizer.Camera.ImageFrameReady += new EventHandler<Input.Camera.ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
-            recognizer.Camera.SkeletonFrameReady += new EventHandler<Input.Camera.SkeletonFrameReadyEventArgs>(Camera_SkeletonFrameReady);
+            //recognizer.Camera.ImageFrameReady += new EventHandler<Input.Camera.ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
+            //recognizer.Camera.SkeletonFrameReady += new EventHandler<Input.Camera.SkeletonFrameReadyEventArgs>(Camera_SkeletonFrameReady);
             Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
             recognizer.Stopped += new EventHandler<EventArgs>(recognizerCallback);
             try
@@ -147,8 +145,6 @@ namespace Iava.Test.Gesture
             try
             {
                 GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
-                recognizer.Camera.ImageFrameReady += new EventHandler<Input.Camera.ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
-                recognizer.Camera.SkeletonFrameReady += new EventHandler<Input.Camera.SkeletonFrameReadyEventArgs>(Camera_SkeletonFrameReady);
                 // Create our expected value of the gesture callbacks.
                 Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
                 expected.Add("Sync", GestureRecognizedCallback);
@@ -185,8 +181,8 @@ namespace Iava.Test.Gesture
             try
             {
                 GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
-                recognizer.Camera.ImageFrameReady += new EventHandler<Input.Camera.ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
-                recognizer.Camera.SkeletonFrameReady += new EventHandler<Input.Camera.SkeletonFrameReadyEventArgs>(Camera_SkeletonFrameReady);
+                //recognizer.Camera.ImageFrameReady += new EventHandler<Input.Camera.ImageFrameReadyEventArgs>(Camera_ImageFrameReady);
+                //recognizer.Camera.SkeletonFrameReady += new EventHandler<Input.Camera.SkeletonFrameReadyEventArgs>(Camera_SkeletonFrameReady);
                 // Create our expected value of the gesture callbacks.
                 Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
                 expected.Add("Sync", GestureRecognizedCallback);

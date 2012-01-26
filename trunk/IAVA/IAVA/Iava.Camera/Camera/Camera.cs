@@ -143,8 +143,11 @@ namespace Iava.Input.Camera {
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs"/> instance containing the event data.</param>
         private void OnSkeletonFrameReady(object sender, Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs e) {
-            // Rethrow this event if someone needs it...
-            this.SkeletonFrameReady(this, new SkeletonFrameReadyEventArgs(e.SkeletonFrame));
+            if (this.SkeletonFrameReady != null)
+            {
+                // Rethrow this event if someone needs it...
+                this.SkeletonFrameReady(this, new SkeletonFrameReadyEventArgs(e.SkeletonFrame));
+            }
 
             List<int> idValues = new List<int>();
 
