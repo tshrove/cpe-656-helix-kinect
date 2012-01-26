@@ -105,34 +105,32 @@ namespace Iava.Test.Gesture
         public void StopTest()
         {
             // The recognizerCallbackInvoked variable is set to false automatically.
-            using (GestureRecognizer recognizer = new GestureRecognizer(string.Empty))
+            GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
+            Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
+            recognizer.Stopped += new EventHandler<EventArgs>(recognizerCallback);
+            try
             {
-                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
-                recognizer.Stopped += new EventHandler<EventArgs>(recognizerCallback);
-                try
-                {
-                    recognizer.Start();
-                    Thread.Sleep(2000);
-                    Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
+                recognizer.Start();
+                Thread.Sleep(2000);
+                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
 
-                    recognizer.Stop();
-                    Thread.Sleep(2000);
-                    Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
-                    Assert.IsTrue(recognizerCallbackInvoked, "OnStopped callback was not invoked.");
+                recognizer.Stop();
+                Thread.Sleep(2000);
+                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
+                Assert.IsTrue(recognizerCallbackInvoked, "OnStopped callback was not invoked.");
 
-                    // Start and stop immediately after one another and ensure it can be started again
-                    recognizer.Start();
-                    recognizer.Stop();
-                    Thread.Sleep(2000);
-                    Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
-                    recognizer.Start();
-                    Thread.Sleep(2000);
-                    Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
-                }
-                catch (Exception ex)
-                {
-                    Assert.Fail(ex.Message);
-                }
+                // Start and stop immediately after one another and ensure it can be started again
+                recognizer.Start();
+                recognizer.Stop();
+                Thread.Sleep(2000);
+                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
+                recognizer.Start();
+                Thread.Sleep(2000);
+                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
             }
         }
 
