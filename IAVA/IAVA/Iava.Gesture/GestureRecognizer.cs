@@ -56,6 +56,14 @@ namespace Iava.Gesture
         /// <param name="name"></param>
         /// <param name="d"></param>
         public void Subscribe(string name, GestureCallback callBack) {
+            if (string.IsNullOrEmpty(name)) {
+                throw new ArgumentException("Name argument was either null or empty.", "name");
+            }
+
+            if (callBack == null) {
+                throw new ArgumentException("Callback argument was null.", "callback");
+            }
+
             if (!GestureCallbacks.ContainsKey(name)) {
                 GestureCallbacks.Add(name, callBack);
             }
@@ -67,8 +75,8 @@ namespace Iava.Gesture
         /// </summary>
         /// <param name="name"></param>
         public void Unsubscribe(string name) {
-            if (GestureCallbacks.ContainsKey(name)) {
-                GestureCallbacks[name] = null;
+            if (!string.IsNullOrEmpty(name) && GestureCallbacks.ContainsKey(name)) {
+                GestureCallbacks.Remove(name);
             }
         }
 
