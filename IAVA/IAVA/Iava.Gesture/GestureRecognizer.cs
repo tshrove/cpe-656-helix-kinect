@@ -37,7 +37,6 @@ namespace Iava.Gesture
         /// </summary>
         public override void Start() {
             m_thread.Start();
-
             OnStarted(this, new EventArgs());
         }
 
