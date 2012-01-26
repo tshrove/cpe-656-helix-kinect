@@ -123,6 +123,7 @@ namespace Iava.Test.Gesture
 
                 // Start and stop immediately after one another and ensure it can be started again
                 recognizer.Start();
+                Thread.Sleep(2000);
                 recognizer.Stop();
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
                 recognizer.Start();

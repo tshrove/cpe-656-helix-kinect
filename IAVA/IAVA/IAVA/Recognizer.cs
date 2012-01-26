@@ -222,7 +222,10 @@ namespace Iava.Core {
 
         protected System.Timers.Timer m_timeoutTimer = new System.Timers.Timer(SyncTimeoutValue);
 
-        protected Thread m_thread;
+        /// <summary>
+        /// Token source used to stop any background tasks.
+        /// </summary>
+        protected CancellationTokenSource tokenSource = new CancellationTokenSource();
 
         protected SynchronizationContext m_syncContext;
 

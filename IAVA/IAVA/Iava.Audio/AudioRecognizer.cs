@@ -296,11 +296,6 @@ namespace Iava.Audio
         private const string RecognizerId = "SR_MS_en-US_Kinect_10.0";
 
         /// <summary>
-        /// Token source used to stop any background tasks.
-        /// </summary>
-        private CancellationTokenSource tokenSource = new CancellationTokenSource();
-
-        /// <summary>
         /// The sync command.
         /// </summary>
         private string syncCommand = "IAVA";
