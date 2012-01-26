@@ -119,10 +119,10 @@ namespace Iava.Test.Audio
         public void StopTest()
         {
             recognizer = new AudioRecognizer(string.Empty);
-
             Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
             recognizer.Stopped += RecognizerCallback;
-
+            // ToDo: Thing we need to change the code above to this.
+            // recognizer.Stopped += new EventHandler<EventArgs>(RecognizerCallback);
             try
             {
                 recognizer.Start();

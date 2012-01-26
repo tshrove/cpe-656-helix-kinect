@@ -36,6 +36,11 @@ namespace Iava.Gesture
         /// Starts the recognizer.
         /// </summary>
         public override void Start() {
+            if (m_thread.ThreadState == ThreadState.Stopped)
+            {
+                m_thread = new Thread(SetupGestureDevice);
+                m_thread.Name = "GestureRecognizerThread";
+            }
             m_thread.Start();
             OnStarted(this, new EventArgs());
         }
