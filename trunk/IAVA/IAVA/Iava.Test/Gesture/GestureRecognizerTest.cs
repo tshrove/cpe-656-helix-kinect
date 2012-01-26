@@ -79,6 +79,10 @@ namespace Iava.Test.Gesture
             {
                 Assert.Fail(ex.Message);
             }
+            finally
+            {
+                recognizer.Stop();
+            }
         }
 
         #region Additional Handlers
@@ -132,6 +136,10 @@ namespace Iava.Test.Gesture
             catch (Exception ex)
             {
                 Assert.Fail(ex.Message);
+            }
+            finally
+            {
+                recognizer.Stop();
             }
         }
 
