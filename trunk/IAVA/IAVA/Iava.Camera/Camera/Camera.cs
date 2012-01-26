@@ -43,16 +43,8 @@ namespace Iava.Input.Camera {
 
         #region Public Methods
 
-        public void GetColorPixelCoordinatesFromDepthPixel(ImageResolution colorResolution, ImageViewArea viewArea, int depthX, int depthY, short depthValue, out int colorX, out int colorY) {
-            // Wrapping a needed NuiCamera method...
-            // This is getting ugly.  What to do?
-            Microsoft.Research.Kinect.Nui.ImageViewArea viewArea2;
-            viewArea2.CenterX = viewArea.CenterX;
-            viewArea2.CenterY = viewArea.CenterY;
-            viewArea2.Zoom = (Microsoft.Research.Kinect.Nui.ImageDigitalZoom)viewArea.Zoom;
-            m_kinectRuntime.NuiCamera.GetColorPixelCoordinatesFromDepthPixel((Microsoft.Research.Kinect.Nui.ImageResolution)colorResolution,
-                                                                             viewArea2,
-                                                                             depthX, depthY, depthValue, out colorX, out colorY);
+        public void Dispose() {
+            m_kinectRuntime.Uninitialize();
         }
 
         /// <summary>

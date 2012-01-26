@@ -69,7 +69,7 @@ namespace Iava.Test.Gesture
             try
             {
                 recognizer.Start();
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
 
                 // Ensure the OnStarted callback was invoked
@@ -111,21 +111,22 @@ namespace Iava.Test.Gesture
             try
             {
                 recognizer.Start();
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
 
                 recognizer.Stop();
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
                 Assert.IsTrue(recognizerCallbackInvoked, "OnStopped callback was not invoked.");
 
                 // Start and stop immediately after one another and ensure it can be started again
                 recognizer.Start();
+
                 recognizer.Stop();
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
                 recognizer.Start();
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
             }
             catch (Exception ex)
