@@ -52,6 +52,9 @@ namespace Iava.Gesture
             tokenSource.Cancel();
             tokenSource = new CancellationTokenSource();
 
+            // Hotfix
+            Camera.Dispose();
+
             Status = RecognizerStatus.Ready;
 
             OnStopped(this, new EventArgs());
@@ -102,7 +105,7 @@ namespace Iava.Gesture
             // Don't really like this here, but the UI
             // depends on this property being set in
             // the constructor...
-            Camera = new Camera();
+            //Camera = new Camera();
 
             // Initialize our collections...
             GestureCallbacks = new Dictionary<string, GestureCallback>();
@@ -244,7 +247,7 @@ namespace Iava.Gesture
             if (!token.IsCancellationRequested) {
                 // Try to connect to the camera first.  If this fails there is no point in continuing
                 try {
-                    //Camera = new Camera();
+                    Camera = new Camera();
 
                     // Register with some camera events
                     Camera.SkeletonReady += OnSkeletonReady;
