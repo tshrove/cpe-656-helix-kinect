@@ -256,8 +256,7 @@ namespace Iava.Audio
                                 ResetTimer();
 
                                 // Throw the audio event
-                                //m_syncContext.Post(new SendOrPostCallback(delegate(object state) { AudioCallbacks[command].Invoke(args); }), null);
-                                AudioCallbacks[command].Invoke(args);
+                                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { AudioCallbacks[command].Invoke(args); }), null);
                             }
                         }
                         catch (Exception exception) {
