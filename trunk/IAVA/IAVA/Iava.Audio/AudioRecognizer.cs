@@ -20,15 +20,23 @@ namespace Iava.Audio
     /// <summary>
     /// AudioRecognizer Class
     /// </summary>
-    public class AudioRecognizer : Recognizer 
+    public class AudioRecognizer : Recognizer
     {
+        #region Public Attributes
+
+        /// <summary>
+        /// The level of confidence of the audio being recognized.  Anything below this level is
+        /// ignored.
+        /// </summary>
+        public const float AudioConfidenceThreshold = 0.8f;
+
+        #endregion
+
         #region Public Methods
         /// <summary>
         /// Starts the recognizer.
         /// </summary>
         public override void Start() {
-            //m_thread.Start(tokenSource.Token);
-
             if (Status != RecognizerStatus.Running)
             {
                 Task.Factory.StartNew(() => SetupAudioDevice(tokenSource.Token), tokenSource.Token);
@@ -114,9 +122,21 @@ namespace Iava.Audio
             this.AudioCallbacks.Add(syncCommand, null);
             // TODO Add the function to load the gestures to the dictionary.
 
-            // Set up the thread
-            //m_thread = new Thread(SetupAudioDevice);
-            //m_thread.Name = "AudioRecognizerThread";
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="filePath">Path to configuration file</param>
+        public AudioRecognizer(ISpeechRecognitionEngine engine)
+            : base(null)
+        {
+            this.AudioCallbacks = new Dictionary<string, AudioCallback>();
+            // TODO This is temporary for prototype.
+            this.AudioCallbacks.Add(syncCommand, null);
+            // TODO Add the function to load the gestures to the dictionary.
+
+            speechEngine = engine;
         }
 
         #endregion
@@ -143,16 +163,6 @@ namespace Iava.Audio
         private void SetupAudioDevice(CancellationToken token) 
         {
             try {
-                RecognizerInfo ri = SpeechRecognitionEngine.InstalledRecognizers().Where(
-                            r => r.Id == RecognizerId).FirstOrDefault();
-
-                if (ri == null) 
-                {
-                    throw new Exception("Failed to find any installed audio recognizers.");
-                }
-
-                speechEngine = new SpeechRecognitionEngine(ri.Id);
-
                 speechEngine.LoadGrammar(CreateGrammar());
                 speechEngine.SpeechRecognized += SpeechRecognized;
                 speechEngine.SpeechHypothesized += SpeechHypothesized;
@@ -215,12 +225,12 @@ namespace Iava.Audio
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>
-        private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e) 
+        private void SpeechRecognized(object sender, IavaSpeechRecognizedEventArgs e) 
         {
-            Console.Write("\rSpeech Recognized: \t{0}\tConfidence:\t{1}", e.Result.Text, e.Result.Confidence);
+            Console.Write("\rSpeech Recognized: \t{0}\tConfidence:\t{1}", e.Text, e.Confidence);
 
             // If we just synced, set the flag and return
-            if (e.Result.Text.Contains(syncCommand))
+            if (e.Text.Contains(syncCommand))
             {
                 m_syncContext.Post(new SendOrPostCallback(delegate(object state) { OnSynced(this, e); }), null);
                 return;
@@ -230,7 +240,7 @@ namespace Iava.Audio
             {
                 foreach (string command in AudioCallbacks.Keys) 
                 {
-                    if (e.Result.Text.Contains(command)) 
+                    if (e.Text.Contains(command)) 
                     {
                         try 
                         {
@@ -240,12 +250,14 @@ namespace Iava.Audio
                                     CommandWilcards = null
                                 };
 
-                            if (e.Result.Confidence > 0.8f) {
+                            if (e.Confidence > AudioConfidenceThreshold)
+                            {
                                 // We found a command, reset the timer
                                 ResetTimer();
 
                                 // Throw the audio event
-                                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { AudioCallbacks[command].Invoke(args); }), null);
+                                //m_syncContext.Post(new SendOrPostCallback(delegate(object state) { AudioCallbacks[command].Invoke(args); }), null);
+                                AudioCallbacks[command].Invoke(args);
                             }
                         }
                         catch (Exception exception) {
@@ -288,12 +300,7 @@ namespace Iava.Audio
         /// <summary>
         /// Speech recognition engine instance.
         /// </summary>
-        private SpeechRecognitionEngine speechEngine;
-
-        /// <summary>
-        /// Recognizer ID for the Kinect.
-        /// </summary>
-        private const string RecognizerId = "SR_MS_en-US_Kinect_10.0";
+        private ISpeechRecognitionEngine speechEngine;
 
         /// <summary>
         /// The sync command.

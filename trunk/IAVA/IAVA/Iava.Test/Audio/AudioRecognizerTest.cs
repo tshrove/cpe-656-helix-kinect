@@ -1,12 +1,18 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading;
+
+using Iava.Audio;
+using Iava.Core;
+
+using Microsoft.Speech.AudioFormat;
+using Microsoft.Speech.Recognition;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Iava.Core;
-using Iava.Audio;
-using System.Threading;
+using Moq;
 
 namespace Iava.Test.Audio
 {
@@ -87,10 +93,10 @@ namespace Iava.Test.Audio
         [TestMethod]
         public void StartTest()
         {
-            recognizer = new AudioRecognizer(string.Empty);
+            recognizer = new AudioRecognizer(new SpeechRecognitionEngineWrapper());
 
             Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
-            recognizer.Started += RecognizerCallback;
+            recognizer.Started += RecognizerStatusCallback;
 
             try
             {
@@ -102,12 +108,13 @@ namespace Iava.Test.Audio
                 Assert.IsTrue(recognizerCallbackInvoked, "OnStarted callback was not invoked.");
 
                 recognizer.Start();
+                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
             }
             finally
             {
                 if (recognizer != null)
                 {
-                    recognizer.Started -= RecognizerCallback;
+                    recognizer.Started -= RecognizerStatusCallback;
                 }
             }
         }
@@ -118,11 +125,11 @@ namespace Iava.Test.Audio
         [TestMethod]
         public void StopTest()
         {
-            recognizer = new AudioRecognizer(string.Empty);
+            recognizer = new AudioRecognizer(new SpeechRecognitionEngineWrapper());
+
             Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
-            recognizer.Stopped += RecognizerCallback;
-            // ToDo: Thing we need to change the code above to this.
-            // recognizer.Stopped += new EventHandler<EventArgs>(RecognizerCallback);
+            recognizer.Stopped += RecognizerStatusCallback;
+
             try
             {
                 recognizer.Start();
@@ -130,14 +137,13 @@ namespace Iava.Test.Audio
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
 
                 recognizer.Stop();
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
                 Assert.IsTrue(recognizerCallbackInvoked, "OnStopped callback was not invoked.");
 
                 // Start and stop immediately after one another and ensure it can be started again
                 recognizer.Start();
                 recognizer.Stop();
-                Thread.Sleep(2000);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
                 recognizer.Start();
                 Thread.Sleep(2000);
@@ -147,7 +153,7 @@ namespace Iava.Test.Audio
             {
                 if (recognizer != null)
                 {
-                    recognizer.Stopped -= RecognizerCallback;
+                    recognizer.Stopped -= RecognizerStatusCallback;
                 }
             }
         }
@@ -158,12 +164,31 @@ namespace Iava.Test.Audio
         [TestMethod]
         public void SubscribeTest()
         {
-            recognizer = new AudioRecognizer(string.Empty);
             const string commandString = "Test Callback";
 
+            // Create a mock speech engine and set it up
+            var mockEngine = SetupMockSpeechRecognitionEngine();
+
+            recognizer = new AudioRecognizer(mockEngine.Object);
+
+            int methodCallbackCount = 0;
+            bool callback1Invoked = false;
+            recognizer.Subscribe(commandString, (eventArgs) => 
+                {
+                    Assert.AreEqual(commandString, eventArgs.Command, "Command string returned did not match expected value.");
+                    methodCallbackCount++;
+                    callback1Invoked = true;
+
+                    if (methodCallbackCount > 1)
+                    {
+                        Assert.Fail("Audio callback method was called when with a confidence value less than the threshold.");
+                    }
+                });
+
+            // Test for exception throwing on invalid parameters entered
             try
             {
-                recognizer.Subscribe(string.Empty, AudioRecognizedCallback);
+                recognizer.Subscribe(string.Empty, (eventArgs) => { });
             }
             catch (Exception ex)
             {
@@ -178,16 +203,34 @@ namespace Iava.Test.Audio
             {
                 Assert.IsInstanceOfType(ex, typeof(ArgumentException));
             }
-
-            // Subscribe before started
-            recognizer.Subscribe(commandString, AudioRecognizedCallback);
-
+            
             recognizer.Start();
-            Thread.Sleep(2000);
-            Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
+            Thread.Sleep(100);  // Allow the Kinect to initialize
 
-            // Subscribe after started
-            recognizer.Subscribe("Test Callback 2", AudioRecognizedCallback);            
+            // Sync the callback first then raise spoken event
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("Blah Blah blah", AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("IAVA", AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(50);
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("Blah Blah blah", AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            Assert.IsTrue(callback1Invoked);
+
+            // Callback with the same command but with confidence below the threshold level to ensure the audio callback method is not called
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, AudioRecognizer.AudioConfidenceThreshold - 0.01f));
+
+            // Test that an exception is not propagated when an audio callback throws an exception
+            const string commandString2 = "Command String 2";
+            bool callback2Invoked = false;
+            recognizer.Subscribe(commandString2, (eventArgs) => 
+                {
+                    Assert.AreEqual(commandString2, eventArgs.Command, "Command string returned did not match expected value.");
+                    callback2Invoked = true;
+                    throw new Exception ("Kaboom!");
+                });
+            Thread.Sleep(100); // Restart occurred, allow time to setup
+
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString2, 0.95f));
+            Assert.IsTrue(callback2Invoked);
         }
 
         /// <summary>
@@ -196,38 +239,115 @@ namespace Iava.Test.Audio
         [TestMethod]
         public void UnsubscribeTest()
         {
-            recognizer = new AudioRecognizer(string.Empty);
             const string commandString = "Test Callback";
 
-            // Unsubscribe before started
-            recognizer.Subscribe(commandString, AudioRecognizedCallback);
-            recognizer.Unsubscribe(commandString);
+            // Create a mock speech engine and set it up
+            var mockEngine = SetupMockSpeechRecognitionEngine();
+
+            recognizer = new AudioRecognizer(mockEngine.Object);
+
+            // Raise the speech recognized event, unsubscribe the event, and try the command again
+            bool callback1Invoked = false;
+            recognizer.Subscribe(commandString, (eventArgs) =>
+                {
+                    Assert.AreEqual(commandString, eventArgs.Command, "Command string returned did not match expected value.");
+                    callback1Invoked = true;
+                });
 
             recognizer.Start();
-            Thread.Sleep(2000);
-            Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
+            Thread.Sleep(100);  // Allow the Kinect to initialize
 
-            // Unsubscribe after started
-            string commandString2 = "Test Callback 2";
-            recognizer.Subscribe(commandString2, AudioRecognizedCallback);
-            recognizer.Unsubscribe(null);
-            recognizer.Unsubscribe(commandString2);
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("IAVA", AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(50);
+
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            Assert.IsTrue(callback1Invoked);
+            callback1Invoked = false;
+
+            recognizer.Unsubscribe(commandString);
+            Thread.Sleep(100);  // Restart occurred, allow time to setup
+
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            Assert.IsFalse(callback1Invoked, "Audio callback method was called when the command was unsubscribed.");
+        }
+
+        /// <summary>
+        /// Tests the syncing and unsyncing of the recognizer.
+        /// </summary>
+        [TestMethod]
+        public void SyncUnsyncTest()
+        {
+            const string commandString = "Test Callback";
+
+            // TODO: Make the sync timeout value configurable.  That way this test will not run for a long time
+
+            // Create a mock speech engine and set it up
+            var mockEngine = SetupMockSpeechRecognitionEngine();
+            recognizer = new AudioRecognizer(mockEngine.Object);
+
+            // Sync the recognizer, call a command, wait until un-sync and re-call the same command.
+            // Ensure the callback is not called twice.
+
+            bool callback1Invoked = false;
+            recognizer.Subscribe(commandString, (eventArgs) =>
+            {
+                Assert.AreEqual(commandString, eventArgs.Command, "Command string returned did not match expected value.");
+                callback1Invoked = true;
+            });
+
+            recognizer.Start();
+            Thread.Sleep(100);  // Allow the Kinect to initialize
+
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("IAVA", AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(50);
+
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            Assert.IsTrue(callback1Invoked);
+            callback1Invoked = false;
+
+            Thread.Sleep(AudioRecognizer.SyncTimeoutValue + 100);
+
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, AudioRecognizer.AudioConfidenceThreshold + 0.01f));
+            Assert.IsFalse(callback1Invoked);
         }
 
         #region Private Methods And Attributes
 
+        /// <summary>
+        /// Recognizer object under test.
+        /// </summary>
         private AudioRecognizer recognizer;
 
+        /// <summary>
+        /// Used to determine if the recognizer status ballback was invoked.
+        /// </summary>
         private bool recognizerCallbackInvoked;
 
-        void RecognizerCallback(object sender, EventArgs e)
+        /// <summary>
+        /// Called when the recognizer's status changes.
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">event args</param>
+        private void RecognizerStatusCallback(object sender, EventArgs e)
         {
             recognizerCallbackInvoked = true;
         }
 
-        void AudioRecognizedCallback(AudioEventArgs e)
+        /// <summary>
+        /// Creates and sets up a mock speech recongition engine.
+        /// </summary>
+        /// <returns>Mock engine</returns>
+        private Mock<ISpeechRecognitionEngine> SetupMockSpeechRecognitionEngine()
         {
+            var mockEngine = new Mock<ISpeechRecognitionEngine>(MockBehavior.Strict);
 
+            // Setup the methods that are going to be called
+            mockEngine.Setup(m => m.LoadGrammar(It.IsAny<Grammar>()));
+            mockEngine.Setup(m => m.SetInputToAudioStream(It.IsAny<Stream>(), It.IsAny<SpeechAudioFormatInfo>()));
+            mockEngine.Setup(m => m.RecognizeAsync(RecognizeMode.Multiple));
+            mockEngine.Setup(m => m.RecognizeAsyncStop());
+
+            return mockEngine;
         }
 
         #endregion
