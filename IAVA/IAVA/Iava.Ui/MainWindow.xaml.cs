@@ -30,7 +30,8 @@ namespace Iava.Ui {
         public MainWindow() {
             InitializeComponent();
             m_pGestureRecognizer = new Gesture.GestureRecognizer(string.Empty);
-            m_pAudioRecognizer = new Audio.AudioRecognizer(string.Empty);
+            m_pAudioRecognizer = new AudioRecognizer(new SpeechRecognitionEngineWrapper()); // TODO:  Update this so a factory method creates the recognizer
+
             // Events
             m_pAudioRecognizer.StatusChanged    += OnAudioRecognizerStatusChanged;
             m_pGestureRecognizer.StatusChanged  += OnGestureRecognizerStatusChanged;

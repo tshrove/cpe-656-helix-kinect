@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\ThirdParty\Autofac\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration">
+      <HintPath>..\..\ThirdParty\Autofac\Autofac.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Research.Kinect, Version=1.0.0.45, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Microsoft SDKs\Kinect\v1.0 Beta2\Assemblies\Microsoft.Research.Kinect.dll</HintPath>
@@ -50,16 +56,19 @@
   <ItemGroup>
     <Compile Include="AudioEventArgs.cs" />
     <Compile Include="AudioRecognizer.cs" />
+    <Compile Include="IavaSpeechRecognizedEventArgs.cs" />
+    <Compile Include="ISpeechRecognitionEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IAVA\Iava.Core.csproj">
-      <Project>{80DF01EC-0E97-4B4D-A36F-FED9659D748A}</Project>
-      <Name>Iava.Core</Name>
-    </ProjectReference>
+    <Compile Include="SpeechRecognitionEngineWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Iava.Audio.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Iava.Core\Iava.Core.csproj">
+      <Project>{80DF01EC-0E97-4B4D-A36F-FED9659D748A}</Project>
+      <Name>Iava.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

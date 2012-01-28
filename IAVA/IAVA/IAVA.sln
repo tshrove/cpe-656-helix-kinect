@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Audio", "Iava.Audio\Ia
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Gesture", "Iava.Gesture\Iava.Gesture.csproj", "{39C4649E-594B-41FC-B9BE-0000AA88F569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Core", "IAVA\Iava.Core.csproj", "{80DF01EC-0E97-4B4D-A36F-FED9659D748A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Ui", "Iava.Ui\Iava.Ui.csproj", "{E30DADBC-D79B-4CE1-AB21-3335CB5DF7E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Input", "Iava.Camera\Iava.Input.csproj", "{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}"
@@ -19,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Test", "Iava.Test\Iava.Test.csproj", "{CF6A5E3A-A1EF-45EB-9CAF-CFC4C7B3093D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Core", "Iava.Core\Iava.Core.csproj", "{80DF01EC-0E97-4B4D-A36F-FED9659D748A}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -59,17 +59,6 @@ Global
 		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{39C4649E-594B-41FC-B9BE-0000AA88F569}.Release|x86.ActiveCfg = Release|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|x86.Build.0 = Debug|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|x86.ActiveCfg = Release|Any CPU
 		{E30DADBC-D79B-4CE1-AB21-3335CB5DF7E3}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{E30DADBC-D79B-4CE1-AB21-3335CB5DF7E3}.Debug|Any CPU.Build.0 = Debug|x86
 		{E30DADBC-D79B-4CE1-AB21-3335CB5DF7E3}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
@@ -103,6 +92,17 @@ Global
 		{CF6A5E3A-A1EF-45EB-9CAF-CFC4C7B3093D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{CF6A5E3A-A1EF-45EB-9CAF-CFC4C7B3093D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CF6A5E3A-A1EF-45EB-9CAF-CFC4C7B3093D}.Release|x86.ActiveCfg = Release|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Debug|x86.Build.0 = Debug|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{80DF01EC-0E97-4B4D-A36F-FED9659D748A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

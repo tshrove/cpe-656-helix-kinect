@@ -131,13 +131,13 @@
       <Project>{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}</Project>
       <Name>Iava.Input</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Iava.Core\Iava.Core.csproj">
+      <Project>{80DF01EC-0E97-4B4D-A36F-FED9659D748A}</Project>
+      <Name>Iava.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Iava.Gesture\Iava.Gesture.csproj">
       <Project>{39C4649E-594B-41FC-B9BE-0000AA88F569}</Project>
       <Name>Iava.Gesture</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IAVA\Iava.Core.csproj">
-      <Project>{80DF01EC-0E97-4B4D-A36F-FED9659D748A}</Project>
-      <Name>Iava.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
