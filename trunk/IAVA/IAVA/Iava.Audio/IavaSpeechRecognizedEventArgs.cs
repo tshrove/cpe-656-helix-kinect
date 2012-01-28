@@ -6,12 +6,25 @@ using Microsoft.Speech.Recognition;
 
 namespace Iava.Audio
 {
+    /// <summary>
+    /// Speed recognition event arguments.
+    /// </summary>
     public class IavaSpeechRecognizedEventArgs : EventArgs
     {
+        /// <summary>
+        /// The spoken text the engine recognized.
+        /// </summary>
         public string Text { get; private set; }
 
+        /// <summary>
+        /// The confidence level of the recognized speech.
+        /// </summary>
         public float Confidence { get; private set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="eventArg">Speech recognized event args</param>
         public IavaSpeechRecognizedEventArgs(SpeechRecognizedEventArgs eventArg)
         {
             if (eventArg == null)

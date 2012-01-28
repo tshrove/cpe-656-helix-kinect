@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.Speech.Recognition;
-using System.Collections.ObjectModel;
 using Microsoft.Speech.AudioFormat;
-using System.IO;
+using Microsoft.Speech.Recognition;
 
 namespace Iava.Audio
 {
+    /// <summary>
+    /// Speech recognition interface.
+    /// </summary>
     public interface ISpeechRecognitionEngine
     {
         event EventHandler<IavaSpeechRecognizedEventArgs> SpeechRecognized;

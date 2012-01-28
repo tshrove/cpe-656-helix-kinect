@@ -6,9 +6,15 @@ using Microsoft.Speech.Recognition;
 
 namespace Iava.Audio
 {
+    /// <summary>
+    /// Wraps Microsoft's SpeechRecognitionEngine class so it conforms to the
+    /// ISpeechRecognitionEngine interface.
+    /// </summary>
     public class SpeechRecognitionEngineWrapper : ISpeechRecognitionEngine
     {
-
+        /// <summary>
+        /// Event handler for when speech is recognized.
+        /// </summary>
         private event EventHandler<IavaSpeechRecognizedEventArgs> SpeechRecognizedHandler;
 
         /// <summary>
@@ -87,6 +93,11 @@ namespace Iava.Audio
 
         #endregion
 
+        /// <summary>
+        /// Occurs when speech is recognized.
+        /// </summary>
+        /// <param name="sender">object sender</param>
+        /// <param name="e">event args</param>
         private void OnSpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             if (SpeechRecognizedHandler != null)
