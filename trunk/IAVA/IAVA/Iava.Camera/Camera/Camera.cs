@@ -6,7 +6,7 @@ namespace Iava.Input.Camera {
     /// <summary>
     /// Wraps the Kinect Camera Sensor
     /// </summary>
-    public class Camera {
+    public class Camera: IDisposable{
 
         #region Public Events
 
@@ -48,7 +48,7 @@ namespace Iava.Input.Camera {
         }
 
         /// <summary>
-        /// Tilts the camera up 1 degree
+        /// Tilts the camera down 1 degree
         /// </summary>
         public void TiltDown() {
             // Valid Camera angle range is -27 to 27 degrees
@@ -58,7 +58,7 @@ namespace Iava.Input.Camera {
         }
 
         /// <summary>
-        /// Tilts the camera down 1 degree
+        /// Tilts the camera up 1 degree
         /// </summary>
         public void TiltUp() {
             // Valid Camera angle range is -25 to 25 degrees
