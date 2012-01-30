@@ -60,7 +60,7 @@ namespace Iava.Test.Gesture
         /// Tests the constructor of the gesturerecognizer.
         /// </summary>
         [TestMethod]
-        public void GestureRecognizerConstructorTest
+        public void GestureRecognizerConstructorTest()
         {
            //GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
 
