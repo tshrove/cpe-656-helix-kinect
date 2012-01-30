@@ -61,9 +61,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\AudioRecognizerTest.cs">
+    <None Include="Audio\AudioRecognizerTest.cs">
       <SubType>Code</SubType>
-    </Compile>
+    </None>
     <Compile Include="Input\CameraTest.cs" />
     <Compile Include="Gesture\GestureRecognizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

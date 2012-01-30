@@ -60,10 +60,15 @@ namespace Iava.Test.Gesture
         /// Tests the constructor of the gesturerecognizer.
         /// </summary>
         [TestMethod]
+        [DeploymentItem("Iava.Gesture.dll")]
         public void GestureRecognizerConstructorTest()
         {
-           //GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
-
+            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+            Assert.IsNull(recognizer.Camera);
+            Assert.IsNotNull(recognizer.GestureCallbacks);
+            Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
+            Assert.AreEqual(recognizer.GestureCallbacks.Count, expected.Count);
+            Assert.IsInstanceOfType(recognizer.GestureCallbacks, typeof(Dictionary<string, GestureCallback>));
         }
 
         /// <summary>
