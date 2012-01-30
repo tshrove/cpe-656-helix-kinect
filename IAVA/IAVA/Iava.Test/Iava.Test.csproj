@@ -61,9 +61,12 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio\AudioRecognizerTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Input\CameraTest.cs" />
     <Compile Include="Gesture\GestureRecognizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Audio\AudioRecognizerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Iava.Audio\Iava.Audio.csproj">
