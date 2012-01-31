@@ -93,7 +93,7 @@ namespace Iava.Test.Audio
         [TestMethod]
         public void StartTest()
         {
-            recognizer = new AudioRecognizer(new SpeechRecognitionEngineWrapper());
+            recognizer = new AudioRecognizer(string.Empty);
 
             Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
             recognizer.Started += RecognizerStatusCallback;
@@ -125,7 +125,7 @@ namespace Iava.Test.Audio
         [TestMethod]
         public void StopTest()
         {
-            recognizer = new AudioRecognizer(new SpeechRecognitionEngineWrapper());
+            recognizer = new AudioRecognizer(string.Empty);
 
             Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
             recognizer.Stopped += RecognizerStatusCallback;
@@ -285,6 +285,20 @@ namespace Iava.Test.Audio
             var mockEngine = SetupMockSpeechRecognitionEngine();
             recognizer = new AudioRecognizer(mockEngine.Object);
 
+            bool syncedCallbackInvoked = false;
+            recognizer.Synced += 
+                (sender, args) => 
+                {
+                    syncedCallbackInvoked = true;
+                };
+
+            bool unsyncedCallbackInvoked = false;
+            recognizer.Unsynced +=
+                (sender, args) =>
+                {
+                    unsyncedCallbackInvoked = true;
+                };
+
             // Sync the recognizer, call a command, wait until un-sync and re-call the same command.
             // Ensure the callback is not called twice.
 
@@ -300,12 +314,14 @@ namespace Iava.Test.Audio
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("IAVA", AudioRecognizer.AudioConfidenceThreshold + 0.01f));
             Thread.Sleep(50);
+            Assert.IsTrue(syncedCallbackInvoked);
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, AudioRecognizer.AudioConfidenceThreshold + 0.01f));
             Assert.IsTrue(callback1Invoked);
             callback1Invoked = false;
 
             Thread.Sleep(AudioRecognizer.SyncTimeoutValue + 100);
+            Assert.IsTrue(unsyncedCallbackInvoked);
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, AudioRecognizer.AudioConfidenceThreshold + 0.01f));
             Assert.IsFalse(callback1Invoked);
