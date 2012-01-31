@@ -122,6 +122,7 @@ namespace Iava.Audio
             this.AudioCallbacks.Add(syncCommand, null);
             // TODO Add the function to load the gestures to the dictionary.
 
+            speechEngine = new SpeechRecognitionEngineWrapper();
         }
 
         /// <summary>

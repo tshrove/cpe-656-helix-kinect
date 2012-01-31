@@ -71,7 +71,7 @@ namespace Iava.Core {
         public abstract void Start();
 
         /// <summary>
-        ///  Stops the recognizer.
+        /// Stops the recognizer.
         /// </summary>
         public abstract void Stop();
 
@@ -114,8 +114,8 @@ namespace Iava.Core {
         /// <summary>
         /// Raises before the recognizer starts.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of event</param>
+        /// <param name="e">Event args</param>
         protected void OnStarted(object sender, EventArgs e) {
             if (Started != null)
                 m_syncContext.Post(new SendOrPostCallback(delegate(object state) { Started(this, e); }), null);
@@ -124,8 +124,8 @@ namespace Iava.Core {
         /// <summary>
         /// Raises before the recognizer stops.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of event</param>
+        /// <param name="e">Event args</param>
         protected void OnStopped(object sender, EventArgs e) {
             if (Stopped != null)
                 m_syncContext.Post(new SendOrPostCallback(delegate(object state) { Stopped(this, e); }), null);
@@ -134,8 +134,8 @@ namespace Iava.Core {
         /// <summary>
         /// Raises before the recognizer fails.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of event</param>
+        /// <param name="e">Event args</param>
         protected void OnFailed(object sender, EventArgs e) {
             if (Failed != null)
                 m_syncContext.Post(new SendOrPostCallback(delegate(object state) { Failed(this, e); }), null);
@@ -144,8 +144,8 @@ namespace Iava.Core {
         /// <summary>
         /// Raises when the recognizer is synced.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of event</param>
+        /// <param name="e">Event args</param>
         protected void OnSynced(object sender, EventArgs e) {
             // Only throw the event if we were previously unsynced
             if (!m_isSynced && (Synced != null)) {
@@ -161,8 +161,8 @@ namespace Iava.Core {
         /// <summary>
         /// Raises when the recognizer is unsynced.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of event</param>
+        /// <param name="e">Event args</param>
         protected void OnUnsynced(object sender, EventArgs e) {
             // Only throw the event if we were previously synced
             if (m_isSynced && (Unsynced != null)) {
@@ -175,8 +175,8 @@ namespace Iava.Core {
         /// <summary>
         /// Raises when the status of the recognizer is changed.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of event</param>
+        /// <param name="e">Event args</param>
         protected void OnStatusChanged(object sender, EventArgs e) {
             if (StatusChanged != null) {
                 m_syncContext.Post(new SendOrPostCallback(delegate(object state) { StatusChanged(this, e); }), null);
@@ -186,8 +186,8 @@ namespace Iava.Core {
         /// <summary>
         /// Raised when the Timeout Timer expires.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Sender of event</param>
+        /// <param name="e">Event args</param>
         protected void OnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e) {
             OnUnsynced(this, e);
         }
@@ -216,14 +216,24 @@ namespace Iava.Core {
 
         #region Private Fields
 
+        /// <summary>
+        /// Recognizer status.
+        /// </summary>
         private RecognizerStatus m_pStatus = RecognizerStatus.NotReady;
 
+        /// <summary>
+        /// Specifies if the recongizer is synced.
+        /// </summary>
         protected bool m_isSynced = false;
 
+        /// <summary>
+        /// Syncronization timeout timer.
+        /// </summary>
         protected System.Timers.Timer m_timeoutTimer = new System.Timers.Timer(SyncTimeoutValue);
 
-        //protected Thread m_thread;
-
+        /// <summary>
+        /// Synchronization context.
+        /// </summary>
         protected SynchronizationContext m_syncContext;
 
         /// <summary>
