@@ -61,9 +61,6 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Audio\AudioRecognizerTest.cs">
-      <SubType>Code</SubType>
-    </None>
     <Compile Include="Input\CameraTest.cs" />
     <Compile Include="Gesture\GestureRecognizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,7 +86,11 @@
   <ItemGroup>
     <Shadow Include="Test References\Iava.Gesture.accessor" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Audio\AudioRecognizerTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -21,6 +21,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Core", "Iava.Core\Iava.Core.csproj", "{80DF01EC-0E97-4B4D-A36F-FED9659D748A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParty", "ThirdParty", "{CF10F1EE-1A7E-4640-A4BF-00A413EE96C4}"
+	ProjectSection(SolutionItems) = preProject
+		..\ThirdParty\Autofac\Autofac.Configuration.dll = ..\ThirdParty\Autofac\Autofac.Configuration.dll
+		..\ThirdParty\Autofac\Autofac.dll = ..\ThirdParty\Autofac\Autofac.dll
+		..\ThirdParty\Moq\Moq.dll = ..\ThirdParty\Moq\Moq.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
