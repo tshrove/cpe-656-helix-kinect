@@ -207,41 +207,6 @@ namespace Iava.Gesture
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
         }
         
-        private void OnGestureRecognized(object sender, GestureEventArgs e) {
-            // If we just synced, set the flag and return
-            if (e.Name == SyncGesture.Name) {
-                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { OnSynced(this, e); }), null);
-                return;
-            }
-
-            if (GestureCallbacks.ContainsKey(e.Name)) {
-                // We found a command, reset the timer
-                ResetTimer();
-
-                // Throw the gesture event
-                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { GestureCallbacks[e.Name].Invoke(e); }), null);
-
-                // Reset all the gesture states
-                SupportedGestures.ForEach(x => x.Reset());
-            }
-
-            else { /* No one cares about this gesture =( */ }
-        }
-
-        private void OnSkeletonReady(object sender, SkeletonEventArgs e) {
-
-            // If we're synced up look for gestures
-            if (m_isSynced) {
-                // Check to see if this skeleton frame completes one of our supported gestures
-                foreach (Gesture.GestureStuff.Gesture gesture in SupportedGestures) {
-                    gesture.CheckForGesture(e.Skeleton);
-                }
-            }
-
-            // Check for the sync gesture
-            else { SyncGesture.CheckForGesture(e.Skeleton); }
-        }
-
         private void SetupGestureDevice(CancellationToken token) {
             // I probably want to instatiate a Camera in here instead of the constructor...
             if (!token.IsCancellationRequested) {
@@ -265,5 +230,44 @@ namespace Iava.Gesture
         }
 
         #endregion Private Methods
+
+        #region Protected Methods
+
+        protected void OnGestureRecognized(object sender, GestureEventArgs e) {
+            // If we just synced, set the flag and return
+            if (e.Name == SyncGesture.Name) {
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { OnSynced(this, e); }), null);
+                return;
+            }
+
+            if (GestureCallbacks.ContainsKey(e.Name)) {
+                // We found a command, reset the timer
+                ResetTimer();
+
+                // Throw the gesture event
+                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { GestureCallbacks[e.Name].Invoke(e); }), null);
+
+                // Reset all the gesture states
+                SupportedGestures.ForEach(x => x.Reset());
+            }
+
+            else { /* No one cares about this gesture =( */ }
+        }
+
+        protected void OnSkeletonReady(object sender, SkeletonEventArgs e) {
+
+            // If we're synced up look for gestures
+            if (m_isSynced) {
+                // Check to see if this skeleton frame completes one of our supported gestures
+                foreach (Gesture.GestureStuff.Gesture gesture in SupportedGestures) {
+                    gesture.CheckForGesture(e.Skeleton);
+                }
+            }
+
+            // Check for the sync gesture
+            else { SyncGesture.CheckForGesture(e.Skeleton); }
+        }
+
+        #endregion Protected Methods
     }
 }
