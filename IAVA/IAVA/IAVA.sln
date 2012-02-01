@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Test", "Iava.Test\Iava
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Core", "Iava.Core\Iava.Core.csproj", "{80DF01EC-0E97-4B4D-A36F-FED9659D748A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParty", "ThirdParty", "{CF10F1EE-1A7E-4640-A4BF-00A413EE96C4}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -106,5 +108,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CF10F1EE-1A7E-4640-A4BF-00A413EE96C4} = {19764636-D7AB-41FB-81C7-9AA6012165EA}
 	EndGlobalSection
 EndGlobal
