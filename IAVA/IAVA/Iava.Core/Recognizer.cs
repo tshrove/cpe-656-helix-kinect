@@ -80,21 +80,9 @@ namespace Iava.Core {
         #region Constructors
 
         /// <summary>
-        /// Default Constructor.
+        /// Deafult constructor.
         /// </summary>
-        public Recognizer()
-            : this(null) {
-           // Nothing to do.
-        }
-
-        /// <summary>
-        /// Constructor that takes the file and creates the recognizer based on
-        /// the file input.
-        /// </summary>
-        /// <param name="filePath">Path to the configuration file</param>
-        public Recognizer(string filePath) {
-            // TODO Check for correct file path and may want to do stuff with.
-            //this.Configuration = new FileStream(filePath, FileMode.Open);
+        public Recognizer() {
 
             m_timeoutTimer.Elapsed += OnTimerElapsed;
 

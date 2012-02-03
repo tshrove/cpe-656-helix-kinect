@@ -98,9 +98,9 @@ namespace Iava.Gesture
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="filePath"></param>
+        /// <param name="filePath">Path to gesture file</param>
         public GestureRecognizer(string filePath)
-            : base(filePath) {
+            : base() {
 
             // Don't really like this here, but the UI
             // depends on this property being set in
