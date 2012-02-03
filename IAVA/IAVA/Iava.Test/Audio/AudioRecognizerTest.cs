@@ -169,19 +169,25 @@ namespace Iava.Test.Audio
 
             recognizer = new AudioRecognizer(mockEngine.Object);
 
-            int methodCallbackCount = 0;
             bool callback1Invoked = false;
             recognizer.Subscribe(commandString, (eventArgs) => 
                 {
-                    Assert.AreEqual(commandString, eventArgs.Command, "Command string returned did not match expected value.");
-                    methodCallbackCount++;
-                    callback1Invoked = true;
-
-                    if (methodCallbackCount > 1)
+                    if (callback1Invoked)
                     {
-                        Assert.Fail("Audio callback method was called when with a confidence value less than the threshold.");
+                        Assert.Fail("Audio callback method was called more than once.");
                     }
+
+                    Assert.AreEqual(commandString, eventArgs.Command, "Command string returned did not match expected value.");
+                    callback1Invoked = true;                   
                 });
+
+            const string commandString2 = "Command String 2";
+            bool callback2Invoked = false;
+            recognizer.Subscribe(commandString2, (eventArgs) =>
+            {
+                Assert.AreEqual(commandString2, eventArgs.Command, "Command string returned did not match expected value.");
+                callback2Invoked = true;
+            });
 
             // Test for exception throwing on invalid parameters entered
             try
@@ -203,7 +209,6 @@ namespace Iava.Test.Audio
             }
             
             recognizer.Start();
-            //Thread.Sleep(100);  // Allow the Kinect to initialize
 
             // Sync the callback first then raise spoken event
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("Blah Blah blah", recognizer.AudioConfidenceThreshold + 0.01f));
@@ -211,23 +216,15 @@ namespace Iava.Test.Audio
             Thread.Sleep(50);
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("Blah Blah blah", recognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(100);
             Assert.IsTrue(callback1Invoked);
 
             // Callback with the same command but with confidence below the threshold level to ensure the audio callback method is not called
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold - 0.01f));
 
-            // Test that an exception is not propagated when an audio callback throws an exception
-            const string commandString2 = "Command String 2";
-            bool callback2Invoked = false;
-            recognizer.Subscribe(commandString2, (eventArgs) => 
-                {
-                    Assert.AreEqual(commandString2, eventArgs.Command, "Command string returned did not match expected value.");
-                    callback2Invoked = true;
-                    throw new Exception ("Kaboom!");
-                });
-            //Thread.Sleep(100); // Restart occurred, allow time to setup
-
+            // Call second command
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString2, 0.95f));
+            Thread.Sleep(100);
             Assert.IsTrue(callback2Invoked);
         }
 
@@ -270,17 +267,16 @@ namespace Iava.Test.Audio
                 });
 
             recognizer.Start();
-            //Thread.Sleep(100);  // Allow the Kinect to initialize
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("IAVA", recognizer.AudioConfidenceThreshold + 0.01f));
             Thread.Sleep(50);
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(100);
             Assert.IsTrue(callback1Invoked);
             callback1Invoked = false;
 
             recognizer.Unsubscribe(commandString);
-            //Thread.Sleep(100);  // Restart occurred, allow time to setup
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
             Assert.IsFalse(callback1Invoked, "Audio callback method was called when the command was unsubscribed.");           
@@ -325,13 +321,13 @@ namespace Iava.Test.Audio
             });
 
             recognizer.Start();
-            //Thread.Sleep(100);  // Allow the Kinect to initialize
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("IAVA", recognizer.AudioConfidenceThreshold + 0.01f));
             Thread.Sleep(50);
             Assert.IsTrue(syncedCallbackInvoked);
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(100);
             Assert.IsTrue(callback1Invoked);
             callback1Invoked = false;
 
