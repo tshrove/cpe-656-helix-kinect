@@ -212,7 +212,7 @@ namespace Iava.Test.Audio
 
             // Sync the callback first then raise spoken event
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("Blah Blah blah", recognizer.AudioConfidenceThreshold + 0.01f));
-            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("IAVA", recognizer.AudioConfidenceThreshold + 0.01f));
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(recognizer.SyncCommand, recognizer.AudioConfidenceThreshold + 0.01f));
             Thread.Sleep(50);
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("Blah Blah blah", recognizer.AudioConfidenceThreshold + 0.01f));
@@ -268,7 +268,7 @@ namespace Iava.Test.Audio
 
             recognizer.Start();
 
-            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("IAVA", recognizer.AudioConfidenceThreshold + 0.01f));
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(recognizer.SyncCommand, recognizer.AudioConfidenceThreshold + 0.01f));
             Thread.Sleep(50);
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
@@ -289,8 +289,6 @@ namespace Iava.Test.Audio
         public void SyncUnsyncTest()
         {
             const string commandString = "Test Callback";
-
-            // TODO: Make the sync timeout value configurable.  That way this test will not run for a long time
 
             // Create a mock speech engine and set it up
             var mockEngine = SetupMockSpeechRecognitionEngine();
@@ -322,7 +320,7 @@ namespace Iava.Test.Audio
 
             recognizer.Start();
 
-            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("IAVA", recognizer.AudioConfidenceThreshold + 0.01f));
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(recognizer.SyncCommand, recognizer.AudioConfidenceThreshold + 0.01f));
             Thread.Sleep(50);
             Assert.IsTrue(syncedCallbackInvoked);
 
@@ -336,6 +334,64 @@ namespace Iava.Test.Audio
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
             Assert.IsFalse(callback1Invoked);
+        }
+
+        /// <summary>
+        /// Tests changing the sync command
+        /// </summary>
+        [TestMethod]
+        public void SyncCommandTest()
+        {        
+            // Create a mock speech engine and set it up
+            var mockEngine = SetupMockSpeechRecognitionEngine();
+            recognizer = new AudioRecognizer(mockEngine.Object);
+
+            // Test changing the sync command
+            try { recognizer.SyncCommand = null; }
+            catch (Exception exception)
+            {
+                Assert.IsInstanceOfType(exception, typeof(ArgumentException));
+            }
+
+            try { recognizer.SyncCommand = string.Empty; }
+            catch (Exception exception)
+            {
+                Assert.IsInstanceOfType(exception, typeof(ArgumentException));
+            }
+
+            try { recognizer.SyncCommand = "          "; }
+            catch (Exception exception)
+            {
+                Assert.IsInstanceOfType(exception, typeof(ArgumentException));
+            }
+
+            recognizer.SyncCommand = "Test Sync Command";  
+
+            const string commandString = "Test Callback";
+            bool callback1Invoked = false;
+            recognizer.Subscribe(commandString, (eventArgs) =>
+            {
+                Assert.AreEqual(commandString, eventArgs.Command, "Command string returned did not match expected value.");
+                callback1Invoked = true;
+            });
+
+            recognizer.Start();
+
+            // Sync the callback first then raise spoken event
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(recognizer.SyncCommand, recognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(50);
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(100);
+            Assert.IsTrue(callback1Invoked);
+            callback1Invoked = false;
+
+            // Change the sync command, re-sync and recognize the command again
+            recognizer.SyncCommand = "Open the pod bay doors HAL...";
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(recognizer.SyncCommand, recognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(50);
+            mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(100);
+            Assert.IsTrue(callback1Invoked);
         }
 
         #region Private Methods And Attributes
