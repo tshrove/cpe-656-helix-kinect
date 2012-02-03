@@ -43,7 +43,33 @@ namespace Iava.Audio
 
                 audioConfidenceThreshold = value;
             }
-        } 
+        }
+
+        /// <summary>
+        /// The command that syncs the recognizer.
+        /// </summary>
+        public string SyncCommand
+        {
+            get
+            {
+                return syncCommand;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("value", "Sync command was either null, empty, or consisted of only whitespace.");
+                }
+
+                syncCommand = value;
+
+                if (Status == RecognizerStatus.Running)
+                {
+                    Stop();
+                    Start();
+                }
+            }
+        }
 
         #endregion
 
