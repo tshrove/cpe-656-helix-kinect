@@ -40,6 +40,12 @@ namespace Iava.Gesture
             if (Status != RecognizerStatus.Running) {
                 Task.Factory.StartNew(() => SetupGestureDevice(tokenSource.Token), tokenSource.Token);
 
+                // Wait for the SetupGestureDevice call to complete
+                m_resetEvent.WaitOne();
+                
+                // Reset the event
+                m_resetEvent.Reset();
+
                 // TODO: Should this be called inside the task?
                 OnStarted(this, new EventArgs());
             }
@@ -222,10 +228,13 @@ namespace Iava.Gesture
 
                     Status = RecognizerStatus.Running;
                 }
+
                 catch (Exception e) {
                     // TODO: Log message.  Failed to detect Kinect or start Camera
                     Status = RecognizerStatus.Error;
                 }
+
+                finally { m_resetEvent.Set(); }
             }
         }
 
