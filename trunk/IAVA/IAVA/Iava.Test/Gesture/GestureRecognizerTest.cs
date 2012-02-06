@@ -75,7 +75,7 @@ namespace Iava.Test.Gesture
         /// Tests the Start method.
         /// </summary>
         [TestMethod]
-        public void StartTest()
+        public void GestureStartTest()
         {
             // The recognizerCallbackInvoked variable is set to false automatically.
             GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
@@ -84,7 +84,7 @@ namespace Iava.Test.Gesture
             try
             {
                 recognizer.Start();
-                Thread.Sleep(5000);
+                Thread.Sleep(100);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
 
                 // Ensure the OnStarted callback was invoked
@@ -97,6 +97,7 @@ namespace Iava.Test.Gesture
             finally
             {
                 recognizer.Stop();
+                Thread.Sleep(100);
             }
         }
 
@@ -121,7 +122,7 @@ namespace Iava.Test.Gesture
         /// Tests the Stop method.
         /// </summary>
         [TestMethod]
-        public void StopTest()
+        public void GestureStopTest()
         {
             // The recognizerCallbackInvoked variable is set to false automatically.
             GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
@@ -130,11 +131,11 @@ namespace Iava.Test.Gesture
             try
             {
                 recognizer.Start();
-                Thread.Sleep(5000);
+                Thread.Sleep(100);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
 
                 recognizer.Stop();
-                Thread.Sleep(5000);
+                Thread.Sleep(100);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
                 Assert.IsTrue(recognizerCallbackInvoked, "OnStopped callback was not invoked.");
 
@@ -142,10 +143,10 @@ namespace Iava.Test.Gesture
                 recognizer.Start();
 
                 recognizer.Stop();
-                Thread.Sleep(5000);
+                Thread.Sleep(100);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
                 recognizer.Start();
-                Thread.Sleep(5000);
+                Thread.Sleep(100);
                 Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
             }
             catch (Exception ex)
@@ -163,7 +164,7 @@ namespace Iava.Test.Gesture
         /// </summary>
         [TestMethod]
         [DeploymentItem("Iava.Gesture.dll")]
-        public void SubscribeTest()
+        public void GestureSubscribeTest()
         {
             try
             {
@@ -199,7 +200,7 @@ namespace Iava.Test.Gesture
         /// </summary>
         [TestMethod]
         [DeploymentItem("Iava.Gesture.dll")]
-        public void UnsubscribeTest()
+        public void GestureUnsubscribeTest()
         {
             try
             {
