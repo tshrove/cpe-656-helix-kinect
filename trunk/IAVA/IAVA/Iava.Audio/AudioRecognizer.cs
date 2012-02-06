@@ -83,7 +83,10 @@ namespace Iava.Audio
                 Task.Factory.StartNew(() => SetupAudioDevice(tokenSource.Token), tokenSource.Token);
 
                 // Wait until the thread has finished
-                resetEvent.WaitOne();
+                m_resetEvent.WaitOne();
+
+                // Reset the event
+                m_resetEvent.Reset();
 
                 OnStarted(this, new EventArgs());
             }
@@ -248,7 +251,7 @@ namespace Iava.Audio
             }
             finally
             {
-                resetEvent.Set();
+                m_resetEvent.Set();
             }
         }
 
@@ -368,11 +371,6 @@ namespace Iava.Audio
         /// Confidence threshold.
         /// </summary>
         private float audioConfidenceThreshold = 0.8f;
-
-        /// <summary>
-        /// Event used to signal the setup audio thread has finished.
-        /// </summary>
-        private readonly AutoResetEvent resetEvent = new AutoResetEvent(false);
 
         #endregion Private Fields
     }
