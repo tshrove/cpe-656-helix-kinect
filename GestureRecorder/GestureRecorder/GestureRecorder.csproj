@@ -49,6 +49,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xml.Schema.Linq">
+      <HintPath>C:\Users\Tshrove\Desktop\linqtoxsd.2.0.2.56002-bin\linqtoxsd.2.0.2.56002-bin\Xml.Schema.Linq.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -91,6 +94,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GestureRecorder.DataStructures\GestureRecorder.DataStructures.csproj">
+      <Project>{603E0319-9369-4FE8-8FC5-8EAC5326BAC6}</Project>
+      <Name>GestureRecorder.DataStructures</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
