@@ -22,16 +22,20 @@ namespace GestureRecorder {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.ShowDialog();
-            if (System.IO.File.Exists(dlg.FileName))
-            {
-                System.IO.FileStream file = new System.IO.FileStream(dlg.FileName, System.IO.FileMode.Open);
-                System.IO.StreamReader stream = new System.IO.StreamReader(file);
-                Gesture gesture = Gesture.Load(stream);
-            }
+            this.Close();
+        }
+
+        private void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            CreateGestureWindow window = new CreateGestureWindow();
+            Nullable<bool> results = window.ShowDialog();
         }
     }
 }

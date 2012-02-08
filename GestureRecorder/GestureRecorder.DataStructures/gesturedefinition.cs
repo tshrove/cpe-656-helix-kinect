@@ -7,6 +7,17 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+//
+// Example of how to use this.
+//
+//Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+//            dlg.ShowDialog();
+//            if (System.IO.File.Exists(dlg.FileName))
+//            {
+//                System.IO.FileStream file = new System.IO.FileStream(dlg.FileName, System.IO.FileMode.Open);
+//                System.IO.StreamReader stream = new System.IO.StreamReader(file);
+//                Gesture gesture = Gesture.Load(stream);
+//            }
 
 namespace tempuri.org.GestureDefinition.xsd {
     using System;
