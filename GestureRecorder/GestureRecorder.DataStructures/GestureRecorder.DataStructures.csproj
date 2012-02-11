@@ -39,7 +39,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Xml.Schema.Linq">
-      <HintPath>C:\Users\Tshrove\Desktop\linqtoxsd.2.0.2.56002-bin\linqtoxsd.2.0.2.56002-bin\Xml.Schema.Linq.dll</HintPath>
+      <HintPath>..\GestureRecorder\Resources\Xml.Schema.Linq.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
