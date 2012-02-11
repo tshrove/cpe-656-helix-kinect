@@ -57,8 +57,8 @@ namespace Iava.Ui {
             m_pAudioRecognizer.Subscribe("Move West", MoveWestCallback);
             m_pAudioRecognizer.Subscribe("Blow Up", BlowUp);
 
-            m_pGestureRecognizer.Camera.ImageFrameReady += OnCameraImageFrameReady;
-            m_pGestureRecognizer.Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
+            Camera.ImageFrameReady += OnCameraImageFrameReady;
+            Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
 
             m_pAudioSyncTimer = new System.Timers.Timer(1000);
             m_pAudioSyncTimer.Elapsed += OnAudioSyncTimerElapsed;
@@ -74,8 +74,6 @@ namespace Iava.Ui {
             lblAudioSyncTime.Background = lblGestureSyncTime.Background = backgroundBrush;
             lblAudioTTL.Background = lblGestureTTL.Background = backgroundBrush;
         }
-
-        
 
         #endregion Constructors
 

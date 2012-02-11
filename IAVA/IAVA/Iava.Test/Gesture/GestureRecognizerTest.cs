@@ -64,7 +64,6 @@ namespace Iava.Test.Gesture
         public void GestureRecognizerConstructorTest()
         {
             GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
-            Assert.IsNull(recognizer.Camera);
             Assert.IsNotNull(recognizer.GestureCallbacks);
             Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
             Assert.AreEqual(recognizer.GestureCallbacks.Count, expected.Count);

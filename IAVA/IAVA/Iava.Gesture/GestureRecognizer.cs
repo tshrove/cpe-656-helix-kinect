@@ -23,11 +23,11 @@ namespace Iava.Gesture
     public class GestureRecognizer : Recognizer {
 
         #region Public Properties
-
+        /*
         /// <summary>
         /// Not sure if we want to make this public or not.
         /// </summary>
-        public Camera Camera { get; private set; }
+        public Camera Camera { get; private set; }*/
 
         #endregion Public Properties
 
@@ -58,8 +58,8 @@ namespace Iava.Gesture
             tokenSource.Cancel();
             tokenSource = new CancellationTokenSource();
 
-            // Hotfix
-            Camera.Dispose();
+            // Unsubscribe from the events
+            Camera.SkeletonReady -= OnSkeletonReady;
 
             Status = RecognizerStatus.Ready;
 
@@ -218,8 +218,6 @@ namespace Iava.Gesture
             if (!token.IsCancellationRequested) {
                 // Try to connect to the camera first.  If this fails there is no point in continuing
                 try {
-                    Camera = new Camera();
-
                     // Register with some camera events
                     Camera.SkeletonReady += OnSkeletonReady;
 
