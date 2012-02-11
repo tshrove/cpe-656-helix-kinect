@@ -56,6 +56,7 @@ namespace Iava.Ui {
             m_pAudioRecognizer.Subscribe("Move East", MoveEastCallback);
             m_pAudioRecognizer.Subscribe("Move West", MoveWestCallback);
             m_pAudioRecognizer.Subscribe("Blow Up", BlowUp);
+            m_pAudioRecognizer.Subscribe("Exit", BlowUp);
 
             Camera.ImageFrameReady += OnCameraImageFrameReady;
             Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
