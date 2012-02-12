@@ -60,6 +60,20 @@ namespace GestureRecorder.Properties {
             }
         }
         
+        public static System.Drawing.Bitmap bluecircle {
+            get {
+                object obj = ResourceManager.GetObject("bluecircle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        public static System.Drawing.Bitmap circle {
+            get {
+                object obj = ResourceManager.GetObject("circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         public static System.Drawing.Bitmap Skeleton {
             get {
                 object obj = ResourceManager.GetObject("Skeleton", resourceCulture);
