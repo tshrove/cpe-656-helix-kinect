@@ -1,41 +1,54 @@
 ﻿<Window x:Class="GestureRecorder.CreateGestureWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Create Gestures" Height="446" Width="1048" Background="#FF313131" ShowInTaskbar="False" WindowStyle="SingleBorderWindow" ResizeMode="NoResize">
+        Title="Create Gestures" Height="446" Width="1048" Background="#FF313131" ShowInTaskbar="False" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" Loaded="OnWindowLoaded">
     <DockPanel LastChildFill="True">
         <Border BorderBrush="Gray" CornerRadius="1" Width="150" DockPanel.Dock="Right">
             <StackPanel>
-                <Button Content="Snapshot" Margin="2" Name="btnSnapshot" Height="30" />
+                <Button Content="Snapshot" Margin="2" Name="btnSnapshot" Height="30" Click="OnSnapshotClick" />
                 <Button Content="Next" Margin="2" Name="btnNext" Height="30"/>
-                <Button Content="Cancel" Margin="2" Name="btnCancel" Click="btnCancel_Click" Height="30"/>
+                <Button Content="Cancel" Margin="2" Name="btnCancel" Click="OnCancelClick" Height="30"/>
+                <Image Name="VideoFeed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             </StackPanel>
         </Border>
         <StackPanel DockPanel.Dock="Right">
             <TextBlock Text="Select Joints to Record" HorizontalAlignment="Center" Foreground="Wheat"/>
             <Grid>
                 <Image Width="200" Height="Auto" Source="Resources/Skeleton.png" />
-                <Image Name="dotHead" Width="10" Height="10" Margin="88,28,102,348" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotShoulderCenter" Width="10" Height="10" Margin="88,69,102,307" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotShoulderLeft" Width="10" Height="10" Margin="57,69,133,307" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotShoulderRight" Width="10" Height="10" Margin="123,69,67,307" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotElbowLeft" Width="10" Height="10" Margin="34,131,156,245" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp" />
-                <Image Name="dotElbowRight" Width="10" Height="10" Margin="138,132,52,244" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotWristLeft" Width="10" Height="10" Margin="29,182,161,194" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotWristRight" Width="10" Height="10" Margin="154,182,36,194" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotHandLeft" Width="10" Height="10" Margin="34,205,156,171" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotHandRight" Width="10" Height="10" Margin="162,205,28,171" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp" />
-                <Image Name="dotSpine" Width="10" Height="10" Margin="88,128,102,248" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotHipLeft" Width="10" Height="10" Margin="65,162,125,214" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotHipRight" Width="10" Height="10" Margin="110,163,80,213" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotKneeLeft" Width="10" Height="10" Margin="75,262,115,114" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotKneeRight" Width="10" Height="10" Margin="99,262,91,114" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotAnkleLeft" Width="10" Height="10" Margin="77,338,113,38" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotAnkleRight" Width="10" Height="10" Margin="97,338,93,38" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotFootLeft" Width="10" Height="10" Margin="69,357,121,19" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
-                <Image Name="dotFootRight" Width="10" Height="10" Margin="106,358,84,18" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="dot_MouseLeftButtonUp"/>
+                <Image Name="dotHead" Width="10" Height="10" Margin="88,28,102,348" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotShoulderCenter" Width="10" Height="10" Margin="88,69,102,307" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotShoulderLeft" Width="10" Height="10" Margin="57,69,133,307" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotShoulderRight" Width="10" Height="10" Margin="123,69,67,307" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotElbowLeft" Width="10" Height="10" Margin="34,131,156,245" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick" />
+                <Image Name="dotElbowRight" Width="10" Height="10" Margin="138,132,52,244" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotWristLeft" Width="10" Height="10" Margin="29,182,161,194" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotWristRight" Width="10" Height="10" Margin="154,182,36,194" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotHandLeft" Width="10" Height="10" Margin="34,205,156,171" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotHandRight" Width="10" Height="10" Margin="162,205,28,171" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick" />
+                <Image Name="dotSpine" Width="10" Height="10" Margin="88,128,102,248" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotHipLeft" Width="10" Height="10" Margin="65,162,125,214" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotHipRight" Width="10" Height="10" Margin="110,163,80,213" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotKneeLeft" Width="10" Height="10" Margin="75,262,115,114" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotKneeRight" Width="10" Height="10" Margin="99,262,91,114" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotAnkleLeft" Width="10" Height="10" Margin="77,338,113,38" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotAnkleRight" Width="10" Height="10" Margin="97,338,93,38" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotFootLeft" Width="10" Height="10" Margin="69,357,121,19" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
+                <Image Name="dotFootRight" Width="10" Height="10" Margin="106,358,84,18" Source="Resources/circle.png" Opacity="0.5" MouseLeftButtonUp="OnJointClick"/>
             </Grid>
         </StackPanel>
-        
-        <ListBox Margin="4"/>
+        <Grid Name="gridSnapshot" Margin="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.2*" />
+            </Grid.ColumnDefinitions>
+        </Grid>
     </DockPanel>
 </Window>
+
