@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Effects;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Iava.Gesture;
 using Iava.Audio;
+using Iava.Gesture;
 using Iava.Input.Camera;
 
 namespace Iava.Ui {
@@ -291,7 +283,7 @@ namespace Iava.Ui {
         }
 
         /// <summary>
-        /// Raises when the camera frame is ready to be viewed.
+        /// Displays the raw camera image from the Kinect sensor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -304,7 +296,7 @@ namespace Iava.Ui {
         }
 
         /// <summary>
-        /// Raised when a full skeleton frame is ready to be viewed
+        /// Displays the full skeleton image from the Kinect sensor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -467,21 +459,6 @@ namespace Iava.Ui {
             // Return the new point
             return new Point(newX, newY);
         }
-
-        /*
-        private Point GetDisplayPosition(Joint joint) {
-            float depthX, depthY;
-            Kinect.SkeletonEngine.SkeletonToDepthImage(joint.Position, out depthX, out depthY);  // I'm not gonna wrap this call
-            depthX = depthX * 320; //convert to 320, 240 space
-            depthY = depthY * 240; //convert to 320, 240 space
-            int colorX, colorY;
-            ImageViewArea iv = new ImageViewArea();
-            // only ImageResolution.Resolution640x480 is supported at this point
-            m_pGestureRecognizer.Camera.GetColorPixelCoordinatesFromDepthPixel(ImageResolution.Resolution640x480, iv, (int)depthX, (int)depthY, (short)0, out colorX, out colorY);
-
-            // map back to skeleton.Width & skeleton.Height
-            return new Point((int)(kinectSkeletonFeed.Width * colorX / 640.0), (int)(kinectSkeletonFeed.Height * colorY / 480));
-        }*/
 
         /// <summary>
         /// Resets the audio sync time.
