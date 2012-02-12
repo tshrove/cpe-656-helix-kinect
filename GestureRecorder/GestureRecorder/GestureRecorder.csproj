@@ -36,6 +36,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Iava.Audio">
+      <HintPath>..\..\IAVA\IAVA\Iava.Audio\bin\Release\Iava.Audio.dll</HintPath>
+    </Reference>
+    <Reference Include="Iava.Camera">
+      <HintPath>..\..\IAVA\IAVA\Iava.Camera\bin\Release\Iava.Camera.dll</HintPath>
+    </Reference>
+    <Reference Include="Iava.Gesture">
+      <HintPath>..\..\IAVA\IAVA\Iava.Gesture\bin\Release\Iava.Gesture.dll</HintPath>
+    </Reference>
+    <Reference Include="Iave.Core">
+      <HintPath>..\..\IAVA\IAVA\Iava.Core\bin\Release\Iave.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
