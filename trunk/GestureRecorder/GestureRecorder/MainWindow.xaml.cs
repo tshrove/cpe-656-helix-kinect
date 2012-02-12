@@ -29,7 +29,8 @@ namespace GestureRecorder {
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-
+            TestGestureWindow window = new TestGestureWindow();
+            Nullable<bool> results = window.ShowDialog();
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
