@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using GestureRecorder.DataStructures;
+using System.Collections.ObjectModel;
 
 namespace GestureRecorder
 {
@@ -21,7 +22,7 @@ namespace GestureRecorder
     {
 
         #region Members
-        List<tempuri.org.GestureDefinition.xsd.Gesture> m_pGestures = new List<tempuri.org.GestureDefinition.xsd.Gesture>();
+        ObservableCollection<tempuri.org.GestureDefinition.xsd.Gesture> m_pGestures = new ObservableCollection<tempuri.org.GestureDefinition.xsd.Gesture>();
         #endregion
 
         #region Constructor
@@ -46,7 +47,8 @@ namespace GestureRecorder
             {
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    m_pGestures = GestureFolderReader.Read(dialog.SelectedPath);
+                    m_pGestures = new ObservableCollection<tempuri.org.GestureDefinition.xsd.Gesture>(GestureFolderReader.Read(dialog.SelectedPath));
+                    this.lstGestures.ItemsSource = m_pGestures;
                 }
             }
         }
