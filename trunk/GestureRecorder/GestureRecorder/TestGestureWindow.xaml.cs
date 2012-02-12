@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using GestureRecorder.DataStructures;
 
 namespace GestureRecorder
 {
@@ -18,6 +19,11 @@ namespace GestureRecorder
     /// </summary>
     public partial class TestGestureWindow : Window
     {
+
+        #region Members
+        List<tempuri.org.GestureDefinition.xsd.Gesture> m_pGestures = new List<tempuri.org.GestureDefinition.xsd.Gesture>();
+        #endregion
+
         #region Constructor
         /// <summary>
         /// Constructor
@@ -36,13 +42,12 @@ namespace GestureRecorder
         /// <param name="e"></param>
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog open = new Microsoft.Win32.OpenFileDialog();
-            open.CheckFileExists = true;
-            open.Filter = "IAVA Gesture file (*.iava)|*.iava";
-            Nullable<bool> results = open.ShowDialog();
-            if (results == true)
+            using (System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog())
             {
-                String filename = open.FileName;
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    m_pGestures = GestureFolderReader.Read(dialog.SelectedPath);
+                }
             }
         }
         /// <summary>
