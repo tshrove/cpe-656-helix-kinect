@@ -43,7 +43,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="gesturedefinition.cs" />
+    <Compile Include="gesturedefinition.cs">
+      <DependentUpon>GestureDefinition.xsd</DependentUpon>
+    </Compile>
     <Compile Include="GestureFolderReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

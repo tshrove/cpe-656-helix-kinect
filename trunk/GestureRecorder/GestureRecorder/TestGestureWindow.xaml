@@ -5,7 +5,13 @@
     <DockPanel LastChildFill="True">
         <DockPanel LastChildFill="True">
             <!--<TextBlock Text="Gesture to test" HorizontalAlignment="Center" Foreground="Wheat" FontSize="14" DockPanel.Dock="Top"/>-->
-            <ListBox DockPanel.Dock="Left" Width="200" Background="#FF313131"/>
+            <ListBox Name="lstGestures" DockPanel.Dock="Left" Width="200" Background="#FF313131" ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Foreground="White" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </DockPanel>     
         <StackPanel DockPanel.Dock="Right" Width="200" Background="#FF313131">
             <Button Name="btnLoad" Content="Load Gesture File" Height="50" Margin="5" Click="btnLoad_Click" />
