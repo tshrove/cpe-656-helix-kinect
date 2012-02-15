@@ -34,7 +34,7 @@ namespace Iava.Input.Camera {
         public int Height;
         public int Width;
 
-        public static implicit operator PlanarImage(Microsoft.Research.Kinect.Nui.PlanarImage value) {
+        public static explicit operator PlanarImage(Microsoft.Research.Kinect.Nui.PlanarImage value) {
             return new PlanarImage()
             {
                 Bits = value.Bits,
@@ -50,7 +50,7 @@ namespace Iava.Input.Camera {
         public int CenterY;
         public ImageDigitalZoom Zoom;
 
-        public static implicit operator ImageViewArea(Microsoft.Research.Kinect.Nui.ImageViewArea value) {
+        public static explicit operator ImageViewArea(Microsoft.Research.Kinect.Nui.ImageViewArea value) {
             return new ImageViewArea()
             {
                 CenterX = value.CenterX,
@@ -68,15 +68,15 @@ namespace Iava.Input.Camera {
         public ImageType Type;
         public ImageViewArea ViewArea;
 
-        public static implicit operator ImageFrame(Microsoft.Research.Kinect.Nui.ImageFrame value) {
+        public static explicit operator ImageFrame(Microsoft.Research.Kinect.Nui.ImageFrame value) {
             return new ImageFrame()
             {
                 FrameNumber = value.FrameNumber,
-                Image = value.Image,
+                Image = (PlanarImage)value.Image,
                 Resolution = (ImageResolution)value.Resolution,
                 Timestamp = value.Timestamp,
                 Type = (ImageType)value.Type,
-                ViewArea = value.ViewArea
+                ViewArea = (ImageViewArea)value.ViewArea
             };
         }
     }
@@ -89,12 +89,12 @@ namespace Iava.Input.Camera {
         public SkeletonData[] Skeletons;
         public long TimeStamp;
 
-        public static implicit operator SkeletonFrame(Microsoft.Research.Kinect.Nui.SkeletonFrame value) {
+        public static explicit operator SkeletonFrame(Microsoft.Research.Kinect.Nui.SkeletonFrame value) {
             SkeletonFrame skeletonFrame = new SkeletonFrame()
             {
-                FloorClipPlane = value.FloorClipPlane,
+                FloorClipPlane = (Vector)value.FloorClipPlane,
                 FrameNumber = value.FrameNumber,
-                NormalToGravity = value.NormalToGravity,
+                NormalToGravity = (Vector)value.NormalToGravity,
                 Quality = (SkeletonFrameQuality)value.Quality,
                 Skeletons = new SkeletonData[value.Skeletons.Length],
                 TimeStamp = value.TimeStamp
@@ -102,7 +102,7 @@ namespace Iava.Input.Camera {
 
             // Copy and convert the array
             for (int i = 0; i < skeletonFrame.Skeletons.Length; i++) {
-                skeletonFrame.Skeletons[i] = value.Skeletons[i];
+                skeletonFrame.Skeletons[i] = (SkeletonData)value.Skeletons[i];
             }
 
             return skeletonFrame;
@@ -124,11 +124,11 @@ namespace Iava.Input.Camera {
         public SkeletonTrackingState TrackingState;
         public int UserIndex;
 
-        public static implicit operator SkeletonData(Microsoft.Research.Kinect.Nui.SkeletonData value) {
+        public static explicit operator SkeletonData(Microsoft.Research.Kinect.Nui.SkeletonData value) {
             return new SkeletonData()
             {
-                Joints = value.Joints,
-                Position = value.Position,
+                Joints = (JointsCollection)value.Joints,
+                Position = (Vector)value.Position,
                 Quality = (SkeletonQuality)value.Quality,
                 TrackingID = value.TrackingID,
                 TrackingState = (SkeletonTrackingState)value.TrackingState,
@@ -147,10 +147,10 @@ namespace Iava.Input.Camera {
 
         public IEnumerator GetEnumerator() { return _joints.GetEnumerator(); }
 
-        public static implicit operator JointsCollection(Microsoft.Research.Kinect.Nui.JointsCollection value) {
+        public static explicit operator JointsCollection(Microsoft.Research.Kinect.Nui.JointsCollection value) {
             JointsCollection jointsCollection = new JointsCollection();
 
-            for (int i = 0; i < (int)JointID.Count; i++) { jointsCollection[(JointID)i] = value[(Microsoft.Research.Kinect.Nui.JointID)i]; }
+            for (int i = 0; i < (int)JointID.Count; i++) { jointsCollection[(JointID)i] = (Joint)value[(Microsoft.Research.Kinect.Nui.JointID)i]; }
 
             return jointsCollection;
         }
@@ -163,10 +163,10 @@ namespace Iava.Input.Camera {
         public Vector Position { get; set; }
         public JointTrackingState TrackingState { get; set; }
 
-        public static implicit operator Joint(Microsoft.Research.Kinect.Nui.Joint value) {
+        public static explicit operator Joint(Microsoft.Research.Kinect.Nui.Joint value) {
             return new Joint() {
                 ID = (JointID)value.ID,
-                Position = value.Position,
+                Position = (Vector)value.Position,
                 TrackingState = (JointTrackingState)value.TrackingState
             };
         }
@@ -208,6 +208,13 @@ namespace Iava.Input.Camera {
         Count = 20,
     }
 
+        public enum SkeletonQuality {
+            ClippedRight = 1,
+            ClippedLeft = 2,
+            ClippedTop = 4,
+            ClippedBottom = 8
+        }
+
         public struct Vector {
 
             public float W { get; set; }
@@ -215,7 +222,7 @@ namespace Iava.Input.Camera {
             public float Y { get; set; }
             public float Z { get; set; }
 
-            public static implicit operator Vector(Microsoft.Research.Kinect.Nui.Vector value) {
+            public static explicit operator Vector(Microsoft.Research.Kinect.Nui.Vector value) {
                 return new Vector()
                 {
                     W = value.W,

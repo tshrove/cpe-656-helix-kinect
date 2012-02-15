@@ -133,7 +133,7 @@ namespace Iava.Input.Camera {
         private static void OnSkeletonFrameReady(object sender, Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs e) {
             if (SkeletonFrameReady != null) {
                 // Rethrow this event if someone needs it...
-                SkeletonFrameReady(null, new SkeletonFrameReadyEventArgs(e.SkeletonFrame));
+                SkeletonFrameReady(null, new SkeletonFrameReadyEventArgs((SkeletonFrame)e.SkeletonFrame));
             }
 
             List<int> idValues = new List<int>();

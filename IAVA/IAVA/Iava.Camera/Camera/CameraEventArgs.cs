@@ -99,7 +99,7 @@ namespace Iava.Input.Camera {
         #region Operator Overloads
 
         public static implicit operator ImageFrameReadyEventArgs(Microsoft.Research.Kinect.Nui.ImageFrameReadyEventArgs value) {
-            return new ImageFrameReadyEventArgs(value.ImageFrame);
+            return new ImageFrameReadyEventArgs((ImageFrame)value.ImageFrame);
         }
 
         #endregion Operator Overloads
@@ -124,7 +124,7 @@ namespace Iava.Input.Camera {
         #region Operator Overloads
 
         public static implicit operator SkeletonFrameReadyEventArgs(Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs value) {
-            return new SkeletonFrameReadyEventArgs(value.SkeletonFrame);
+            return new SkeletonFrameReadyEventArgs((SkeletonFrame)value.SkeletonFrame);
         }
 
         #endregion Operator Overloads
