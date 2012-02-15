@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 using GestureRecorder.Data;
 using Iava.Audio;
 using Iava.Input.Camera;
@@ -23,7 +24,7 @@ namespace GestureRecorder {
         /// </summary>
         public CreateGestureWindow() {
             InitializeComponent();
-
+            this.Gesture = new tempuri.org.GestureDefinition.xsd.Gesture();
             // Subscribe to the Camera events we are interested in...
             Camera.ImageFrameReady += OnCameraImageFrameReady;
             Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
@@ -50,6 +51,14 @@ namespace GestureRecorder {
         /// </summary>
         private int GestureSegmentCount { get; set; }
 
+        /// <summary>
+        /// Gets the gesture that is about to be saved. 
+        /// </summary>
+        private tempuri.org.GestureDefinition.xsd.Gesture Gesture
+        {
+            get;
+            set;
+        }
         #endregion Private Properties
 
         #region Private Methods
@@ -147,180 +156,380 @@ namespace GestureRecorder {
                 case "dotHead":
                     if (!m_bHead) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the heads in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.Head.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the heads in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.Head.Tracking = false;
+                        }
                     }
                     m_bHead = !m_bHead;
                     break;
                 case "dotShoulderCenter":
                     if (!m_bShoulderCenter) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ShoulderCenter.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ShoulderCenter.Tracking = false;
+                        }
                     }
                     m_bShoulderCenter = !m_bShoulderCenter;
                     break;
                 case "dotShoulderLeft":
                     if (!m_bShoulderLeft) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ShoulderLeft.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ShoulderLeft.Tracking = false;
+                        }
                     }
                     m_bShoulderLeft = !m_bShoulderLeft;
                     break;
                 case "dotShoulderRight":
                     if (!m_bShoulderRight) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ShoulderRight.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ShoulderRight.Tracking = false;
+                        }
                     }
                     m_bShoulderRight = !m_bShoulderRight;
                     break;
                 case "dotElbowLeft":
                     if (!m_bElbowLeft) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ElbowLeft.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ElbowLeft.Tracking = false;
+                        }
                     }
                     m_bElbowLeft = !m_bElbowLeft;
                     break;
                 case "dotElbowRight":
                     if (!m_bElbowRight) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ElbowRight.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.ElbowRight.Tracking = false;
+                        }
                     }
                     m_bElbowRight = !m_bElbowRight;
                     break;
                 case "dotWristLeft":
                     if (!m_bWristLeft) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.WristLeft.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.WristLeft.Tracking = false;
+                        }
                     }
                     m_bWristLeft = !m_bWristLeft;
                     break;
                 case "dotWristRight":
                     if (!m_bWristRight) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.WristRight.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.WristRight.Tracking = false;
+                        }
                     }
                     m_bWristRight = !m_bWristRight;
                     break;
                 case "dotHandLeft":
                     if (!m_bHandLeft) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HandLeft.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HandLeft.Tracking = false;
+                        }
                     }
                     m_bHandLeft = !m_bHandLeft;
                     break;
                 case "dotHandRight":
                     if (!m_bHandRight) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HandRight.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HandRight.Tracking = false;
+                        }
                     }
                     m_bHandRight = !m_bHandRight;
                     break;
                 case "dotSpine":
                     if (!m_bSpine) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.Spine.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.Spine.Tracking = false;
+                        }
                     }
                     m_bSpine = !m_bSpine;
                     break;
                 case "dotHipCenter":
                     if (!m_bHipCenter) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HipCenter.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HipCenter.Tracking = false;
+                        }
                     }
                     m_bHipCenter = !m_bHipCenter;
                     break;
                 case "dotHipLeft":
                     if (!m_bHipLeft) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HipLeft.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HipLeft.Tracking = false;
+                        }
                     }
                     m_bHipLeft = !m_bHipLeft;
                     break;
                 case "dotHipRight":
                     if (!m_bHipRight) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HipRight.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.HipRight.Tracking = false;
+                        }
                     }
                     m_bHipRight = !m_bHipRight;
                     break;
                 case "dotKneeLeft":
                     if (!m_bKneeLeft) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.KneeLeft.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.KneeLeft.Tracking = false;
+                        }
                     }
                     m_bKneeLeft = !m_bKneeLeft;
                     break;
                 case "dotKneeRight":
                     if (!m_bKneeRight) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.KneeRight.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.KneeRight.Tracking = false;
+                        }
                     }
                     m_bKneeRight = !m_bKneeRight;
                     break;
                 case "dotAnkleLeft":
                     if (!m_bAnkleLeft) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.AnkleLeft.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.AnkleLeft.Tracking = false;
+                        }
                     }
                     m_bAnkleLeft = !m_bAnkleLeft;
                     break;
                 case "dotAnkleRight":
                     if (!m_bAnkleRight) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.AnkleRight.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.AnkleRight.Tracking = false;
+                        }
                     }
                     m_bAnkleRight = !m_bAnkleRight;
                     break;
                 case "dotFootLeft":
                     if (!m_bFootLeft) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.FootLeft.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.FootLeft.Tracking = false;
+                        }
                     }
                     m_bFootLeft = !m_bFootLeft;
                     break;
                 case "dotFootRight":
                     if (!m_bFootRight) {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/bluecircle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.FootRight.Tracking = true;
+                        }
                     }
                     else {
                         ((Image)sender).Source = new BitmapImage(new Uri("pack://application:,,,/GestureRecorder;component/Resources/circle.png"));
+                        // Add the tracking capability to all the shoudlers in the gesture segments
+                        foreach (var segment in this.Gesture.Segment)
+                        {
+                            segment.FootRight.Tracking = false;
+                        }
                     }
                     m_bFootRight = !m_bFootRight;
                     break;
@@ -335,19 +544,15 @@ namespace GestureRecorder {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnSnapshotClick(object sender, RoutedEventArgs e) {
-            //Gesture.SegmentLocalType segment = new Gesture.SegmentLocalType();
-            
-            //Gesture gesture = new Gesture();
-
-            //segment.
+            //ToDo: Get the joints and add them to a new segment to add to the current gesture.
+            tempuri.org.GestureDefinition.xsd.Gesture.SegmentLocalType gestureSegment = new tempuri.org.GestureDefinition.xsd.Gesture.SegmentLocalType();
 
             GestureSegment segment = new GestureSegment();
-
-            segment.SetTrackingJoints(JointID.AnkleLeft, JointID.AnkleRight);
-            
-            //gesture.Segment.Add()
-            
+            segment.SetTrackingJoints(JointID.AnkleLeft, JointID.AnkleRight);         
             AddSegmentCanvas();
+
+            // Add the new set of segments of the body to the gesture that will be saved to a file.
+            this.Gesture.Segment.Add(gestureSegment);
         }
 
         /// <summary>
