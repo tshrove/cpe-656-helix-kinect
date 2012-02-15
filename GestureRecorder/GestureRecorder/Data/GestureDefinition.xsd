@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="GestureDefinition"
+    targetNamespace="http://tempuri.org/GestureDefinition.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/GestureDefinition.xsd"
+    xmlns:mstns="http://tempuri.org/GestureDefinition.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+  
+  <!--Need to add a fudge factor field-->
+  
+  <xs:element name="Gesture">
+    <!--
+    <xs:simpleType>
+      <xs:restriction base="xs:double">
+        <xs:minInclusive value="0.0" />
+        <xs:maxInclusive value="1.0" />
+      </xs:restriction>
+    </xs:simpleType>
+    -->
+    <xs:complexType>
+      
+      <xs:sequence>
+        <xs:element name="Name" type="xs:string" />
+        <xs:element name="FudgeFactor" type="xs:double" minOccurs="1" maxOccurs="1" />
+        <xs:element name="Segment" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="HipCenter"      type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="Spine"          type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="ShoulderCenter" type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="Head"           type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="ShoulderLeft"   type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="ElbowLeft"      type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="WristLeft"      type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="HandLeft"       type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="ShoulderRight"  type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="ElbowRight"     type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="WristRight"     type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="HandRight"      type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="HipLeft"        type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="KneeLeft"       type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="AnkleLeft"      type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="FootLeft"       type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="HipRight"       type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="KneeRight"      type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="AnkleRight"     type="BodyPart" minOccurs="1" maxOccurs="1" />
+              <xs:element name="FootRight"      type="BodyPart" minOccurs="1" maxOccurs="1" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!--Defines a Kinect Body Part-->
+  <xs:complexType name="BodyPart">
+    <xs:sequence>
+      <xs:element name="Tracking" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+      <xs:element name="Position">
+        <xs:complexType>
+          <xs:attribute name="X" type="xs:double" default="0.0" />
+          <xs:attribute name="Y" type="xs:double" default="0.0" />
+          <xs:attribute name="Z" type="xs:double" default="0.0" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
