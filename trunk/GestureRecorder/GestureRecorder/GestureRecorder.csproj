@@ -72,6 +72,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\gesturedefinition.cs">
+      <DependentUpon>GestureDefinition.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Data\GestureFolderReader.cs" />
+    <Compile Include="Data\GestureSegment.cs" />
     <Compile Include="TestGestureWindow.xaml.cs">
       <DependentUpon>TestGestureWindow.xaml</DependentUpon>
     </Compile>
@@ -117,17 +122,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Data\GestureDefinition.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GestureRecorder.DataStructures\GestureRecorder.DataStructures.csproj">
-      <Project>{603E0319-9369-4FE8-8FC5-8EAC5326BAC6}</Project>
-      <Name>GestureRecorder.DataStructures</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Skeleton.png">

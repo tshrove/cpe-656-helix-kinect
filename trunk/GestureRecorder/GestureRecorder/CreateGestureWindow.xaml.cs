@@ -5,8 +5,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using GestureRecorder.Data;
 using Iava.Audio;
 using Iava.Input.Camera;
+
 
 namespace GestureRecorder {
     /// <summary>
@@ -333,6 +335,18 @@ namespace GestureRecorder {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnSnapshotClick(object sender, RoutedEventArgs e) {
+            //Gesture.SegmentLocalType segment = new Gesture.SegmentLocalType();
+            
+            //Gesture gesture = new Gesture();
+
+            //segment.
+
+            GestureSegment segment = new GestureSegment();
+
+            segment.SetTrackingJoints(JointID.AnkleLeft, JointID.AnkleRight);
+            
+            //gesture.Segment.Add()
+            
             AddSegmentCanvas();
         }
 
