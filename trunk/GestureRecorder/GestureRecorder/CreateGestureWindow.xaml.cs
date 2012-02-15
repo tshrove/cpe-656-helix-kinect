@@ -539,6 +539,15 @@ namespace GestureRecorder {
         }
 
         /// <summary>
+        /// Saves the defined gesture to file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnNextClicked(object sender, RoutedEventArgs e) {
+            // TODO: Add save gesture code...
+        }
+
+        /// <summary>
         /// Freezes the current gesture segment and loads the next segment canvas
         /// </summary>
         /// <param name="sender"></param>
@@ -677,14 +686,5 @@ namespace GestureRecorder {
         private Canvas _activeSegmentCanvas = null;
 
         #endregion Private Fields
-
-        /// <summary>
-        /// Saves the defined gesture to file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnNextClicked(object sender, RoutedEventArgs e) {
-            // TODO: Add save gesture code...
-        }
     }
 }
