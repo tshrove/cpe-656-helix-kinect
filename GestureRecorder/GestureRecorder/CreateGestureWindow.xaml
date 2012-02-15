@@ -6,7 +6,7 @@
         <Border BorderBrush="Gray" CornerRadius="1" Width="150" DockPanel.Dock="Right">
             <StackPanel>
                 <Button Content="Snapshot" Margin="2" Name="btnSnapshot" Height="30" Click="OnSnapshotClick" />
-                <Button Content="Next" Margin="2" Name="btnNext" Height="30"/>
+                <Button Content="Next" Margin="2" Name="btnNext" Height="30" Click="OnNextClicked" />
                 <Button Content="Cancel" Margin="2" Name="btnCancel" Click="OnCancelClick" Height="30"/>
                 <Image Name="VideoFeed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             </StackPanel>
