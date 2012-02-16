@@ -76,6 +76,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\SkeletonCanvas.xaml.cs">
+      <DependentUpon>SkeletonCanvas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\gesturedefinition.cs">
       <DependentUpon>GestureDefinition.xsd</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
     <Compile Include="TestGestureWindow.xaml.cs">
       <DependentUpon>TestGestureWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\SkeletonCanvas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateGestureWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -147,6 +154,8 @@
     <Resource Include="Resources\bluecircle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\GreenCircle.png" />
+    <Resource Include="Resources\RedCircle.png" />
     <Content Include="Resources\Xml.Schema.Linq.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

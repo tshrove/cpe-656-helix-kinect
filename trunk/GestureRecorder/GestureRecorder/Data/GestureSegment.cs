@@ -20,6 +20,8 @@ namespace GestureRecorder.Data {
         /// </summary>
         /// <param name="skeleton">Skeleton data used to populate the body segment positions</param>
         public GestureSegment(SkeletonData skeleton) {
+            BodyParts = new Dictionary<JointID, BodyPart>();
+
             // Initialize the key value pair
             BodyParts.Add(JointID.AnkleLeft,       this.AnkleLeft);
             BodyParts.Add(JointID.AnkleRight,      this.AnkleRight);
@@ -81,5 +83,9 @@ namespace GestureRecorder.Data {
         public Dictionary<JointID, BodyPart> BodyParts { get; private set; }
 
         #endregion Public Properties
+    }
+
+    public class GestureWrapper : tempuri.org.GestureDefinition.xsd.Gesture {
+        public List<GestureSegment> Segments { get; set; }
     }
 }
