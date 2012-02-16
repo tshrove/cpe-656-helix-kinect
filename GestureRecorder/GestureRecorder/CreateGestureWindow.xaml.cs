@@ -120,9 +120,9 @@ namespace GestureRecorder {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnJointCheck(object sender, RoutedEventArgs e) {
-            System.Windows.Controls.Primitives.ToggleButton temp = sender as System.Windows.Controls.Primitives.ToggleButton;
+            //System.Windows.Controls.Primitives.ToggleButton temp = sender as System.Windows.Controls.Primitives.ToggleButton;
 
-            Gesture.Segments.ForEach(x => x.BodyParts[(JointID)temp.Tag].Tracking = (bool)temp.IsChecked);
+            //Gesture.Segments.ForEach(x => x.BodyParts[(JointID)temp.Tag].Tracking = (bool)temp.IsChecked);
         }
 
         /// <summary>
