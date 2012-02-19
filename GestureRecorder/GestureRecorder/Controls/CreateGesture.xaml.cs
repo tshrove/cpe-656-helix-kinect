@@ -10,26 +10,36 @@ using GestureRecorder.Data;
 using Iava.Audio;
 using Iava.Input.Camera;
 using System.Linq;
-using GestureRecorder.Controls;
+using System.ComponentModel;
 
-namespace GestureRecorder {
+namespace GestureRecorder.Controls {
     /// <summary>
     /// Interaction logic for CreateGestureWindow.xaml
     /// </summary>
-    public partial class CreateGestureWindow : Window {
+    public partial class CreateGesture : UserControl {
 
         #region Constructors
 
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public CreateGestureWindow() {
+        public CreateGesture() {
             InitializeComponent();
             //this.Gesture = new tempuri.org.GestureDefinition.xsd.Gesture();
             this.Gesture = new GestureWrapper();
+
+            // If we are in design mode, do nothing...
+            if (DesignerProperties.GetIsInDesignMode(this)) { return; }
+
             // Subscribe to the Camera events we are interested in...
-            Camera.ImageFrameReady += OnCameraImageFrameReady;
-            Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
+
+            try {
+                Camera.ImageFrameReady += OnCameraImageFrameReady;
+                Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
+            }
+
+            catch (Exception e) {
+            }
 
             // Set up the Audio Recognizer...
             AudioRecognizer = new AudioRecognizer();
@@ -111,7 +121,7 @@ namespace GestureRecorder {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnCancelClick(object sender, RoutedEventArgs e) {
-            this.Close();
+            this.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -126,12 +136,33 @@ namespace GestureRecorder {
         }
 
         /// <summary>
+        /// Performs the last of the setup operations once the Control has finished loading
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnLoaded(object sender, RoutedEventArgs e) {
+            AddSkeletonCanvas();
+        }
+
+        /// <summary>
         /// Saves the defined gesture to file
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnNextClick(object sender, RoutedEventArgs e) {
             // TODO: Add save gesture code...
+        }
+
+        /// <summary>
+        /// Updates the SkeletonCanvas sizes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnResize(object sender, SizeChangedEventArgs e) {
+            foreach (SkeletonCanvas canvas in gridSnapshot.Children) {
+                SizeSkeletonCanvas(canvas);
+            }
+
         }
 
         /// <summary>
@@ -144,20 +175,20 @@ namespace GestureRecorder {
             tempuri.org.GestureDefinition.xsd.Gesture.SegmentLocalType gestureSegment = new tempuri.org.GestureDefinition.xsd.Gesture.SegmentLocalType();
             /*
             GestureSegment segment = new GestureSegment(_activeSkeletonCanvas.Skeleton);
-            segment.SetTrackingJoints(JointID.AnkleLeft, JointID.AnkleRight);         
+            segment.SetTrackingJoints(JointID.AnkleLeft, JointID.AnkleRight);*/         
             AddSkeletonCanvas();
-            */
+            
             // Add the new set of segments of the body to the gesture that will be saved to a file.
             this.Gesture.Segment.Add(gestureSegment);
         }
 
         /// <summary>
-        /// Performs the last of the setup operations once the Window has finished loading
+        /// Performs the last of the tear-down operations on the Control has finished unloading
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnWindowLoaded(object sender, RoutedEventArgs e) {
-            AddSkeletonCanvas();
+        private void OnUnloaded(object sender, RoutedEventArgs e) {
+            AudioRecognizer.Stop();
         }
 
         #endregion Event Handlers
@@ -177,9 +208,7 @@ namespace GestureRecorder {
             Grid.SetRow(temp, GestureSegmentCount / 5);
 
             // Do the transformation necessary to draw the skeleton
-            temp.RenderTransform = new ScaleTransform(1.0, -1.0,
-                gridSnapshot.ColumnDefinitions[0].ActualWidth / 2.0,
-                gridSnapshot.RowDefinitions[0].ActualHeight / 2.0);
+            SizeSkeletonCanvas(temp);
 
             // Add the canvas to the grid
             gridSnapshot.Children.Add(temp);
@@ -189,6 +218,16 @@ namespace GestureRecorder {
 
             // Increase the number of segments in the gesture
             GestureSegmentCount++;
+        }
+
+        /// <summary>
+        /// Resizes the SkeletonCanvas
+        /// </summary>
+        /// <param name="canvas"></param>
+        private void SizeSkeletonCanvas(SkeletonCanvas canvas) {
+            canvas.RenderTransform = new ScaleTransform(1.0, -1.0,
+                gridSnapshot.ColumnDefinitions[0].ActualWidth / 2.0,
+                gridSnapshot.RowDefinitions[0].ActualHeight / 2.0);
         }
 
         #endregion Private Methods
@@ -224,11 +263,5 @@ namespace GestureRecorder {
         private SkeletonCanvas _activeSkeletonCanvas = null;
 
         #endregion Private Fields
-
-        private void Window_Closed(object sender, EventArgs e) {
-            AudioRecognizer.Stop();
-        }
-
-        
     }
 }

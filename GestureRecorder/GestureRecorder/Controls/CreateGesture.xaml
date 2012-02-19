@@ -1,8 +1,9 @@
-﻿<Window x:Class="GestureRecorder.CreateGestureWindow"
+﻿<UserControl x:Class="GestureRecorder.Controls.CreateGesture"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:GestureRecorder"
-    Title="Create Gestures" Height="446" Width="1048" Background="#FF313131" ShowInTaskbar="False" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" Loaded="OnWindowLoaded" Closed="Window_Closed">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Loaded="OnLoaded" Unloaded="OnUnloaded"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d" d:DesignWidth="600" SizeChanged="OnResize">
     <DockPanel LastChildFill="True">
         <Border BorderBrush="Gray" CornerRadius="1" Width="150" DockPanel.Dock="Right">
             <StackPanel>
@@ -10,14 +11,12 @@
                 <Button Content="Next" Margin="2" Name="btnNext" Height="30" Click="OnNextClick" />
                 <Button Content="Cancel" Margin="2" Name="btnCancel" Click="OnCancelClick" Height="30"/>
                 <Image Name="VideoFeed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-                
             </StackPanel>
         </Border>
         <StackPanel DockPanel.Dock="Right">
             <TextBlock Text="Select Joints to Record" HorizontalAlignment="Center" Foreground="Wheat"/>
             <Grid>
-                <!--<ToggleButton Style="{StaticResource JointButton}" />-->
-                <Image Width="200" Height="Auto" Source="Resources/Skeleton.png" />
+                <Image Width="200" Height="Auto" Source="pack://application:,,,/Resources/Skeleton.png" />
                 <ToggleButton Style="{StaticResource JointButton}" Name="butSpine"          Width="10" Height="10" Margin="88,128,102,248"  Opacity="0.75" Checked="OnJointCheck" Tag="1"  />
                 <ToggleButton Style="{StaticResource JointButton}" Name="butShoulderCenter" Width="10" Height="10" Margin="88,69,102,307"   Opacity="0.75" Checked="OnJointCheck" Tag="2"  />
                 <ToggleButton Style="{StaticResource JointButton}" Name="butHead"           Width="10" Height="10" Margin="88,28,102,348"   Opacity="0.75" Checked="OnJointCheck" Tag="3"  />
@@ -53,5 +52,4 @@
             </Grid.ColumnDefinitions>
         </Grid>
     </DockPanel>
-</Window>
-
+</UserControl>

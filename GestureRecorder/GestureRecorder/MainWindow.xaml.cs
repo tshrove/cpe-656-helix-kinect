@@ -29,14 +29,14 @@ namespace GestureRecorder {
 
         private void btnTest_Click(object sender, RoutedEventArgs e)
         {
-            TestGestureWindow window = new TestGestureWindow();
-            Nullable<bool> results = window.ShowDialog();
+            //TestGestureWindow window = new TestGestureWindow();
+            //Nullable<bool> results = window.ShowDialog();
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            CreateGestureWindow window = new CreateGestureWindow();
-            Nullable<bool> results = window.ShowDialog();
+            //CreateGestureWindow window = new CreateGestureWindow();
+            //Nullable<bool> results = window.ShowDialog();
         }
     }
 }

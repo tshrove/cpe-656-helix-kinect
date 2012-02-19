@@ -84,14 +84,14 @@
     </Compile>
     <Compile Include="Data\GestureFolderReader.cs" />
     <Compile Include="Data\GestureSegment.cs" />
-    <Compile Include="TestGestureWindow.xaml.cs">
-      <DependentUpon>TestGestureWindow.xaml</DependentUpon>
+    <Compile Include="Controls\TestGesture.xaml.cs">
+      <DependentUpon>TestGesture.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\SkeletonCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CreateGestureWindow.xaml">
+    <Page Include="Controls\CreateGesture.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -103,14 +103,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CreateGestureWindow.xaml.cs">
-      <DependentUpon>CreateGestureWindow.xaml</DependentUpon>
+    <Compile Include="Controls\CreateGesture.xaml.cs">
+      <DependentUpon>CreateGesture.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TestGestureWindow.xaml">
+    <Page Include="Controls\TestGesture.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
