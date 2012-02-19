@@ -1,10 +1,33 @@
 ﻿<Window x:Class="GestureRecorder.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="IAVA Gesture Recorder" Height="370" Width="240" Background="#FF313131">
-    <StackPanel VerticalAlignment="Center">
-        <Button Content="Create Gesture" Margin="1,2,1,2" Height="100" Name="btnCreate" Click="btnCreate_Click" />
-        <Button Content="Test Gestures" Margin="1,2,1,2" Height="100" Name="btnTest" Click="btnTest_Click" />
-        <Button Content="Exit" Margin="1,2,1,2" Height="100" Name="btnExit" Click="btnExit_Click" />
-    </StackPanel>
+        xmlns:local="clr-namespace:GestureRecorder.Controls"
+        Title="IAVA Gesture Recorder" Height="425" Width="1000" Background="#FF313131" ResizeMode="NoResize">
+
+    <DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel VerticalAlignment="Top" Grid.Column="0">
+                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Create Gesture" Margin="1,2,1,2" Height="100" Name="btnCreate" Click="btnCreate_Click" />
+                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Test Gestures" Margin="1,2,1,2" Height="100" Name="btnTest" Click="btnTest_Click" />
+                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Exit" Margin="1,2,1,2" Height="100" Name="btnExit" Click="btnExit_Click" />
+            </StackPanel>
+            <local:CreateGesture x:Name="CreateGesture" Grid.Column="1"
+                                 Visibility="{Binding ElementName=btnCreate,
+                                                    Path =IsChecked,
+                                                    Converter={StaticResource BooleanToVisibilityConverter}}"
+                                 />
+            <local:TestGesture x:Name="TestGesture" Grid.Column="1"
+                               Visibility="{Binding ElementName=btnTest,
+                                                    Path=IsChecked,
+                                                    Converter={StaticResource BooleanToVisibilityConverter}}"
+                                 />
+        </Grid>
+    </DockPanel>
+
+
 </Window>

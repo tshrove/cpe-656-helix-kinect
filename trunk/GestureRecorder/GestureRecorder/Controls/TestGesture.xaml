@@ -1,7 +1,9 @@
-﻿<Window x:Class="GestureRecorder.TestGestureWindow"
+﻿<UserControl x:Class="GestureRecorder.Controls.TestGesture"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Test Gesture" Height="466" Width="822" >
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d" d:DesignWidth="400">
     <DockPanel LastChildFill="True">
         <DockPanel LastChildFill="True">
             <!--<TextBlock Text="Gesture to test" HorizontalAlignment="Center" Foreground="Wheat" FontSize="14" DockPanel.Dock="Top"/>-->
@@ -20,4 +22,4 @@
         </StackPanel>
         <Image Name="Gesture" />
     </DockPanel>
-</Window>
+</UserControl>

@@ -1,13 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using GestureRecorder.Data;
+using System.Windows.Controls;
 
-namespace GestureRecorder
+namespace GestureRecorder.Controls
 {
     /// <summary>
     /// Interaction logic for TestGestureWindow.xaml
     /// </summary>
-    public partial class TestGestureWindow : Window
+    public partial class TestGesture : UserControl
     {
 
         #region Members
@@ -18,7 +19,7 @@ namespace GestureRecorder
         /// <summary>
         /// Constructor
         /// </summary>
-        public TestGestureWindow()
+        public TestGesture()
         {
             InitializeComponent();
         }
@@ -48,7 +49,7 @@ namespace GestureRecorder
         /// <param name="e"></param>
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Visibility = Visibility.Hidden;
         }
         #endregion
     }
