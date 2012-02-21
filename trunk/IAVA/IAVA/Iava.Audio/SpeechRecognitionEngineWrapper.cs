@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Speech.Recognition;
+using System.Speech.Recognition;
 
 namespace Iava.Audio
 {
@@ -10,7 +10,7 @@ namespace Iava.Audio
     /// Wraps Microsoft's SpeechRecognitionEngine class so it conforms to the
     /// ISpeechRecognitionEngine interface.
     /// </summary>
-    public class SpeechRecognitionEngineWrapper : ISpeechRecognitionEngine
+    internal class SpeechRecognitionEngineWrapper : ISpeechRecognitionEngine
     {
         /// <summary>
         /// Event handler for when speech is recognized.
@@ -32,8 +32,10 @@ namespace Iava.Audio
         /// </summary>
         public SpeechRecognitionEngineWrapper()
         {
-            RecognizerInfo ri = SpeechRecognitionEngine.InstalledRecognizers().Where(
-                            r => r.Id == RecognizerId).FirstOrDefault();
+            //RecognizerInfo ri = SpeechRecognitionEngine.InstalledRecognizers().Where(
+            //                r => r.Id == RecognizerId).FirstOrDefault();
+
+            RecognizerInfo ri = GetKinectRecognizer();
 
             if (ri == null)
             {
@@ -44,6 +46,36 @@ namespace Iava.Audio
 
             engine.SpeechRecognized += OnSpeechRecognized;
         }
+
+        private static RecognizerInfo GetKinectRecognizer()
+        {
+            //Func<RecognizerInfo, bool> matchingFunc = r =>
+            //{
+            //    string value;
+            //    r.AdditionalInfo.TryGetValue("Kinect", out value);
+            //    return "True".Equals(value, StringComparison.InvariantCultureIgnoreCase) && "en-US".Equals(r.Culture.Name, StringComparison.InvariantCultureIgnoreCase);
+            //};
+
+            //return SpeechRecognitionEngine.InstalledRecognizers().Where(matchingFunc).FirstOrDefault();
+
+            RecognizerInfo rv = null;
+
+            var recognizers = SpeechRecognitionEngine.InstalledRecognizers();
+            foreach (var recognizer in recognizers)
+            {
+                if (recognizer.Culture.Name == "en-US")
+                {
+                    rv = recognizer;
+                    break;
+                }
+            }
+            //if (recognizers.Count > 0)
+            //{
+            //    rv = recognizers[0];
+            //}            
+
+            return rv;
+        }
     
         #region ISpeechRecognition Members
 
@@ -52,7 +84,7 @@ namespace Iava.Audio
             engine.LoadGrammar(grammar);
         }
 
-        void  ISpeechRecognitionEngine.SetInputToAudioStream(System.IO.Stream stream, Microsoft.Speech.AudioFormat.SpeechAudioFormatInfo audioFormat)
+        void  ISpeechRecognitionEngine.SetInputToAudioStream(System.IO.Stream stream, System.Speech.AudioFormat.SpeechAudioFormatInfo audioFormat)
         {
             engine.SetInputToAudioStream(stream, audioFormat);
         }

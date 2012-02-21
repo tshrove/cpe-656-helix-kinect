@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using Iava.Core;
 using Microsoft.Research.Kinect.Audio;
-using Microsoft.Speech.Recognition;
-using Microsoft.Speech.AudioFormat;
+//using Microsoft.Speech.Recognition;
+//using Microsoft.Speech.AudioFormat;
+using System.Speech.Recognition;
+using System.Speech.AudioFormat;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -62,7 +64,7 @@ namespace Iava.Audio
                 }
 
                 syncCommand = value;
-
+                
                 if (Status == RecognizerStatus.Running)
                 {
                     Stop();
@@ -82,7 +84,7 @@ namespace Iava.Audio
             {
                 Task.Factory.StartNew(() => SetupAudioDevice(tokenSource.Token), tokenSource.Token);
 
-                // Wait until the thread has finished
+                // Wait until the setup thread has finished
                 m_resetEvent.WaitOne();
 
                 // Reset the event
@@ -189,8 +191,6 @@ namespace Iava.Audio
         private void Initialize()
         {
             this.AudioCallbacks = new Dictionary<string, AudioCallback>();
-            // TODO This is temporary for prototype.
-            this.AudioCallbacks.Add(syncCommand, null);
         }
 
         #endregion
@@ -221,7 +221,7 @@ namespace Iava.Audio
                 speechEngine.LoadGrammar(CreateGrammar());
                 speechEngine.SpeechRecognized += SpeechRecognized;
                 speechEngine.SpeechHypothesized += SpeechHypothesized;
-                speechEngine.SpeechRecognitionRejected += SpeechRejected;
+                speechEngine.SpeechRecognitionRejected += SpeechRejected;               
 
                 if (!token.IsCancellationRequested)
                 {
@@ -235,6 +235,7 @@ namespace Iava.Audio
                     speechEngine.SetInputToAudioStream(kinectStream, new SpeechAudioFormatInfo(
                                                           EncodingFormat.Pcm, 16000, 16, 1,
                                                           32000, 2, null));
+
                     speechEngine.RecognizeAsync(RecognizeMode.Multiple);
 
                     Status = RecognizerStatus.Running;
@@ -262,21 +263,59 @@ namespace Iava.Audio
         private Grammar CreateGrammar() {
             Grammar rv = null;
 
-            //// Build a simple grammar of commands
-
-            //// TODO: The speech recognition is picking up false positives.  Look into how
-            //// to better refine speech input.
             Choices choices = new Choices();
-            foreach (string phrase in AudioCallbacks.Keys) {
-                choices.Add(phrase);
+            choices.Add(new[] { syncCommand });
+            foreach (string phrase in AudioCallbacks.Keys)
+            {
+                string command = phrase;
+                if (command.EndsWith("*"))
+                {
+                    command = command.TrimEnd('*');
+                    GrammarBuilder builder = new GrammarBuilder(command);
+                    builder.AppendDictation();
+                    choices.Add(builder);
+                }
+                else
+                {
+                    choices.Add(command);
+                }                
             }
 
-            GrammarBuilder builder = new GrammarBuilder();
-            builder.Append(choices);
-
-            rv = new Grammar(builder);
+            GrammarBuilder commandsBuilder = new GrammarBuilder(choices);
+            rv = new Grammar(commandsBuilder);
             rv.Enabled = true;
-            rv.Name = "IAVA";
+            rv.Name = syncCommand;           
+
+            //GrammarBuilder gb = new GrammarBuilder();
+            //gb.Append("Execute option ");
+            //gb.AppendDictation();
+
+            //GrammarBuilder dictaphoneGB = new GrammarBuilder();
+            //GrammarBuilder dictation = new GrammarBuilder();
+            //dictation.AppendDictation();
+            
+            //dictaphoneGB.Append(new SemanticResultKey("StartDictation", new SemanticResultValue("Start ", true)));
+            //dictaphoneGB.Append(new SemanticResultKey("DictationInput", dictation));
+            //dictaphoneGB.Append(new SemanticResultKey("EndDictation", new SemanticResultValue("Stop ", false)));
+
+            //GrammarBuilder spelling = new GrammarBuilder();
+            //spelling.AppendDictation("spelling");
+            //GrammarBuilder spellingGB = new GrammarBuilder();
+            //spellingGB.Append(new SemanticResultKey("StartSpelling", new SemanticResultValue("Start Spelling", true)));
+            //spellingGB.Append(new SemanticResultKey("spellingInput", spelling));
+            //spellingGB.Append(new SemanticResultKey("StopSpelling", new SemanticResultValue("Stop Spelling", true)));
+
+            //GrammarBuilder both = GrammarBuilder.Add((GrammarBuilder)new SemanticResultKey("Dictation", dictaphoneGB),
+            //                                        (GrammarBuilder)new SemanticResultKey("Spelling", spellingGB));
+            
+
+            //DictationGrammar dg = new DictationGrammar();
+            //dg.Name = "TEST";
+            //dg.Enabled = true;
+
+            //Grammar grammar = new Grammar(gb);
+            //grammar.Enabled = true;
+            //grammar.Name = "Dictaphone and Spelling ";
 
             return rv;
         }
@@ -300,25 +339,28 @@ namespace Iava.Audio
             if (m_isSynced) 
             {
                 foreach (string command in AudioCallbacks.Keys) 
-                {
-                    if (e.Text.Contains(command)) 
+                {                    
+                    if (e.Text.Contains(command.TrimEnd(new [] {'*'})) && e.Confidence > AudioConfidenceThreshold) 
                     {
                         try 
-                        {
+                        {                                                       
+                            // We found a command, reset the timer
+                            ResetTimer();                          
+
                             AudioEventArgs args = new AudioEventArgs
                                 {
-                                    Command = command,
-                                    CommandWilcards = null
+                                    Command = command                                   
                                 };
 
-                            if (e.Confidence > AudioConfidenceThreshold)
+                            if (command.EndsWith("*"))
                             {
-                                // We found a command, reset the timer
-                                ResetTimer();
-
-                                // Throw the audio event
-                                m_syncContext.Post(new SendOrPostCallback(delegate(object state) { AudioCallbacks[command].Invoke(args); }), null);
+                                // Extract the wildcard words spoken and split them into
+                                string recognizedPhrase = e.Text.Substring(command.Length - 1).ToLower();
+                                args.CommandWildcards = new List<string>(recognizedPhrase.Split(new [] {' '}, StringSplitOptions.RemoveEmptyEntries));                               
                             }
+
+                            // Invoke the callback
+                            m_syncContext.Post(new SendOrPostCallback(delegate(object state) { AudioCallbacks[command].Invoke(args); }), null);
                         }
                         catch (Exception exception) {
                             //TODO: Log message if this fails

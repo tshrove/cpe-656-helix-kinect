@@ -8,8 +8,8 @@ using System.Threading;
 using Iava.Audio;
 using Iava.Core;
 
-using Microsoft.Speech.AudioFormat;
-using Microsoft.Speech.Recognition;
+using System.Speech.AudioFormat;
+using System.Speech.Recognition;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Moq;
@@ -191,18 +191,14 @@ namespace Iava.Test.Audio
 
             // Test for exception throwing on invalid parameters entered
             try
-            {
-                recognizer.Subscribe(string.Empty, (eventArgs) => { });
-            }
+            { recognizer.Subscribe(string.Empty, (eventArgs) => { }); }
             catch (Exception ex)
             {
                 Assert.IsInstanceOfType(ex, typeof(ArgumentException));
             }
 
             try
-            {
-                recognizer.Subscribe(commandString, null);
-            }
+            { recognizer.Subscribe(commandString, null); }
             catch (Exception ex)
             {
                 Assert.IsInstanceOfType(ex, typeof(ArgumentException));
@@ -359,7 +355,7 @@ namespace Iava.Test.Audio
                 Assert.IsInstanceOfType(exception, typeof(ArgumentException));
             }
 
-            try { recognizer.SyncCommand = "          "; }
+            try { recognizer.SyncCommand = "    "; }
             catch (Exception exception)
             {
                 Assert.IsInstanceOfType(exception, typeof(ArgumentException));

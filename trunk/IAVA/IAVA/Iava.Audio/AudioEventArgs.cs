@@ -17,7 +17,7 @@ namespace Iava.Audio
         /// <summary>
         /// The wildcard words (if any present) recognized from the command.
         /// </summary>
-        public List<string> CommandWilcards { get; set; }
+        public List<string> CommandWildcards { get; set; }
 
         #endregion
 

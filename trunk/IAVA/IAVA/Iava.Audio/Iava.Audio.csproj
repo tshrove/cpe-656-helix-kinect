@@ -35,12 +35,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Microsoft SDKs\Kinect\v1.0 Beta2\Assemblies\Microsoft.Research.Kinect.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Speech, Version=10.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Microsoft Speech Platform SDK\Assembly\Microsoft.Speech.dll</HintPath>
+    <Reference Include="Microsoft.Speech, Version=10.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Moq">
+      <HintPath>..\ThirdParty\Moq\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,8 +52,11 @@
     <Compile Include="AudioEventArgs.cs" />
     <Compile Include="AudioRecognizer.cs" />
     <Compile Include="IavaSpeechRecognizedEventArgs.cs" />
+    <Compile Include="ISpeechCommandParser.cs" />
     <Compile Include="ISpeechRecognitionEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpeechCommand.cs" />
+    <Compile Include="SpeechCommandParser.cs" />
     <Compile Include="SpeechRecognitionEngineWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
