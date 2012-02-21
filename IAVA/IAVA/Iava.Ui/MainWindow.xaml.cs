@@ -7,6 +7,9 @@ using System.Windows.Shapes;
 using Iava.Audio;
 using Iava.Gesture;
 using Iava.Input.Camera;
+using System.Collections.Generic;
+
+using MapPoint = ESRI.ArcGIS.Client.Geometry.MapPoint;
 
 namespace Iava.Ui {
     /// <summary>
@@ -24,6 +27,8 @@ namespace Iava.Ui {
             m_pGestureRecognizer = new Gesture.GestureRecognizer(string.Empty);
             m_pAudioRecognizer = new AudioRecognizer();
 
+            m_pAudioRecognizer.AudioConfidenceThreshold = 0.6f;
+            CityLocations.GetCityLocation("test");
             // Events
             m_pAudioRecognizer.StatusChanged    += OnAudioRecognizerStatusChanged;
             m_pGestureRecognizer.StatusChanged  += OnGestureRecognizerStatusChanged;
@@ -49,6 +54,7 @@ namespace Iava.Ui {
             m_pAudioRecognizer.Subscribe("Move West", MoveWestCallback);
             m_pAudioRecognizer.Subscribe("Blow Up", BlowUp);
             m_pAudioRecognizer.Subscribe("Exit", BlowUp);
+            m_pAudioRecognizer.Subscribe("Go to *", GoToLocationCallback);
 
             Camera.ImageFrameReady += OnCameraImageFrameReady;
             Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
@@ -152,6 +158,25 @@ namespace Iava.Ui {
             DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
 
             ResetAudioSyncTime();
+        }
+
+        /// <summary>
+        /// Occurs when a go to location command was received.
+        /// </summary>
+        /// <param name="e">Audio event args</param>
+        private void GoToLocationCallback(AudioEventArgs e)
+        {
+            if (e.CommandWildcards != null && e.CommandWildcards.Count == 2)
+            {
+                MapPoint point = CityLocations.GetCityLocation(e.CommandWildcards[0] + " " + e.CommandWildcards[1]);
+
+                map1.PanTo(point);
+
+                DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+
+                ResetAudioSyncTime();
+            }
+                        
         }
 
         #endregion Audio Callbacks
@@ -345,7 +370,18 @@ namespace Iava.Ui {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnGestureRecognizerStatusChanged(object sender, EventArgs e) {
-            DisplayStatus("Gesture Status: " + m_pAudioRecognizer.Status.ToString());
+            DisplayStatus("Gesture Status: " + m_pGestureRecognizer.Status.ToString());
+
+            if (m_pGestureRecognizer.Status == Core.RecognizerStatus.Running)
+            {
+                //m_pGestureRecognizer.Camera.ImageFrameReady += OnCameraImageFrameReady;
+                //m_pGestureRecognizer.Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
+            }
+            else
+            {
+                //m_pGestureRecognizer.Camera.ImageFrameReady -= OnCameraImageFrameReady;
+                //m_pGestureRecognizer.Camera.SkeletonFrameReady -= OnCameraSkeletonFrameReady;
+            }
         }
 
         /// <summary>
@@ -506,7 +542,7 @@ namespace Iava.Ui {
             screen.X += 300;
 
             ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
-
+          
             map1.PanTo(newCenter);
         }
 
@@ -578,6 +614,8 @@ namespace Iava.Ui {
         private System.Timers.Timer m_pGestureSyncTimer;
         private TimeSpan m_sGestureSyncTime;
         private TextBoxStreamWriter m_pConsoleTxtBox = null;
+
+        private readonly Dictionary<string, MapPoint> locationsDictionary = new Dictionary<string, MapPoint>();
 
         // UI theme specific.  It'd be great if we had time to databind the the labels to a boolean stating whether
         // or not they're synced and then apply the appropriate theme instead of doing this all in code.

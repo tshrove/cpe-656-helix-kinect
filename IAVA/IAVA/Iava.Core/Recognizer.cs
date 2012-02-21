@@ -230,7 +230,7 @@ namespace Iava.Core {
         protected CancellationTokenSource tokenSource = new CancellationTokenSource();
 
         /// <summary>
-        /// Event used to signal the setup audio thread has finished.
+        /// Event used to signal the setup thread has finished.
         /// </summary>
         protected readonly AutoResetEvent m_resetEvent = new AutoResetEvent(false);
 

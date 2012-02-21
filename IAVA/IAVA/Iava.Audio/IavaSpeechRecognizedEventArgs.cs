@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Speech.Recognition;
+using System.Speech.Recognition;
 
 namespace Iava.Audio
 {
     /// <summary>
     /// Speed recognition event arguments.
     /// </summary>
-    public class IavaSpeechRecognizedEventArgs : EventArgs
+    internal class IavaSpeechRecognizedEventArgs : EventArgs
     {
         /// <summary>
         /// The spoken text the engine recognized.
