@@ -107,7 +107,7 @@ namespace Iava.Audio
             }
             remove 
             { 
-                SpeechRecognizedHandler += value;
+                SpeechRecognizedHandler -= value;
             }
         }
 
