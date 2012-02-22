@@ -9,7 +9,7 @@ using Iava.Gesture;
 using Iava.Input.Camera;
 using System.Collections.Generic;
 
-using MapPoint = ESRI.ArcGIS.Client.Geometry.MapPoint;
+using Geometry = ESRI.ArcGIS.Client.Geometry.Geometry;
 
 namespace Iava.Ui {
     /// <summary>
@@ -168,15 +168,14 @@ namespace Iava.Ui {
         {
             if (e.CommandWildcards != null && e.CommandWildcards.Count == 2)
             {
-                MapPoint point = CityLocations.GetCityLocation(e.CommandWildcards[0] + " " + e.CommandWildcards[1]);
+                Geometry point = CityLocations.GetCityLocation(e.CommandWildcards[0] + " " + e.CommandWildcards[1]);
 
                 map1.PanTo(point);
 
                 DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
 
                 ResetAudioSyncTime();
-            }
-                        
+            }                        
         }
 
         #endregion Audio Callbacks
@@ -614,8 +613,6 @@ namespace Iava.Ui {
         private System.Timers.Timer m_pGestureSyncTimer;
         private TimeSpan m_sGestureSyncTime;
         private TextBoxStreamWriter m_pConsoleTxtBox = null;
-
-        private readonly Dictionary<string, MapPoint> locationsDictionary = new Dictionary<string, MapPoint>();
 
         // UI theme specific.  It'd be great if we had time to databind the the labels to a boolean stating whether
         // or not they're synced and then apply the appropriate theme instead of doing this all in code.

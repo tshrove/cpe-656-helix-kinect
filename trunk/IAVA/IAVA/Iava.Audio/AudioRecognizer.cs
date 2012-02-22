@@ -284,38 +284,7 @@ namespace Iava.Audio
             GrammarBuilder commandsBuilder = new GrammarBuilder(choices);
             rv = new Grammar(commandsBuilder);
             rv.Enabled = true;
-            rv.Name = syncCommand;           
-
-            //GrammarBuilder gb = new GrammarBuilder();
-            //gb.Append("Execute option ");
-            //gb.AppendDictation();
-
-            //GrammarBuilder dictaphoneGB = new GrammarBuilder();
-            //GrammarBuilder dictation = new GrammarBuilder();
-            //dictation.AppendDictation();
-            
-            //dictaphoneGB.Append(new SemanticResultKey("StartDictation", new SemanticResultValue("Start ", true)));
-            //dictaphoneGB.Append(new SemanticResultKey("DictationInput", dictation));
-            //dictaphoneGB.Append(new SemanticResultKey("EndDictation", new SemanticResultValue("Stop ", false)));
-
-            //GrammarBuilder spelling = new GrammarBuilder();
-            //spelling.AppendDictation("spelling");
-            //GrammarBuilder spellingGB = new GrammarBuilder();
-            //spellingGB.Append(new SemanticResultKey("StartSpelling", new SemanticResultValue("Start Spelling", true)));
-            //spellingGB.Append(new SemanticResultKey("spellingInput", spelling));
-            //spellingGB.Append(new SemanticResultKey("StopSpelling", new SemanticResultValue("Stop Spelling", true)));
-
-            //GrammarBuilder both = GrammarBuilder.Add((GrammarBuilder)new SemanticResultKey("Dictation", dictaphoneGB),
-            //                                        (GrammarBuilder)new SemanticResultKey("Spelling", spellingGB));
-            
-
-            //DictationGrammar dg = new DictationGrammar();
-            //dg.Name = "TEST";
-            //dg.Enabled = true;
-
-            //Grammar grammar = new Grammar(gb);
-            //grammar.Enabled = true;
-            //grammar.Name = "Dictaphone and Spelling ";
+            rv.Name = syncCommand;
 
             return rv;
         }
@@ -345,7 +314,7 @@ namespace Iava.Audio
                         try 
                         {                                                       
                             // We found a command, reset the timer
-                            ResetTimer();                          
+                            ResetTimer();
 
                             AudioEventArgs args = new AudioEventArgs
                                 {

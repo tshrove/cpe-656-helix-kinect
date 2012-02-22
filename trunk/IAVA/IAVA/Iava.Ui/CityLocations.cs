@@ -5,11 +5,13 @@ using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
 using ESRI.ArcGIS.Client.Geometry;
+using ESRI.ArcGIS.Client.Projection;
 
 namespace Iava.Ui
 {
     /// <summary>
     /// Loads in and maps a city name to a latitude longitude coordinate.
+    /// <remarks>The lat/lon data was taken from http://www.realestate3d.com/gps/latlong.htm </remarks>
     /// </summary>
     public class CityLocations
     {
@@ -19,7 +21,7 @@ namespace Iava.Ui
 
         private const string CityLocationsFilePath = @".\Resources\CityLocationsData.txt";
 
-        private static readonly Dictionary<string, MapPoint> cityToLocationMap = new Dictionary<string, MapPoint>();
+        private static readonly Dictionary<string, Geometry> cityToLocationMap = new Dictionary<string, Geometry>();
 
         static CityLocations()
         {
@@ -34,6 +36,7 @@ namespace Iava.Ui
 
                 const int groupCount = 5;
 
+                WebMercator converter = new WebMercator();
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
@@ -43,22 +46,23 @@ namespace Iava.Ui
                         double lat = double.Parse(match.Groups[1].ToString());
                         double lon = double.Parse(match.Groups[2].ToString());
 
-                        // TODO: Change lat/lon to correct format for map type!
-
                         string cityNameKey = match.Groups[3].ToString() + " " + match.Groups[4].ToString();
                         cityNameKey = cityNameKey.ToLower();
                         if (!cityToLocationMap.ContainsKey(cityNameKey))
                         {
-                            cityToLocationMap.Add(cityNameKey, new MapPoint(lon, lat));
+                            // Convert to the correct coordinate format for the maps
+                            // The text file does not contain the negative signs in front of the latitude so add it
+                            Geometry coords = converter.FromGeographic(new MapPoint(-lon, lat));
+                            cityToLocationMap.Add(cityNameKey, coords);
                         }
                     }
                 }
             }
         }
 
-        public static MapPoint GetCityLocation(string cityName)
+        public static Geometry GetCityLocation(string cityName)
         {
-            MapPoint rv = null;
+            Geometry rv = null;
             cityToLocationMap.TryGetValue(cityName, out rv);
 
             return rv;
