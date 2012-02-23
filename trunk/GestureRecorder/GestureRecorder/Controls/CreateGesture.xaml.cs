@@ -11,6 +11,7 @@ using Iava.Audio;
 using Iava.Input.Camera;
 using System.Linq;
 using System.ComponentModel;
+using tempuri.org.GestureDefinition.xsd;
 
 namespace GestureRecorder.Controls {
     /// <summary>
@@ -66,7 +67,7 @@ namespace GestureRecorder.Controls {
         /// <summary>
         /// Gets the gesture that is about to be saved. 
         /// </summary>
-        private GestureWrapper Gesture
+        private Gesture Gesture
         {
             get;
             set;
@@ -130,9 +131,11 @@ namespace GestureRecorder.Controls {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnJointCheck(object sender, RoutedEventArgs e) {
-            //System.Windows.Controls.Primitives.ToggleButton temp = sender as System.Windows.Controls.Primitives.ToggleButton;
-
-            //Gesture.Segments.ForEach(x => x.BodyParts[(JointID)temp.Tag].Tracking = (bool)temp.IsChecked);
+            System.Windows.Controls.Primitives.ToggleButton temp = sender as System.Windows.Controls.Primitives.ToggleButton;
+            foreach (var segment in Gesture.Segment)
+            {
+                segment.SetTrackingJoints((JointID)temp.Tag);
+            }
         }
 
         /// <summary>
@@ -172,7 +175,7 @@ namespace GestureRecorder.Controls {
         /// <param name="e"></param>
         private void OnSnapshotClick(object sender, RoutedEventArgs e) {
             //ToDo: Get the joints and add them to a new segment to add to the current gesture.
-            tempuri.org.GestureDefinition.xsd.Gesture.SegmentLocalType gestureSegment = new tempuri.org.GestureDefinition.xsd.Gesture.SegmentLocalType();
+            Gesture.SegmentLocalType gestureSegment = new Gesture.SegmentLocalType(_activeSkeletonCanvas.ActiveSkeleton);
             /*
             GestureSegment segment = new GestureSegment(_activeSkeletonCanvas.Skeleton);
             segment.SetTrackingJoints(JointID.AnkleLeft, JointID.AnkleRight);*/         
