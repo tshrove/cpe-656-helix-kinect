@@ -23,12 +23,31 @@ namespace GestureRecorder.Controls {
             InitializeComponent();
         }
 
+        #region Properties
         public SkeletonFrame SkeletonFrame {
             get { return _skeletonFrame; }
             set { _skeletonFrame = value; UpdateCanvas(); }
         }
+        /// <summary>
+        /// Gets the active skeleton out of the list of 6 skeletons
+        /// </summary>
+        public SkeletonData ActiveSkeleton
+        {
+            get
+            {
+                SkeletonData data = null;
+                foreach (SkeletonData skeleton in this.SkeletonFrame.Skeletons)
+                {
+                    if (skeleton != null) { data = skeleton; break; }
+                }
+                return data;
+            }
+        }
+        #endregion
 
+        #region Private Members
         private SkeletonFrame _skeletonFrame;
+        #endregion
 
         private void UpdateCanvas() {
             if (SkeletonFrame == null) { return; }

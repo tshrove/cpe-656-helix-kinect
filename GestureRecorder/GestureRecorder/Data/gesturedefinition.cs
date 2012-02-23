@@ -18,6 +18,7 @@ namespace tempuri.org.GestureDefinition.xsd {
     using System.Xml.Schema;
     using System.Xml.Linq;
     using Xml.Schema.Linq;
+    using Iava.Input.Camera;
     
     
     /// <summary>
@@ -209,6 +210,178 @@ namespace tempuri.org.GestureDefinition.xsd {
             /// </para>
             /// </summary>
             public SegmentLocalType() {
+            }
+
+            public SegmentLocalType(SkeletonData skeleton)
+            {
+                foreach (Joint joint in skeleton.Joints)
+                {
+                    switch (joint.ID)
+                    {
+                        case JointID.AnkleLeft:
+                            this.AnkleLeft.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.AnkleRight:
+                            this.AnkleRight.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.Count:
+                            break;
+                        case JointID.ElbowLeft:
+                            this.ElbowLeft.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.ElbowRight:
+                            this.ElbowRight.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.FootLeft:
+                            this.FootLeft.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.FootRight:
+                            this.FootRight.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.HandLeft:
+                            this.HandLeft.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.HandRight:
+                            this.HandRight.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.Head:
+                            this.Head.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.HipCenter:
+                            this.HipCenter.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.HipLeft:
+                            this.HipLeft.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.HipRight:
+                            this.HipRight.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.KneeLeft:
+                            this.KneeLeft.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.KneeRight:
+                            this.KneeRight.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.ShoulderCenter:
+                            this.ShoulderCenter.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.ShoulderLeft:
+                            this.ShoulderLeft.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.ShoulderRight:
+                            this.ShoulderRight.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.Spine:
+                            this.Spine.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.WristLeft:
+                            this.WristLeft.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        case JointID.WristRight:
+                            this.WristRight.Position = BodyPart.PositionLocalType.VectorToPositionLocalType(joint.Position);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            public void ClearTrackingJoints()
+            {
+                this.HipCenter.Tracking = false;
+                this.Spine.Tracking = false;
+                this.ShoulderCenter.Tracking = false;
+                this.Head.Tracking = false;
+                this.ShoulderLeft.Tracking = false;
+                this.ElbowLeft.Tracking = false;
+                this.WristLeft.Tracking = false;
+                this.HandLeft.Tracking = false;
+                this.ShoulderRight.Tracking = false;
+                this.ElbowRight.Tracking = false;
+                this.WristRight.Tracking = false;
+                this.HandRight.Tracking = false;
+                this.HipLeft.Tracking = false;
+                this.KneeLeft.Tracking = false;
+                this.AnkleLeft.Tracking = false;
+                this.FootLeft.Tracking = false;
+                this.KneeRight.Tracking = false;
+                this.AnkleRight.Tracking = false;
+                this.FootRight.Tracking = false;
+                this.HipRight.Tracking = false;
+            }
+
+            public void SetTrackingJoints(params JointID[] joints)
+            {
+                foreach (JointID id in joints)
+                {
+                    switch (id)
+                    {
+                        case JointID.AnkleLeft:
+                            this.AnkleLeft.Tracking = true;
+                            break;
+                        case JointID.AnkleRight:
+                            this.AnkleRight.Tracking = true;
+                            break;
+                        case JointID.Count:
+                            break;
+                        case JointID.ElbowLeft:
+                            this.ElbowLeft.Tracking = true;
+                            break;
+                        case JointID.ElbowRight:
+                            this.ElbowRight.Tracking = true;
+                            break;
+                        case JointID.FootLeft:
+                            this.FootLeft.Tracking = true;
+                            break;
+                        case JointID.FootRight:
+                            this.FootRight.Tracking = true;
+                            break;
+                        case JointID.HandLeft:
+                            this.HandLeft.Tracking = true;
+                            break;
+                        case JointID.HandRight:
+                            this.HandRight.Tracking = true;
+                            break;
+                        case JointID.Head:
+                            this.Head.Tracking = true;
+                            break;
+                        case JointID.HipCenter:
+                            this.HipCenter.Tracking = true;
+                            break;
+                        case JointID.HipLeft:
+                            this.HipLeft.Tracking = true;
+                            break;
+                        case JointID.HipRight:
+                            this.HipRight.Tracking = true;
+                            break;
+                        case JointID.KneeLeft:
+                            this.KneeLeft.Tracking = true;
+                            break;
+                        case JointID.KneeRight:
+                            this.KneeRight.Tracking = true;
+                            break;
+                        case JointID.ShoulderCenter:
+                            this.ShoulderCenter.Tracking = true;
+                            break;
+                        case JointID.ShoulderLeft:
+                            this.ShoulderLeft.Tracking = true;
+                            break;
+                        case JointID.ShoulderRight:
+                            this.ShoulderRight.Tracking = true;
+                            break;
+                        case JointID.Spine:
+                            this.Spine.Tracking = true;
+                            break;
+                        case JointID.WristLeft:
+                            this.WristLeft.Tracking = true;
+                            break;
+                        case JointID.WristRight:
+                            this.WristRight.Tracking = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
             
             /// <summary>
@@ -738,6 +911,19 @@ namespace tempuri.org.GestureDefinition.xsd {
         }
         
         public partial class PositionLocalType : XTypedElement, IXMetaData {
+            /// <summary>
+            /// Convert a vector to a PositionLocalType
+            /// </summary>
+            /// <param name="Position"></param>
+            /// <returns></returns>
+            public static PositionLocalType VectorToPositionLocalType(Vector Position)
+            {
+                PositionLocalType pos = new PositionLocalType();
+                pos.X = Position.X;
+                pos.Y = Position.Y;
+                pos.Z = Position.Z;
+                return pos;
+            }
             
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private static double XDefaultValue = System.Xml.XmlConvert.ToDouble("0.0");
