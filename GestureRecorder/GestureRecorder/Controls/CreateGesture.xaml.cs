@@ -11,7 +11,6 @@ using Iava.Audio;
 using Iava.Input.Camera;
 using System.Linq;
 using System.ComponentModel;
-using tempuri.org.GestureDefinition.xsd;
 
 namespace GestureRecorder.Controls {
     /// <summary>
@@ -27,7 +26,7 @@ namespace GestureRecorder.Controls {
         public CreateGesture() {
             InitializeComponent();
             //this.Gesture = new tempuri.org.GestureDefinition.xsd.Gesture();
-            this.Gesture = new GestureWrapper();
+            this.Gesture = new Gesture();
 
             // If we are in design mode, do nothing...
             if (DesignerProperties.GetIsInDesignMode(this)) { return; }
@@ -132,10 +131,8 @@ namespace GestureRecorder.Controls {
         /// <param name="e"></param>
         private void OnJointCheck(object sender, RoutedEventArgs e) {
             System.Windows.Controls.Primitives.ToggleButton temp = sender as System.Windows.Controls.Primitives.ToggleButton;
-            foreach (var segment in Gesture.Segment)
-            {
-                segment.SetTrackingJoints((JointID)temp.Tag);
-            }
+            // Sets all the snapshots to track this joint.
+            this.Gesture.SetTracking((JointID)temp.Tag);
         }
 
         /// <summary>
@@ -174,15 +171,12 @@ namespace GestureRecorder.Controls {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnSnapshotClick(object sender, RoutedEventArgs e) {
-            //ToDo: Get the joints and add them to a new segment to add to the current gesture.
-            Gesture.SegmentLocalType gestureSegment = new Gesture.SegmentLocalType(_activeSkeletonCanvas.ActiveSkeleton);
-            /*
-            GestureSegment segment = new GestureSegment(_activeSkeletonCanvas.Skeleton);
-            segment.SetTrackingJoints(JointID.AnkleLeft, JointID.AnkleRight);*/         
+            // Turn the new active canvas into a snapshot.
+            Snapshot pNewSnapshot = new Snapshot(_activeSkeletonCanvas.ActiveSkeleton);
+            // Get the new snapshot taken
             AddSkeletonCanvas();
-            
-            // Add the new set of segments of the body to the gesture that will be saved to a file.
-            this.Gesture.Segment.Add(gestureSegment);
+            // Save the snapshot in the gesture for later saving to a file.
+            this.Gesture.Snapshots.Add(pNewSnapshot);
         }
 
         /// <summary>

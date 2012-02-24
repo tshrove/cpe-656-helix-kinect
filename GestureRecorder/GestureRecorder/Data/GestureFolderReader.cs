@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using tempuri.org.GestureDefinition.xsd;
 
 namespace GestureRecorder.Data
 {
@@ -18,9 +17,7 @@ namespace GestureRecorder.Data
             string[] filePaths = Directory.GetFiles(path, "*.iava");
             foreach (string file in filePaths)
             {
-                System.IO.FileStream stream = new System.IO.FileStream(file, System.IO.FileMode.Open);
-                System.IO.StreamReader xmlReader = new System.IO.StreamReader(stream);
-                gestures.Add(Gesture.Load(xmlReader));
+                gestures.Add(Gesture.Load(file));
             }
             return gestures;
         }

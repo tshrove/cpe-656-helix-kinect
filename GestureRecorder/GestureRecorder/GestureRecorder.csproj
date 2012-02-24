@@ -76,17 +76,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\BodyPart.cs" />
     <Compile Include="Controls\SkeletonCanvas.xaml.cs">
       <DependentUpon>SkeletonCanvas.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\gesturedefinition.cs">
-      <DependentUpon>GestureDefinition.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Data\GestureFolderReader.cs" />
-    <Compile Include="Data\GestureSegment.cs" />
     <Compile Include="Controls\TestGesture.xaml.cs">
       <DependentUpon>TestGesture.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\Gesture.cs" />
+    <Compile Include="Data\Snapshot.cs" />
     <Page Include="Controls\SkeletonCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -133,6 +132,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Data\GestureDefinition.xsd">
       <SubType>Designer</SubType>
     </None>

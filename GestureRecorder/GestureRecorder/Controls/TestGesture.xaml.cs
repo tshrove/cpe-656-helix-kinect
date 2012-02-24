@@ -12,7 +12,7 @@ namespace GestureRecorder.Controls
     {
 
         #region Members
-        ObservableCollection<tempuri.org.GestureDefinition.xsd.Gesture> m_pGestures = new ObservableCollection<tempuri.org.GestureDefinition.xsd.Gesture>();
+        ObservableCollection<Gesture> m_pGestures = new ObservableCollection<Gesture>();
         #endregion
 
         #region Constructor
@@ -37,7 +37,7 @@ namespace GestureRecorder.Controls
             {
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    m_pGestures = new ObservableCollection<tempuri.org.GestureDefinition.xsd.Gesture>(GestureFolderReader.Read(dialog.SelectedPath));
+                    m_pGestures = new ObservableCollection<Gesture>(GestureFolderReader.Read(dialog.SelectedPath));
                     this.lstGestures.ItemsSource = m_pGestures;
                 }
             }
