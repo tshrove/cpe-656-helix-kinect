@@ -132,8 +132,7 @@ namespace GestureRecorder.Controls {
         private void OnJointCheck(object sender, RoutedEventArgs e) {
             System.Windows.Controls.Primitives.ToggleButton temp = sender as System.Windows.Controls.Primitives.ToggleButton;
             // Sets all the snapshots to track this joint.
-            // ToDo: Fix this. It crashes on joint click can not cast from one type to another.
-            this.Gesture.SetTrackingJoints((JointID)temp.Tag);
+            this.Gesture.SetTrackingJoints((JointID)(Convert.ToInt32(temp.Tag)));
         }
 
         /// <summary>
