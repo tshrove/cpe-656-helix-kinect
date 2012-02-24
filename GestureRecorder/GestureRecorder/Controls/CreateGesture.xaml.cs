@@ -17,9 +17,12 @@ namespace GestureRecorder.Controls {
     /// Interaction logic for CreateGestureWindow.xaml
     /// </summary>
     public partial class CreateGesture : UserControl {
+        /// <summary>
+        /// This decides whether or not the button is a next button or finish button.
+        /// </summary>
+        private bool m_bIsNextButton = true;
 
         #region Constructors
-
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -150,13 +153,33 @@ namespace GestureRecorder.Controls {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnNextClick(object sender, RoutedEventArgs e) {
-            // Get the audio recognizer from adding more snapshots accidentally.
-            this.AudioRecognizer.Unsubscribe("Capture");
-            this.AudioRecognizer.Unsubscribe("Snapshot");
-            // Enable the skeleton
-            this.stkSkeletalBody.IsEnabled = true;
-            // Disable Snapshot button
-            this.btnSnapshot.IsEnabled = false;
+            if (m_bIsNextButton)
+            {
+                // Get the audio recognizer from adding more snapshots accidentally.
+                this.AudioRecognizer.Unsubscribe("Capture");
+                this.AudioRecognizer.Unsubscribe("Snapshot");
+                // Enable the skeleton
+                this.stkSkeletalBody.IsEnabled = true;
+                // Disable Snapshot button
+                this.btnSnapshot.IsEnabled = false;
+                m_bIsNextButton = false;
+                this.btnNext.Content = "Finish";
+            }
+            else
+            {
+                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                Nullable<bool> results = dialog.ShowDialog();
+                if (results == true)
+                {
+                    string sGestureName = System.IO.Path.GetFileNameWithoutExtension(dialog.FileName);
+                    // Set the gesture's name
+                    this.Gesture.Name = sGestureName;
+                    // Save the content to a file
+                    Gesture.Save(this.Gesture, dialog.FileName);
+                }
+                m_bIsNextButton = false;
+                this.btnNext.Content = "Next";
+            }
         }
 
         /// <summary>
