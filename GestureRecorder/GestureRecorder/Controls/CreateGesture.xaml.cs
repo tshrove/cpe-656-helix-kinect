@@ -167,15 +167,24 @@ namespace GestureRecorder.Controls {
             }
             else
             {
-                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog()
+                {
+                    DefaultExt = "*.iava",
+                    Filter = "IAVA gesture files (*.iava)| *.iava"                    
+                };
+
                 Nullable<bool> results = dialog.ShowDialog();
                 if (results == true)
                 {
                     string sGestureName = System.IO.Path.GetFileNameWithoutExtension(dialog.FileName);
                     // Set the gesture's name
+                    // I set the name of the gesture to the filename without the extension.
+                    // I thought this would be easier than showing another control or window to ask for a name
+                    // T.S.
                     this.Gesture.Name = sGestureName;
                     // Save the content to a file
                     Gesture.Save(this.Gesture, dialog.FileName);
+                    MessageBox.Show("File Saved", "Saved!");
                 }
                 m_bIsNextButton = false;
                 this.btnNext.Content = "Next";
