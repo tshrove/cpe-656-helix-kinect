@@ -27,10 +27,28 @@ namespace GestureRecorder.Data
             {
                 return this.m_pSnapshots;
             }
-            protected set
+            set
             {
                 this.m_pSnapshots = value;
             }
+        }
+        /// <summary>
+        /// Gets or sets the name of the gesture.
+        /// </summary>
+        [XmlAttribute("Name")]
+        public string Name
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// Gets or sets the fudginess of the gesture.
+        /// </summary>
+        [XmlAttribute("FudgeFactor")]
+        public double FudgeFactor
+        {
+            get;
+            set;
         }
         #endregion
 

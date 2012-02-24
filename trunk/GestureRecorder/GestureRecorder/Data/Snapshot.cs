@@ -10,21 +10,20 @@ namespace GestureRecorder.Data
     public class Snapshot
     {
         #region Private Members
-        private Dictionary<JointID, BodyPart> m_pBodyParts = new Dictionary<JointID, BodyPart>();
+        private SerializableDictionary<JointID, BodyPart> m_pBodyParts = new SerializableDictionary<JointID, BodyPart>();
         #endregion
 
         #region Properties
         /// <summary>
         /// Gets the list of bodyparts associated with this snapshot.
         /// </summary>
-        [XmlElement("BodyParts")]
-        public Dictionary<JointID, BodyPart> BodyParts
+        public SerializableDictionary<JointID, BodyPart> BodyParts
         {
             get
             {
                 return this.m_pBodyParts;
             }
-            protected set
+            set
             {
                 this.m_pBodyParts = value;
             }
