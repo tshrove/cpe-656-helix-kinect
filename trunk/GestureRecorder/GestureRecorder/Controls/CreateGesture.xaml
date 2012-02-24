@@ -13,7 +13,7 @@
                 <Image Name="VideoFeed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             </StackPanel>
         </Border>
-        <StackPanel DockPanel.Dock="Right">
+        <StackPanel Name="stkSkeletalBody" DockPanel.Dock="Right" IsEnabled="False">
             <TextBlock Text="Select Joints to Record" HorizontalAlignment="Center" Foreground="Wheat"/>
             <Grid>
                 <Image Width="200" Height="Auto" Source="pack://application:,,,/Resources/Skeleton.png" />
