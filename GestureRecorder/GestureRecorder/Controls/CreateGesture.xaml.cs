@@ -132,7 +132,8 @@ namespace GestureRecorder.Controls {
         private void OnJointCheck(object sender, RoutedEventArgs e) {
             System.Windows.Controls.Primitives.ToggleButton temp = sender as System.Windows.Controls.Primitives.ToggleButton;
             // Sets all the snapshots to track this joint.
-            this.Gesture.SetTracking((JointID)temp.Tag);
+            // ToDo: Fix this. It crashes on joint click can not cast from one type to another.
+            this.Gesture.SetTrackingJoints((JointID)temp.Tag);
         }
 
         /// <summary>
@@ -150,7 +151,13 @@ namespace GestureRecorder.Controls {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnNextClick(object sender, RoutedEventArgs e) {
-            // TODO: Add save gesture code...
+            // Get the audio recognizer from adding more snapshots accidentally.
+            this.AudioRecognizer.Unsubscribe("Capture");
+            this.AudioRecognizer.Unsubscribe("Snapshot");
+            // Enable the skeleton
+            this.stkSkeletalBody.IsEnabled = true;
+            // Disable Snapshot button
+            this.btnSnapshot.IsEnabled = false;
         }
 
         /// <summary>

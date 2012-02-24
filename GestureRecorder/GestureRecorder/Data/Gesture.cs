@@ -49,11 +49,11 @@ namespace GestureRecorder.Data
         /// Sets all the snapshots to track this specified joint.
         /// </summary>
         /// <param name="joint"></param>
-        public void SetTracking(JointID joint)
+        public void SetTrackingJoints(params JointID[] joints)
         {
             foreach (var segment in this.Snapshots)
             {
-                segment.SetTrackingJoints(joint);
+                segment.SetTrackingJoints(joints);
             }
         }
         #endregion
