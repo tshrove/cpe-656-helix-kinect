@@ -11,15 +11,17 @@ namespace GestureRecorder.Data
     [XmlRoot("Gesture")]
     public class Gesture
     {
-        #region Private Members
+        #region Private Fields
+
         private List<Snapshot> m_pSnapshots = new List<Snapshot>();
-        #endregion
+
+        #endregion Private Fields
 
         #region Public Properties
+
         /// <summary>
         /// Gets the list of snapshots for the current Gesture.
         /// </summary>
-        [XmlArray("Snapshots")]
         [XmlArrayItem("Snapshot")]
         public List<Snapshot> Snapshots
         {
@@ -32,6 +34,7 @@ namespace GestureRecorder.Data
                 this.m_pSnapshots = value;
             }
         }
+
         /// <summary>
         /// Gets or sets the name of the gesture.
         /// </summary>
@@ -41,6 +44,7 @@ namespace GestureRecorder.Data
             get;
             set;
         }
+
         /// <summary>
         /// Gets or sets the fudginess of the gesture.
         /// </summary>
@@ -50,9 +54,11 @@ namespace GestureRecorder.Data
             get;
             set;
         }
-        #endregion
+
+        #endregion Public Properties
 
         #region Constructors
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -60,7 +66,8 @@ namespace GestureRecorder.Data
         {
             //Nothing to do
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Public Methods
         /// <summary>
