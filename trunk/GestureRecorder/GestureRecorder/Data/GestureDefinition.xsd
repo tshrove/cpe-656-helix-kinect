@@ -6,23 +6,10 @@
     xmlns:mstns="http://tempuri.org/GestureDefinition.xsd"
     xmlns:xs="http://www.w3.org/2001/XMLSchema" >
   
-  <!--Need to add a fudge factor field-->
-  
   <xs:element name="Gesture">
-    <!--
-    <xs:simpleType>
-      <xs:restriction base="xs:double">
-        <xs:minInclusive value="0.0" />
-        <xs:maxInclusive value="1.0" />
-      </xs:restriction>
-    </xs:simpleType>
-    -->
     <xs:complexType>
-      
       <xs:sequence>
-        <xs:element name="Name" type="xs:string" />
-        <xs:element name="FudgeFactor" type="xs:double" minOccurs="1" maxOccurs="1" />
-        <xs:element name="Segment" minOccurs="1" maxOccurs="unbounded">
+        <xs:element name="Snapshot" minOccurs="1" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="HipCenter"      type="BodyPart" minOccurs="1" maxOccurs="1" />
@@ -49,6 +36,8 @@
           </xs:complexType>
         </xs:element>
       </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" />
+      <xs:attribute name="FudgeFactor" type="xs:double" />
     </xs:complexType>
   </xs:element>
 
@@ -58,9 +47,12 @@
       <xs:element name="Tracking" type="xs:boolean" minOccurs="1" maxOccurs="1" />
       <xs:element name="Position">
         <xs:complexType>
-          <xs:attribute name="X" type="xs:double" default="0.0" />
-          <xs:attribute name="Y" type="xs:double" default="0.0" />
-          <xs:attribute name="Z" type="xs:double" default="0.0" />
+          <xs:sequence>
+            <xs:element name="W" type="xs:double" minOccurs="1" maxOccurs="1" />
+            <xs:element name="X" type="xs:double" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Y" type="xs:double" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Z" type="xs:double" minOccurs="1" maxOccurs="1" />
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
