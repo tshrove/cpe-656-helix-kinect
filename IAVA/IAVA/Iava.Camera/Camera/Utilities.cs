@@ -89,6 +89,30 @@ namespace Iava.Input.Camera {
         public SkeletonData[] Skeletons;
         public long TimeStamp;
 
+        private int _skeletonIndex = 0;
+
+        /// <summary>
+        /// Gets the fist active skeleton, in any, in the frame
+        /// </summary>
+        public SkeletonData ActiveSkeleton { get { return GetActiveSkeleton(); } }
+
+        private SkeletonData GetActiveSkeleton() {
+            // Check the last known active skeleton first...
+            if (Skeletons[_skeletonIndex] != null) { return Skeletons[_skeletonIndex]; }
+
+            // Check all the skeleton slots
+            for (int i = 0; i < Skeletons.Count(); i++) {
+                if (Skeletons[i] != null) {
+                    _skeletonIndex = i;
+                    return Skeletons[i];
+                }
+            }
+
+            // If we get here we didn't find anything
+            _skeletonIndex = 0;
+            return null;
+        }
+
         public static explicit operator SkeletonFrame(Microsoft.Research.Kinect.Nui.SkeletonFrame value) {
             SkeletonFrame skeletonFrame = new SkeletonFrame()
             {

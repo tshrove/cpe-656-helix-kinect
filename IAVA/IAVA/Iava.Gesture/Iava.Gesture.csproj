@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BodyPart.cs" />
     <Compile Include="Gesture Stuff\Enums.cs" />
     <Compile Include="Gesture Stuff\Gesture.cs" />
     <Compile Include="Gesture Stuff\Gestures\SwipeDown.cs" />
@@ -54,9 +55,11 @@
     <Compile Include="Gesture Stuff\Gestures\ZoomOut.cs" />
     <Compile Include="Gesture Stuff\IGestureSegment.cs" />
     <Compile Include="Gesture Stuff\Gestures\SwipeLeft.cs" />
+    <Compile Include="Gesture.cs" />
     <Compile Include="GestureEventArgs.cs" />
     <Compile Include="GestureRecognizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Snapshot.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Iava.Camera\Iava.Input.csproj">
@@ -69,11 +72,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Gesture Class Diagrams.cd" />
     <None Include="GestureDefinition.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Iava.Gesture.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
