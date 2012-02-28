@@ -133,9 +133,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Data\GestureDefinition.xsd">
+    <Content Include="Data\GestureDefinition.xsd">
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
