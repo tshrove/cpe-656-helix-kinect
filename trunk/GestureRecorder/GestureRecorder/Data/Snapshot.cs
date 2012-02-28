@@ -13,7 +13,7 @@ namespace GestureRecorder.Data {
         /// <summary>
         /// Gets the list of bodyparts associated with this snapshot.
         /// </summary>
-        [XmlArrayItem("BodyPart")]
+        [XmlElement("BodyPart")]
         public List<BodyPart> BodyParts {
             get { return _bodyParts; }
             set { _bodyParts = value; }

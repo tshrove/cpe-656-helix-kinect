@@ -8,7 +8,7 @@ using Iava.Input.Camera;
 
 namespace GestureRecorder.Data
 {
-    [XmlRoot("Gesture")]
+    [XmlRoot("Gesture", Namespace = "urn:Gestures")]
     public class Gesture
     {
         #region Private Fields
@@ -22,7 +22,7 @@ namespace GestureRecorder.Data
         /// <summary>
         /// Gets the list of snapshots for the current Gesture.
         /// </summary>
-        [XmlArrayItem("Snapshot")]
+        [XmlElement("Snapshot")]
         public List<Snapshot> Snapshots
         {
             get
