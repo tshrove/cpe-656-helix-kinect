@@ -1,0 +1,57 @@
+﻿<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="urn:Gestures"
+    xmlns:gest="urn:Gestures" >
+  
+  <xsd:element name="Gesture">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Snapshot" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="BodyPart" id="HipCenter"      type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="Spine"          type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="ShoulderCenter" type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="Head"           type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="ShoulderLeft"   type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="ElbowLeft"      type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="WristLeft"      type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="HandLeft"       type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="ShoulderRight"  type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="ElbowRight"     type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="WristRight"     type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="HandRight"      type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="HipLeft"        type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="KneeLeft"       type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="AnkleLeft"      type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="FootLeft"       type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="HipRight"       type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="KneeRight"      type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="AnkleRight"     type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+              <xsd:element name="BodyPart" id="FootRight"      type="gest:BodyPart" minOccurs="1" maxOccurs="1" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="Name" type="xsd:string" />
+      <xsd:attribute name="FudgeFactor" type="xsd:double" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <!--Defines a Kinect Body Part-->
+  <xsd:complexType name="BodyPart">
+    <xsd:sequence>
+      <xsd:element name="Position">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="W" type="xsd:double" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="X" type="xsd:double" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="Y" type="xsd:double" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="Z" type="xsd:double" minOccurs="1" maxOccurs="1" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="Tracking" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+    </xsd:sequence>
+    <xsd:attribute name="Name" type="xsd:string" />
+  </xsd:complexType>
+</xsd:schema>
