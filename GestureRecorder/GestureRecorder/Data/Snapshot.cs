@@ -60,7 +60,7 @@ namespace GestureRecorder.Data {
         public Snapshot(SkeletonData skeleton) {
             // ROFL, I didn't even know this was allowed...
             for (JointID i = 0; i < JointID.Count; i++) {
-                BodyParts.Add(new BodyPart(i));
+                BodyParts.Add(new BodyPart(i, skeleton.Joints[i].Position));
             }
 
             if (skeleton == null) { return; }
