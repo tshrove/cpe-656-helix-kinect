@@ -100,7 +100,7 @@ namespace Iava.Input.Camera {
             // NEM: Probably want to throw this at some point instead of returning booleans
             catch (Exception exception) {
                 Console.WriteLine(exception.ToString());
-                return false;
+                throw exception;
             }
 
             // Open the RGB camera

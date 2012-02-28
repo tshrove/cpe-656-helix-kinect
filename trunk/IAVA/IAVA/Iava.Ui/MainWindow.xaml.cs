@@ -27,7 +27,7 @@ namespace Iava.Ui {
             m_pGestureRecognizer = new Gesture.GestureRecognizer(string.Empty);
             m_pAudioRecognizer = new AudioRecognizer();
 
-            m_pAudioRecognizer.AudioConfidenceThreshold = 0.6f;
+            m_pAudioRecognizer.AudioConfidenceThreshold = 0.5f;
             CityLocations.GetCityLocation("test");
             // Events
             m_pAudioRecognizer.StatusChanged    += OnAudioRecognizerStatusChanged;

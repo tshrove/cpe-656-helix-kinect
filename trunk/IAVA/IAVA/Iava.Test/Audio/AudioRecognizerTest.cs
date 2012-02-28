@@ -219,7 +219,7 @@ namespace Iava.Test.Audio
 
             // Callback with the same command but with confidence below the threshold level to ensure the audio callback method is not called
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold - 0.01f));
-
+            
             // Call second command
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString2, 0.95f));
             Thread.Sleep(100);
