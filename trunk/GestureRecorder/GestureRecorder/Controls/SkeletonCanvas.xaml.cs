@@ -19,72 +19,52 @@ namespace GestureRecorder.Controls {
     /// Interaction logic for SkeletonCanvas.xaml
     /// </summary>
     public partial class SkeletonCanvas : Canvas {
+
+        #region Public Properties
+
+        public SkeletonData Skeleton {
+            get { return _skeleton; }
+            set { _skeleton = value; UpdateCanvas(); }
+        }
+
+        #endregion Public Properties
+
+        #region Constructors
+
         public SkeletonCanvas() {
             InitializeComponent();
         }
 
-        #region Properties
-        public SkeletonFrame SkeletonFrame {
-            get { return _skeletonFrame; }
-            set { _skeletonFrame = value; UpdateCanvas(); }
-        }
-        /// <summary>
-        /// Gets the active skeleton out of the list of 6 skeletons
-        /// </summary>
-        public SkeletonData ActiveSkeleton
-        {
-            get
-            {
-                SkeletonData data = null;
-                foreach (SkeletonData skeleton in this.SkeletonFrame.Skeletons)
-                {
-                    if (skeleton != null) { data = skeleton; break; }
-                }
-                return data;
-            }
-        }
-        #endregion
+        #endregion Constructors
 
-        #region Private Members
-        private SkeletonFrame _skeletonFrame;
-        #endregion
+        #region Private Methods
 
         private void UpdateCanvas() {
-            if (SkeletonFrame == null) { return; }
+            if (Skeleton == null) { return; }
 
-                int iSkeleton = 0;
-                Brush[] brushes = new Brush[6];
-                brushes[0] = new SolidColorBrush(Color.FromRgb(255,   0, 0));
-                brushes[1] = new SolidColorBrush(Color.FromRgb(0,   255, 0));
-                brushes[2] = new SolidColorBrush(Color.FromRgb(0,     0, 255));
-                brushes[3] = new SolidColorBrush(Color.FromRgb(255, 255, 255));/*
-                brushes[4] = new SolidColorBrush(Color.FromRgb(255, 64,  255));
-                brushes[5] = new SolidColorBrush(Color.FromRgb(128, 128, 255));*/
+            Brush brush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
 
-                Children.Clear();
-                foreach (SkeletonData data in SkeletonFrame.Skeletons) {
-                    if (SkeletonTrackingState.Tracked == data.TrackingState) {
-                        // Draw bones
-                        Brush brush = brushes[iSkeleton % brushes.Length];
-                        Children.Add(GetBodySegment(data.Joints, brush, JointID.HipCenter, JointID.Spine, JointID.ShoulderCenter, JointID.Head));
-                        Children.Add(GetBodySegment(data.Joints, brush, JointID.ShoulderCenter, JointID.ShoulderLeft, JointID.ElbowLeft, JointID.WristLeft, JointID.HandLeft));
-                        Children.Add(GetBodySegment(data.Joints, brush, JointID.ShoulderCenter, JointID.ShoulderRight, JointID.ElbowRight, JointID.WristRight, JointID.HandRight));
-                        Children.Add(GetBodySegment(data.Joints, brush, JointID.HipCenter, JointID.HipLeft, JointID.KneeLeft, JointID.AnkleLeft, JointID.FootLeft));
-                        Children.Add(GetBodySegment(data.Joints, brush, JointID.HipCenter, JointID.HipRight, JointID.KneeRight, JointID.AnkleRight, JointID.FootRight));
+            Children.Clear();
 
-                        // Draw joints
-                        foreach (Joint joint in data.Joints) {
-                            Point jointPos = new Point(joint.Position.X, joint.Position.Y);
-                            Line jointLine = new Line();
-                            jointLine.X1 = jointPos.X - 3;
-                            jointLine.X2 = jointLine.X1 + 6;
-                            jointLine.Y1 = jointLine.Y2 = jointPos.Y;
-                            jointLine.StrokeThickness = 6;
-                            Children.Add(jointLine);
-                        }
-                    }
-                    iSkeleton++;
-                } // for each skeleton
+            if (Skeleton.TrackingState == SkeletonTrackingState.Tracked) {
+                // Draw bones
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, JointID.HipCenter, JointID.Spine, JointID.ShoulderCenter, JointID.Head));
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, JointID.ShoulderCenter, JointID.ShoulderLeft, JointID.ElbowLeft, JointID.WristLeft, JointID.HandLeft));
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, JointID.ShoulderCenter, JointID.ShoulderRight, JointID.ElbowRight, JointID.WristRight, JointID.HandRight));
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, JointID.HipCenter, JointID.HipLeft, JointID.KneeLeft, JointID.AnkleLeft, JointID.FootLeft));
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, JointID.HipCenter, JointID.HipRight, JointID.KneeRight, JointID.AnkleRight, JointID.FootRight));
+
+                // Draw joints
+                foreach (Joint joint in Skeleton.Joints) {
+                    Point jointPos = new Point(joint.Position.X, joint.Position.Y);
+                    Line jointLine = new Line();
+                    jointLine.X1 = jointPos.X - 3;
+                    jointLine.X2 = jointLine.X1 + 6;
+                    jointLine.Y1 = jointLine.Y2 = jointPos.Y;
+                    jointLine.StrokeThickness = 6;
+                    Children.Add(jointLine);
+                }
+            }
         }
 
         /// <summary>
@@ -135,5 +115,13 @@ namespace GestureRecorder.Controls {
             // Return the new point
             return new Point(newX, newY);
         }
+
+        #endregion Private Methods
+
+        #region Private Fields
+
+        private SkeletonData _skeleton;
+
+        #endregion Private Fields
     }
 }

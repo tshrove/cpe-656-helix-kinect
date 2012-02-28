@@ -115,7 +115,7 @@ namespace GestureRecorder.Controls {
             // If we don't have a canvas to draw on, there's nothing for us to do...
             if (_activeSkeletonCanvas == null) { return; }
 
-            _activeSkeletonCanvas.SkeletonFrame = e.SkeletonFrame;
+            _activeSkeletonCanvas.Skeleton = e.SkeletonFrame.ActiveSkeleton;
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace GestureRecorder.Controls {
         /// <param name="e"></param>
         private void OnSnapshotClick(object sender, RoutedEventArgs e) {
             // Turn the new active canvas into a snapshot.
-            Snapshot pNewSnapshot = new Snapshot(_activeSkeletonCanvas.ActiveSkeleton);
+            Snapshot pNewSnapshot = new Snapshot(_activeSkeletonCanvas.Skeleton);
             // Get the new snapshot taken
             AddSkeletonCanvas();
             // Save the snapshot in the gesture for later saving to a file.
