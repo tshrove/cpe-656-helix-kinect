@@ -91,7 +91,7 @@ namespace Iava.Test.Audio
         /// Tests the Start method.
         /// </summary>
         [TestMethod]
-        public void StartTest()
+        public void AudioStartTest()
         {
             recognizer = new AudioRecognizer();
 
@@ -123,7 +123,7 @@ namespace Iava.Test.Audio
         /// Tests the Stop method.
         /// </summary>
         [TestMethod]
-        public void StopTest()
+        public void AudioStopTest()
         {
             recognizer = new AudioRecognizer();
 
@@ -160,7 +160,7 @@ namespace Iava.Test.Audio
         /// Tests the Subscribe method.
         /// </summary>
         [TestMethod]
-        public void SubscribeTest()
+        public void AudioSubscribeTest()
         {
             const string commandString = "Test Callback";
 
@@ -238,7 +238,7 @@ namespace Iava.Test.Audio
         /// Tests the Unsubscribe method.
         /// </summary>
         [TestMethod]
-        public void UnsubscribeTest()
+        public void AudioUnsubscribeTest()
         {
             const string commandString = "Test Callback";
 
@@ -307,7 +307,7 @@ namespace Iava.Test.Audio
         /// Tests the syncing and unsyncing of the recognizer.
         /// </summary>
         [TestMethod]
-        public void SyncUnsyncTest()
+        public void AudioSyncUnsyncTest()
         {
             const string commandString = "Test Callback";
 
@@ -364,7 +364,7 @@ namespace Iava.Test.Audio
         /// Tests changing the sync command
         /// </summary>
         [TestMethod]
-        public void SyncCommandTest()
+        public void AudioSyncCommandTest()
         {        
             // Create a mock speech engine and set it up
             var mockEngine = SetupMockSpeechRecognitionEngine();
@@ -422,7 +422,7 @@ namespace Iava.Test.Audio
         /// Tests wildcard functionality.
         /// </summary>
         [TestMethod]
-        public void WildcardTest()
+        public void AudioWildcardTest()
         {
             // Create a mock speech engine and set it up
             var mockEngine = SetupMockSpeechRecognitionEngine();
