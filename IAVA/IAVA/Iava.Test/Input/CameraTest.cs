@@ -63,20 +63,20 @@ namespace Iava.Test
         //}
         //
         #endregion
-
+        /*
         /// <summary>
         ///A test for TiltUp
         ///</summary>
         [TestMethod()]
         public void CameraTiltUpTest()
-        {/*
+        {
             //TODO: Need to figure out why this is failing
             int iExpectedAngle = Camera.TiltAngle;
             Camera.TiltUp();
             iExpectedAngle++;
             Thread.Sleep(1500);
             Assert.AreEqual(iExpectedAngle, Camera.TiltAngle);
-          */
+          
         }
 
         /// <summary>
@@ -84,14 +84,14 @@ namespace Iava.Test
         ///</summary>
         [TestMethod()]
         public void CameraTiltDownTest()
-        {/*
+        {
             //TODO: Need to figure out why this is failing
             int iExpectedAngle = Camera.TiltAngle;
             Camera.TiltDown();
             iExpectedAngle--;
             Thread.Sleep(1000);
             Assert.AreEqual(iExpectedAngle, Camera.TiltAngle);
-            */
-        }
+            
+        }*/
     }
 }
