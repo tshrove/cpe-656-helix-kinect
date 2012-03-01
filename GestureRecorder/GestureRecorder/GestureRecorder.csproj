@@ -76,7 +76,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data\BodyPart.cs" />
     <Compile Include="Controls\SkeletonCanvas.xaml.cs">
       <DependentUpon>SkeletonCanvas.xaml</DependentUpon>
     </Compile>
@@ -84,9 +83,6 @@
     <Compile Include="Controls\TestGesture.xaml.cs">
       <DependentUpon>TestGesture.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Gesture.cs" />
-    <Compile Include="Data\SerializableDictionary.cs" />
-    <Compile Include="Data\Snapshot.cs" />
     <Page Include="Controls\SkeletonCanvas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -133,9 +129,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Content Include="Data\GestureDefinition.xsd">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
