@@ -339,6 +339,9 @@ namespace Iava.Test.Audio
                 callback1Invoked = true;
             });
 
+            // Set the timeout to 5 seconds
+            recognizer.SyncTimeoutValue = 5000;
+            
             recognizer.Start();
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(recognizer.SyncCommand, recognizer.AudioConfidenceThreshold + 0.01f));
@@ -350,7 +353,7 @@ namespace Iava.Test.Audio
             Assert.IsTrue(callback1Invoked);
             callback1Invoked = false;
 
-            Thread.Sleep(AudioRecognizer.SyncTimeoutValue + 100);
+            Thread.Sleep(recognizer.SyncTimeoutValue + 100);
             Assert.IsTrue(unsyncedCallbackInvoked);
 
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
