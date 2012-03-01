@@ -500,7 +500,7 @@ namespace Iava.Ui {
         /// </summary>
         private void ResetAudioSyncTime()
         {
-            this.m_sAudioSyncTime = new TimeSpan(0, 0, 0, 0, Iava.Core.Recognizer.SyncTimeoutValue);                     
+            this.m_sAudioSyncTime = new TimeSpan(0, 0, 0, 0, m_pAudioRecognizer.SyncTimeoutValue);
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace Iava.Ui {
         /// </summary>
         private void ResetGestureSyncTime()
         {
-            this.m_sGestureSyncTime = new TimeSpan(0, 0, 0, 0, Iava.Core.Recognizer.SyncTimeoutValue);
+            this.m_sGestureSyncTime = new TimeSpan(0, 0, 0, 0, m_pGestureRecognizer.SyncTimeoutValue);
         }
 
         /// <summary>

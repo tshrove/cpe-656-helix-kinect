@@ -46,7 +46,7 @@ namespace Iava.Core {
 
         #endregion Public Events
 
-        #region Public Properties and Constants
+        #region Public Properties
 
         /// <summary>
         /// Gets the status of the recognizer.
@@ -57,11 +57,14 @@ namespace Iava.Core {
         }
 
         /// <summary>
-        /// The timeout value (in milliseconds) to wait until the recognizer unsyncs.
+        /// The timeout value, in milliseconds, to wait until the recognizer unsyncs.
         /// </summary>
-        public const int SyncTimeoutValue = 30000;
+        public int SyncTimeoutValue {
+            get { return m_syncTimeout; }
+            set { m_syncTimeout = value; m_timeoutTimer.Interval = value; }
+        }
 
-        #endregion Public Properties and Constants
+        #endregion Public Properties
 
         #region Public Methods
 
@@ -83,6 +86,8 @@ namespace Iava.Core {
         /// Deafult constructor.
         /// </summary>
         public Recognizer() {
+            // Default to 30 seconds
+            SyncTimeoutValue = 30000;
 
             m_timeoutTimer.Elapsed += OnTimerElapsed;
 
@@ -204,6 +209,8 @@ namespace Iava.Core {
 
         #region Private Fields
 
+        private int m_syncTimeout;
+
         /// <summary>
         /// Recognizer status.
         /// </summary>
@@ -217,7 +224,7 @@ namespace Iava.Core {
         /// <summary>
         /// Syncronization timeout timer.
         /// </summary>
-        protected System.Timers.Timer m_timeoutTimer = new System.Timers.Timer(SyncTimeoutValue);
+        protected System.Timers.Timer m_timeoutTimer = new System.Timers.Timer();
 
         /// <summary>
         /// Synchronization context.
