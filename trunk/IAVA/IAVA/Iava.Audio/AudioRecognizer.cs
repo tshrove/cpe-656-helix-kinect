@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using Iava.Core;
 using Microsoft.Research.Kinect.Audio;
-//using Microsoft.Speech.Recognition;
-//using Microsoft.Speech.AudioFormat;
 using System.Speech.Recognition;
 using System.Speech.AudioFormat;
 using System.Threading.Tasks;
@@ -318,7 +316,7 @@ namespace Iava.Audio
 
                             AudioEventArgs args = new AudioEventArgs
                                 {
-                                    Command = command                                   
+                                    Command = command
                                 };
 
                             if (command.EndsWith("*"))
