@@ -311,8 +311,8 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnCameraImageFrameReady(object sender, ImageFrameReadyEventArgs e) {
-            PlanarImage Image = e.ImageFrame.Image;
+        private void OnCameraImageFrameReady(object sender, IavaImageFrameReadyEventArgs e) {
+            IavaPlanarImage Image = e.ImageFrame.Image;
 
             kinectVideoFeed.Source = BitmapSource.Create(
                 Image.Width, Image.Height, 96, 96, PixelFormats.Bgr32, null,
@@ -324,8 +324,8 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnCameraSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e) {
-            Iava.Input.Camera.SkeletonFrame skeletonFrame = e.SkeletonFrame;
+        private void OnCameraSkeletonFrameReady(object sender, IavaSkeletonFrameReadyEventArgs e) {
+            Iava.Input.Camera.IavaSkeletonFrame skeletonFrame = e.SkeletonFrame;
 
             int iSkeleton = 0;
             Brush[] brushes = new Brush[6];
@@ -337,18 +337,18 @@ namespace Iava.Ui {
             brushes[5] = new SolidColorBrush(Color.FromRgb(128, 128, 255));
 
             kinectSkeletonFeed.Children.Clear();
-            foreach (SkeletonData data in skeletonFrame.Skeletons) {
-                if (SkeletonTrackingState.Tracked == data.TrackingState) {
+            foreach (IavaSkeletonData data in skeletonFrame.Skeletons) {
+                if (IavaSkeletonTrackingState.Tracked == data.TrackingState) {
                     // Draw bones
                     Brush brush = brushes[iSkeleton % brushes.Length];
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.HipCenter, JointID.Spine, JointID.ShoulderCenter, JointID.Head));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.ShoulderCenter, JointID.ShoulderLeft, JointID.ElbowLeft, JointID.WristLeft, JointID.HandLeft));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.ShoulderCenter, JointID.ShoulderRight, JointID.ElbowRight, JointID.WristRight, JointID.HandRight));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.HipCenter, JointID.HipLeft, JointID.KneeLeft, JointID.AnkleLeft, JointID.FootLeft));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, JointID.HipCenter, JointID.HipRight, JointID.KneeRight, JointID.AnkleRight, JointID.FootRight));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.HipCenter, IavaJointID.Spine, IavaJointID.ShoulderCenter, IavaJointID.Head));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.ShoulderCenter, IavaJointID.ShoulderLeft, IavaJointID.ElbowLeft, IavaJointID.WristLeft, IavaJointID.HandLeft));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.ShoulderCenter, IavaJointID.ShoulderRight, IavaJointID.ElbowRight, IavaJointID.WristRight, IavaJointID.HandRight));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.HipCenter, IavaJointID.HipLeft, IavaJointID.KneeLeft, IavaJointID.AnkleLeft, IavaJointID.FootLeft));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.HipCenter, IavaJointID.HipRight, IavaJointID.KneeRight, IavaJointID.AnkleRight, IavaJointID.FootRight));
 
                     // Draw joints
-                    foreach (Joint joint in data.Joints) {
+                    foreach (IavaJoint joint in data.Joints) {
                         Point jointPos = new Point(joint.Position.X, joint.Position.Y);
                         Line jointLine = new Line();
                         jointLine.X1 = jointPos.X - 3;
@@ -453,7 +453,7 @@ namespace Iava.Ui {
 
         #endregion Event Handlers
 
-        private Polyline GetBodySegment(JointsCollection joints, Brush brush, params JointID[] jointIDs) {
+        private Polyline GetBodySegment(IavaJointsCollection joints, Brush brush, params IavaJointID[] jointIDs) {
             PointCollection points = new PointCollection(jointIDs.Length);
             for (int i = 0; i < jointIDs.Length; ++i) {
                 points.Add(ScalePoint(joints[jointIDs[i]].Position.X, joints[jointIDs[i]].Position.Y, kinectSkeletonFeed.Width, kinectSkeletonFeed.Height));

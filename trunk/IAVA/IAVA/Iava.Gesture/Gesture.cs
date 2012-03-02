@@ -74,7 +74,7 @@ namespace GestureRecorder.Data
         /// Sets all the snapshots to track this specified joint.
         /// </summary>
         /// <param name="joint"></param>
-        public void SetTrackingJoints(params JointID[] joints)
+        public void SetTrackingJoints(params IavaJointID[] joints)
         {
             foreach (var segment in this.Snapshots)
             {
