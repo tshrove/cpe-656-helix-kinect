@@ -31,7 +31,7 @@ namespace Iava.Gesture.GestureStuff {
 
         #region Public Methods
 
-        public void CheckForGesture(SkeletonData skeleton) {
+        public void CheckForGesture(IavaSkeletonData skeleton) {
             // NEM: Need to describe what this code is doing...
             if (_paused) {
                 if (_frameCount == _pausedFrameCount) {

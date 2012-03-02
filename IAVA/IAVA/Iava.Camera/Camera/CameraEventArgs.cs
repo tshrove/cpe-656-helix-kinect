@@ -9,37 +9,37 @@ namespace Iava.Input.Camera {
     /// <summary>
     /// The SkeletonEventArgs class
     /// </summary>
-    public class SkeletonEventArgs : EventArgs {
+    public class IavaSkeletonEventArgs : EventArgs {
 
         #region Public Properties
 
         /// <summary>
         /// Gets the Skeleton data.
         /// </summary>
-        public SkeletonData Skeleton { get; private set; }
+        public IavaSkeletonData Skeleton { get; private set; }
 
         #endregion Public Properties
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SkeletonEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="IavaSkeletonEventArgs"/> class.
         /// </summary>
         /// <param name="skeleton">The skeleton.</param>
-        public SkeletonEventArgs(SkeletonData skeleton) {
+        public IavaSkeletonEventArgs(IavaSkeletonData skeleton) {
             this.Skeleton = skeleton;
         }
 
-        public SkeletonEventArgs(Microsoft.Research.Kinect.Nui.SkeletonData skeleton) {
-            this.Skeleton = (SkeletonData)skeleton;
+        public IavaSkeletonEventArgs(SkeletonData skeleton) {
+            this.Skeleton = (IavaSkeletonData)skeleton;
         }
 
         #endregion Constructors
 
         #region Operator Overloads
         /*
-        public static implicit operator SkeletonEventArgs(Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs arg) {
-            //Microsoft.Research.Kinect.Nui.
+        public static implicit operator SkeletonEventArgs(SkeletonFrameReadyEventArgs arg) {
+            //
             arg.SkeletonFrame.
         }
         */
@@ -49,7 +49,7 @@ namespace Iava.Input.Camera {
     /// <summary>
     /// The SkeletonFrameEventArgs class
     /// </summary>
-    public class SkeletonFrameEventArgs : EventArgs {
+    public class IavaSkeletonFrameEventArgs : EventArgs {
 
         #region Public Properties
 
@@ -68,11 +68,11 @@ namespace Iava.Input.Camera {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SkeletonFrameEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="IavaSkeletonFrameEventArgs"/> class.
         /// </summary>
         /// <param name="skeletonIDValues">The skeleton ID values.</param>
         /// <param name="timeStamp">The time stamp.</param>
-        public SkeletonFrameEventArgs(List<int> skeletonIDs, long timestamp) {
+        public IavaSkeletonFrameEventArgs(List<int> skeletonIDs, long timestamp) {
             this.SkeletonIDs = skeletonIDs;
             this.Timestamp = timestamp;
         }
@@ -80,17 +80,17 @@ namespace Iava.Input.Camera {
         #endregion Constructors
     }
 
-    public sealed class ImageFrameReadyEventArgs : EventArgs {
+    public sealed class IavaImageFrameReadyEventArgs : EventArgs {
 
         #region Public Properties
 
-        public ImageFrame ImageFrame { get; private set; }
+        public IavaImageFrame ImageFrame { get; private set; }
 
         #endregion Pulbic Properties
         
         #region Constructors
 
-        public ImageFrameReadyEventArgs(ImageFrame imageFrame) {
+        public IavaImageFrameReadyEventArgs(IavaImageFrame imageFrame) {
             ImageFrame = imageFrame;
         }
 
@@ -98,24 +98,24 @@ namespace Iava.Input.Camera {
 
         #region Operator Overloads
 
-        public static implicit operator ImageFrameReadyEventArgs(Microsoft.Research.Kinect.Nui.ImageFrameReadyEventArgs value) {
-            return new ImageFrameReadyEventArgs((ImageFrame)value.ImageFrame);
+        public static implicit operator IavaImageFrameReadyEventArgs(ImageFrameReadyEventArgs value) {
+            return new IavaImageFrameReadyEventArgs((IavaImageFrame)value.ImageFrame);
         }
 
         #endregion Operator Overloads
     }
 
-    public sealed class SkeletonFrameReadyEventArgs : EventArgs {
+    public sealed class IavaSkeletonFrameReadyEventArgs : EventArgs {
 
         #region Public Properties
 
-        public SkeletonFrame SkeletonFrame { get; private set; }
+        public IavaSkeletonFrame SkeletonFrame { get; private set; }
 
         #endregion Public Properties
 
         #region Constructors
 
-        public SkeletonFrameReadyEventArgs(SkeletonFrame skeletonFrame) {
+        public IavaSkeletonFrameReadyEventArgs(IavaSkeletonFrame skeletonFrame) {
             SkeletonFrame = skeletonFrame;
         }
 
@@ -123,8 +123,8 @@ namespace Iava.Input.Camera {
 
         #region Operator Overloads
 
-        public static implicit operator SkeletonFrameReadyEventArgs(Microsoft.Research.Kinect.Nui.SkeletonFrameReadyEventArgs value) {
-            return new SkeletonFrameReadyEventArgs((SkeletonFrame)value.SkeletonFrame);
+        public static implicit operator IavaSkeletonFrameReadyEventArgs(SkeletonFrameReadyEventArgs value) {
+            return new IavaSkeletonFrameReadyEventArgs((IavaSkeletonFrame)value.SkeletonFrame);
         }
 
         #endregion Operator Overloads

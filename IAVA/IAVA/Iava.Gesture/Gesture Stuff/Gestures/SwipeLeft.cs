@@ -9,18 +9,18 @@ using Iava.Input.Camera;
 
 namespace Iava.Gesture.GestureStuff {
     public class SwipeLeftSegment1 : IGestureSegment {
-        public GestureResult CheckGesture(SkeletonData skeleton)
+        public GestureResult CheckGesture(IavaSkeletonData skeleton)
         {
             // Right hand in front of Right shoulder
-            if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ElbowRight].Position.Z && skeleton.Joints[JointID.HandLeft].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y)
+            if (skeleton.Joints[IavaJointID.HandRight].Position.Z < skeleton.Joints[IavaJointID.ElbowRight].Position.Z && skeleton.Joints[IavaJointID.HandLeft].Position.Y < skeleton.Joints[IavaJointID.HipCenter].Position.Y)
             {
                 // Console.WriteLine("GesturePart 0 - Right hand in front of Right shoudler - PASS");
                 // Right hand below shoulder height but above hip height
-                if (skeleton.Joints[JointID.HandRight].Position.Y < skeleton.Joints[JointID.Head].Position.Y && skeleton.Joints[JointID.HandRight].Position.Y > skeleton.Joints[JointID.HipCenter].Position.Y)
+                if (skeleton.Joints[IavaJointID.HandRight].Position.Y < skeleton.Joints[IavaJointID.Head].Position.Y && skeleton.Joints[IavaJointID.HandRight].Position.Y > skeleton.Joints[IavaJointID.HipCenter].Position.Y)
                 {
                     // Console.WriteLine("GesturePart 0 - Right hand below shoulder height but above hip height - PASS");
                     // Right hand Right of Right shoulder
-                    if (skeleton.Joints[JointID.HandRight].Position.X > skeleton.Joints[JointID.ShoulderRight].Position.X)
+                    if (skeleton.Joints[IavaJointID.HandRight].Position.X > skeleton.Joints[IavaJointID.ShoulderRight].Position.X)
                     {
                         Console.WriteLine("Swipe Left Gesture - Segment 1 received.");
                         return GestureResult.Succeed;
@@ -45,15 +45,15 @@ namespace Iava.Gesture.GestureStuff {
         /// </summary>
         /// <param name="skeleton">The skeleton.</param>
         /// <returns>GesturePartResult based on if the gesture part has been completed</returns>
-        public GestureResult CheckGesture(SkeletonData skeleton) {
+        public GestureResult CheckGesture(IavaSkeletonData skeleton) {
             // //Right hand in front of Right shoulder
-            if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ElbowRight].Position.Z && skeleton.Joints[JointID.HandLeft].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y) {
+            if (skeleton.Joints[IavaJointID.HandRight].Position.Z < skeleton.Joints[IavaJointID.ElbowRight].Position.Z && skeleton.Joints[IavaJointID.HandLeft].Position.Y < skeleton.Joints[IavaJointID.HipCenter].Position.Y) {
                 // Console.WriteLine("GesturePart 1 - Right hand in front of Right shoulder - PASS");
                 // //Right hand below shoulder height but above hip height
-                if (skeleton.Joints[JointID.HandRight].Position.Y < skeleton.Joints[JointID.Head].Position.Y && skeleton.Joints[JointID.HandRight].Position.Y > skeleton.Joints[JointID.HipCenter].Position.Y) {
+                if (skeleton.Joints[IavaJointID.HandRight].Position.Y < skeleton.Joints[IavaJointID.Head].Position.Y && skeleton.Joints[IavaJointID.HandRight].Position.Y > skeleton.Joints[IavaJointID.HipCenter].Position.Y) {
                     // Console.WriteLine("GesturePart 1 - Right hand below shoulder height but above hip height - PASS");
                     // //Right hand left of Right shoulder & Right of left shoulder
-                    if (skeleton.Joints[JointID.HandRight].Position.X < skeleton.Joints[JointID.ShoulderRight].Position.X && skeleton.Joints[JointID.HandRight].Position.X > skeleton.Joints[JointID.ShoulderLeft].Position.X) {
+                    if (skeleton.Joints[IavaJointID.HandRight].Position.X < skeleton.Joints[IavaJointID.ShoulderRight].Position.X && skeleton.Joints[IavaJointID.HandRight].Position.X > skeleton.Joints[IavaJointID.ShoulderLeft].Position.X) {
                         Console.WriteLine("Swipe Left Gesture - Segment 2 received.");
                         return GestureResult.Succeed;
                     }
@@ -77,15 +77,15 @@ namespace Iava.Gesture.GestureStuff {
         /// </summary>
         /// <param name="skeleton">The skeleton.</param>
         /// <returns>GesturePartResult based on if the gesture part has been completed</returns>
-        public GestureResult CheckGesture(SkeletonData skeleton) {
+        public GestureResult CheckGesture(IavaSkeletonData skeleton) {
             // //Right hand in front of Right Shoulder
-            if (skeleton.Joints[JointID.HandRight].Position.Z < skeleton.Joints[JointID.ElbowRight].Position.Z && skeleton.Joints[JointID.HandLeft].Position.Y < skeleton.Joints[JointID.HipCenter].Position.Y) {
+            if (skeleton.Joints[IavaJointID.HandRight].Position.Z < skeleton.Joints[IavaJointID.ElbowRight].Position.Z && skeleton.Joints[IavaJointID.HandLeft].Position.Y < skeleton.Joints[IavaJointID.HipCenter].Position.Y) {
                 // Console.WriteLine("GesturePart 2 - Right hand in front of Right shoulder - PASS");
                 // //Right hand below shoulder height but above hip height
-                if (skeleton.Joints[JointID.HandRight].Position.Y < skeleton.Joints[JointID.Head].Position.Y && skeleton.Joints[JointID.HandRight].Position.Y > skeleton.Joints[JointID.HipCenter].Position.Y) {
+                if (skeleton.Joints[IavaJointID.HandRight].Position.Y < skeleton.Joints[IavaJointID.Head].Position.Y && skeleton.Joints[IavaJointID.HandRight].Position.Y > skeleton.Joints[IavaJointID.HipCenter].Position.Y) {
                     // Console.WriteLine("GesturePart 2 - Right hand below shoulder height but above hip height - PASS");
                     // //Right hand left of left Shoulder
-                    if (skeleton.Joints[JointID.HandRight].Position.X < skeleton.Joints[JointID.ShoulderLeft].Position.X) {
+                    if (skeleton.Joints[IavaJointID.HandRight].Position.X < skeleton.Joints[IavaJointID.ShoulderLeft].Position.X) {
                         Console.WriteLine("Swipe Left Gesture - Segment 3 received.");
                         return GestureResult.Succeed;
                     }

@@ -8,6 +8,6 @@ using Iava.Input.Camera;
 
 namespace Iava.Gesture.GestureStuff {
     public interface IGestureSegment {
-        GestureResult CheckGesture(SkeletonData skeleton);
+        GestureResult CheckGesture(IavaSkeletonData skeleton);
     }
 }

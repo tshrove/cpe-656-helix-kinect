@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.IO;
-using Iava.Core;
-using Iava.Input.Camera;
-using Iava.Gesture.GestureStuff;
 using System.Threading;
 using System.Threading.Tasks;
+using Iava.Core;
+using Iava.Gesture.GestureStuff;
+using Iava.Input.Camera;
 
 namespace Iava.Gesture 
 {
@@ -59,7 +57,7 @@ namespace Iava.Gesture
             tokenSource = new CancellationTokenSource();
 
             // Unsubscribe from the events
-            Camera.SkeletonReady -= OnSkeletonReady;
+            _runtime.SkeletonReady -= OnSkeletonReady;
 
             Status = RecognizerStatus.Ready;
 
@@ -92,7 +90,11 @@ namespace Iava.Gesture
         /// </summary>
         /// <param name="name"></param>
         public void Unsubscribe(string name) {
-            if (!string.IsNullOrEmpty(name) && GestureCallbacks.ContainsKey(name)) {
+            if (string.IsNullOrEmpty(name)) {
+                throw new ArgumentException("Name argument was either null or empty.", "name");
+            }
+
+            if (GestureCallbacks.ContainsKey(name)) {
                 GestureCallbacks.Remove(name);
             }
         }
@@ -108,14 +110,19 @@ namespace Iava.Gesture
         public GestureRecognizer(string filePath)
             : base() {
 
-            // Don't really like this here, but the UI
-            // depends on this property being set in
-            // the constructor...
-            //Camera = new Camera();
+            Intialize();
+            _runtime = new RuntimeWrapper();
+        }
 
-            // Initialize our collections...
-            GestureCallbacks = new Dictionary<string, GestureCallback>();
-            SupportedGestures = new List<GestureStuff.Gesture>();
+        /// <summary>
+        /// Constructor.  Used for unit testing.
+        /// </summary>
+        /// <param name="runtime">IRuntime object to provide the data to the recognizer</param>
+        internal GestureRecognizer(IRuntime runtime)
+            : base() {
+
+            Intialize();
+            _runtime = runtime;
         }
 
         #endregion Constructors
@@ -135,11 +142,36 @@ namespace Iava.Gesture
         /// <summary>
         /// The sync gesture
         /// </summary>
-        private Gesture.GestureStuff.Gesture SyncGesture { get; set; }
+        public Gesture.GestureStuff.Gesture SyncGesture {
+            get {
+                return _syncGesture;
+            }
+            set {
+                if (value == null) {
+                    throw new ArgumentException("value", "Sync Gesture was null.");
+                }
+
+                _syncGesture = value;
+
+                if (Status == RecognizerStatus.Running) {
+                    Stop();
+                    Start();
+                }
+            }
+        }
 
         #endregion Private Properties
 
         #region Private Methods
+
+        /// <summary>
+        /// Initialization Routine
+        /// </summary>
+        private void Intialize() {
+            // Initialize our collections...
+            GestureCallbacks = new Dictionary<string, GestureCallback>();
+            SupportedGestures = new List<GestureStuff.Gesture>();
+        }
 
         private void LoadGestures() {
             // TODO: Reading in the config file needs to happen here
@@ -219,7 +251,7 @@ namespace Iava.Gesture
                 // Try to connect to the camera first.  If this fails there is no point in continuing
                 try {
                     // Register with some camera events
-                    Camera.SkeletonReady += OnSkeletonReady;
+                    _runtime.SkeletonReady += OnSkeletonReady;
 
                     // Read the gestures in from the config file
                     LoadGestures();
@@ -237,6 +269,14 @@ namespace Iava.Gesture
         }
 
         #endregion Private Methods
+
+        #region Private Fields
+
+        private IRuntime _runtime;
+
+        private Gesture.GestureStuff.Gesture _syncGesture;
+
+        #endregion Private Fields
 
         #region Protected Methods
 
@@ -261,7 +301,7 @@ namespace Iava.Gesture
             else { /* No one cares about this gesture =( */ }
         }
 
-        protected void OnSkeletonReady(object sender, SkeletonEventArgs e) {
+        protected void OnSkeletonReady(object sender, IavaSkeletonEventArgs e) {
 
             // If we're synced up look for gestures
             if (m_isSynced) {

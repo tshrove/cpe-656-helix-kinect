@@ -14,7 +14,7 @@ namespace GestureRecorder.Data {
         /// Gets the postion of the body part in x and y axis.
         /// </summary>
         [XmlElement("Position")]
-        public Vector Position { get; set; }
+        public IavaVector Position { get; set; }
 
         /// <summary>
         /// Gets or sets whether the body part should be tracked.
@@ -26,20 +26,20 @@ namespace GestureRecorder.Data {
         /// The ID of the Body Part
         /// </summary>
         [XmlAttribute("Name")]
-        public JointID JointID { get; set; }
+        public IavaJointID JointID { get; set; }
 
         #endregion Public Properties
 
         #region Constructors
 
         private BodyPart()
-            : this(0, new Vector()) { }
+            : this(0, new IavaVector()) { }
 
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public BodyPart(JointID jointID)
-            : this(jointID, new Vector()) {
+        public BodyPart(IavaJointID jointID)
+            : this(jointID, new IavaVector()) {
             // Nothing to do
         }
 
@@ -47,7 +47,7 @@ namespace GestureRecorder.Data {
         /// Constructor that sets the position to the parameter of position.
         /// </summary>
         /// <param name="position"></param>
-        public BodyPart(JointID jointID, Vector position) {
+        public BodyPart(IavaJointID jointID, IavaVector position) {
             this.JointID = jointID;
             this.Position = position;
         }

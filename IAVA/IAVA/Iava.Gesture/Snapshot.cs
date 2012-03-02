@@ -34,8 +34,8 @@ namespace GestureRecorder.Data {
         /// Sets the tracking state of the specified BodyParts to true
         /// </summary>
         /// <param name="joints">The joints to track</param>
-        public void SetTrackingJoints(params JointID[] joints) {
-            foreach (JointID id in joints) {
+        public void SetTrackingJoints(params IavaJointID[] joints) {
+            foreach (IavaJointID id in joints) {
                 BodyParts.Where(x => x.JointID == id).Single(x => x.Tracking = true);
             }
         }
@@ -57,16 +57,16 @@ namespace GestureRecorder.Data {
         /// parts according to the data provided in skeleton.
         /// </summary>
         /// <param name="skeleton"></param>
-        public Snapshot(SkeletonData skeleton) {
+        public Snapshot(IavaSkeletonData skeleton) {
             // ROFL, I didn't even know this was allowed...
-            for (JointID i = 0; i < JointID.Count; i++) {
+            for (IavaJointID i = 0; i < IavaJointID.Count; i++) {
                 BodyParts.Add(new BodyPart(i, skeleton.Joints[i].Position));
             }
 
             if (skeleton == null) { return; }
 
             // Set the body part positions
-            foreach (Joint joint in skeleton.Joints) {
+            foreach (IavaJoint joint in skeleton.Joints) {
                 BodyParts.Where(x => x.JointID == joint.ID).Single().Position = joint.Position;
             }
         }
