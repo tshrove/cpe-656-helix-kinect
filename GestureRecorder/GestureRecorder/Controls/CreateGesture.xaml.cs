@@ -98,8 +98,8 @@ namespace GestureRecorder.Controls {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnCameraImageFrameReady(object sender, ImageFrameReadyEventArgs e) {
-            PlanarImage Image = e.ImageFrame.Image;
+        private void OnCameraImageFrameReady(object sender, IavaImageFrameReadyEventArgs e) {
+            IavaPlanarImage Image = e.ImageFrame.Image;
 
             VideoFeed.Source = BitmapSource.Create(
                 Image.Width, Image.Height, 96, 96, PixelFormats.Bgr32, null,
@@ -111,7 +111,7 @@ namespace GestureRecorder.Controls {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnCameraSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e) {
+        private void OnCameraSkeletonFrameReady(object sender, IavaSkeletonFrameReadyEventArgs e) {
             // If we don't have a canvas to draw on, there's nothing for us to do...
             if (_activeSkeletonCanvas == null) { return; }
 
@@ -135,7 +135,7 @@ namespace GestureRecorder.Controls {
         private void OnJointCheck(object sender, RoutedEventArgs e) {
             System.Windows.Controls.Primitives.ToggleButton temp = sender as System.Windows.Controls.Primitives.ToggleButton;
             // Sets all the snapshots to track this joint.
-            this.Gesture.SetTrackingJoints((JointID)(Convert.ToInt32(temp.Tag)));
+            this.Gesture.SetTrackingJoints((IavaJointID)(Convert.ToInt32(temp.Tag)));
         }
 
         /// <summary>
