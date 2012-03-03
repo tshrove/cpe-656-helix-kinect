@@ -46,9 +46,27 @@
   <ItemGroup>
     <Compile Include="Camera\Camera.cs" />
     <Compile Include="Camera\CameraEventArgs.cs" />
-    <Compile Include="Camera\Utilities.cs" />
+    <Compile Include="Camera\DataTypes\IavaImageDigitalZoom.cs" />
+    <Compile Include="Camera\DataTypes\IavaImageFrame.cs" />
+    <Compile Include="Camera\DataTypes\IavaImageType.cs" />
+    <Compile Include="Camera\DataTypes\IavaImageResolution.cs" />
+    <Compile Include="Camera\DataTypes\IavaImageViewArea.cs" />
+    <Compile Include="Camera\DataTypes\IavaJoint.cs" />
+    <Compile Include="Camera\DataTypes\IavaJointID.cs" />
+    <Compile Include="Camera\DataTypes\IavaJointsCollection.cs" />
+    <Compile Include="Camera\DataTypes\IavaJointTrackingState.cs" />
+    <Compile Include="Camera\DataTypes\IavaPlanarImage.cs" />
+    <Compile Include="Camera\DataTypes\IavaSkeletonData.cs" />
+    <Compile Include="Camera\DataTypes\IavaSkeletonFrame.cs" />
+    <Compile Include="Camera\DataTypes\IavaSkeletonFrameQuality.cs" />
+    <Compile Include="Camera\DataTypes\IavaSkeletonQuality.cs" />
+    <Compile Include="Camera\DataTypes\IavaSkeletonTrackingState.cs" />
+    <Compile Include="Camera\DataTypes\IavaVector.cs" />
+    <Compile Include="Camera\IRuntime.cs" />
+    <Compile Include="Camera\RuntimeWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

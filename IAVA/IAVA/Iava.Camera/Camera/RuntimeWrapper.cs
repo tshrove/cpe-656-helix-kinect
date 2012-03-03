@@ -3,78 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Research.Kinect.Nui;
-using Iava.Input.Camera;
 
-namespace Iava.Gesture {
+namespace Iava.Input.Camera {
 
     /// <summary>
     /// Wraps Microsoft Kinect's Runtime class so it conforms to the
     /// IRuntime interface.
     /// </summary>
-    internal class RuntimeWrapper : IRuntime {
+    internal class KinectRuntimeWrapper : IRuntime {
 
         #region Constructors
 
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public RuntimeWrapper() {
-            if (InitializeNui()) {
-                // Register with the Camera events
-                _kinectRuntime.SkeletonFrameReady += OnSkeletonFrameReady;
-                _kinectRuntime.VideoFrameReady += OnVideoFrameReady;
-            }
+        public KinectRuntimeWrapper() {
+            _kinectRuntime = Runtime.Kinects[0];
 
-            else { throw new Exception("Error initializing camera"); }
+            if (_kinectRuntime == null) { throw new Exception("Kinect camera not detected."); }
+
+            // Register for the Skeleton and Video Frame Events
+            _kinectRuntime.SkeletonFrameReady += OnSkeletonFrameReady;
+            _kinectRuntime.VideoFrameReady += OnVideoFrameReady;
         }
 
         #endregion Constructors
 
         #region Private Methods
-
-        /// <summary>
-        /// Responsible for initializing the Kinect Runtime
-        /// </summary>
-        /// <returns>bool value indicating whether the Runtime initialized correctly</returns>
-        private bool InitializeNui() {
-            // Create the Kinect Runtime object...
-            _kinectRuntime = Runtime.Kinects[0];
-
-            // Odds are a Kinect camera is not plugged in...
-            if (_kinectRuntime == null) { Console.WriteLine("Kinect camera not detected!"); return false; }
-
-            try {
-                // Initialize the Depth, Skeleton, and RGB cameras
-                _kinectRuntime.Initialize(RuntimeOptions.UseDepth | RuntimeOptions.UseSkeletalTracking | RuntimeOptions.UseColor);
-            }
-
-            // NEM: Probably want to throw this at some point instead of returning booleans
-            catch (Exception exception) {
-                Console.WriteLine(exception.ToString());
-                throw exception;
-            }
-
-            // Open the RGB camera
-            _kinectRuntime.VideoStream.Open((ImageStreamType)ImageStreamType.Video, 2,
-                                                  (ImageResolution)ImageResolution.Resolution640x480,
-                                                  (ImageType)ImageType.Color);
-
-            // Create our smoothing parameters
-            var smoothingParams = new TransformSmoothParameters
-            {
-                Smoothing = 0.75f,
-                Correction = 0.00f,
-                Prediction = 0.00f,
-                JitterRadius = 0.05f,
-                MaxDeviationRadius = 0.04f
-            };
-
-            _kinectRuntime.SkeletonEngine.TransformSmooth = true;
-            _kinectRuntime.SkeletonEngine.SmoothParameters = smoothingParams;
-
-            // If we've made it here we're good.
-            return true;
-        }
 
         /// <summary>
         /// Handles the SkeletonFrameReady event of the Kinect's RunTime control.
@@ -134,6 +89,34 @@ namespace Iava.Gesture {
         public event EventHandler<IavaImageFrameReadyEventArgs> ImageFrameReady;
 
         public event EventHandler<IavaSkeletonFrameReadyEventArgs> SkeletonFrameReady;
+
+        /// <summary>
+        /// Responsible for initializing the Kinect Runtime
+        /// </summary>
+        public void Initialize() {
+            // Initialize the Depth, Skeleton, and RGB cameras
+            _kinectRuntime.Initialize(RuntimeOptions.UseDepth |
+                                      RuntimeOptions.UseSkeletalTracking |
+                                      RuntimeOptions.UseColor);
+
+            // Open the RGB camera
+            _kinectRuntime.VideoStream.Open((ImageStreamType)ImageStreamType.Video, 2,
+                                            (ImageResolution)ImageResolution.Resolution640x480,
+                                            (ImageType)ImageType.Color);
+
+            // Create our smoothing parameters
+            var smoothingParams = new TransformSmoothParameters
+            {
+                Smoothing = 0.75f,
+                Correction = 0.00f,
+                Prediction = 0.00f,
+                JitterRadius = 0.05f,
+                MaxDeviationRadius = 0.04f
+            };
+
+            _kinectRuntime.SkeletonEngine.TransformSmooth = true;
+            _kinectRuntime.SkeletonEngine.SmoothParameters = smoothingParams;
+        }
 
         #endregion IRuntime Members
     }

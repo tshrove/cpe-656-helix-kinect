@@ -61,6 +61,8 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Input\CameraDataTypesTest.cs" />
+    <Compile Include="Input\CameraEventArgsTest.cs" />
     <Compile Include="Input\CameraTest.cs" />
     <Compile Include="Gesture\GestureRecognizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
