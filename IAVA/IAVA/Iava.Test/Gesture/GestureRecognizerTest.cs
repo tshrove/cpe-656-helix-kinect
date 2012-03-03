@@ -1,36 +1,21 @@
-﻿using System;
+﻿using System.Linq;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Iava.Gesture;
 using Iava.Gesture.GestureStuff;
+using Iava.Input.Camera;
+using Iava.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace Iava.Test.Gesture {
+
     /// <summary>
     /// Tests the GestureRecognizer class.
     /// </summary>
     [TestClass]
     public class GestureRecognizerTest {
-        public GestureRecognizerTest() {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        private TestContext testContextInstance;
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext {
-            get {
-                return testContextInstance;
-            }
-            set {
-                testContextInstance = value;
-            }
-        }
 
         #region Additional test attributes
 
@@ -44,280 +29,315 @@ namespace Iava.Test.Gesture {
         /// </summary>
         private const int TimeoutValue = 100;
 
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-
-        /// <summary>
-        /// Called before each test is run.
-        /// </summary>
-        [TestInitialize()]
-        public void MyTestInitialize() {
-
-        }
-
-        /// <summary>
-        /// Called after each test is run.
-        /// </summary>
-        [TestCleanup()]
-        public void MyTestCleanup() {
-            recognizerCallbackInvoked = false;
-
-            if (recognizer != null) {
-                recognizer.Stop();
-            }
-
-            recognizer = null;
-
-            resetEvent.Reset();
-        }
-
         #endregion
 
-//        /// <summary>
-//        /// Tests the constructor of the gesturerecognizer.
-//        /// </summary>
-//        [TestMethod]
-//        [DeploymentItem("Iava.Gesture.dll")]
-//        public void GestureRecognizerConstructorTest() {
-//            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
-//            Assert.IsNotNull(recognizer.GestureCallbacks);
-//            Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
-//            Assert.AreEqual(recognizer.GestureCallbacks.Count, expected.Count);
-//            Assert.IsInstanceOfType(recognizer.GestureCallbacks, typeof(Dictionary<string, GestureCallback>));
-//        }
+        /// <summary>
+        /// Tests the constructor of the gesturerecognizer.
+        /// </summary>
+        [TestMethod]
+        public void GestureRecognizerConstructorTest() {
+            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+            Assert.IsNotNull(recognizer.GestureCallbacks);
+            Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
+            Assert.AreEqual(recognizer.GestureCallbacks.Count, expected.Count);
+            Assert.IsInstanceOfType(recognizer.GestureCallbacks, typeof(Dictionary<string, GestureCallback>));
+        }
 
-//        /// <summary>
-//        /// Tests the Start method.
-//        /// </summary>
-//        [TestMethod]
-//        public void GestureStartTest() {
-//            // The recognizerCallbackInvoked variable is set to false automatically.
-//            GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
-//            Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
-//            recognizer.Started += new EventHandler<EventArgs>(recognizerCallback);
-//            try {
-//                recognizer.Start();
-//                Thread.Sleep(100);
-//                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
+        /// <summary>
+        /// Tests the Start method.
+        /// </summary>
+        [TestMethod]
+        public void GestureStartTest() {
+            GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
 
-//                // Ensure the OnStarted callback was invoked
-//                Assert.IsTrue(recognizerCallbackInvoked, "OnStarted callback was not invoked.");
-//            }
-//            catch (Exception ex) {
-//                Assert.Fail(ex.Message);
-//            }
-//            finally {
-//                recognizer.Stop();
-//                Thread.Sleep(100);
-//            }
-//        }
+            // Make sure the Recognizer isn't showing a faulty status
+            Assert.AreEqual(RecognizerStatus.NotReady, recognizer.Status);
 
-//        #region Additional Handlers
-//        void Camera_SkeletonFrameReady(object sender, Input.Camera.IavaSkeletonFrameReadyEventArgs e) {
-//            // To Do
-//        }
+            bool eventFired = false;
 
-//        void Camera_ImageFrameReady(object sender, Input.Camera.IavaImageFrameReadyEventArgs e) {
-//            // To Do
-//        }
+            // Register for the Recognizer Started Event
+            recognizer.Started += (param1, param2) => eventFired = true;
 
-//        void recognizerCallback(object sender, EventArgs e) {
-//            recognizerCallbackInvoked = true;
-//        }
-//        #endregion
+            try {
+                // Start the Recognizer
+                recognizer.Start();
+                Thread.Sleep(50);
 
-//        /// <summary>
-//        /// Tests the Stop method.
-//        /// </summary>
-//        [TestMethod]
-//        public void GestureStopTest() {
-//            // The recognizerCallbackInvoked variable is set to false automatically.
-//            GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
-//            Assert.AreEqual<RecognizerStatus>(RecognizerStatus.NotReady, recognizer.Status);
-//            recognizer.Stopped += new EventHandler<EventArgs>(recognizerCallback);
-//            try {
-//                recognizer.Start();
-//                Thread.Sleep(100);
-//                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
+                // Make sure we're showing the correct status
+                Assert.AreEqual(RecognizerStatus.Running, recognizer.Status);
 
-//                recognizer.Stop();
-//                Thread.Sleep(100);
-//                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
-//                Assert.IsTrue(recognizerCallbackInvoked, "OnStopped callback was not invoked.");
+                // Make sure the Recognizer Started Event was fired
+                Assert.IsTrue(eventFired);
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+        }
 
-//                // Start and stop immediately after one another and ensure it can be started again
-//                recognizer.Start();
+        /// <summary>
+        /// Tests the Stop method.
+        /// </summary>
+        [TestMethod]
+        public void GestureStopTest() {
+            GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
 
-//                recognizer.Stop();
-//                Thread.Sleep(100);
-//                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Ready, recognizer.Status);
-//                recognizer.Start();
-//                Thread.Sleep(100);
-//                Assert.AreEqual<RecognizerStatus>(RecognizerStatus.Running, recognizer.Status);
-//            }
-//            catch (Exception ex) {
-//                Assert.Fail(ex.Message);
-//            }
-//            finally {
-//                recognizer.Stop();
-//            }
-//        }
+            // Make sure the Recognizer isn't showing a faulty status
+            Assert.AreEqual(RecognizerStatus.NotReady, recognizer.Status);
 
-//        /// <summary>
-//        /// Tests the Subscribe method.
-//        /// </summary>
-//        [TestMethod]
-//        [DeploymentItem("Iava.Gesture.dll")]
-//        public void GestureSubscribeTest() {
-//            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+            bool eventFired = false;
 
-//            // Create our expected value of the gesture callbacks.
-//            Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
-//            expected.Add("Sync", GestureRecognizedCallback);
+            // Register for the Recognizer Stopped Event
+            recognizer.Stopped += (param1, param2) => eventFired = true;
 
-//            // Now get the actual gesture callbacks after the subscribe function test.
-//            Dictionary<string, GestureCallback> actual;
+            try {
+                // Start the Recognizer
+                recognizer.Start();
+                Thread.Sleep(50);
 
-//            // Try to subscribe doing everything correctly
-//            try {
-//                // Call the subscribe function.
-//                recognizer.Subscribe("Sync", GestureRecognizedCallback);
-//                actual = recognizer.GestureCallbacks;
+                // Make sure we're showing the correct status
+                Assert.AreEqual(RecognizerStatus.Running, recognizer.Status);
 
-//                // Test the actual vs expected.
-//                Assert.AreEqual(expected.Count, actual.Count);
+                // Stop the Recognizer
+                recognizer.Stop();
+                Thread.Sleep(50);
 
-//                // Test all stored gesture names
-//                foreach (var pair in actual) {
-//                    string key = pair.Key;
-//                    bool contains = expected.ContainsKey(key);
-//                    Assert.IsTrue(contains);
-//                    Assert.AreEqual(expected[key], actual[key]);
-//                }
-//            }
-//            catch (Exception ex) {
-//                Assert.Fail(ex.Message);
-//            }
+                // Make sure we're showing the correct status
+                Assert.AreEqual(RecognizerStatus.Ready, recognizer.Status);
 
-//            // Try to subscribe while passing in an empty gesture name
-//            try {
-//                recognizer.Subscribe(string.Empty, GestureRecognizedCallback);
-//            }
-//            catch (Exception ex) {
-//                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
-//            }
+                // Make sure the Recognizer Stopped Event was fired
+                Assert.IsTrue(eventFired);
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+        }
 
-//            // Try to subscribe without passing in a gesture name
-//            try {
-//                recognizer.Subscribe(null, GestureRecognizedCallback);
-//            }
-//            catch (Exception ex) {
-//                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
-//            }
+        /// <summary>
+        /// Tests to see if the Recognizer can be restarted.
+        /// </summary>
+        [TestMethod]
+        public void GestureRestartTest() {
+            GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
 
-//            // Try to subscribe without passing in a valid callback
-//            try {
-//                recognizer.Subscribe("Sync", null);
-//            }
-//            catch (Exception ex) {
-//                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
-//            }
-//        }
+            // Make sure the Recognizer isn't showing a faulty status
+            Assert.AreEqual(RecognizerStatus.NotReady, recognizer.Status);
 
-//        /// <summary>
-//        /// Tests the Unsubscribe method.
-//        /// </summary>
-//        [TestMethod]
-//        [DeploymentItem("Iava.Gesture.dll")]
-//        public void GestureUnsubscribeTest() {
-//            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
-            
-//            // Create our expected value of the gesture callbacks.
-//            Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
-//            expected.Add("Sync", GestureRecognizedCallback);
+            bool eventFired = false;
 
-//            // Now get the actual gesture callbacks after the subscribe function test.
-//            Dictionary<string, GestureCallback> actual;
+            // Register for the Recognizer Started Event
+            recognizer.Started += (param1, param2) => eventFired = true;
 
-//            // Subscribe to a valid gesture and callback
-//            try {
-//                // Call the subscribe function.
-//                recognizer.Subscribe("Sync", GestureRecognizedCallback);
-//                actual = recognizer.GestureCallbacks;
+            try {
+                // Start the Recognizer
+                recognizer.Start();
+                Thread.Sleep(50);
 
-//                // Test the actual vs expected.
-//                Assert.AreEqual(expected.Count, actual.Count);
-//                foreach (var pair in actual) {
-//                    string key = pair.Key;
-//                    bool contains = expected.ContainsKey(key);
-//                    Assert.IsTrue(contains);
-//                    Assert.AreEqual(expected[key], actual[key]);
-//                }
+                // Make sure we're showing the correct status
+                Assert.AreEqual(RecognizerStatus.Running, recognizer.Status);
 
-//                // Reset the expected.
-//                expected = new Dictionary<string, GestureCallback>();
+                // Make sure the Recognizer Started Event was fired
+                Assert.IsTrue(eventFired);
 
-//                // Call the unsubscribe function to test.
-//                recognizer.Unsubscribe("Sync");
-//                actual = recognizer.GestureCallbacks;
+                // Reset the event
+                eventFired = false;
 
-//                // Make sure there are the same number of gestures left in the recognizer
-//                // that we are expecting
-//                Assert.AreEqual(expected.Count, actual.Count);
+                // Stop the Recognizer
+                recognizer.Stop();
+                Thread.Sleep(50);
 
-//                // Make sure all remaining gestures are ones we are expecting
-//                foreach (var pair in actual) {
-//                    string key = pair.Key;
-//                    bool contains = expected.ContainsKey(key);
-//                    Assert.IsTrue(contains);
-//                    Assert.AreEqual(expected[key], actual[key]);
-//                }
-//            }
+                // Make sure we're showing the correct status
+                Assert.AreEqual(RecognizerStatus.Ready, recognizer.Status);
 
-//            catch (Exception ex) {
-//                Assert.Fail(ex.Message);
-//            }
+                // Attempt to restart the Recognizer
+                recognizer.Start();
+                Thread.Sleep(50);
 
-//            // Try to unsubscribe while passing in an empty gesture name
-//            try {
-//                recognizer.Unsubscribe(string.Empty);
-//            }
-//            catch (Exception ex) {
-//                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
-//            }
+                // Make sure we're showing the correct status
+                Assert.AreEqual(RecognizerStatus.Running, recognizer.Status);
 
-//            // Try to unsubscribe without passing in a gesture name
-//            try {
-//                recognizer.Unsubscribe(null);
-//            }
-//            catch (Exception ex) {
-//                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
-//            }
+                // Make sure the Recognizer Started Event was fired
+                Assert.IsTrue(eventFired);
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+        }
 
-//            // Try to unsubscribe from a gesture that doesn't exist
-//            try {
-//                recognizer.Unsubscribe("Nonexistant Gesture");
-//            }
-//            catch (Exception ex) {
-//                Assert.Fail(ex.Message);
-//            }
-//        }
+        /// <summary>
+        /// Tests the Subscribe method.
+        /// </summary>
+        [TestMethod]
+        public void GestureSubscribeTest() {
+            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+
+            string eventName;
+
+            // Hold our expected callbacks and a key value pair for the subscription signature
+            Dictionary<string, GestureCallback> expectedCallbacks = new Dictionary<string, GestureCallback>();
+            KeyValuePair<string, GestureCallback> subscriptionSignature = new KeyValuePair<string,GestureCallback>();
+
+            // Try to do things correctly the first time
+            try {
+                // Create the subscription signature for the 'Sync' Gesture
+                subscriptionSignature = new KeyValuePair<string, GestureCallback>("Sync", (eventArgs) => { eventName = eventArgs.Name; });
+
+                // Subscribe to the gesture
+                recognizer.Subscribe(subscriptionSignature.Key, subscriptionSignature.Value);
+
+                // Add it to our expected callbacks
+                expectedCallbacks.Add(subscriptionSignature.Key, subscriptionSignature.Value);
+
+                // Make sure we have the same number of callbacks
+                Assert.AreEqual(expectedCallbacks.Count, recognizer.GestureCallbacks.Count);
+
+                // Create the subscription signature for the 'Wave' Gesture
+                subscriptionSignature = new KeyValuePair<string, GestureCallback>("Wave", (eventArgs) => { eventName = eventArgs.Name; });
+
+                // Subscribe to the gesture
+                recognizer.Subscribe(subscriptionSignature.Key, subscriptionSignature.Value);
+
+                // Add it to our expected callbacks
+                expectedCallbacks.Add(subscriptionSignature.Key, subscriptionSignature.Value);
+
+                // Again, make sure we have the same number of callbacks
+                Assert.AreEqual(expectedCallbacks.Count, recognizer.GestureCallbacks.Count);
+
+                // Do a deep inspection to make sure all the elements are the same
+                foreach (var pair in recognizer.GestureCallbacks) {
+                    string key = pair.Key;
+                    Assert.IsTrue(recognizer.GestureCallbacks.ContainsKey(key));
+                    Assert.AreEqual(expectedCallbacks[key], recognizer.GestureCallbacks[key]);
+                }
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+
+            // Try to subscribe while passing in an empty gesture name
+            try {
+                recognizer.Subscribe(string.Empty, (eventArgs) => { eventName = eventArgs.Name; });
+            }
+            catch (Exception ex) {
+                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
+            }
+
+            // Try to subscribe without passing in a gesture name
+            try {
+                recognizer.Subscribe(null, (eventArgs) => { eventName = eventArgs.Name; });
+            }
+            catch (Exception ex) {
+                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
+            }
+
+            // Try to subscribe without passing in a valid callback
+            try {
+                recognizer.Subscribe("Sync", null);
+            }
+            catch (Exception ex) {
+                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
+            }
+        }
+
+        /// <summary>
+        /// Tests the Unsubscribe method.
+        /// </summary>
+        [TestMethod]
+        public void GestureUnsubscribeTest() {
+            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+
+            string eventName;
+
+            // Hold our expected callbacks and a key value pair for the subscription signature
+            Dictionary<string, GestureCallback> expectedCallbacks = new Dictionary<string, GestureCallback>();
+            KeyValuePair<string, GestureCallback> subscriptionSignature = new KeyValuePair<string, GestureCallback>();
+
+            // Try to do things correctly the first time
+            try {
+                // Create the subscription signature for the 'Sync' Gesture
+                subscriptionSignature = new KeyValuePair<string, GestureCallback>("Sync", (eventArgs) => { eventName = eventArgs.Name; });
+
+                // Subscribe to the gesture
+                recognizer.Subscribe(subscriptionSignature.Key, subscriptionSignature.Value);
+
+                // Add it to our expected callbacks
+                expectedCallbacks.Add(subscriptionSignature.Key, subscriptionSignature.Value);
+
+                // Create the subscription signature for the 'Wave' Gesture
+                subscriptionSignature = new KeyValuePair<string, GestureCallback>("Wave", (eventArgs) => { eventName = eventArgs.Name; });
+
+                // Subscribe to the gesture
+                recognizer.Subscribe(subscriptionSignature.Key, subscriptionSignature.Value);
+
+                // Add it to our expected callbacks
+                expectedCallbacks.Add(subscriptionSignature.Key, subscriptionSignature.Value);
+
+                // Unsubscribe from the 'Wave' gesture
+                recognizer.Unsubscribe("Wave");
+
+                // Remove it from our expected callbacks
+                expectedCallbacks.Remove("Wave");
+                
+                // Make sure we have the same number of callbacks
+                Assert.AreEqual(expectedCallbacks.Count, recognizer.GestureCallbacks.Count);
+
+                // Do a deep inspection to make sure all the elements are the same
+                foreach (var pair in recognizer.GestureCallbacks) {
+                    string key = pair.Key;
+                    Assert.IsTrue(recognizer.GestureCallbacks.ContainsKey(key));
+                    Assert.AreEqual(expectedCallbacks[key], recognizer.GestureCallbacks[key]);
+                }
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+
+            // Try to unsubscribe while passing in an empty gesture name
+            try {
+                recognizer.Unsubscribe(string.Empty);
+            }
+            catch (Exception ex) {
+                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
+            }
+
+            // Try to unsubscribe without passing in a gesture name
+            try {
+                recognizer.Unsubscribe(null);
+            }
+            catch (Exception ex) {
+                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
+            }
+
+            // Try to unsubscribe from a gesture that doesn't exist
+            try {
+                recognizer.Unsubscribe("Nonexistant Gesture");
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+
+            // Try to unsubscribe from a gesture that we already removed
+            try {
+                recognizer.Unsubscribe("Wave");
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+
+            // After all that make sure nothing has changed
+            Assert.AreEqual(expectedCallbacks.Count, recognizer.GestureCallbacks.Count);
+
+            // Do a deep inspection to make sure all the elements are the same
+            foreach (var pair in recognizer.GestureCallbacks) {
+                string key = pair.Key;
+                Assert.IsTrue(recognizer.GestureCallbacks.ContainsKey(key));
+                Assert.AreEqual(expectedCallbacks[key], recognizer.GestureCallbacks[key]);
+            }
+        }
         
         /// <summary>
         ///A test for OnGestureRecognized
         ///</summary>
         [TestMethod()]
-        //[DeploymentItem("Iava.Gesture.dll")]
         public void OnGestureRecognizedTest() {/*
             resetEvent.Reset();
             var mockRuntime = SetupMockRuntime();
@@ -352,6 +372,7 @@ namespace Iava.Test.Gesture {
             }
 
             // Subscribe to the sync gesture
+            // Should be able to use the eventFired trick without needing to use a reset event...
             string eventName = string.Empty;
             recognizer.Subscribe(anotherGesture, (eventArgs) => { eventName = eventArgs.Name; resetEvent.Set(); });
 
@@ -400,33 +421,14 @@ namespace Iava.Test.Gesture {
         #region Private Methods And Attributes
 
         /// <summary>
-        /// Recognizer object under test.
+        /// Creates and sets up a mock IRuntime in the Camera class so we can drive Recongnizer events.
         /// </summary>
-        private GestureRecognizer recognizer;
+        private void SetupCamera() {
+            var mockRuntime = new Mock<IRuntime>(MockBehavior.Strict);
 
-        /// <summary>
-        /// Used to determine if the recognizer status ballback was invoked.
-        /// </summary>
-        private bool recognizerCallbackInvoked;
-
-        /// <summary>
-        /// Called when the recognizer's status changes.
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">event args</param>
-        private void RecognizerStatusCallback(object sender, EventArgs e) {
-            recognizerCallbackInvoked = true;
+            // This lets up replace the IRuntime even though its an instance object
+            IavaCamera camera = new IavaCamera(mockRuntime.Object);
         }
-        /*
-        /// <summary>
-        /// Creates and sets up a mock speech recongition engine.
-        /// </summary>
-        /// <returns>Mock engine</returns>
-        private Mock<IRuntime> SetupMockRuntime() {
-            var mockEngine = new Mock<IRuntime>(MockBehavior.Strict);
-
-            return mockEngine;
-        }*/
 
         #endregion
     }
