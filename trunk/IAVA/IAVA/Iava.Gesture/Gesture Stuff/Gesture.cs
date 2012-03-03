@@ -7,7 +7,7 @@ using System.Text;
 using Iava.Input.Camera;
 
 namespace Iava.Gesture.GestureStuff {
-    public class Gesture {
+    public class IavaGesture {
 
         #region Public Events
 
@@ -97,7 +97,7 @@ namespace Iava.Gesture.GestureStuff {
 
         #region Constructors
 
-        public Gesture(string name, List<IGestureSegment> gestureParts) {
+        public IavaGesture(string name, List<IGestureSegment> gestureParts) {
             Name = name;
             GestureParts = gestureParts;
 

@@ -37,10 +37,30 @@ namespace Iava.Test.Gesture {
         [TestMethod]
         public void GestureRecognizerConstructorTest() {
             GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+
+            // Make sure GestureCallbacks exist 
             Assert.IsNotNull(recognizer.GestureCallbacks);
-            Dictionary<string, GestureCallback> expected = new Dictionary<string, GestureCallback>();
-            Assert.AreEqual(recognizer.GestureCallbacks.Count, expected.Count);
+
+            // Make sure the GestureCallbacks is a dictionary
             Assert.IsInstanceOfType(recognizer.GestureCallbacks, typeof(Dictionary<string, GestureCallback>));
+
+            // Hold our expected callbacks (in this case empty)
+            Dictionary<string, GestureCallback> expectedCallbacks = new Dictionary<string, GestureCallback>();
+
+            // Make sure we have the same number of callbacks as we are expecting
+            Assert.AreEqual(recognizer.GestureCallbacks.Count, expectedCallbacks.Count);
+
+            // Make sure SupportedGestures exist
+            Assert.IsNotNull(recognizer.SupportedGestures);
+
+            // Make sure the SupportedGestures is a list
+            Assert.IsInstanceOfType(recognizer.SupportedGestures, typeof(List<IavaGesture>));
+
+            // Hold our expected gestures (in this case empty)
+            List<string> expectedGestures = new List<string>();
+
+            // Make sure we have the same number of gestures as we are expecting
+            Assert.AreEqual(recognizer.SupportedGestures.Count, expectedGestures.Count);
         }
 
         /// <summary>
@@ -333,90 +353,226 @@ namespace Iava.Test.Gesture {
                 Assert.AreEqual(expectedCallbacks[key], recognizer.GestureCallbacks[key]);
             }
         }
+
+        /// <summary>
+        /// Tests the syncing and unsyncing of the recognizer.
+        /// </summary>
+        [TestMethod]
+        public void GestureSyncUnsyncTest() {
+            GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
+
+            bool syncEventFired = false;
+            bool unsyncEventFired = false;
+
+            // Register for the Synced and Unsynced events
+            recognizer.Synced += (param1, param2) => syncEventFired = true;
+            recognizer.Unsynced += (param1, param2) => unsyncEventFired = true;
+
+            // Set the Sync Timeout to 5 seconds
+            recognizer.SyncTimeoutValue = 5000;
+
+            // Set the Sync Gesture
+            PrivateObject privateObject = new PrivateObject(recognizer);
+            privateObject.SetProperty("SyncGesture", new IavaGesture("Sync", new List<IGestureSegment>()));
+            
+            // Recognize the 'Sync' Gesture
+            privateObject.Invoke("OnGestureRecognized", null, new GestureEventArgs("Sync"));
+            Thread.Sleep(50);
+
+            // Make sure the Sync Event fired
+            Assert.IsTrue(syncEventFired);
+
+            // Make sure the Unsync Event did not fire
+            Assert.IsFalse(unsyncEventFired);
+
+            // Reset the sync event
+            syncEventFired = false;
+
+            // Wait for the timeout to occur
+            Thread.Sleep(recognizer.SyncTimeoutValue);
+
+            // Make sure the Unsync Event fired
+            Assert.IsTrue(unsyncEventFired);
+
+            // Make sure the Sync Event did not fire
+            Assert.IsFalse(syncEventFired);
+        }
         
         /// <summary>
         ///A test for OnGestureRecognized
         ///</summary>
         [TestMethod()]
-        public void OnGestureRecognizedTest() {/*
-            resetEvent.Reset();
-            var mockRuntime = SetupMockRuntime();
-            try {
-                recognizer = new GestureRecognizer(mockRuntime.Object);
-            }
-            catch (Exception ex) {
-                Assert.Fail(ex.Message);
-            }
+        public void OnGestureRecognizedTest() {
+            GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
 
+            bool syncEventFired = false;
+            bool waveCallbackInvoked = false;
+            bool shakeCallbackInvoked = false;
+
+            // Set the Sync Gesture
             PrivateObject privateObject = new PrivateObject(recognizer);
+            privateObject.SetProperty("SyncGesture", new IavaGesture("Sync", new List<IGestureSegment>()));
 
-            // The name of the sync gesture
-            string syncGesture = "Sync Gesture";
-            string anotherGesture = "Not Sync Gesture";
-
-            // Set the sync gesture to an empty gesture
-            try {
-                privateObject.SetProperty("SyncGesture", null);
-                //recognizer.SyncGesture = null;
-            }
-            catch (Exception ex) {
-                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
-            }
+            // Register for some Gestures
+            recognizer.Synced += (parm1, param2) => { syncEventFired = true; };
+            recognizer.Subscribe("Wave", (eventArgs) => { waveCallbackInvoked = true; });
+            recognizer.Subscribe("Shake", (eventArgs) => { shakeCallbackInvoked = true; });
 
             try {
-                privateObject.SetProperty("SyncGesture", new Iava.Gesture.GestureStuff.Gesture(syncGesture, new List<IGestureSegment>()));
-                //recognizer.SyncGesture = new Iava.Gesture.GestureStuff.Gesture(syncGesture, new List<IGestureSegment>());
+                // Recognize the Wave gesture
+                privateObject.Invoke("OnGestureRecognized", null, new GestureEventArgs("Wave"));
+                Thread.Sleep(50);
+
+                // Make sure the Wave callback fired
+                Assert.IsTrue(waveCallbackInvoked);
+
             }
             catch (Exception ex) {
                 Assert.Fail(ex.Message);
             }
 
-            // Subscribe to the sync gesture
-            // Should be able to use the eventFired trick without needing to use a reset event...
-            string eventName = string.Empty;
-            recognizer.Subscribe(anotherGesture, (eventArgs) => { eventName = eventArgs.Name; resetEvent.Set(); });
-
-            recognizer.Start();
-
-            mockRuntime.Raise(m => m.SkeletonFrameReady += null, new GestureEventArgs(syncGesture));
-            Thread.Sleep(50);
-            mockRuntime.Raise(m => m.SkeletonFrameReady += null, new GestureEventArgs(anotherGesture));
-            Thread.Sleep(50);
-
-            //Assert.IsTrue(resetEvent.WaitOne(TimeoutValue));
-            Assert.AreEqual(anotherGesture, eventName, "Gesture name did not match expected value.");
-            resetEvent.Reset();
-            
-            syncGesture = "Another Gesture";
-
-            // Change the sync gesture, re-sync and recognize the gesture again
             try {
-                privateObject.SetProperty("SyncGesture", new Iava.Gesture.GestureStuff.Gesture(syncGesture, new List<IGestureSegment>()));
-                //recognizer.SyncGesture = new Iava.Gesture.GestureStuff.Gesture(syncGesture, new List<IGestureSegment>());
+                // Recognize the Shake gesture
+                privateObject.Invoke("OnGestureRecognized", null, new GestureEventArgs("Shake"));
+                Thread.Sleep(50);
+
+                // Make sure the Shake callback fired
+                Assert.IsTrue(shakeCallbackInvoked);
+
             }
             catch (Exception ex) {
                 Assert.Fail(ex.Message);
             }
 
-            mockRuntime.Raise(m => m.SkeletonFrameReady += null, new GestureEventArgs(syncGesture));
-            Thread.Sleep(50);
-            mockRuntime.Raise(m => m.SkeletonFrameReady += null, new GestureEventArgs(anotherGesture));
-            Assert.IsTrue(resetEvent.WaitOne(TimeoutValue));*/
+            try {
+                // Recognize the Sync gesture
+                privateObject.Invoke("OnGestureRecognized", null, new GestureEventArgs("Sync"));
+                Thread.Sleep(50);
+
+                // Make sure the Sync event fired,
+                Assert.IsTrue(syncEventFired);
+
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+
+            try {
+                // Reset the Sync, Wave, and Shake callbacks
+                syncEventFired = false;
+                waveCallbackInvoked = false;
+                shakeCallbackInvoked = false;
+
+                // Recognize the Wave gesture again
+                privateObject.Invoke("OnGestureRecognized", null, new GestureEventArgs("Wave"));
+                Thread.Sleep(50);
+
+                // Make sure the Wave callback fired
+                Assert.IsTrue(waveCallbackInvoked);
+
+                // Recognize the Shake gesture again
+                privateObject.Invoke("OnGestureRecognized", null, new GestureEventArgs("Shake"));
+                Thread.Sleep(50);
+
+                // Make sure the Shake callback fired
+                Assert.IsTrue(shakeCallbackInvoked);
+            }
+
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
         }
 
-//        /// <summary>
-//        ///A test for OnSkeletonReady
-//        ///</summary>
-//        [TestMethod()]
-//        [DeploymentItem("Iava.Gesture.dll")]
-//        public void OnSkeletonReadyTest() {/*
-//            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-//            GestureRecognizer_Accessor target = new GestureRecognizer_Accessor(param0); // TODO: Initialize to an appropriate value
-//            object sender = null; // TODO: Initialize to an appropriate value
-//            IavaSkeletonEventArgs e = null; // TODO: Initialize to an appropriate value
-//            target.OnSkeletonReady(sender, e);
-//            Assert.Inconclusive("A method that does not return a value cannot be verified.");*/
-//        }
+        // ************************************************
+
+        /// <summary>
+        ///A test for OnSkeletonReady
+        ///</summary>
+        [TestMethod()]
+        public void OnSkeletonReadyTest() {/*
+            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
+            GestureRecognizer_Accessor target = new GestureRecognizer_Accessor(param0); // TODO: Initialize to an appropriate value
+            object sender = null; // TODO: Initialize to an appropriate value
+            IavaSkeletonEventArgs e = null; // TODO: Initialize to an appropriate value
+            target.OnSkeletonReady(sender, e);
+            Assert.Inconclusive("A method that does not return a value cannot be verified.");*/
+        }
+
+        // ************************************************
+
+        /// <summary>
+        ///A test for GestureCallbacks
+        ///</summary>
+        [TestMethod()]
+        public void GestureCallbacksTest() {
+            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+
+            string eventName;
+
+            // Hold our expected callbacks
+            Dictionary<string, GestureCallback> gestureCallbacks = new Dictionary<string, GestureCallback>();
+            gestureCallbacks.Add("Sync", (eventArgs) => { eventName = eventArgs.Name; });
+            gestureCallbacks.Add("Wave", (eventArgs) => { eventName = eventArgs.Name; });
+            gestureCallbacks.Add("Shake", (eventArgs) => { eventName = eventArgs.Name; });
+
+            try {
+                // Set the Gesture Callbacks
+                recognizer.GestureCallbacks = gestureCallbacks;
+
+                // Make sure the Gesture Callbacks were updated
+                Assert.AreEqual(gestureCallbacks, recognizer.GestureCallbacks);
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        /// <summary>
+        ///A test for SupportedGestures
+        ///</summary>
+        [TestMethod()]
+        public void SupportedGesturesTest() {
+            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+
+            // Hold our supported gestures
+            List<IavaGesture> supportedGestures = new List<IavaGesture>();
+            supportedGestures.Add(new IavaGesture("Sync", new List<IGestureSegment>()));
+            supportedGestures.Add(new IavaGesture("Wave", new List<IGestureSegment>()));
+            supportedGestures.Add(new IavaGesture("Shake", new List<IGestureSegment>()));
+
+            try {
+                // Set the Supported Gestures
+                recognizer.SupportedGestures = supportedGestures;
+
+                // Make sure the Supported Gestures were updated
+                Assert.AreEqual(supportedGestures, recognizer.SupportedGestures);
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        /// <summary>
+        ///A test for SyncGesture
+        ///</summary>
+        [TestMethod()]
+        public void SyncGestureTest() {
+            GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
+
+            // Hold our sync gesture
+            IavaGesture syncGesture = new IavaGesture("Sync", new List<IGestureSegment>());
+
+            try {
+                // Set the Sync Gesture
+                recognizer.SyncGesture = syncGesture;
+
+                // Make sure the Sync Gesture was updated
+                Assert.AreEqual(syncGesture, recognizer.SyncGesture);
+            }
+            catch (Exception ex) {
+                Assert.Fail(ex.Message);
+            }
+        }
 
         #region Private Methods And Attributes
 
