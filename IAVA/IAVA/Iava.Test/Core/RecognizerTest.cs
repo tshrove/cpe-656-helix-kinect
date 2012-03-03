@@ -17,7 +17,7 @@ namespace Iava.Test {
         ///A test for OnFailed
         ///</summary>
         [TestMethod()]
-        public void OnFailedTest() {
+        public void RecognizerOnFailedTest() {
             // Since we're treating this as the generic Recognizer this is ok
             Recognizer recognizer = new GestureRecognizer(string.Empty);
 
@@ -44,7 +44,7 @@ namespace Iava.Test {
         ///A test for OnStarted
         ///</summary>
         [TestMethod()]
-        public void OnStartedTest() {
+        public void RecognizerOnStartedTest() {
             // Since we're treating this as the generic Recognizer this is ok
             Recognizer recognizer = new GestureRecognizer(string.Empty);
 
@@ -71,7 +71,7 @@ namespace Iava.Test {
         ///A test for OnStatusChanged
         ///</summary>
         [TestMethod()]
-        public void OnStatusChangedTest() {
+        public void RecognizerOnStatusChangedTest() {
             // Since we're treating this as the generic Recognizer this is ok
             Recognizer recognizer = new GestureRecognizer(string.Empty);
 
@@ -98,7 +98,7 @@ namespace Iava.Test {
         ///A test for OnStopped
         ///</summary>
         [TestMethod()]
-        public void OnStoppedTest() {
+        public void RecognizerOnStoppedTest() {
             // Since we're treating this as the generic Recognizer this is ok
             Recognizer recognizer = new GestureRecognizer(string.Empty);
 
@@ -125,7 +125,7 @@ namespace Iava.Test {
         ///A test for OnSynced
         ///</summary>
         [TestMethod()]
-        public void OnSyncedTest() {
+        public void RecognizerOnSyncedTest() {
             // Since we're treating this as the generic Recognizer this is ok
             Recognizer recognizer = new GestureRecognizer(string.Empty);
 
@@ -162,7 +162,7 @@ namespace Iava.Test {
         ///A test for OnUnsynced
         ///</summary>
         [TestMethod()]
-        public void OnUnsyncedTest() {
+        public void RecognizerOnUnsyncedTest() {
             // Since we're treating this as the generic Recognizer this is ok
             Recognizer recognizer = new GestureRecognizer(string.Empty);
 
@@ -200,7 +200,7 @@ namespace Iava.Test {
         ///A test for Status
         ///</summary>
         [TestMethod()]
-        public void StatusTest() {
+        public void RecognizerStatusTest() {
             // Since we're treating this as the generic Recognizer this is ok
             Recognizer recognizer = new GestureRecognizer(string.Empty);
 
@@ -269,15 +269,17 @@ namespace Iava.Test {
         ///A test for SyncTimeoutValue
         ///</summary>
         [TestMethod()]
-        public void SyncTimeoutValueTest() {
+        public void RecognizerSyncTimeoutValueTest() {
             // Since we're treating this as the generic Recognizer this is ok
             Recognizer recognizer = new GestureRecognizer(string.Empty);
+
+            int timeout = 123456;
+            
             try {
-
-                int timeout = 123456;
-
+                // Set the Timeout Value
                 recognizer.SyncTimeoutValue = 123456;
 
+                // Make sure the Timeout Value was updated
                 Assert.AreEqual(timeout, recognizer.SyncTimeoutValue);
             }
             catch (Exception ex) {

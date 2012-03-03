@@ -125,12 +125,12 @@ namespace Iava.Gesture
         /// <summary>
         /// Holds all the gestures this recognizer supports in a Name, Gesture pair
         /// </summary>
-        private List<Gesture.GestureStuff.Gesture> SupportedGestures { get; set; }
+        private List<IavaGesture> SupportedGestures { get; set; }
 
         /// <summary>
         /// The sync gesture
         /// </summary>
-        private Gesture.GestureStuff.Gesture SyncGesture {
+        private IavaGesture SyncGesture {
             get {
                 return _syncGesture;
             }
@@ -158,7 +158,7 @@ namespace Iava.Gesture
         private void Intialize() {
             // Initialize our collections...
             GestureCallbacks = new Dictionary<string, GestureCallback>();
-            SupportedGestures = new List<GestureStuff.Gesture>();
+            SupportedGestures = new List<GestureStuff.IavaGesture>();
         }
 
         private void LoadGestures() {
@@ -171,7 +171,7 @@ namespace Iava.Gesture
             for (int i = 0; i < 20; i++) { syncSegments.Add(new SyncSegment()); }
 
             // Add the gesture as our Sync Gestyre
-            SyncGesture = new GestureStuff.Gesture("Sync", syncSegments);
+            SyncGesture = new GestureStuff.IavaGesture("Sync", syncSegments);
             SyncGesture.GestureRecognized += OnGestureRecognized;
             
             // Left Swipe
@@ -181,7 +181,7 @@ namespace Iava.Gesture
             swipeLeftSegments.Add(new SwipeLeftSegment3());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Swipe Left", swipeLeftSegments));
+            SupportedGestures.Add(new GestureStuff.IavaGesture("Swipe Left", swipeLeftSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
             // Right Swipe
@@ -191,7 +191,7 @@ namespace Iava.Gesture
             swipeRightSegments.Add(new SwipeRightSegment3());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Swipe Right", swipeRightSegments));
+            SupportedGestures.Add(new GestureStuff.IavaGesture("Swipe Right", swipeRightSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
             // Up Swipe
@@ -201,7 +201,7 @@ namespace Iava.Gesture
             swipeUpSegments.Add(new SwipeUpSegment3());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Swipe Up", swipeUpSegments));
+            SupportedGestures.Add(new GestureStuff.IavaGesture("Swipe Up", swipeUpSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
             // Down Swipe
@@ -211,7 +211,7 @@ namespace Iava.Gesture
             swipeDownSegments.Add(new SwipeDownSegment3());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Swipe Down", swipeDownSegments));
+            SupportedGestures.Add(new GestureStuff.IavaGesture("Swipe Down", swipeDownSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
             // Zoom In
@@ -220,7 +220,7 @@ namespace Iava.Gesture
             zoomInSwipeSegments.Add(new ZoomInSegment2());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Zoom In", zoomInSwipeSegments));
+            SupportedGestures.Add(new GestureStuff.IavaGesture("Zoom In", zoomInSwipeSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
 
             // Zoom Out
@@ -229,7 +229,7 @@ namespace Iava.Gesture
             zoomOutSwipeSegments.Add(new ZoomOutSegment2());
 
             // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.Gesture("Zoom Out", zoomOutSwipeSegments));
+            SupportedGestures.Add(new GestureStuff.IavaGesture("Zoom Out", zoomOutSwipeSegments));
             SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
         }
         
@@ -259,7 +259,7 @@ namespace Iava.Gesture
 
         #region Private Fields
 
-        private Gesture.GestureStuff.Gesture _syncGesture;
+        private IavaGesture _syncGesture;
 
         #endregion Private Fields
 
@@ -291,7 +291,7 @@ namespace Iava.Gesture
             // If we're synced up look for gestures
             if (m_isSynced) {
                 // Check to see if this skeleton frame completes one of our supported gestures
-                foreach (Gesture.GestureStuff.Gesture gesture in SupportedGestures) {
+                foreach (IavaGesture gesture in SupportedGestures) {
                     gesture.CheckForGesture(e.Skeleton);
                 }
             }
