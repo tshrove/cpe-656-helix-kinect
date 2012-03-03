@@ -1,16 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Collections.Generic;
 using GestureRecorder.Data;
 using Iava.Audio;
 using Iava.Input.Camera;
-using System.Linq;
-using System.ComponentModel;
 
 namespace GestureRecorder.Controls {
     /// <summary>
@@ -37,8 +33,8 @@ namespace GestureRecorder.Controls {
             // Subscribe to the Camera events we are interested in...
 
             try {
-                Camera.ImageFrameReady += OnCameraImageFrameReady;
-                Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
+                IavaCamera.ImageFrameReady += OnCameraImageFrameReady;
+                IavaCamera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
             }
 
             catch (Exception e) {
