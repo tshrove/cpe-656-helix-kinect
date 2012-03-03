@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Research.Kinect.Nui;
 
 namespace Iava.Input.Camera {
@@ -17,6 +15,8 @@ namespace Iava.Input.Camera {
         /// Gets the Skeleton data.
         /// </summary>
         public IavaSkeletonData Skeleton { get; private set; }
+
+        public static readonly IavaSkeletonEventArgs Empty = null;
 
         #endregion Public Properties
 
@@ -35,15 +35,6 @@ namespace Iava.Input.Camera {
         }
 
         #endregion Constructors
-
-        #region Operator Overloads
-        /*
-        public static implicit operator SkeletonEventArgs(SkeletonFrameReadyEventArgs arg) {
-            //
-            arg.SkeletonFrame.
-        }
-        */
-        #endregion Operator Overloads
     }
 
     /// <summary>
@@ -62,6 +53,8 @@ namespace Iava.Input.Camera {
         /// Gets the event's timestamp
         /// </summary>
         public long Timestamp { get; private set; }
+
+        public static readonly IavaSkeletonFrameEventArgs Empty = null;
 
         #endregion Public Properties
 
@@ -85,6 +78,8 @@ namespace Iava.Input.Camera {
         #region Public Properties
 
         public IavaImageFrame ImageFrame { get; private set; }
+
+        public static readonly IavaImageFrameReadyEventArgs Empty = null;
 
         #endregion Pulbic Properties
         
@@ -110,6 +105,8 @@ namespace Iava.Input.Camera {
         #region Public Properties
 
         public IavaSkeletonFrame SkeletonFrame { get; private set; }
+
+        public static readonly IavaSkeletonFrameReadyEventArgs Empty = null;
 
         #endregion Public Properties
 

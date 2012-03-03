@@ -57,7 +57,7 @@ namespace Iava.Gesture
             tokenSource = new CancellationTokenSource();
 
             // Unsubscribe from the events
-            _runtime.SkeletonReady -= OnSkeletonReady;
+            IavaCamera.SkeletonReady -= OnSkeletonReady;
 
             Status = RecognizerStatus.Ready;
 
@@ -111,18 +111,6 @@ namespace Iava.Gesture
             : base() {
 
             Intialize();
-            _runtime = new RuntimeWrapper();
-        }
-
-        /// <summary>
-        /// Constructor.  Used for unit testing.
-        /// </summary>
-        /// <param name="runtime">IRuntime object to provide the data to the recognizer</param>
-        internal GestureRecognizer(IRuntime runtime)
-            : base() {
-
-            Intialize();
-            _runtime = runtime;
         }
 
         #endregion Constructors
@@ -142,7 +130,7 @@ namespace Iava.Gesture
         /// <summary>
         /// The sync gesture
         /// </summary>
-        public Gesture.GestureStuff.Gesture SyncGesture {
+        private Gesture.GestureStuff.Gesture SyncGesture {
             get {
                 return _syncGesture;
             }
@@ -246,33 +234,30 @@ namespace Iava.Gesture
         }
         
         private void SetupGestureDevice(CancellationToken token) {
-            // I probably want to instatiate a Camera in here instead of the constructor...
-            if (!token.IsCancellationRequested) {
-                // Try to connect to the camera first.  If this fails there is no point in continuing
-                try {
-                    // Register with some camera events
-                    _runtime.SkeletonReady += OnSkeletonReady;
+            // Try to connect to the camera first.  If this fails there is no point in continuing
+            try {
+                // Register with some camera events
+                IavaCamera.SkeletonReady += OnSkeletonReady;
 
+                if (!token.IsCancellationRequested) {
                     // Read the gestures in from the config file
                     LoadGestures();
 
                     Status = RecognizerStatus.Running;
                 }
-
-                catch (Exception e) {
-                    // TODO: Log message.  Failed to detect Kinect or start Camera
-                    Status = RecognizerStatus.Error;
-                }
-
-                finally { m_resetEvent.Set(); }
             }
+
+            catch (Exception e) {
+                // TODO: Log message.  Failed to detect Kinect or start Camera
+                Status = RecognizerStatus.Error;
+            }
+
+            finally { m_resetEvent.Set(); }
         }
 
         #endregion Private Methods
 
         #region Private Fields
-
-        private IRuntime _runtime;
 
         private Gesture.GestureStuff.Gesture _syncGesture;
 

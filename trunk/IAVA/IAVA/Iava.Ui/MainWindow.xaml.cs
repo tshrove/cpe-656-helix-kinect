@@ -56,8 +56,8 @@ namespace Iava.Ui {
             m_pAudioRecognizer.Subscribe("Exit", BlowUp);
             m_pAudioRecognizer.Subscribe("Go to *", GoToLocationCallback);
 
-            Camera.ImageFrameReady += OnCameraImageFrameReady;
-            Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
+            IavaCamera.ImageFrameReady += OnCameraImageFrameReady;
+            IavaCamera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
 
             m_pAudioSyncTimer = new System.Timers.Timer(1000);
             m_pAudioSyncTimer.Elapsed += OnAudioSyncTimerElapsed;

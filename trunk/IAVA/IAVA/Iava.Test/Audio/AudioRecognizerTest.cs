@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Speech.AudioFormat;
 using System.Speech.Recognition;
-using System.Text;
 using System.Threading;
-
 using Iava.Audio;
 using Iava.Core;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

@@ -1,97 +1,91 @@
-﻿using Iava.Input.Camera;
+﻿using System.Threading;
+using Iava.Input.Camera;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Threading;
+using Moq;
 
-namespace Iava.Test
-{
-    
-    
+namespace Iava.Test.Camera {
+
     /// <summary>
     ///This is a test class for CameraTest and is intended
     ///to contain all CameraTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class CameraTest
-    {
+    public class CameraTest {
+        
+        [TestMethod()]
+        public void CameraImageFrameReadyTest() {
+            // Create a mock runtime
+            var mockRuntime = SetupMockRuntime();
+            camera = new IavaCamera(mockRuntime.Object);
 
+            bool eventFired = false;
 
-        private TestContext testContextInstance;
+            // Subscribe to our Camera ImageFrame Ready Event
+            IavaCamera.ImageFrameReady += (param1, param2) => eventFired = true;
 
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+            // Raise the IRuntime ImageFrameReady Event
+            mockRuntime.Raise(m => m.ImageFrameReady += null, IavaImageFrameReadyEventArgs.Empty);
+            Thread.Sleep(50);
+
+            Assert.IsTrue(eventFired);
         }
 
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-        /*
-        /// <summary>
-        ///A test for TiltUp
-        ///</summary>
         [TestMethod()]
-        public void CameraTiltUpTest()
-        {
-            //TODO: Need to figure out why this is failing
-            int iExpectedAngle = Camera.TiltAngle;
-            Camera.TiltUp();
-            iExpectedAngle++;
-            Thread.Sleep(1500);
-            Assert.AreEqual(iExpectedAngle, Camera.TiltAngle);
-          
+        public void CameraSkeletonReadyTest() {
+            // Create a mock runtime
+            var mockRuntime = SetupMockRuntime();
+            camera = new IavaCamera(mockRuntime.Object);
+
+            bool eventFired = false;
+
+            // Subscribe to our Camera SkeletonReady Ready Event
+            IavaCamera.SkeletonReady += (param1, param2) => eventFired = true;
+
+            // Raise the IRuntime SkeletonReady Event
+            mockRuntime.Raise(m => m.SkeletonReady += null, IavaSkeletonEventArgs.Empty);
+            Thread.Sleep(50);
+
+            Assert.IsTrue(eventFired);
         }
 
-        /// <summary>
-        ///A test for TiltDown
-        ///</summary>
         [TestMethod()]
-        public void CameraTiltDownTest()
-        {
-            //TODO: Need to figure out why this is failing
-            int iExpectedAngle = Camera.TiltAngle;
-            Camera.TiltDown();
-            iExpectedAngle--;
-            Thread.Sleep(1000);
-            Assert.AreEqual(iExpectedAngle, Camera.TiltAngle);
-            
-        }*/
+        public void CameraSkeletonFrameReadyTest() {
+            // Create a mock runtime
+            var mockRuntime = SetupMockRuntime();
+            camera = new IavaCamera(mockRuntime.Object);
+
+            bool eventFired = false;
+
+            // Subscribe to our Camera ImageFrame Ready Event
+            IavaCamera.SkeletonFrameReady += (param1, param2) => eventFired = true;
+
+            // Raise the IRuntime SkeletonFrameReady Event
+            mockRuntime.Raise(m => m.SkeletonFrameReady += null, IavaSkeletonFrameReadyEventArgs.Empty);
+            Thread.Sleep(50);
+
+            Assert.IsTrue(eventFired);
+        }
+
+        #region Private Methods And Attributes
+
+        /// <summary>
+        /// Recognizer object under test.
+        /// </summary>
+        private IavaCamera camera;
+
+        /// <summary>
+        /// Creates and sets up a mock IRuntime.
+        /// </summary>
+        /// <returns>Mock IRuntime</returns>
+        private Mock<IRuntime> SetupMockRuntime() {
+            var mockRuntime = new Mock<IRuntime>(MockBehavior.Strict);
+
+            // Setup methods that need to be called
+            mockRuntime.Setup(m => m.Initialize());
+
+            return mockRuntime;
+        }
+
+        #endregion Private Methods And Attributes
     }
 }
