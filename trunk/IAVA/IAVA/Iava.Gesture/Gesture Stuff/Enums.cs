@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Iava.Gesture.GestureStuff {
+namespace Iava.Gesture {
     public enum GestureResult {
         Fail,
         Succeed,

@@ -47,14 +47,8 @@
     <Compile Include="BodyPart.cs" />
     <Compile Include="Gesture Stuff\Enums.cs" />
     <Compile Include="Gesture Stuff\Gesture.cs" />
-    <Compile Include="Gesture Stuff\Gestures\SwipeDown.cs" />
-    <Compile Include="Gesture Stuff\Gestures\SwipeRight.cs" />
-    <Compile Include="Gesture Stuff\Gestures\Sync.cs" />
-    <Compile Include="Gesture Stuff\Gestures\SwipeUp.cs" />
-    <Compile Include="Gesture Stuff\Gestures\ZoomIn.cs" />
-    <Compile Include="Gesture Stuff\Gestures\ZoomOut.cs" />
     <Compile Include="Gesture Stuff\IGestureSegment.cs" />
-    <Compile Include="Gesture Stuff\Gestures\SwipeLeft.cs" />
+    <Compile Include="Gesture Stuff\RecognizerEngine.cs" />
     <Compile Include="Gesture.cs" />
     <Compile Include="GestureEventArgs.cs" />
     <Compile Include="GestureRecognizer.cs" />

@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml.Serialization;
 using Iava.Input.Camera;
 
-namespace GestureRecorder.Data {
+namespace Iava.Gesture {
     public class Snapshot {
 
         #region Public Properties
@@ -38,6 +38,19 @@ namespace GestureRecorder.Data {
             foreach (IavaJointID id in joints) {
                 BodyParts.Where(x => x.JointID == id).Single(x => x.Tracking = true);
             }
+        }
+
+        public bool CheckSnapshot(IavaSkeletonData skeleton) {
+            foreach (BodyPart bodyPart in BodyParts) {
+                if (bodyPart.Tracking) {
+                    if (bodyPart.Position.X == skeleton.Joints[bodyPart.JointID].Position.X &&
+                        bodyPart.Position.Y == skeleton.Joints[bodyPart.JointID].Position.Y) {
+
+
+                    }
+                }
+            }
+            return false;
         }
 
         #endregion Public Methods

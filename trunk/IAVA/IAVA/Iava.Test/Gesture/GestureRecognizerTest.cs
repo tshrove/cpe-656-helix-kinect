@@ -373,7 +373,7 @@ namespace Iava.Test.Gesture {
 
             // Set the Sync Gesture
             PrivateObject privateObject = new PrivateObject(recognizer);
-            privateObject.SetProperty("SyncGesture", new IavaGesture("Sync", new List<IGestureSegment>()));
+            privateObject.SetProperty("SyncGesture", new IavaGesture("Sync", new List<Snapshot>()));
             
             // Recognize the 'Sync' Gesture
             privateObject.Invoke("OnGestureRecognized", null, new GestureEventArgs("Sync"));
@@ -411,7 +411,7 @@ namespace Iava.Test.Gesture {
 
             // Set the Sync Gesture
             PrivateObject privateObject = new PrivateObject(recognizer);
-            privateObject.SetProperty("SyncGesture", new IavaGesture("Sync", new List<IGestureSegment>()));
+            privateObject.SetProperty("SyncGesture", new IavaGesture("Sync", new List<Snapshot>()));
 
             // Register for some Gestures
             recognizer.Synced += (parm1, param2) => { syncEventFired = true; };
@@ -536,9 +536,9 @@ namespace Iava.Test.Gesture {
 
             // Hold our supported gestures
             List<IavaGesture> supportedGestures = new List<IavaGesture>();
-            supportedGestures.Add(new IavaGesture("Sync", new List<IGestureSegment>()));
-            supportedGestures.Add(new IavaGesture("Wave", new List<IGestureSegment>()));
-            supportedGestures.Add(new IavaGesture("Shake", new List<IGestureSegment>()));
+            supportedGestures.Add(new IavaGesture("Sync", new List<Snapshot>()));
+            supportedGestures.Add(new IavaGesture("Wave", new List<Snapshot>()));
+            supportedGestures.Add(new IavaGesture("Shake", new List<Snapshot>()));
 
             try {
                 // Set the Supported Gestures
@@ -560,7 +560,7 @@ namespace Iava.Test.Gesture {
             GestureRecognizer_Accessor recognizer = new GestureRecognizer_Accessor(string.Empty);
 
             // Hold our sync gesture
-            IavaGesture syncGesture = new IavaGesture("Sync", new List<IGestureSegment>());
+            IavaGesture syncGesture = new IavaGesture("Sync", new List<Snapshot>());
 
             try {
                 // Set the Sync Gesture

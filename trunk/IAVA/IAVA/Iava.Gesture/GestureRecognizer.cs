@@ -158,20 +158,20 @@ namespace Iava.Gesture
         private void Intialize() {
             // Initialize our collections...
             GestureCallbacks = new Dictionary<string, GestureCallback>();
-            SupportedGestures = new List<GestureStuff.IavaGesture>();
+            SupportedGestures = new List<IavaGesture>();
         }
 
-        private void LoadGestures() {
+        private void LoadGestures() {/*
             // TODO: Reading in the config file needs to happen here
 
             // NEM: For the prototype we will manually load hard-coded gestures
 
             // Sync Gesture
-            List<IGestureSegment> syncSegments = new List<IGestureSegment>();
-            for (int i = 0; i < 20; i++) { syncSegments.Add(new SyncSegment()); }
+            List<Snapshot> syncSegments = new List<Snapshot>();
+            //for (int i = 0; i < 20; i++) { syncSegments.Add(new SyncSegment()); }
 
             // Add the gesture as our Sync Gestyre
-            SyncGesture = new GestureStuff.IavaGesture("Sync", syncSegments);
+            SyncGesture = new IavaGesture("Sync", syncSegments);
             SyncGesture.GestureRecognized += OnGestureRecognized;
             
             // Left Swipe
@@ -230,7 +230,7 @@ namespace Iava.Gesture
 
             // Add the gesture to our supported types and register for its recognized event
             SupportedGestures.Add(new GestureStuff.IavaGesture("Zoom Out", zoomOutSwipeSegments));
-            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
+            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;*/
         }
         
         private void SetupGestureDevice(CancellationToken token) {
@@ -287,17 +287,20 @@ namespace Iava.Gesture
         }
 
         protected void OnSkeletonReady(object sender, IavaSkeletonEventArgs e) {
+            IavaSkeletonData skeleton = e.Skeleton;
+
+            // Translate all the points in the skeleton to the center of the kinect view
 
             // If we're synced up look for gestures
             if (m_isSynced) {
                 // Check to see if this skeleton frame completes one of our supported gestures
                 foreach (IavaGesture gesture in SupportedGestures) {
-                    gesture.CheckForGesture(e.Skeleton);
+                    gesture.CheckGesture(e.Skeleton);
                 }
             }
 
             // Check for the sync gesture
-            else { SyncGesture.CheckForGesture(e.Skeleton); }
+            else { SyncGesture.CheckGesture(e.Skeleton); }
         }
 
         #endregion Protected Methods
