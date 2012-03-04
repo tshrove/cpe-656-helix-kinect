@@ -29,5 +29,20 @@ namespace Iava.Core.Math {
         }
 
         #endregion Operator Overloads
+
+        #region Static Property
+        public static IavaVector Zero
+        {
+            get
+            {
+                return new IavaVector()
+                    {
+                        X = 0f,
+                        Y = 0f,
+                        Z = 0f
+                    };
+            }
+        }
+        #endregion
     }
 }
