@@ -1,4 +1,5 @@
 ﻿using Microsoft.Research.Kinect.Nui;
+using Iava.Core.Math;
 
 namespace Iava.Input.Camera {
 
