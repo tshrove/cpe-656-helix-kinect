@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Iava.Input.Camera;
 using System.Xml.Serialization;
+using Iava.Core.Math;
 
 namespace Iava.Gesture {
     public class BodyPart {
