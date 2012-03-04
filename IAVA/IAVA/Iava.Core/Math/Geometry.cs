@@ -5,7 +5,7 @@ using System.Text;
 using System.Drawing;
 
 namespace Iava.Core.Math {
-    static class Geometry {
+    public static class Geometry {
         public static Point Translate(Point original, Point translation) {
             Point returnPoint = new Point();
 
