@@ -10,6 +10,7 @@ using Iava.Input.Camera;
 using System.Collections.Generic;
 
 using Geometry = ESRI.ArcGIS.Client.Geometry.Geometry;
+using MapPoint = ESRI.ArcGIS.Client.Geometry.MapPoint;
 
 namespace Iava.Ui {
     /// <summary>
@@ -55,6 +56,8 @@ namespace Iava.Ui {
             m_pAudioRecognizer.Subscribe("Blow Up", BlowUp);
             m_pAudioRecognizer.Subscribe("Exit", BlowUp);
             m_pAudioRecognizer.Subscribe("Go to *", GoToLocationCallback);
+            m_pAudioRecognizer.Subscribe("Get Recognizer Statuses", GetRecognizerStatusesCallback);
+            m_pAudioRecognizer.Subscribe("Change sync command to *", ChangeAudioSyncCommandCallback);
 
             IavaCamera.ImageFrameReady += OnCameraImageFrameReady;
             IavaCamera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
@@ -166,16 +169,63 @@ namespace Iava.Ui {
         /// <param name="e">Audio event args</param>
         private void GoToLocationCallback(AudioEventArgs e)
         {
-            if (e.CommandWildcards != null && e.CommandWildcards.Count == 2)
+            if (e.CommandWildcards != null && e.CommandWildcards.Count > 0)
             {
-                Geometry point = CityLocations.GetCityLocation(e.CommandWildcards[0] + " " + e.CommandWildcards[1]);
+                string wildCardString = string.Empty;
+                foreach (string wildcard in e.CommandWildcards)
+                {
+                    wildCardString += wildcard + " ";
+                }
+                wildCardString = wildCardString.Trim();
 
-                map1.PanTo(point);
+                MapPoint point = CityLocations.GetCityLocation(wildCardString);
 
-                DisplayStatus(String.Format("Audio: {0} Detected", e.Command));
+                if (point != null)
+                {
+                    map.PanTo(point);
+                    //TODO: Find a way to zoom in and pan
+                    //map.ZoomTo(point);
+                    //map.ZoomToResolution(map.Resolution, (ESRI.ArcGIS.Client.Geometry.MapPoint)point);
+                    
+                    DisplayStatus(String.Format("Audio: {0} {1}", e.Command.TrimEnd('*'), wildCardString));
+
+                    ResetAudioSyncTime();
+                }                
+            }                        
+        }
+
+        /// <summary>
+        /// Occurs when a get recognizer statuses command was received.
+        /// </summary>
+        /// <param name="e">Audio event args</param>
+        private void GetRecognizerStatusesCallback(AudioEventArgs e)
+        {
+            DisplayStatus(String.Format("Audio Recognizer Status: {0}   Gesture Recognizer Status: {1}", m_pAudioRecognizer.Status, m_pGestureRecognizer.Status));
+
+            ResetAudioSyncTime();
+        }
+
+        /// <summary>
+        /// Occurs when change audio sync command was recieved.
+        /// </summary>
+        /// <param name="e">Audio event args</param>
+        private void ChangeAudioSyncCommandCallback(AudioEventArgs e)
+        {
+            if (e.CommandWildcards != null && e.CommandWildcards.Count > 0)
+            {
+                string commandWildcards = string.Empty;
+                foreach (string wildcard in e.CommandWildcards)
+                {
+                    commandWildcards += wildcard + " ";
+                }
+                commandWildcards = commandWildcards.Trim();
+
+                m_pAudioRecognizer.SyncCommand = commandWildcards.Trim();
+
+                DisplayStatus(String.Format("Sync Command Changed To: {0}", m_pAudioRecognizer.SyncCommand));
 
                 ResetAudioSyncTime();
-            }                        
+            }
         }
 
         #endregion Audio Callbacks
@@ -527,6 +577,8 @@ namespace Iava.Ui {
                 m_pTimer.Interval = 2000;
                 lblStatus.Content = text;
             }
+
+            Console.WriteLine(text);
         }
 
         /// <summary>
@@ -535,14 +587,14 @@ namespace Iava.Ui {
         /// <param name="e"></param>
         private void MoveEast() {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
-            center = map1.Extent.GetCenter();
+            center = map.Extent.GetCenter();
 
-            Point screen = map1.MapToScreen(center);
+            Point screen = map.MapToScreen(center);
             screen.X += 300;
 
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map.ScreenToMap(screen);
           
-            map1.PanTo(newCenter);
+            map.PanTo(newCenter);
         }
 
         /// <summary>
@@ -551,14 +603,14 @@ namespace Iava.Ui {
         /// <param name="e"></param>
         private void MoveNorth() {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
-            center = map1.Extent.GetCenter();
+            center = map.Extent.GetCenter();
 
-            Point screen = map1.MapToScreen(center);
+            Point screen = map.MapToScreen(center);
             screen.Y -= 300;
 
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map.ScreenToMap(screen);
             
-            map1.PanTo(newCenter);
+            map.PanTo(newCenter);
         }
 
         /// <summary>
@@ -567,14 +619,14 @@ namespace Iava.Ui {
         /// <param name="e"></param>
         private void MoveSouth() {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
-            center = map1.Extent.GetCenter();
+            center = map.Extent.GetCenter();
 
-            Point screen = map1.MapToScreen(center);
+            Point screen = map.MapToScreen(center);
             screen.Y += 300;
 
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map.ScreenToMap(screen);
 
-            map1.PanTo(newCenter);
+            map.PanTo(newCenter);
         }
 
         /// <summary>
@@ -583,22 +635,22 @@ namespace Iava.Ui {
         /// <param name="e"></param>
         private void MoveWest() {
             ESRI.ArcGIS.Client.Geometry.MapPoint center = null;
-            center = map1.Extent.GetCenter();
+            center = map.Extent.GetCenter();
 
-            Point screen = map1.MapToScreen(center);
+            Point screen = map.MapToScreen(center);
             screen.X -= 300;
 
-            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map1.ScreenToMap(screen);
+            ESRI.ArcGIS.Client.Geometry.MapPoint newCenter = map.ScreenToMap(screen);
 
-            map1.PanTo(newCenter);
+            map.PanTo(newCenter);
         }
 
         private void ZoomIn() {
-            map1.Zoom(2.0);
+            map.Zoom(2.0);
         }
 
         private void ZoomOut() {
-            map1.Zoom(0.5);
+            map.Zoom(0.5);
         }
 
         #endregion Private Methods

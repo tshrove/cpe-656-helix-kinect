@@ -294,7 +294,7 @@ namespace Iava.Audio
         /// <param name="e">Event args</param>
         private void SpeechRecognized(object sender, IavaSpeechRecognizedEventArgs e) 
         {
-            Console.Write("\rSpeech Recognized: \t{0}\tConfidence:\t{1}", e.Text, e.Confidence);
+            Console.WriteLine("\rSpeech Recognized: \t{0}\tConfidence:\t{1}", e.Text, e.Confidence);
 
             // If we just synced, set the flag and return
             if (e.Text.Contains(syncCommand))

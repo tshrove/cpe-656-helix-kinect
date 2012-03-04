@@ -205,18 +205,17 @@ namespace Iava.Test.Audio
             const string commandString2 = "Command String 2";
             string eventArgsCommand2 = null;
             recognizer.Subscribe(commandString2, (eventArgs) =>
-            {
-                eventArgsCommand2 = eventArgs.Command;
-                resetEvent.Set();
-            });
-
-            Thread.Sleep(100);  // Allow time to restart
+                {
+                    eventArgsCommand2 = eventArgs.Command;
+                    resetEvent.Set();
+                });
 
             // Sync the callback first then raise spoken event
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("Blah Blah blah", recognizer.AudioConfidenceThreshold + 0.01f));
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(recognizer.SyncCommand, recognizer.AudioConfidenceThreshold + 0.01f));
-            Thread.Sleep(50);
+            Thread.Sleep(200);
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold + 0.01f));
+            Thread.Sleep(200);
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs("Blah Blah blah", recognizer.AudioConfidenceThreshold + 0.01f));
 
             Assert.IsTrue(resetEvent.WaitOne(TimeoutValue));
@@ -225,8 +224,8 @@ namespace Iava.Test.Audio
 
             // Callback with the same command but with confidence below the threshold level to ensure the audio callback method is not called
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString, recognizer.AudioConfidenceThreshold - 0.01f));
+            Thread.Sleep(200);
             Assert.IsFalse(resetEvent.WaitOne(TimeoutValue));
-            resetEvent.Reset();
 
             // Call second command and wait for callback to be invoked
             mockEngine.Raise(m => m.SpeechRecognized += null, new IavaSpeechRecognizedEventArgs(commandString2, 0.95f));
@@ -325,7 +324,7 @@ namespace Iava.Test.Audio
             // Create a mock speech engine and set it up
             var mockEngine = SetupMockSpeechRecognitionEngine();
             recognizer = new AudioRecognizer(mockEngine.Object);
-            recognizer.SyncTimeoutValue = 2000;
+            recognizer.SyncTimeoutValue = 500;
 
             recognizer.Synced += 
                 (sender, args) => 
@@ -348,9 +347,6 @@ namespace Iava.Test.Audio
                 eventArgsCommand = eventArgs.Command;
                 resetEvent.Set();
             });
-
-            // Set the timeout to 5 seconds
-            recognizer.SyncTimeoutValue = 5000;
             
             recognizer.Start();
 

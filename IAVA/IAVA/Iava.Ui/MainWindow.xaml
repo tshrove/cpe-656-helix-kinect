@@ -11,7 +11,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <esri:Map Background="White" Name="map1" WrapAround="True" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" 
+        <esri:Map Background="White" Name="map" WrapAround="True" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" 
                   Unloaded="OnMapUnloaded" Loaded="OnMapLoaded">
             <esri:Map.Layers>
                 <esri:LayerCollection>
@@ -37,7 +37,7 @@
             </StackPanel>
         </StackPanel>
         <Popup x:Name="popStatus" 
-               PlacementTarget="{Binding ElementName=map1}"
+               PlacementTarget="{Binding ElementName=map}"
                Placement="Center" 
                AllowsTransparency="True"
                HorizontalAlignment="Center" 

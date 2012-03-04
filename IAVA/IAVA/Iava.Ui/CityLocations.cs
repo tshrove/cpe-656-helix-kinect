@@ -21,7 +21,7 @@ namespace Iava.Ui
 
         private const string CityLocationsFilePath = @".\Resources\CityLocationsData.txt";
 
-        private static readonly Dictionary<string, Geometry> cityToLocationMap = new Dictionary<string, Geometry>();
+        private static readonly Dictionary<string, MapPoint> cityToLocationMap = new Dictionary<string, MapPoint>();
 
         static CityLocations()
         {
@@ -46,13 +46,13 @@ namespace Iava.Ui
                         double lat = double.Parse(match.Groups[1].ToString());
                         double lon = double.Parse(match.Groups[2].ToString());
 
-                        string cityNameKey = match.Groups[3].ToString() + " " + match.Groups[4].ToString();
+                        string cityNameKey = match.Groups[3].ToString();
                         cityNameKey = cityNameKey.ToLower();
                         if (!cityToLocationMap.ContainsKey(cityNameKey))
                         {
                             // Convert to the correct coordinate format for the maps
                             // The text file does not contain the negative signs in front of the latitude so add it
-                            Geometry coords = converter.FromGeographic(new MapPoint(-lon, lat));
+                            MapPoint coords = (MapPoint)converter.FromGeographic(new MapPoint(-lon, lat));
                             cityToLocationMap.Add(cityNameKey, coords);
                         }
                     }
@@ -60,9 +60,9 @@ namespace Iava.Ui
             }
         }
 
-        public static Geometry GetCityLocation(string cityName)
+        public static MapPoint GetCityLocation(string cityName)
         {
-            Geometry rv = null;
+            MapPoint rv = null;
             cityToLocationMap.TryGetValue(cityName, out rv);
 
             return rv;
