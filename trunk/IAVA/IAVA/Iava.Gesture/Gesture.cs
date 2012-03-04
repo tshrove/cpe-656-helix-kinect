@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using Iava.Input.Camera;
+using Iava.Core.Math;
 
 namespace Iava.Gesture {
     [XmlRoot("Gesture", Namespace = "urn:Gestures")]
@@ -124,6 +125,23 @@ namespace Iava.Gesture {
         /// <param name="gesture"></param>
         /// <param name="path"></param>
         public static void Save(IavaGesture gesture, string path) {
+            foreach (Snapshot snapshot in gesture.Snapshots)
+            {
+                // Get the hipcenter
+                BodyPart hipCenter = snapshot.BodyParts[(int)IavaJointID.HipCenter];
+                // make the translation vector
+                IavaVector hipCenterTranslationPoint = new IavaVector()
+                {
+                    X = hipCenter.Position.X,
+                    Y = hipCenter.Position.Y,
+                    Z = hipCenter.Position.Z
+                };
+                // Translate each bodypart position
+                foreach (BodyPart bodyPart in snapshot.BodyParts)
+                {
+                    bodyPart.Position = Iava.Core.Math.Geometry.Translate(bodyPart.Position, hipCenterTranslationPoint);
+                }
+            }
             XmlSerializer serializer = new XmlSerializer(typeof(IavaGesture));
             TextWriter textWriter = new StreamWriter(path);
             serializer.Serialize(textWriter, gesture);

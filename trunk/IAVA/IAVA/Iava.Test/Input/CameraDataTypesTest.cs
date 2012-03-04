@@ -1,6 +1,7 @@
 ﻿using Iava.Input.Camera;
 using Microsoft.Research.Kinect.Nui;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Iava.Core.Math;
 
 namespace Iava.Test.Camera {
 
