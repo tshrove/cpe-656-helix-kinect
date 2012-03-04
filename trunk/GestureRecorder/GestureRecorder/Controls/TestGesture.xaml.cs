@@ -2,6 +2,7 @@
 using System.Windows;
 using GestureRecorder.Data;
 using System.Windows.Controls;
+using Iava.Gesture;
 
 namespace GestureRecorder.Controls
 {
@@ -12,7 +13,7 @@ namespace GestureRecorder.Controls
     {
 
         #region Members
-        ObservableCollection<Gesture> m_pGestures = new ObservableCollection<Gesture>();
+        ObservableCollection<IavaGesture> m_pGestures = new ObservableCollection<IavaGesture>();
         #endregion
 
         #region Constructor
@@ -37,7 +38,7 @@ namespace GestureRecorder.Controls
             {
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    m_pGestures = new ObservableCollection<Gesture>(GestureFolderReader.Read(dialog.SelectedPath));
+                    m_pGestures = new ObservableCollection<IavaGesture>(GestureFolderReader.Read(dialog.SelectedPath));
                     this.lstGestures.ItemsSource = m_pGestures;
                 }
             }
