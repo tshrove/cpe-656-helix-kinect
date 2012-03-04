@@ -109,9 +109,14 @@ namespace GestureRecorder.Controls {
         /// <param name="e"></param>
         private void OnCameraSkeletonFrameReady(object sender, IavaSkeletonFrameReadyEventArgs e) {
             // If we don't have a canvas to draw on, there's nothing for us to do...
-            if (_activeSkeletonCanvas == null) { return; }
+            if (_activeSkeletonCanvas == null) { lblActiveSkeleton.Content = "No Skeleton"; return; }
 
             _activeSkeletonCanvas.Skeleton = e.SkeletonFrame.ActiveSkeleton;
+
+            // For debugging purposes
+            if (e.SkeletonFrame.ActiveSkeleton == null) { lblActiveSkeleton.Content = "No Skeleton"; }
+
+            else { lblActiveSkeleton.Content = ""; }
         }
 
         /// <summary>

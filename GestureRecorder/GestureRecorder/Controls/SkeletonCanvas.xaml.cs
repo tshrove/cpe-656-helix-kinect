@@ -40,11 +40,11 @@ namespace GestureRecorder.Controls {
         #region Private Methods
 
         private void UpdateCanvas() {
+            Children.Clear();
+
             if (Skeleton == null) { return; }
 
             Brush brush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-
-            Children.Clear();
 
             if (Skeleton.TrackingState == IavaSkeletonTrackingState.Tracked) {
                 // Draw bones
