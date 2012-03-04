@@ -11,6 +11,7 @@
                 <Button Content="Next" Margin="2" Name="btnNext" Height="30" Click="OnNextClick" />
                 <Button Content="Cancel" Margin="2" Name="btnCancel" Click="OnCancelClick" Height="30"/>
                 <Image Name="VideoFeed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                <Label Name="lblActiveSkeleton" Foreground="White" FontWeight="ExtraBold"/>
             </StackPanel>
         </Border>
         <StackPanel Name="stkSkeletalBody" DockPanel.Dock="Right" IsEnabled="False">
