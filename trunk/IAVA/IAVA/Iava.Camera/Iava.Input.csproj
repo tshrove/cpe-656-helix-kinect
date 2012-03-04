@@ -61,12 +61,16 @@
     <Compile Include="Camera\DataTypes\IavaSkeletonFrameQuality.cs" />
     <Compile Include="Camera\DataTypes\IavaSkeletonQuality.cs" />
     <Compile Include="Camera\DataTypes\IavaSkeletonTrackingState.cs" />
-    <Compile Include="Camera\DataTypes\IavaVector.cs" />
     <Compile Include="Camera\IRuntime.cs" />
     <Compile Include="Camera\RuntimeWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Iava.Core\Iava.Core.csproj">
+      <Project>{80DF01EC-0E97-4B4D-A36F-FED9659D748A}</Project>
+      <Name>Iava.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
