@@ -6,7 +6,7 @@ using System.Text;
 
 using Iava.Input.Camera;
 
-namespace Iava.Gesture.GestureStuff {
+namespace Iava.Gesture {
     public interface IGestureSegment {
         GestureResult CheckGesture(IavaSkeletonData skeleton);
     }

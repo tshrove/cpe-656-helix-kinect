@@ -5,7 +5,7 @@ using System.Text;
 using Iava.Input.Camera;
 using System.Xml.Serialization;
 
-namespace GestureRecorder.Data {
+namespace Iava.Gesture {
     public class BodyPart {
 
         #region Public Properties
