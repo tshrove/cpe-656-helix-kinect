@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using GestureRecorder.Data;
 using Iava.Audio;
 using Iava.Input.Camera;
 using Iava.Gesture;

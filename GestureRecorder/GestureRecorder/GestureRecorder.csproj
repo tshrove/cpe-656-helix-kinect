@@ -79,7 +79,6 @@
     <Compile Include="Controls\SkeletonCanvas.xaml.cs">
       <DependentUpon>SkeletonCanvas.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\GestureFolderReader.cs" />
     <Compile Include="Controls\TestGesture.xaml.cs">
       <DependentUpon>TestGesture.xaml</DependentUpon>
     </Compile>
