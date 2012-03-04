@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Iava.Gesture;
 
 namespace GestureRecorder.Data
 {
@@ -10,14 +11,14 @@ namespace GestureRecorder.Data
         /// Default Constructor
         /// </summary>
         /// <param name="path"></param>
-        public static List<Gesture> Read(string path)
+        public static List<IavaGesture> Read(string path)
         {
-            List<Gesture> gestures = new List<Gesture>();
+            List<IavaGesture> gestures = new List<IavaGesture>();
             string folderPath = path;
             string[] filePaths = Directory.GetFiles(path, "*.iava");
             foreach (string file in filePaths)
             {
-                gestures.Add(Gesture.Load(file));
+                gestures.Add(IavaGesture.Load(file));
             }
             return gestures;
         }

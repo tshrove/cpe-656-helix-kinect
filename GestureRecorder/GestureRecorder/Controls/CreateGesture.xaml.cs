@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 using GestureRecorder.Data;
 using Iava.Audio;
 using Iava.Input.Camera;
+using Iava.Gesture;
 
 namespace GestureRecorder.Controls {
     /// <summary>
@@ -25,7 +26,7 @@ namespace GestureRecorder.Controls {
         public CreateGesture() {
             InitializeComponent();
             //this.Gesture = new tempuri.org.GestureDefinition.xsd.Gesture();
-            this.Gesture = new Gesture();
+            this.Gesture = new IavaGesture();
 
             // If we are in design mode, do nothing...
             if (DesignerProperties.GetIsInDesignMode(this)) { return; }
@@ -65,7 +66,7 @@ namespace GestureRecorder.Controls {
         /// <summary>
         /// Gets the gesture that is about to be saved. 
         /// </summary>
-        private Gesture Gesture
+        private IavaGesture Gesture
         {
             get;
             set;
@@ -184,7 +185,7 @@ namespace GestureRecorder.Controls {
                     // T.S.
                     this.Gesture.Name = sGestureName;
                     // Save the content to a file
-                    Gesture.Save(this.Gesture, dialog.FileName);
+                    IavaGesture.Save(this.Gesture, dialog.FileName);
                     MessageBox.Show("File Saved", "Saved!");
                 }
                 m_bIsNextButton = false;
