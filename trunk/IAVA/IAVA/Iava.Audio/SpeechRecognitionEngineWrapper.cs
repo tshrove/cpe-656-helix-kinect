@@ -32,9 +32,6 @@ namespace Iava.Audio
         /// </summary>
         public SpeechRecognitionEngineWrapper()
         {
-            //RecognizerInfo ri = SpeechRecognitionEngine.InstalledRecognizers().Where(
-            //                r => r.Id == RecognizerId).FirstOrDefault();
-
             RecognizerInfo ri = GetKinectRecognizer();
 
             if (ri == null)
@@ -49,15 +46,6 @@ namespace Iava.Audio
 
         private static RecognizerInfo GetKinectRecognizer()
         {
-            //Func<RecognizerInfo, bool> matchingFunc = r =>
-            //{
-            //    string value;
-            //    r.AdditionalInfo.TryGetValue("Kinect", out value);
-            //    return "True".Equals(value, StringComparison.InvariantCultureIgnoreCase) && "en-US".Equals(r.Culture.Name, StringComparison.InvariantCultureIgnoreCase);
-            //};
-
-            //return SpeechRecognitionEngine.InstalledRecognizers().Where(matchingFunc).FirstOrDefault();
-
             RecognizerInfo rv = null;
 
             var recognizers = SpeechRecognitionEngine.InstalledRecognizers();
@@ -68,11 +56,7 @@ namespace Iava.Audio
                     rv = recognizer;
                     break;
                 }
-            }
-            //if (recognizers.Count > 0)
-            //{
-            //    rv = recognizers[0];
-            //}            
+            }         
 
             return rv;
         }
