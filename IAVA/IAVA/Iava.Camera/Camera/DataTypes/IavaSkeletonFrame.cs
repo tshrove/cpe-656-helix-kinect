@@ -30,13 +30,16 @@ namespace Iava.Input.Camera {
 
         private IavaSkeletonData GetActiveSkeleton() {
             // Check the last known active skeleton first...
-            if (Skeletons[_skeletonIndex] != null) { return Skeletons[_skeletonIndex]; }
+            //if (Skeletons[_skeletonIndex] != null) { return Skeletons[_skeletonIndex]; }
 
             // Check all the skeleton slots
             for (int i = 0; i < Skeletons.Count(); i++) {
                 if (Skeletons[i] != null) {
-                    _skeletonIndex = i;
-                    return Skeletons[i];
+                    if (Skeletons[i].Position.W != 0 && Skeletons[i].Position.X != 0 &&
+                        Skeletons[i].Position.Y != 0 && Skeletons[i].Position.Z != 0) {
+                        _skeletonIndex = i;
+                        return Skeletons[i];
+                    }
                 }
             }
 
