@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
-using GestureRecorder.Data;
 using System.Windows.Controls;
 using Iava.Gesture;
 
