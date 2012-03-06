@@ -11,6 +11,7 @@ using System.Collections.Generic;
 
 using Geometry = ESRI.ArcGIS.Client.Geometry.Geometry;
 using MapPoint = ESRI.ArcGIS.Client.Geometry.MapPoint;
+using System.IO;
 
 namespace Iava.Ui {
     /// <summary>
@@ -25,7 +26,8 @@ namespace Iava.Ui {
         /// </summary>
         public MainWindow() {
             InitializeComponent();
-            m_pGestureRecognizer = new Gesture.GestureRecognizer(string.Empty);
+            //string temp = Directory.GetCurrentDirectory();
+            m_pGestureRecognizer = new Gesture.GestureRecognizer(@"..\..\..\Gestures\");
             m_pAudioRecognizer = new AudioRecognizer();
 
             m_pAudioRecognizer.AudioConfidenceThreshold = 0.5f;

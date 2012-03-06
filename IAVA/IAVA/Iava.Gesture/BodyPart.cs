@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Iava.Core.Math;
 using Iava.Input.Camera;
 using System.Xml.Serialization;
 using Iava.Core.Math;

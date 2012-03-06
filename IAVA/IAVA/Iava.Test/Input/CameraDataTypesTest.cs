@@ -1,4 +1,5 @@
-﻿using Iava.Input.Camera;
+﻿using Iava.Core.Math;
+using Iava.Input.Camera;
 using Microsoft.Research.Kinect.Nui;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Iava.Core.Math;
@@ -276,26 +277,6 @@ namespace Iava.Test.Camera {
             SkeletonTrackingState kinectObject = SkeletonTrackingState.PositionOnly;
             IavaSkeletonTrackingState iavaObject = (IavaSkeletonTrackingState)kinectObject;
             Assert.AreEqual((IavaSkeletonTrackingState)kinectObject, iavaObject);
-        }
-
-        [TestMethod()]
-        public void CameraIavaVector() {
-            // Init the Kinect object
-            Vector vector = new Vector();
-            vector.W = 1;
-            vector.X = 2.8f;
-            vector.Y = -99.7f;
-            vector.Z = -5;
-
-            // Explicitly cast to the Iava equivalent
-            IavaVector iavaVector = (IavaVector)vector;
-            Assert.AreEqual(vector.W, iavaVector.W);
-            Assert.AreEqual(vector.X, iavaVector.X);
-            Assert.AreEqual(vector.Y, iavaVector.Y);
-            Assert.AreEqual(vector.Z, iavaVector.Z);
-
-            // Test object as a whole
-            Assert.AreEqual((IavaVector)vector, iavaVector);
         }
     }
 }

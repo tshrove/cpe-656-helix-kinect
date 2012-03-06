@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
 using Iava.Input.Camera;
+using Iava.Core.Math;
 
 namespace Iava.Gesture {
     public class Snapshot {
@@ -40,17 +41,20 @@ namespace Iava.Gesture {
             }
         }
 
-        public bool CheckSnapshot(IavaSkeletonData skeleton) {
+        public bool CheckSnapshot(IavaSkeletonData skeleton, double fudgeFactor) {
+            List<bool> results = new List<bool>();
+
             foreach (BodyPart bodyPart in BodyParts) {
+
                 if (bodyPart.Tracking) {
-                    if (bodyPart.Position.X == skeleton.Joints[bodyPart.JointID].Position.X &&
-                        bodyPart.Position.Y == skeleton.Joints[bodyPart.JointID].Position.Y) {
-
-
-                    }
+                    results.Add(Geometry.Magnitude2D(bodyPart.Position, skeleton.Joints[bodyPart.JointID].Position) <= fudgeFactor);
                 }
             }
-            return false;
+
+            // We aren't tracking any joints, impossible to match
+            if (results.Count == 0) { return false; }
+
+            return results.TrueForAll(x => x == true);
         }
 
         #endregion Public Methods
@@ -60,7 +64,7 @@ namespace Iava.Gesture {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public Snapshot()
+        private Snapshot()
             : this(null) {
             // Nothing to do.
         }
@@ -71,12 +75,12 @@ namespace Iava.Gesture {
         /// </summary>
         /// <param name="skeleton"></param>
         public Snapshot(IavaSkeletonData skeleton) {
+            if (skeleton == null) { return; }
+
             // ROFL, I didn't even know this was allowed...
             for (IavaJointID i = 0; i < IavaJointID.Count; i++) {
                 BodyParts.Add(new BodyPart(i, skeleton.Joints[i].Position));
             }
-
-            if (skeleton == null) { return; }
 
             // Set the body part positions
             foreach (IavaJoint joint in skeleton.Joints) {

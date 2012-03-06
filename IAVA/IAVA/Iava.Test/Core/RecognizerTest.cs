@@ -4,7 +4,7 @@ using Iava.Core;
 using Iava.Gesture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Iava.Test {
+namespace Iava.Test.Core {
 
     /// <summary>
     ///This is a test class for RecognizerTest and is intended

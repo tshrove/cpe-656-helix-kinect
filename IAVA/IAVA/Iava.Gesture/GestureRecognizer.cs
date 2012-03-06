@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Iava.Core;
 using Iava.Gesture.GestureStuff;
 using Iava.Input.Camera;
+using Iava.Core.Math;
 
 namespace Iava.Gesture 
 {
@@ -110,7 +111,13 @@ namespace Iava.Gesture
         public GestureRecognizer(string filePath)
             : base() {
 
-            Intialize();
+            _filepath = filePath;
+
+            // Initialize our collections...
+            GestureCallbacks = new Dictionary<string, GestureCallback>();
+            SupportedGestures = new List<IavaGesture>();
+
+            _engine = new GestureEngine();
         }
 
         #endregion Constructors
@@ -151,105 +158,31 @@ namespace Iava.Gesture
         #endregion Private Properties
 
         #region Private Methods
-
-        /// <summary>
-        /// Initialization Routine
-        /// </summary>
-        private void Intialize() {
-            // Initialize our collections...
-            GestureCallbacks = new Dictionary<string, GestureCallback>();
-            SupportedGestures = new List<IavaGesture>();
-        }
-
-        private void LoadGestures() {/*
-            // TODO: Reading in the config file needs to happen here
-
-            // NEM: For the prototype we will manually load hard-coded gestures
-
-            // Sync Gesture
-            List<Snapshot> syncSegments = new List<Snapshot>();
-            //for (int i = 0; i < 20; i++) { syncSegments.Add(new SyncSegment()); }
-
-            // Add the gesture as our Sync Gestyre
-            SyncGesture = new IavaGesture("Sync", syncSegments);
-            SyncGesture.GestureRecognized += OnGestureRecognized;
-            
-            // Left Swipe
-            List<IGestureSegment> swipeLeftSegments = new List<IGestureSegment>();
-            swipeLeftSegments.Add(new SwipeLeftSegment1());
-            swipeLeftSegments.Add(new SwipeLeftSegment2());
-            swipeLeftSegments.Add(new SwipeLeftSegment3());
-
-            // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.IavaGesture("Swipe Left", swipeLeftSegments));
-            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
-
-            // Right Swipe
-            List<IGestureSegment> swipeRightSegments = new List<IGestureSegment>();
-            swipeRightSegments.Add(new SwipeRightSegment1());
-            swipeRightSegments.Add(new SwipeRightSegment2());
-            swipeRightSegments.Add(new SwipeRightSegment3());
-
-            // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.IavaGesture("Swipe Right", swipeRightSegments));
-            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
-
-            // Up Swipe
-            List<IGestureSegment> swipeUpSegments = new List<IGestureSegment>();
-            swipeUpSegments.Add(new SwipeUpSegment1());
-            swipeUpSegments.Add(new SwipeUpSegment2());
-            swipeUpSegments.Add(new SwipeUpSegment3());
-
-            // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.IavaGesture("Swipe Up", swipeUpSegments));
-            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
-
-            // Down Swipe
-            List<IGestureSegment> swipeDownSegments = new List<IGestureSegment>();
-            swipeDownSegments.Add(new SwipeDownSegment1());
-            swipeDownSegments.Add(new SwipeDownSegment2());
-            swipeDownSegments.Add(new SwipeDownSegment3());
-
-            // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.IavaGesture("Swipe Down", swipeDownSegments));
-            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
-
-            // Zoom In
-            List<IGestureSegment> zoomInSwipeSegments = new List<IGestureSegment>();
-            zoomInSwipeSegments.Add(new ZoomInSegment1());
-            zoomInSwipeSegments.Add(new ZoomInSegment2());
-
-            // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.IavaGesture("Zoom In", zoomInSwipeSegments));
-            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;
-
-            // Zoom Out
-            List<IGestureSegment> zoomOutSwipeSegments = new List<IGestureSegment>();
-            zoomOutSwipeSegments.Add(new ZoomOutSegment1());
-            zoomOutSwipeSegments.Add(new ZoomOutSegment2());
-
-            // Add the gesture to our supported types and register for its recognized event
-            SupportedGestures.Add(new GestureStuff.IavaGesture("Zoom Out", zoomOutSwipeSegments));
-            SupportedGestures.Last().GestureRecognized += OnGestureRecognized;*/
-        }
         
         private void SetupGestureDevice(CancellationToken token) {
-            // Try to connect to the camera first.  If this fails there is no point in continuing
             try {
-                // Register with some camera events
-                IavaCamera.SkeletonReady += OnSkeletonReady;
-
                 if (!token.IsCancellationRequested) {
                     // Read the gestures in from the config file
-                    LoadGestures();
+                    SupportedGestures = GestureFolderReader.Read(_filepath);
+                    SyncGesture = SupportedGestures.Single(x => x.Name == "Sync");
+
+                    // Set the Gestures for our GestureEngine
+                    _engine.SyncGesture = SyncGesture;
+                    _engine.SupportedGestures = SupportedGestures;
+                    _engine.Initialize();
 
                     Status = RecognizerStatus.Running;
                 }
+
+                // Register with some camera events
+                IavaCamera.SkeletonReady += OnSkeletonReady;
+                _engine.GestureRecognized += OnGestureRecognized;
             }
 
             catch (Exception e) {
                 // TODO: Log message.  Failed to detect Kinect or start Camera
                 Status = RecognizerStatus.Error;
+                throw e;
             }
 
             finally { m_resetEvent.Set(); }
@@ -260,6 +193,10 @@ namespace Iava.Gesture
         #region Private Fields
 
         private IavaGesture _syncGesture;
+
+        private string _filepath;
+
+        private GestureEngine _engine;
 
         #endregion Private Fields
 
@@ -287,20 +224,26 @@ namespace Iava.Gesture
         }
 
         protected void OnSkeletonReady(object sender, IavaSkeletonEventArgs e) {
-            IavaSkeletonData skeleton = e.Skeleton;
+            IavaVector translationVector = e.Skeleton.Joints[IavaJointID.HipCenter].Position;
+
+            IavaJoint joint = new IavaJoint();
 
             // Translate all the points in the skeleton to the center of the kinect view
+            for (IavaJointID jointID = 0; jointID < IavaJointID.Count; jointID++) {
+                // Refer to http://stackoverflow.com/questions/1003772/setting-margin-properties-in-code
+                // for why things are done this way
+                joint = e.Skeleton.Joints[jointID];
+                joint.Position = Geometry.Translate(joint.Position, translationVector);
 
-            // If we're synced up look for gestures
-            if (m_isSynced) {
-                // Check to see if this skeleton frame completes one of our supported gestures
-                foreach (IavaGesture gesture in SupportedGestures) {
-                    gesture.CheckGesture(e.Skeleton);
-                }
+                // Set the joint to the joint with the updated position
+                e.Skeleton.Joints[jointID] = joint;
             }
 
+            // If we're synced up look for gestures
+            if (m_isSynced) { _engine.CheckForGesture(e.Skeleton); }
+
             // Check for the sync gesture
-            else { SyncGesture.CheckGesture(e.Skeleton); }
+            else { _engine.CheckForSyncGesture(e.Skeleton); }
         }
 
         #endregion Protected Methods

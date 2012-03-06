@@ -10,23 +10,22 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Input", "Iava.Camera\Iava.Input.csproj", "{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{19764636-D7AB-41FB-81C7-9AA6012165EA}"
-	ProjectSection(SolutionItems) = preProject
-		IAVA.vsmdi = IAVA.vsmdi
-		Local.testsettings = Local.testsettings
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Test", "Iava.Test\Iava.Test.csproj", "{CF6A5E3A-A1EF-45EB-9CAF-CFC4C7B3093D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iava.Core", "Iava.Core\Iava.Core.csproj", "{80DF01EC-0E97-4B4D-A36F-FED9659D748A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gestures", "Gestures", "{608C8B52-B69A-4CBB-8727-ECB7EC44BC6B}"
+	ProjectSection(SolutionItems) = preProject
+		Gestures\Swipe Left.iava = Gestures\Swipe Left.iava
+		Gestures\Swipe Right.iava = Gestures\Swipe Right.iava
+		Gestures\Sync.iava = Gestures\Sync.iava
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
 		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = IAVA.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
