@@ -6,26 +6,42 @@ namespace Iava.Core.Math {
 
         #region Public Properties
 
-        public float W { get; set; }
+        public double W { get; set; }
 
-        public float X { get; set; }
+        public double X { get; set; }
 
-        public float Y { get; set; }
+        public double Y { get; set; }
 
-        public float Z { get; set; }
+        public double Z { get; set; }
 
         #endregion Public Properties
 
         #region Operator Overloads
 
-        public static explicit operator IavaVector(Vector value) {
-            return new IavaVector()
-            {
-                W = value.W,
-                X = value.X,
-                Y = value.Y,
-                Z = value.Z
-            };
+        public static IavaVector operator +(IavaVector vector1, IavaVector vector2) {
+            IavaVector returnVector = new IavaVector();
+
+            // Subtract the vectors
+            returnVector.W = vector1.W + vector2.W;
+            returnVector.X = vector1.X + vector2.X;
+            returnVector.Y = vector1.Y + vector2.Y;
+            returnVector.Z = vector1.Z + vector2.Z;
+
+            // Return the difference
+            return returnVector;
+        }
+
+        public static IavaVector operator -(IavaVector vector1, IavaVector vector2) {
+            IavaVector returnVector = new IavaVector();
+
+            // Subtract the vectors
+            returnVector.W = vector1.W - vector2.W;
+            returnVector.X = vector1.X - vector2.X;
+            returnVector.Y = vector1.Y - vector2.Y;
+            returnVector.Z = vector1.Z - vector2.Z;
+
+            // Return the difference
+            return returnVector;
         }
 
         public static bool operator ==(IavaVector vector1, IavaVector vector2) {
@@ -42,17 +58,14 @@ namespace Iava.Core.Math {
                     vector1.Z != vector2.Z);
         }
 
-        public static IavaVector operator -(IavaVector vector1, IavaVector vector2) {
-            IavaVector returnVector = new IavaVector();
-
-            // Subtract the vectors
-            returnVector.W = vector1.W = vector2.W;
-            returnVector.X = vector1.X = vector2.X;
-            returnVector.Y = vector1.Y = vector2.Y;
-            returnVector.Z = vector1.Z = vector2.Z;
-
-            // Return the difference
-            return returnVector;
+        public static explicit operator IavaVector(Vector value) {
+            return new IavaVector()
+            {
+                W = value.W,
+                X = value.X,
+                Y = value.Y,
+                Z = value.Z
+            };
         }
 
         #endregion Operator Overloads

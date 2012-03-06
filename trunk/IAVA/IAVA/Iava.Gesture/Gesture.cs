@@ -19,7 +19,7 @@ namespace Iava.Gesture {
 
         #region Private Fields
 
-        private List<Snapshot> m_pSnapshots = new List<Snapshot>();
+        private List<Snapshot> _snapshots = new List<Snapshot>();
 
         /// <summary>
         /// Indicates if the current gesture is in the paused state
@@ -45,8 +45,6 @@ namespace Iava.Gesture {
         [XmlIgnore()]
         private int _currentGestureSegment = 0;
 
-
-
         #endregion Private Fields
 
         #region Public Properties
@@ -57,10 +55,10 @@ namespace Iava.Gesture {
         [XmlElement("Snapshot")]
         public List<Snapshot> Snapshots {
             get {
-                return this.m_pSnapshots;
+                return this._snapshots;
             }
             set {
-                this.m_pSnapshots = value;
+                this._snapshots = value;
             }
         }
 
@@ -112,57 +110,6 @@ namespace Iava.Gesture {
             }
         }
 
-        public void CheckForGesture(IavaSkeletonData skeleton) {
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region Static Methods
-        /// <summary>
-        /// Save the gesture into an xml file.
-        /// </summary>
-        /// <param name="gesture"></param>
-        /// <param name="path"></param>
-        public static void Save(IavaGesture gesture, string path) {
-            foreach (Snapshot snapshot in gesture.Snapshots)
-            {
-                // Get the hipcenter
-                BodyPart hipCenter = snapshot.BodyParts[(int)IavaJointID.HipCenter];
-                // make the translation vector
-                IavaVector hipCenterTranslationPoint = new IavaVector()
-                {
-                    X = hipCenter.Position.X,
-                    Y = hipCenter.Position.Y,
-                    Z = hipCenter.Position.Z
-                };
-                // Translate each bodypart position
-                foreach (BodyPart bodyPart in snapshot.BodyParts)
-                {
-                    bodyPart.Position = Iava.Core.Math.Geometry.Translate(bodyPart.Position, hipCenterTranslationPoint);
-                }
-            }
-            XmlSerializer serializer = new XmlSerializer(typeof(IavaGesture));
-            TextWriter textWriter = new StreamWriter(path);
-            serializer.Serialize(textWriter, gesture);
-            textWriter.Close();
-        }
-        /// <summary>
-        /// Creates a gesture from the current xml file path.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static IavaGesture Load(string path) {
-            IavaGesture newGesture = null;
-            XmlSerializer deserializer = new XmlSerializer(typeof(IavaGesture));
-            TextReader textReader = new StreamReader(path);
-            newGesture = (IavaGesture)deserializer.Deserialize(textReader);
-            textReader.Close();
-
-            return newGesture;
-        }
-        #endregion
-
         public void CheckGesture(IavaSkeletonData skeleton) {/*
             // NEM: Need to describe what this code is doing...
             if (_paused) {
@@ -173,8 +120,11 @@ namespace Iava.Gesture {
                 _frameCount++;
             }*/
 
+            // For now hard code Fudgefactor
+            FudgeFactor = 0.3;
+
             // Check to see if the skeleton data matches our snapshot
-            if (Snapshots[_currentGestureSegment].CheckSnapshot(skeleton)) {
+            if (Snapshots[_currentGestureSegment].CheckSnapshot(skeleton, FudgeFactor)) {
                 _currentGestureSegment++;
 
                 // We have detected an entire gesture
@@ -215,5 +165,46 @@ namespace Iava.Gesture {
             //_pausedFrameCount = 5;
             //_paused = true;
         }
+
+        #endregion
+
+        #region Static Methods
+        /// <summary>
+        /// Save the gesture into an xml file.
+        /// </summary>
+        /// <param name="gesture"></param>
+        /// <param name="path"></param>
+        public static void Save(IavaGesture gesture, string path) {
+            foreach (Snapshot snapshot in gesture.Snapshots)
+            {
+                // Get the hipcenter
+                BodyPart hipCenter = snapshot.BodyParts[(int)IavaJointID.HipCenter];
+                
+                // Translate each bodypart position based on hipcenter
+                foreach (BodyPart bodyPart in snapshot.BodyParts)
+                {
+                    bodyPart.Position = Iava.Core.Math.Geometry.Translate(bodyPart.Position, hipCenter.Position);
+                }
+            }
+            XmlSerializer serializer = new XmlSerializer(typeof(IavaGesture));
+            TextWriter textWriter = new StreamWriter(path);
+            serializer.Serialize(textWriter, gesture);
+            textWriter.Close();
+        }
+        /// <summary>
+        /// Creates a gesture from the current xml file path.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static IavaGesture Load(string path) {
+            IavaGesture newGesture = null;
+            XmlSerializer deserializer = new XmlSerializer(typeof(IavaGesture));
+            TextReader textReader = new StreamReader(path);
+            newGesture = (IavaGesture)deserializer.Deserialize(textReader);
+            textReader.Close();
+
+            return newGesture;
+        }
+        #endregion
     }
 }

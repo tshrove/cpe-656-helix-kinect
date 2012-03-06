@@ -1,7 +1,6 @@
 ﻿namespace Iava.Core.Math {
     public static class Geometry {
-        public static IavaVector Translate(IavaVector original, IavaVector translation)
-        {
+        public static IavaVector Translate(IavaVector original, IavaVector translation) {
             IavaVector returnPoint = new IavaVector();
             // Translate the Points
             returnPoint.X = original.X - translation.X;
