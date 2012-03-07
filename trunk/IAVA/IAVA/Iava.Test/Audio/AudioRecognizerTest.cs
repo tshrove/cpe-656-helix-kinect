@@ -4,6 +4,7 @@ using System.IO;
 using System.Speech.AudioFormat;
 using System.Speech.Recognition;
 using System.Threading;
+
 using Iava.Audio;
 using Iava.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -51,7 +52,7 @@ namespace Iava.Test.Audio
         /// <summary>
         /// Time (in milliseconds) to wait for a reset event to be set.
         /// </summary>
-        private const int TimeoutValue = 100;
+        private const int TimeoutValue = 200;
 
         //
         // You can use the following additional attributes as you write your tests:

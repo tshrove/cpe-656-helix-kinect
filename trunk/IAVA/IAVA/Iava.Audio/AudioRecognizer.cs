@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Iava.Core;
-using Microsoft.Research.Kinect.Audio;
-using System.Speech.Recognition;
 using System.Speech.AudioFormat;
-using System.Threading.Tasks;
+using System.Speech.Recognition;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+
+using Iava.Core;
+using Iava.Core.Logging;
+
+using Microsoft.Research.Kinect.Audio;
 
 namespace Iava.Audio 
 {
@@ -216,7 +219,7 @@ namespace Iava.Audio
         {
             try
             {
-                speechEngine.LoadGrammar(CreateGrammar());
+                CreateGrammars();
                 speechEngine.SpeechRecognized += SpeechRecognized;
                 speechEngine.SpeechHypothesized += SpeechHypothesized;
                 speechEngine.SpeechRecognitionRejected += SpeechRejected;               
@@ -245,8 +248,11 @@ namespace Iava.Audio
             }
             catch (Exception exception)
             {
-                // TODO: Log message.  Failed to detect Kinect or start speech engine
                 Status = RecognizerStatus.Error;
+                //StatusLogger.LogMessage(new Message("Failed to detect Kinect or start speech recognition engine.", 
+                //                                    GetType().Name, 
+                //                                    MessageType.Error, 
+                //                                    exception));
             }
             finally
             {
@@ -255,14 +261,17 @@ namespace Iava.Audio
         }
 
         /// <summary>
-        /// Creates a Grammar object based on the spoken commands to listen for.
+        /// Creates Grammar objects based on the spoken commands to listen for and loads 
+        /// them into the speech recognition engine.
         /// </summary>
-        /// <returns>Grammar of audio commands.</returns>
-        private Grammar CreateGrammar() {
-            Grammar rv = null;
-
+        private void CreateGrammars()
+        {
             Choices choices = new Choices();
             choices.Add(new[] { syncCommand });
+
+            Choices wildcardChoices = new Choices();
+            bool wildcardChoiceAdded = false;
+
             foreach (string phrase in AudioCallbacks.Keys)
             {
                 string command = phrase;
@@ -271,20 +280,31 @@ namespace Iava.Audio
                     command = command.TrimEnd('*');
                     GrammarBuilder builder = new GrammarBuilder(command);
                     builder.AppendDictation();
-                    choices.Add(builder);
+                    wildcardChoices.Add(builder);
+                    wildcardChoiceAdded = true;
                 }
                 else
                 {
                     choices.Add(command);
-                }                
-            }
-
+                }
+            }            
+                   
             GrammarBuilder commandsBuilder = new GrammarBuilder(choices);
-            rv = new Grammar(commandsBuilder);
-            rv.Enabled = true;
-            rv.Name = syncCommand;
+            Grammar grammar = new Grammar(commandsBuilder);
+            grammar.Enabled = true;
+            grammar.Name = syncCommand;
+            speechEngine.LoadGrammar(grammar);
 
-            return rv;
+            // An exception is thrown if no items exist in the builder so only create a Grammar
+            // if at least one wildcard statement exists
+            if (wildcardChoiceAdded)
+            {
+                GrammarBuilder wildcardCommandsBuilder = new GrammarBuilder(wildcardChoices);
+                Grammar wildcardGrammar = new Grammar(wildcardCommandsBuilder);
+                wildcardGrammar.Enabled = true;
+                wildcardGrammar.Name = syncCommand + " - Wildcards";
+                speechEngine.LoadGrammar(wildcardGrammar);
+            }           
         }
 
         /// <summary>
@@ -306,8 +326,8 @@ namespace Iava.Audio
             if (m_isSynced) 
             {
                 foreach (string command in AudioCallbacks.Keys) 
-                {                    
-                    if (e.Text.Contains(command.TrimEnd(new [] {'*'})) && e.Confidence > AudioConfidenceThreshold) 
+                {
+                    if (e.Text.Contains(command.TrimEnd(new[] { '*' })) && e.Confidence > AudioConfidenceThreshold) 
                     {
                         try 
                         {                                                       

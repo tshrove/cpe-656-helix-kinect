@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Speech.Recognition;
+using System.Speech.AudioFormat;
 
 namespace Iava.Audio
 {
@@ -68,7 +69,7 @@ namespace Iava.Audio
             engine.LoadGrammar(grammar);
         }
 
-        void  ISpeechRecognitionEngine.SetInputToAudioStream(System.IO.Stream stream, System.Speech.AudioFormat.SpeechAudioFormatInfo audioFormat)
+        void  ISpeechRecognitionEngine.SetInputToAudioStream(System.IO.Stream stream, SpeechAudioFormatInfo audioFormat)
         {
             engine.SetInputToAudioStream(stream, audioFormat);
         }

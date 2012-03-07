@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
 using Iava.Audio;
 using Iava.Gesture;
 using Iava.Input.Camera;
-using System.Collections.Generic;
 
+using Envelope = ESRI.ArcGIS.Client.Geometry.Envelope;
 using Geometry = ESRI.ArcGIS.Client.Geometry.Geometry;
 using MapPoint = ESRI.ArcGIS.Client.Geometry.MapPoint;
-using System.IO;
 
 namespace Iava.Ui {
     /// <summary>
@@ -55,11 +57,10 @@ namespace Iava.Ui {
             m_pAudioRecognizer.Subscribe("Move South", MoveSouthCallback);
             m_pAudioRecognizer.Subscribe("Move East", MoveEastCallback);
             m_pAudioRecognizer.Subscribe("Move West", MoveWestCallback);
-            m_pAudioRecognizer.Subscribe("Blow Up", BlowUp);
-            m_pAudioRecognizer.Subscribe("Exit", BlowUp);
-            m_pAudioRecognizer.Subscribe("Go to *", GoToLocationCallback);
+            m_pAudioRecognizer.Subscribe("Exit Application", BlowUp);
+            m_pAudioRecognizer.Subscribe("Locate *", LocateCityCallback);
             m_pAudioRecognizer.Subscribe("Get Recognizer Statuses", GetRecognizerStatusesCallback);
-            m_pAudioRecognizer.Subscribe("Change sync command to *", ChangeAudioSyncCommandCallback);
+            //m_pAudioRecognizer.Subscribe("Change sync command to *", ChangeAudioSyncCommandCallback);  //TODO: Not working correctly
 
             IavaCamera.ImageFrameReady += OnCameraImageFrameReady;
             IavaCamera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
@@ -166,10 +167,10 @@ namespace Iava.Ui {
         }
 
         /// <summary>
-        /// Occurs when a go to location command was received.
+        /// Occurs when a locate wildcard command was received.
         /// </summary>
         /// <param name="e">Audio event args</param>
-        private void GoToLocationCallback(AudioEventArgs e)
+        private void LocateCityCallback(AudioEventArgs e)
         {
             if (e.CommandWildcards != null && e.CommandWildcards.Count > 0)
             {
@@ -180,15 +181,11 @@ namespace Iava.Ui {
                 }
                 wildCardString = wildCardString.Trim();
 
-                MapPoint point = CityLocations.GetCityLocation(wildCardString);
-
+                MapPoint point = CityLocations.GetCityLocation(wildCardString);                
                 if (point != null)
                 {
                     map.PanTo(point);
-                    //TODO: Find a way to zoom in and pan
-                    //map.ZoomTo(point);
-                    //map.ZoomToResolution(map.Resolution, (ESRI.ArcGIS.Client.Geometry.MapPoint)point);
-                    
+
                     DisplayStatus(String.Format("Audio: {0} {1}", e.Command.TrimEnd('*'), wildCardString));
 
                     ResetAudioSyncTime();
@@ -551,8 +548,8 @@ namespace Iava.Ui {
         /// Resets the audio sync time.
         /// </summary>
         private void ResetAudioSyncTime()
-        {
-            this.m_sAudioSyncTime = new TimeSpan(0, 0, 0, 0, m_pAudioRecognizer.SyncTimeoutValue);
+        {         
+            Dispatcher.Invoke(new Action(() => this.m_sAudioSyncTime = new TimeSpan(0, 0, 0, 0, m_pAudioRecognizer.SyncTimeoutValue)));
         }
 
         /// <summary>
@@ -560,7 +557,7 @@ namespace Iava.Ui {
         /// </summary>
         private void ResetGestureSyncTime()
         {
-            this.m_sGestureSyncTime = new TimeSpan(0, 0, 0, 0, m_pGestureRecognizer.SyncTimeoutValue);
+            Dispatcher.Invoke(new Action(() => this.m_sGestureSyncTime = new TimeSpan(0, 0, 0, 0, m_pGestureRecognizer.SyncTimeoutValue)));
         }
 
         /// <summary>
