@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
 
-namespace Iava.Gesture {
-    public enum GestureResult {
-        Fail,
-        Succeed,
-        Pause
-    }
+//namespace Iava.Gesture {
+//    public enum GestureResult {
+//        Fail,
+//        Succeed,
+//        Pause
+//    }
 
-    public enum GestureType {
-        LeftSwipe,
-        RightSwipe,
-        UpSwipe,
-        DownSwipe
-    }
-}
+//    public enum GestureType {
+//        LeftSwipe,
+//        RightSwipe,
+//        UpSwipe,
+//        DownSwipe
+//    }
+//}

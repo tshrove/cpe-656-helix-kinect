@@ -2,6 +2,7 @@
 using Iava.Core.Math;
 using Microsoft.Research.Kinect.Nui;
 using Iava.Core.Math;
+using System;
 
 namespace Iava.Input.Camera {
 
@@ -59,6 +60,56 @@ namespace Iava.Input.Camera {
         #endregion Private Fields
 
         #region Operator Overloads
+
+        public static bool operator ==(IavaSkeletonFrame skeletonFrame1, IavaSkeletonFrame skeletonFrame2) {
+            // If both are null, or are same instance, return true.
+            if (Object.ReferenceEquals(skeletonFrame1, skeletonFrame2)) { return true; }
+
+            // If just one is null, return false.
+            if (((object)skeletonFrame1 == null) || ((object)skeletonFrame2 == null)) { return false; }
+
+            return (skeletonFrame1.ActiveSkeleton == skeletonFrame2.ActiveSkeleton && 
+                    skeletonFrame1.FloorClipPlane == skeletonFrame2.FloorClipPlane &&
+                    skeletonFrame1.FrameNumber == skeletonFrame2.FrameNumber &&
+                    skeletonFrame1.NormalToGravity == skeletonFrame2.NormalToGravity &&
+                    skeletonFrame1.Quality == skeletonFrame2.Quality &&
+                    skeletonFrame1.Skeletons == skeletonFrame2.Skeletons &&
+                    skeletonFrame1.TimeStamp == skeletonFrame2.TimeStamp);
+        }
+
+        public static bool operator !=(IavaSkeletonFrame skeletonFrame1, IavaSkeletonFrame skeletonFrame2) {
+            // If both are null, or are same instance, return false.
+            if (Object.ReferenceEquals(skeletonFrame1, skeletonFrame2)) { return false; }
+
+            // If just one is null, return true.
+            if (((object)skeletonFrame1 == null) || ((object)skeletonFrame2 == null)) { return true; }
+
+            return (skeletonFrame1.ActiveSkeleton != skeletonFrame2.ActiveSkeleton ||
+                    skeletonFrame1.FloorClipPlane != skeletonFrame2.FloorClipPlane ||
+                    skeletonFrame1.FrameNumber != skeletonFrame2.FrameNumber ||
+                    skeletonFrame1.NormalToGravity != skeletonFrame2.NormalToGravity ||
+                    skeletonFrame1.Quality != skeletonFrame2.Quality ||
+                    skeletonFrame1.Skeletons != skeletonFrame2.Skeletons ||
+                    skeletonFrame1.TimeStamp != skeletonFrame2.TimeStamp);
+        }
+
+        public override bool Equals(object obj) {
+            // If parameter is null return false.
+            if (obj == null) { return false; }
+
+            // If parameter cannot be cast, return false.
+            IavaSkeletonFrame skeletonFrame = (IavaSkeletonFrame)obj;
+            if ((Object)skeletonFrame == null) { return false; }
+
+            // Do a field by field comparison
+            return (skeletonFrame.ActiveSkeleton == this.ActiveSkeleton &&
+                    skeletonFrame.FloorClipPlane == this.FloorClipPlane &&
+                    skeletonFrame.FrameNumber == this.FrameNumber &&
+                    skeletonFrame.NormalToGravity == this.NormalToGravity &&
+                    skeletonFrame.Quality == this.Quality &&
+                    skeletonFrame.Skeletons == this.Skeletons &&
+                    skeletonFrame.TimeStamp == this.TimeStamp);
+        }
 
         public static explicit operator IavaSkeletonFrame(SkeletonFrame value) {
             if (value == null) { return null; }

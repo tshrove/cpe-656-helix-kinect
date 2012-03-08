@@ -71,7 +71,6 @@ namespace Iava.Test.Core.Math
             double actual;
             actual = Geometry.Magnitude2D(point1, point2);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -85,7 +84,6 @@ namespace Iava.Test.Core.Math
             double actual;
             actual = Geometry.Magnitude3D(point1, point2);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
@@ -99,7 +97,6 @@ namespace Iava.Test.Core.Math
             IavaVector actual;
             actual = Geometry.Translate(original, translation);
             Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
     }
 }

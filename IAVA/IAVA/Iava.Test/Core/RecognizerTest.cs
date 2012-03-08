@@ -3,6 +3,7 @@ using System.Threading;
 using Iava.Core;
 using Iava.Gesture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Iava.Audio;
 
 namespace Iava.Test.Core {
 
@@ -19,7 +20,7 @@ namespace Iava.Test.Core {
         [TestMethod()]
         public void RecognizerOnFailedTest() {
             // Since we're treating this as the generic Recognizer this is ok
-            Recognizer recognizer = new GestureRecognizer(string.Empty);
+            Recognizer recognizer = new AudioRecognizer();
 
             bool eventFired = false;
 
@@ -46,7 +47,7 @@ namespace Iava.Test.Core {
         [TestMethod()]
         public void RecognizerOnStartedTest() {
             // Since we're treating this as the generic Recognizer this is ok
-            Recognizer recognizer = new GestureRecognizer(string.Empty);
+            Recognizer recognizer = new AudioRecognizer();
 
             bool eventFired = false;
 
@@ -73,7 +74,7 @@ namespace Iava.Test.Core {
         [TestMethod()]
         public void RecognizerOnStatusChangedTest() {
             // Since we're treating this as the generic Recognizer this is ok
-            Recognizer recognizer = new GestureRecognizer(string.Empty);
+            Recognizer recognizer = new AudioRecognizer();
 
             bool eventFired = false;
 
@@ -100,7 +101,7 @@ namespace Iava.Test.Core {
         [TestMethod()]
         public void RecognizerOnStoppedTest() {
             // Since we're treating this as the generic Recognizer this is ok
-            Recognizer recognizer = new GestureRecognizer(string.Empty);
+            Recognizer recognizer = new AudioRecognizer();
 
             bool eventFired = false;
 
@@ -127,7 +128,7 @@ namespace Iava.Test.Core {
         [TestMethod()]
         public void RecognizerOnSyncedTest() {
             // Since we're treating this as the generic Recognizer this is ok
-            Recognizer recognizer = new GestureRecognizer(string.Empty);
+            Recognizer recognizer = new AudioRecognizer();
 
             bool eventFired = false;
 
@@ -164,7 +165,7 @@ namespace Iava.Test.Core {
         [TestMethod()]
         public void RecognizerOnUnsyncedTest() {
             // Since we're treating this as the generic Recognizer this is ok
-            Recognizer recognizer = new GestureRecognizer(string.Empty);
+            Recognizer recognizer = new AudioRecognizer();
 
             bool eventFired = false;
 
@@ -202,7 +203,7 @@ namespace Iava.Test.Core {
         [TestMethod()]
         public void RecognizerStatusTest() {
             // Since we're treating this as the generic Recognizer this is ok
-            Recognizer recognizer = new GestureRecognizer(string.Empty);
+            Recognizer recognizer = new AudioRecognizer();
 
             bool eventFired = false;
 
@@ -271,13 +272,13 @@ namespace Iava.Test.Core {
         [TestMethod()]
         public void RecognizerSyncTimeoutValueTest() {
             // Since we're treating this as the generic Recognizer this is ok
-            Recognizer recognizer = new GestureRecognizer(string.Empty);
+            Recognizer recognizer = new AudioRecognizer();
 
             int timeout = 123456;
             
             try {
                 // Set the Timeout Value
-                recognizer.SyncTimeoutValue = 123456;
+                recognizer.SyncTimeoutValue = timeout;
 
                 // Make sure the Timeout Value was updated
                 Assert.AreEqual(timeout, recognizer.SyncTimeoutValue);
