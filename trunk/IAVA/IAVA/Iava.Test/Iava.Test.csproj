@@ -71,6 +71,7 @@
     <Compile Include="Gesture\GestureRecognizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\RecognizerTest.cs" />
+    <Compile Include="Gesture\SnapshotTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Iava.Audio\Iava.Audio.csproj">
