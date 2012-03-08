@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Core\Math\GeometryTest.cs" />
     <Compile Include="Core\Math\IavaVectorTest.cs" />
+    <Compile Include="IavaImageFrameTest.cs" />
     <Compile Include="Input\CameraDataTypesTest.cs" />
     <Compile Include="Input\CameraEventArgsTest.cs" />
     <Compile Include="Input\CameraTest.cs" />

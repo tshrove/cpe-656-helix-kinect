@@ -45,6 +45,10 @@ namespace Iava.Test.Core.Math {
             // Make sure both vectors are equal
             Assert.IsTrue(vector1 == vector2);
             Assert.AreEqual(vector1, vector2);
+
+            // Make sure both vectors are not equal
+            Assert.IsFalse(vector1 == IavaVector.Zero);
+            Assert.AreNotEqual(vector1, IavaVector.Zero);
         }
 
         /// <summary>
@@ -54,10 +58,14 @@ namespace Iava.Test.Core.Math {
         public void IavaVectorInequalityTest() {
             IavaVector vector1 = new IavaVector() { W = 1.0, X = 0.5, Y = 0.0, Z = -2.0 };
             IavaVector vector2 = new IavaVector() { W = 4.0, X = 2.1, Y = 8.9, Z = 0.0 };
+            IavaVector vector3 = new IavaVector() { W = 4.0, X = 2.1, Y = 8.9, Z = 0.0 };
 
             // Make sure both vectors are not equal
             Assert.IsTrue(vector1 != vector2);
             Assert.AreNotEqual(vector1, vector2);
+
+            // Make sure both vectors are equal
+            Assert.IsFalse(vector2 != vector3);
         }
 
         /// <summary>

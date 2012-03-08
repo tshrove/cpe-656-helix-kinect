@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Iava.Core;
-using Iava.Gesture.GestureStuff;
-using Iava.Input.Camera;
 using Iava.Core.Math;
+using Iava.Input.Camera;
 
 namespace Iava.Gesture 
 {
@@ -110,6 +110,14 @@ namespace Iava.Gesture
         /// <param name="filePath">Path to gesture file</param>
         public GestureRecognizer(string filePath)
             : base() {
+
+            if (string.IsNullOrEmpty(filePath)) {
+                throw new ArgumentException("Filepath argument was either null or empty.", "filePath");
+            }
+
+            if (!Directory.Exists(filePath)) {
+                throw new ArgumentException("Specified directory does not exist.", "filePath");
+            }
 
             _filepath = filePath;
 
