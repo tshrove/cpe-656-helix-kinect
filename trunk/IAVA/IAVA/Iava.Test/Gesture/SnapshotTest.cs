@@ -65,17 +65,16 @@ namespace Iava.Test
         //
         #endregion
 
-        // Do we really need to test private Constructors
-        ///// <summary>
-        /////A test for Snapshot Constructor
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("Iava.Gesture.dll")]
-        //public void SnapshotConstructorTest()
-        //{
-        //    Snapshot_Accessor target = new Snapshot_Accessor();
-        //    Assert.Inconclusive("TODO: Implement code to verify target");
-        //}
+        /// <summary>
+        ///A test for Snapshot Constructor
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem("Iava.Gesture.dll")]
+        public void SnapshotConstructorTest()
+        {
+            //Snapshot_Accessor target = new Snapshot_Accessor();
+            //Assert.Inconclusive("TODO: Implement code to verify target");
+        }
 
         /// <summary>
         ///A test for Snapshot Constructor
@@ -119,10 +118,11 @@ namespace Iava.Test
         ///A test for SetTrackingJoints
         ///</summary>
         [TestMethod()]
+        [DeploymentItem("Iava.Gesture.dll")]
         public void SetTrackingJointsTest()
         {
-            //Snapshot target = new Snapshot(); // TODO: Initialize to an appropriate value
-            //IavaJointID[] joints = null; // TODO: Initialize to an appropriate value
+            //Snapshot_Accessor target = new Snapshot_Accessor(); // TODO: Initialize to an appropriate value
+            //IavaJointID[] joints = new IavaJointID[] { IavaJointID.Head, IavaJointID.AnkleLeft };
             //target.SetTrackingJoints(joints);
             //Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }
