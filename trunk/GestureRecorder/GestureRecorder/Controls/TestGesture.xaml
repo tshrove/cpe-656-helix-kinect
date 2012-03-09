@@ -6,18 +6,25 @@
         mc:Ignorable="d" d:DesignWidth="400">
     <DockPanel LastChildFill="True">
         <DockPanel LastChildFill="True">
-            <!--<TextBlock Text="Gesture to test" HorizontalAlignment="Center" Foreground="Wheat" FontSize="14" DockPanel.Dock="Top"/>-->
-            <ListBox Name="lstGestures" DockPanel.Dock="Left" Width="200" Background="#FF313131" ItemsSource="{Binding}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" Foreground="White" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </DockPanel>     
+            <StackPanel>
+                <TextBlock Text="Gesture to test" HorizontalAlignment="Center" Foreground="Wheat" FontSize="14" DockPanel.Dock="Top"/>
+                <ListBox Name="lstGestures" DockPanel.Dock="Left" Width="200" Background="#FF313131" ItemsSource="{Binding}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" Foreground="White" FontSize="15" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+            <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Name="kinectSkeletonFeed" Width="320" Height="240" Background="Black">
+                <Canvas.RenderTransform>
+                    <ScaleTransform CenterX="160" CenterY="120" ScaleX="1" ScaleY="-1" />
+                </Canvas.RenderTransform>
+            </Canvas>
+        </DockPanel>
         <StackPanel DockPanel.Dock="Right" Width="200" Background="#FF313131">
             <Button Name="btnLoad" Content="Load Gesture File" Height="50" Margin="5" Click="btnLoad_Click" />
-            <Button Name="btnStartTest" Content="Start Test" Height="50" Margin="5" IsEnabled="False" />
+            <Button Name="btnStartTest" Content="Start Test" Height="50" Margin="5" IsEnabled="False" Click="btnStartTest_Click" />
             <Button Name="btnExit"  Content="Close" Height="50" Margin="5" Click="btnExit_Click" />
         </StackPanel>
         <Image Name="Gesture" />
