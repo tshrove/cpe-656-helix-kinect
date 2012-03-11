@@ -65,8 +65,8 @@ namespace Iava.Test.Core.Math
         ///</summary>
         [TestMethod()]
         public void Magnitude2DTest() {
-            IavaVector point1 = new IavaVector(); // TODO: Initialize to an appropriate value
-            IavaVector point2 = new IavaVector(); // TODO: Initialize to an appropriate value
+            IavaSkeletonPoint point1 = new IavaSkeletonPoint(); // TODO: Initialize to an appropriate value
+            IavaSkeletonPoint point2 = new IavaSkeletonPoint(); // TODO: Initialize to an appropriate value
             double expected = 0F; // TODO: Initialize to an appropriate value
             double actual;
             actual = Geometry.Magnitude2D(point1, point2);
@@ -78,8 +78,8 @@ namespace Iava.Test.Core.Math
         ///</summary>
         [TestMethod()]
         public void Magnitude3DTest() {
-            IavaVector point1 = new IavaVector(); // TODO: Initialize to an appropriate value
-            IavaVector point2 = new IavaVector(); // TODO: Initialize to an appropriate value
+            IavaSkeletonPoint point1 = new IavaSkeletonPoint(); // TODO: Initialize to an appropriate value
+            IavaSkeletonPoint point2 = new IavaSkeletonPoint(); // TODO: Initialize to an appropriate value
             double expected = 0F; // TODO: Initialize to an appropriate value
             double actual;
             actual = Geometry.Magnitude3D(point1, point2);
@@ -91,10 +91,10 @@ namespace Iava.Test.Core.Math
         ///</summary>
         [TestMethod()]
         public void TranslateTest() {
-            IavaVector original = new IavaVector(); // TODO: Initialize to an appropriate value
-            IavaVector translation = new IavaVector(); // TODO: Initialize to an appropriate value
-            IavaVector expected = new IavaVector(); // TODO: Initialize to an appropriate value
-            IavaVector actual;
+            IavaSkeletonPoint original = new IavaSkeletonPoint(); // TODO: Initialize to an appropriate value
+            IavaSkeletonPoint translation = new IavaSkeletonPoint(); // TODO: Initialize to an appropriate value
+            IavaSkeletonPoint expected = new IavaSkeletonPoint(); // TODO: Initialize to an appropriate value
+            IavaSkeletonPoint actual;
             actual = Geometry.Translate(original, translation);
             Assert.AreEqual(expected, actual);
         }

@@ -1,12 +1,10 @@
-﻿using Microsoft.Research.Kinect.Nui;
+﻿using Microsoft.Kinect;
 
 namespace Iava.Core.Math {
 
-    public struct IavaVector {
+    public struct IavaSkeletonPoint {
 
         #region Public Properties
-
-        public double W { get; set; }
 
         public double X { get; set; }
 
@@ -18,24 +16,22 @@ namespace Iava.Core.Math {
 
         #region Operator Overloads
 
-        public static IavaVector operator +(IavaVector vector1, IavaVector vector2) {
-            IavaVector returnVector = new IavaVector();
+        public static IavaSkeletonPoint operator +(IavaSkeletonPoint vector1, IavaSkeletonPoint vector2) {
+            IavaSkeletonPoint returnVector = new IavaSkeletonPoint();
 
-            // Subtract the vectors
-            returnVector.W = vector1.W + vector2.W;
+            // Add the vectors
             returnVector.X = vector1.X + vector2.X;
             returnVector.Y = vector1.Y + vector2.Y;
             returnVector.Z = vector1.Z + vector2.Z;
 
-            // Return the difference
+            // Return the sum
             return returnVector;
         }
 
-        public static IavaVector operator -(IavaVector vector1, IavaVector vector2) {
-            IavaVector returnVector = new IavaVector();
+        public static IavaSkeletonPoint operator -(IavaSkeletonPoint vector1, IavaSkeletonPoint vector2) {
+            IavaSkeletonPoint returnVector = new IavaSkeletonPoint();
 
             // Subtract the vectors
-            returnVector.W = vector1.W - vector2.W;
             returnVector.X = vector1.X - vector2.X;
             returnVector.Y = vector1.Y - vector2.Y;
             returnVector.Z = vector1.Z - vector2.Z;
@@ -44,24 +40,21 @@ namespace Iava.Core.Math {
             return returnVector;
         }
 
-        public static bool operator ==(IavaVector vector1, IavaVector vector2) {
-            return (vector1.W == vector2.W &&
-                    vector1.X == vector2.X &&
+        public static bool operator ==(IavaSkeletonPoint vector1, IavaSkeletonPoint vector2) {
+            return (vector1.X == vector2.X &&
                     vector1.Y == vector2.Y &&
                     vector1.Z == vector2.Z);
         }
 
-        public static bool operator !=(IavaVector vector1, IavaVector vector2) {
-            return (vector1.W != vector2.W &&
-                    vector1.X != vector2.X &&
+        public static bool operator !=(IavaSkeletonPoint vector1, IavaSkeletonPoint vector2) {
+            return (vector1.X != vector2.X &&
                     vector1.Y != vector2.Y &&
                     vector1.Z != vector2.Z);
         }
 
-        public static explicit operator IavaVector(Vector value) {
-            return new IavaVector()
+        public static explicit operator IavaSkeletonPoint(SkeletonPoint value) {
+            return new IavaSkeletonPoint()
             {
-                W = value.W,
                 X = value.X,
                 Y = value.Y,
                 Z = value.Z
@@ -71,19 +64,16 @@ namespace Iava.Core.Math {
         #endregion Operator Overloads
 
         #region Static Property
-        public static IavaVector Zero
-        {
-            get
-            {
-                return new IavaVector()
+        public static IavaSkeletonPoint Zero {
+            get {
+                return new IavaSkeletonPoint()
                     {
-                        W = 0f,
-                        X = 0f,
-                        Y = 0f,
-                        Z = 0f
+                        X = 0.0,
+                        Y = 0.0,
+                        Z = 0.0
                     };
             }
         }
-        #endregion
+        #endregion Static Property
     }
 }

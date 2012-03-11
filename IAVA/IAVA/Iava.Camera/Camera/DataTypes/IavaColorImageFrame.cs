@@ -1,23 +1,25 @@
-﻿using Microsoft.Research.Kinect.Nui;
+﻿using Microsoft.Kinect;
 using System;
 
 namespace Iava.Input.Camera {
 
-    public class IavaImageFrame {
+    public class IavaColorImageFrame : IDisposable {
 
         #region Public Properties
 
-        public int FrameNumber { get; set; }
+        public int BytesPerPixel { get; private set; }
+        
+        public IavaColorImageFormat Format { get; private set; }
 
-        public IavaPlanarImage Image { get; set; }
+        public int FrameNumber { get; private set; }
 
-        public IavaImageResolution Resolution { get; set; }
+        public int Height { get; private set; }
 
-        public long Timestamp { get; set; }
+        public byte[] PixelData { get; private set; }
 
-        public IavaImageType Type { get; set; }
+        public long Timestamp { get; private set; }
 
-        public IavaImageViewArea ViewArea { get; set; }
+        public int Width { get; private set; }
 
         #endregion Public Properties
 
@@ -26,14 +28,14 @@ namespace Iava.Input.Camera {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public IavaImageFrame() {
+        public IavaColorImageFrame() {
         }
 
         #endregion Constructors
 
         #region Operator Overloads
-
-        public static bool operator ==(IavaImageFrame imageFrame1, IavaImageFrame imageFrame2) {
+        /*
+        public static bool operator ==(IavaColorImageFrame imageFrame1, IavaColorImageFrame imageFrame2) {
             // If both are null, or are same instance, return true.
             if (Object.ReferenceEquals(imageFrame1, imageFrame2)) { return true; }
 
@@ -49,7 +51,7 @@ namespace Iava.Input.Camera {
                     imageFrame1.ViewArea == imageFrame2.ViewArea);
         }
 
-        public static bool operator !=(IavaImageFrame imageFrame1, IavaImageFrame imageFrame2) {
+        public static bool operator !=(IavaColorImageFrame imageFrame1, IavaColorImageFrame imageFrame2) {
             // If both are null, or are same instance, return false.
             if (Object.ReferenceEquals(imageFrame1, imageFrame2)) { return false; }
 
@@ -70,7 +72,7 @@ namespace Iava.Input.Camera {
             if (obj == null) { return false; }
 
             // If parameter cannot be cast, return false.
-            IavaImageFrame imageFrame = (IavaImageFrame)obj;
+            IavaColorImageFrame imageFrame = (IavaColorImageFrame)obj;
             if ((Object)imageFrame == null) { return false; }
 
             // Do a field by field comparison
@@ -81,19 +83,35 @@ namespace Iava.Input.Camera {
                     imageFrame.Type == this.Type &&
                     imageFrame.ViewArea == this.ViewArea);
         }
+        */
+        public static explicit operator IavaColorImageFrame(ColorImageFrame value) {
+            if (value == null) { return null; }
 
-        public static explicit operator IavaImageFrame(ImageFrame value) {
-            return new IavaImageFrame()
+            IavaColorImageFrame colorFrame = new IavaColorImageFrame()
             {
+                BytesPerPixel = value.BytesPerPixel,
+                Format = (IavaColorImageFormat)value.Format,
                 FrameNumber = value.FrameNumber,
-                Image = (IavaPlanarImage)value.Image,
-                Resolution = (IavaImageResolution)value.Resolution,
+                Height = value.Height,
+                PixelData = new byte[value.PixelDataLength],
                 Timestamp = value.Timestamp,
-                Type = (IavaImageType)value.Type,
-                ViewArea = (IavaImageViewArea)value.ViewArea
+                Width = value.Width
             };
+
+            // Copy the PixelData
+            value.CopyPixelDataTo(colorFrame.PixelData);
+
+            return colorFrame;
+        }
+        
+        #endregion Operator Overloads
+
+        #region IDisposable Members
+
+        public void Dispose() {
+            throw new NotImplementedException();
         }
 
-        #endregion Operator Overloads
+        #endregion
     }
 }

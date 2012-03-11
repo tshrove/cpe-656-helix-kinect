@@ -82,7 +82,7 @@ namespace Iava.Test
         [TestMethod()]
         public void SnapshotConstructorTest1()
         {
-            //IavaSkeletonData skeleton = new IavaSkeletonData();
+            //IavaSkeleton skeleton = new IavaSkeleton();
             //Snapshot target = new Snapshot(skeleton);
             //Assert.Inconclusive("TODO: Implement code to verify target");
         }
@@ -94,7 +94,7 @@ namespace Iava.Test
         public void CheckSnapshotTest()
         {
             //Snapshot target = new Snapshot(); // TODO: Initialize to an appropriate value
-            //IavaSkeletonData skeleton = null; // TODO: Initialize to an appropriate value
+            //IavaSkeleton skeleton = null; // TODO: Initialize to an appropriate value
             //double fudgeFactor = 0F; // TODO: Initialize to an appropriate value
             //bool expected = false; // TODO: Initialize to an appropriate value
             //bool actual;
@@ -122,7 +122,7 @@ namespace Iava.Test
         public void SetTrackingJointsTest()
         {
             //Snapshot_Accessor target = new Snapshot_Accessor(); // TODO: Initialize to an appropriate value
-            //IavaJointID[] joints = new IavaJointID[] { IavaJointID.Head, IavaJointID.AnkleLeft };
+            //IavaJointType[] joints = new IavaJointType[] { IavaJointType.Head, IavaJointType.AnkleLeft };
             //target.SetTrackingJoints(joints);
             //Assert.Inconclusive("A method that does not return a value cannot be verified.");
         }

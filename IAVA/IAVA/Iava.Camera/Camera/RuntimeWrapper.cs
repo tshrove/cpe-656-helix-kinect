@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Research.Kinect.Nui;
+using Microsoft.Kinect;
 
 namespace Iava.Input.Camera {
 
@@ -18,13 +18,13 @@ namespace Iava.Input.Camera {
         /// Default Constructor
         /// </summary>
         public KinectRuntimeWrapper() {
-            _kinectRuntime = Runtime.Kinects[0];
+            _kinectSensor = KinectSensor.KinectSensors[0];
 
-            if (_kinectRuntime == null) { throw new Exception("Kinect camera not detected."); }
+            if (_kinectSensor == null) { throw new Exception("Kinect camera not detected."); }
 
             // Register for the Skeleton and Video Frame Events
-            _kinectRuntime.SkeletonFrameReady += OnSkeletonFrameReady;
-            _kinectRuntime.VideoFrameReady += OnVideoFrameReady;
+            _kinectSensor.SkeletonFrameReady += OnSkeletonFrameReady;
+            _kinectSensor.ColorFrameReady += OnColorFrameReady;
         }
 
         #endregion Constructors
@@ -37,26 +37,38 @@ namespace Iava.Input.Camera {
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="SkeletonFrameReadyEventArgs"/> instance containing the event data.</param>
         private void OnSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e) {
-            if (SkeletonFrameReady != null) {
-                // Rethrow this event if someone needs it...
-                SkeletonFrameReady(null, new IavaSkeletonFrameReadyEventArgs((IavaSkeletonFrame)e.SkeletonFrame));
-            }
+            Skeleton[] skeletons = null;
 
-            List<int> idValues = new List<int>();
+            using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame()) {
+                bool receivedData = false;
+                if (skeletonFrame != null) {
 
-            if (e.SkeletonFrame == null) { return; }
+                    // Allocate only the first time
+                    if (skeletons == null) {
+                        skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
+                        skeletonFrame.CopySkeletonDataTo(skeletons);
+                    }
 
-            if (e.SkeletonFrame.Skeletons.Length > 0) {
-                // Process each skeleton in the event...
-                foreach (SkeletonData skeleton in e.SkeletonFrame.Skeletons) {
-                    // If the Kinect camera is tracking this skeleton...
-                    if (skeleton.TrackingState == SkeletonTrackingState.Tracked) {
-                        // Create and throw the SkeletonReady event...
-                        if (SkeletonReady != null) {
-                            SkeletonReady(null, new IavaSkeletonEventArgs(skeleton));
+                    // Mark that we received new data
+                    receivedData = true;
+                }
+
+                if (receivedData) {
+
+                    if (SkeletonFrameReady != null) {
+                        // Rethrow this event if someone needs it...
+                        SkeletonFrameReady(null, new IavaSkeletonFrameReadyEventArgs((IavaSkeletonFrame)skeletonFrame));
+                    }
+
+                    // Process each skeleton in the event...
+                    foreach (Skeleton skeleton in skeletons) {
+                        // If the Kinect camera is tracking this skeleton...
+                        if (skeleton.TrackingState == SkeletonTrackingState.Tracked) {
+                            // Create and throw the SkeletonReady event...
+                            if (SkeletonReady != null) {
+                                SkeletonReady(null, new IavaSkeletonEventArgs(skeleton));
+                            }
                         }
-                        // Add the Tracking ID to our watch list...
-                        idValues.Add(skeleton.TrackingID);
                     }
                 }
             }
@@ -67,8 +79,8 @@ namespace Iava.Input.Camera {
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="ImageFrameReadyEventArgs"/> instance containing the event data.</param>
-        private void OnVideoFrameReady(object sender, ImageFrameReadyEventArgs e) {
-            if (ImageFrameReady != null) { ImageFrameReady(null, (ImageFrameReadyEventArgs)e); }
+        private void OnColorFrameReady(object sender, ColorImageFrameReadyEventArgs e) {
+            if (ColorImageFrameReady != null) { ColorImageFrameReady(null, (ColorImageFrameReadyEventArgs)e); }
         }
 
         #endregion Private Methods
@@ -78,7 +90,7 @@ namespace Iava.Input.Camera {
         /// <summary>
         /// Reference to the speech recognition engine.
         /// </summary>
-        private static Runtime _kinectRuntime;
+        private static KinectSensor _kinectSensor;
 
         #endregion Private Fields
 
@@ -86,25 +98,15 @@ namespace Iava.Input.Camera {
 
         public event EventHandler<IavaSkeletonEventArgs> SkeletonReady;
 
-        public event EventHandler<IavaImageFrameReadyEventArgs> ImageFrameReady;
+        public event EventHandler<IavaColorImageFrameReadyEventArgs> ColorImageFrameReady;
 
         public event EventHandler<IavaSkeletonFrameReadyEventArgs> SkeletonFrameReady;
-
+        
         /// <summary>
-        /// Responsible for initializing the Kinect Runtime
+        /// Responsible for initializing the Kinect Sensor
         /// </summary>
         public void Initialize() {
-            // Initialize the Depth, Skeleton, and RGB cameras
-            _kinectRuntime.Initialize(RuntimeOptions.UseDepth |
-                                      RuntimeOptions.UseSkeletalTracking |
-                                      RuntimeOptions.UseColor);
-
-            // Open the RGB camera
-            _kinectRuntime.VideoStream.Open((ImageStreamType)ImageStreamType.Video, 2,
-                                            (ImageResolution)ImageResolution.Resolution640x480,
-                                            (ImageType)ImageType.Color);
-
-            // Create our smoothing parameters
+            // Create our smoothing parameters for the Skeleton Stream
             var smoothingParams = new TransformSmoothParameters
             {
                 Smoothing = 0.75f,
@@ -114,8 +116,24 @@ namespace Iava.Input.Camera {
                 MaxDeviationRadius = 0.04f
             };
 
-            _kinectRuntime.SkeletonEngine.TransformSmooth = true;
-            _kinectRuntime.SkeletonEngine.SmoothParameters = smoothingParams;
+            // Initialize the Depth, Skeleton, and RGB cameras
+            _kinectSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+            _kinectSensor.DepthStream.Enable(DepthImageFormat.Resolution320x240Fps30);
+            _kinectSensor.SkeletonStream.Enable(smoothingParams);
+
+            // Open the RGB camera
+            _kinectSensor.Start();
+        }
+
+        /// <summary>
+        /// Tears down the Kinect Sensor
+        /// </summary>
+        public void Uninitialize() {
+            _kinectSensor.Stop();
+
+            if (_kinectSensor.ColorStream != null) { _kinectSensor.ColorStream.Disable(); }
+            if (_kinectSensor.DepthStream != null) { _kinectSensor.DepthStream.Disable(); }
+            if (_kinectSensor.SkeletonStream != null) { _kinectSensor.SkeletonStream.Disable(); }
         }
 
         #endregion IRuntime Members

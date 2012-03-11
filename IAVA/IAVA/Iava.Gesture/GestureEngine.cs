@@ -41,14 +41,14 @@ namespace Iava.Gesture {
             SupportedGestures.ForEach(x => x.GestureRecognized += OnGestureRecognized);
         }
 
-        public void CheckForGesture(IavaSkeletonData skeleton) {
+        public void CheckForGesture(IavaSkeleton skeleton) {
             // Check to see if this skeleton completes one of our supported gestures
             foreach (IavaGesture gesture in SupportedGestures) {
                 gesture.CheckGesture(skeleton);
             }
         }
 
-        public void CheckForSyncGesture(IavaSkeletonData skeleton) {
+        public void CheckForSyncGesture(IavaSkeleton skeleton) {
             // Check to see if the skeleton completes our sync gesture
             SyncGesture.CheckGesture(skeleton);
         }

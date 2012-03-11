@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Iava.Core;
 using Iava.Core.Logging;
 
-using Microsoft.Research.Kinect.Audio;
+using Microsoft.Kinect;
 
 namespace Iava.Audio 
 {
@@ -226,11 +226,10 @@ namespace Iava.Audio
 
                 if (!token.IsCancellationRequested)
                 {
-                    audioSource = new KinectAudioSource();
-                    audioSource.SystemMode = SystemMode.OptibeamArrayOnly;
-                    audioSource.FeatureMode = true;
-                    audioSource.AutomaticGainControl = false;
-                    audioSource.MicArrayMode = MicArrayMode.MicArrayAdaptiveBeam;
+                    audioSource = KinectSensor.KinectSensors[0].AudioSource;
+                    audioSource.EchoCancellationMode = EchoCancellationMode.CancellationOnly;
+                    audioSource.AutomaticGainControlEnabled = false;
+                    audioSource.BeamAngleMode = BeamAngleMode.Adaptive;
 
                     var kinectStream = audioSource.Start();
                     speechEngine.SetInputToAudioStream(kinectStream, new SpeechAudioFormatInfo(

@@ -1,45 +1,38 @@
 ﻿using System.Linq;
 using Iava.Core.Math;
-using Microsoft.Research.Kinect.Nui;
-using Iava.Core.Math;
+using Microsoft.Kinect;
 using System;
 
 namespace Iava.Input.Camera {
 
-    public sealed class IavaSkeletonFrame {
+    public sealed class IavaSkeletonFrame : IDisposable {
 
         #region Public Properties
 
         /// <summary>
         /// Gets the fist active skeleton, in any, in the frame
         /// </summary>
-        public IavaSkeletonData ActiveSkeleton { get { return GetActiveSkeleton(); } }
+        public IavaSkeleton ActiveSkeleton { get { return GetActiveSkeleton(); } }
 
-        public IavaVector FloorClipPlane { get; set; }
+        public Tuple<float, float, float, float> FloorClipPlane { get; set; }
 
         public int FrameNumber { get; set; }
 
-        public IavaVector NormalToGravity { get; set; }
+        public IavaSkeleton[] Skeletons { get; set; }
 
-        public IavaSkeletonFrameQuality Quality { get; set; }
-
-        public IavaSkeletonData[] Skeletons { get; set; }
-
-        public long TimeStamp { get; set; }
+        public long Timestamp { get; set; }
 
         #endregion Public Properties
 
         #region Private Methods
 
-        private IavaSkeletonData GetActiveSkeleton() {
-            // Check the last known active skeleton first...
-            //if (Skeletons[_skeletonIndex] != null) { return Skeletons[_skeletonIndex]; }
-
+        private IavaSkeleton GetActiveSkeleton() {
             // Check all the skeleton slots
             for (int i = 0; i < Skeletons.Count(); i++) {
                 if (Skeletons[i] != null) {
-                    if (Skeletons[i].Position.W != 0 && Skeletons[i].Position.X != 0 &&
-                        Skeletons[i].Position.Y != 0 && Skeletons[i].Position.Z != 0) {
+                    if (Skeletons[i].Position.X != 0 &&
+                        Skeletons[i].Position.Y != 0 &&
+                        Skeletons[i].Position.Z != 0) {
                         _skeletonIndex = i;
                         return Skeletons[i];
                     }
@@ -71,10 +64,8 @@ namespace Iava.Input.Camera {
             return (skeletonFrame1.ActiveSkeleton == skeletonFrame2.ActiveSkeleton && 
                     skeletonFrame1.FloorClipPlane == skeletonFrame2.FloorClipPlane &&
                     skeletonFrame1.FrameNumber == skeletonFrame2.FrameNumber &&
-                    skeletonFrame1.NormalToGravity == skeletonFrame2.NormalToGravity &&
-                    skeletonFrame1.Quality == skeletonFrame2.Quality &&
                     skeletonFrame1.Skeletons == skeletonFrame2.Skeletons &&
-                    skeletonFrame1.TimeStamp == skeletonFrame2.TimeStamp);
+                    skeletonFrame1.Timestamp == skeletonFrame2.Timestamp);
         }
 
         public static bool operator !=(IavaSkeletonFrame skeletonFrame1, IavaSkeletonFrame skeletonFrame2) {
@@ -87,10 +78,8 @@ namespace Iava.Input.Camera {
             return (skeletonFrame1.ActiveSkeleton != skeletonFrame2.ActiveSkeleton ||
                     skeletonFrame1.FloorClipPlane != skeletonFrame2.FloorClipPlane ||
                     skeletonFrame1.FrameNumber != skeletonFrame2.FrameNumber ||
-                    skeletonFrame1.NormalToGravity != skeletonFrame2.NormalToGravity ||
-                    skeletonFrame1.Quality != skeletonFrame2.Quality ||
                     skeletonFrame1.Skeletons != skeletonFrame2.Skeletons ||
-                    skeletonFrame1.TimeStamp != skeletonFrame2.TimeStamp);
+                    skeletonFrame1.Timestamp != skeletonFrame2.Timestamp);
         }
 
         public override bool Equals(object obj) {
@@ -105,10 +94,8 @@ namespace Iava.Input.Camera {
             return (skeletonFrame.ActiveSkeleton == this.ActiveSkeleton &&
                     skeletonFrame.FloorClipPlane == this.FloorClipPlane &&
                     skeletonFrame.FrameNumber == this.FrameNumber &&
-                    skeletonFrame.NormalToGravity == this.NormalToGravity &&
-                    skeletonFrame.Quality == this.Quality &&
                     skeletonFrame.Skeletons == this.Skeletons &&
-                    skeletonFrame.TimeStamp == this.TimeStamp);
+                    skeletonFrame.Timestamp == this.Timestamp);
         }
 
         public static explicit operator IavaSkeletonFrame(SkeletonFrame value) {
@@ -116,22 +103,32 @@ namespace Iava.Input.Camera {
 
             IavaSkeletonFrame skeletonFrame = new IavaSkeletonFrame()
             {
-                FloorClipPlane = (IavaVector)value.FloorClipPlane,
+                FloorClipPlane = value.FloorClipPlane,
                 FrameNumber = value.FrameNumber,
-                NormalToGravity = (IavaVector)value.NormalToGravity,
-                Quality = (IavaSkeletonFrameQuality)value.Quality,
-                Skeletons = new IavaSkeletonData[value.Skeletons.Length],
-                TimeStamp = value.TimeStamp
+                Skeletons = new IavaSkeleton[value.SkeletonArrayLength],
+                Timestamp = value.Timestamp
             };
 
-            // Copy and convert the array
-            for (int i = 0; i < skeletonFrame.Skeletons.Length; i++) {
-                skeletonFrame.Skeletons[i] = (IavaSkeletonData)value.Skeletons[i];
+            // Copy the Skeletons
+            Skeleton[] kinectSkeletons = new Skeleton[value.SkeletonArrayLength];
+            value.CopySkeletonDataTo(kinectSkeletons);
+
+            // Convert the array
+            for (int i = 0; i < kinectSkeletons.Length; i++) {
+                skeletonFrame.Skeletons[i] = (IavaSkeleton)kinectSkeletons[i];
             }
 
             return skeletonFrame;
         }
 
         #endregion Operator Overloads
+
+        #region IDisposable Members
+
+        public void Dispose() {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

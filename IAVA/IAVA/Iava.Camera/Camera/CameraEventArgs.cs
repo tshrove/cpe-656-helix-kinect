@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Research.Kinect.Nui;
+using Microsoft.Kinect;
 
 namespace Iava.Input.Camera {
 
@@ -14,7 +14,7 @@ namespace Iava.Input.Camera {
         /// <summary>
         /// Gets the Skeleton data.
         /// </summary>
-        public IavaSkeletonData Skeleton { get; private set; }
+        public IavaSkeleton Skeleton { get; private set; }
 
         public static readonly IavaSkeletonEventArgs Empty = null;
 
@@ -26,12 +26,12 @@ namespace Iava.Input.Camera {
         /// Initializes a new instance of the <see cref="IavaSkeletonEventArgs"/> class.
         /// </summary>
         /// <param name="skeleton">The skeleton.</param>
-        public IavaSkeletonEventArgs(IavaSkeletonData skeleton) {
+        public IavaSkeletonEventArgs(IavaSkeleton skeleton) {
             this.Skeleton = skeleton;
         }
 
-        public IavaSkeletonEventArgs(SkeletonData skeleton) {
-            this.Skeleton = (IavaSkeletonData)skeleton;
+        public IavaSkeletonEventArgs(Skeleton skeleton) {
+            this.Skeleton = (IavaSkeleton)skeleton;
         }
 
         #endregion Constructors
@@ -63,7 +63,7 @@ namespace Iava.Input.Camera {
         /// <summary>
         /// Initializes a new instance of the <see cref="IavaSkeletonFrameEventArgs"/> class.
         /// </summary>
-        /// <param name="skeletonIDValues">The skeleton ID values.</param>
+        /// <param name="skeletonIDValues">The skeleton JointType values.</param>
         /// <param name="timeStamp">The time stamp.</param>
         public IavaSkeletonFrameEventArgs(List<int> skeletonIDs, long timestamp) {
             this.SkeletonIDs = skeletonIDs;
@@ -73,19 +73,19 @@ namespace Iava.Input.Camera {
         #endregion Constructors
     }
 
-    public sealed class IavaImageFrameReadyEventArgs : EventArgs {
+    public sealed class IavaColorImageFrameReadyEventArgs : EventArgs {
 
         #region Public Properties
 
-        public IavaImageFrame ImageFrame { get; private set; }
+        public IavaColorImageFrame ImageFrame { get; private set; }
 
-        public static readonly IavaImageFrameReadyEventArgs Empty = null;
+        public static readonly IavaColorImageFrameReadyEventArgs Empty = null;
 
         #endregion Pulbic Properties
         
         #region Constructors
 
-        public IavaImageFrameReadyEventArgs(IavaImageFrame imageFrame) {
+        public IavaColorImageFrameReadyEventArgs(IavaColorImageFrame imageFrame) {
             ImageFrame = imageFrame;
         }
 
@@ -93,8 +93,8 @@ namespace Iava.Input.Camera {
 
         #region Operator Overloads
 
-        public static implicit operator IavaImageFrameReadyEventArgs(ImageFrameReadyEventArgs value) {
-            return new IavaImageFrameReadyEventArgs((IavaImageFrame)value.ImageFrame);
+        public static implicit operator IavaColorImageFrameReadyEventArgs(ColorImageFrameReadyEventArgs value) {
+            return new IavaColorImageFrameReadyEventArgs((IavaColorImageFrame)value.OpenColorImageFrame());
         }
 
         #endregion Operator Overloads
@@ -121,7 +121,7 @@ namespace Iava.Input.Camera {
         #region Operator Overloads
 
         public static implicit operator IavaSkeletonFrameReadyEventArgs(SkeletonFrameReadyEventArgs value) {
-            return new IavaSkeletonFrameReadyEventArgs((IavaSkeletonFrame)value.SkeletonFrame);
+            return new IavaSkeletonFrameReadyEventArgs((IavaSkeletonFrame)value.OpenSkeletonFrame());
         }
 
         #endregion Operator Overloads
