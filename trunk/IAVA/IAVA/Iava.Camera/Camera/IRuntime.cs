@@ -10,10 +10,12 @@ namespace Iava.Input.Camera {
     internal interface IRuntime {
         event EventHandler<IavaSkeletonEventArgs> SkeletonReady;
 
-        event EventHandler<IavaImageFrameReadyEventArgs> ImageFrameReady;
+        event EventHandler<IavaColorImageFrameReadyEventArgs> ColorImageFrameReady;
 
         event EventHandler<IavaSkeletonFrameReadyEventArgs> SkeletonFrameReady;
 
         void Initialize();
+
+        void Uninitialize();
     }
 }

@@ -360,19 +360,38 @@ namespace Iava.Ui {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnCameraImageFrameReady(object sender, IavaImageFrameReadyEventArgs e) {
-            IavaPlanarImage Image = e.ImageFrame.Image;
+        private void OnCameraImageFrameReady(object sender, IavaColorImageFrameReadyEventArgs e) {
+            if (e.ImageFrame == null) { return; }
 
-            kinectVideoFeed.Source = BitmapSource.Create(
-                Image.Width, Image.Height, 96, 96, PixelFormats.Bgr32, null,
-                Image.Bits, Image.Width * Image.BytesPerPixel);
+            // Set up the writable bitmap...
+            if (_firstRun) {
+                // This is more efficient than creating a new bitmap every frame
+                _colorBitmap = new WriteableBitmap(
+                    e.ImageFrame.Width,
+                    e.ImageFrame.Height,
+                    96.0, // DpiX
+                    96.0, // DpiY
+                    PixelFormats.Bgr32,
+                    null);
+
+                // Set the image source
+                kinectVideoFeed.Source = _colorBitmap;
+
+                // Indicate this is not the first run
+                _firstRun = false;
+            }
+
+            // Draw the image
+            _colorBitmap.WritePixels(
+                new Int32Rect(0, 0, e.ImageFrame.Width, e.ImageFrame.Height),
+                e.ImageFrame.PixelData,
+                e.ImageFrame.Width * ((PixelFormats.Bgr32.BitsPerPixel + 7) / 8), // Got this from sample code
+                0);
         }
 
         /// <summary>
         /// Displays the full skeleton image from the Kinect sensor
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void OnCameraSkeletonFrameReady(object sender, IavaSkeletonFrameReadyEventArgs e) {
             Iava.Input.Camera.IavaSkeletonFrame skeletonFrame = e.SkeletonFrame;
 
@@ -386,15 +405,15 @@ namespace Iava.Ui {
             brushes[5] = new SolidColorBrush(Color.FromRgb(128, 128, 255));
 
             kinectSkeletonFeed.Children.Clear();
-            foreach (IavaSkeletonData data in skeletonFrame.Skeletons) {
+            foreach (IavaSkeleton data in skeletonFrame.Skeletons) {
                 if (IavaSkeletonTrackingState.Tracked == data.TrackingState) {
                     // Draw bones
                     Brush brush = brushes[iSkeleton % brushes.Length];
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.HipCenter, IavaJointID.Spine, IavaJointID.ShoulderCenter, IavaJointID.Head));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.ShoulderCenter, IavaJointID.ShoulderLeft, IavaJointID.ElbowLeft, IavaJointID.WristLeft, IavaJointID.HandLeft));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.ShoulderCenter, IavaJointID.ShoulderRight, IavaJointID.ElbowRight, IavaJointID.WristRight, IavaJointID.HandRight));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.HipCenter, IavaJointID.HipLeft, IavaJointID.KneeLeft, IavaJointID.AnkleLeft, IavaJointID.FootLeft));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.HipCenter, IavaJointID.HipRight, IavaJointID.KneeRight, IavaJointID.AnkleRight, IavaJointID.FootRight));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.HipCenter, IavaJointType.Spine, IavaJointType.ShoulderCenter, IavaJointType.Head));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.ShoulderCenter, IavaJointType.ShoulderLeft, IavaJointType.ElbowLeft, IavaJointType.WristLeft, IavaJointType.HandLeft));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.ShoulderCenter, IavaJointType.ShoulderRight, IavaJointType.ElbowRight, IavaJointType.WristRight, IavaJointType.HandRight));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.HipCenter, IavaJointType.HipLeft, IavaJointType.KneeLeft, IavaJointType.AnkleLeft, IavaJointType.FootLeft));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.HipCenter, IavaJointType.HipRight, IavaJointType.KneeRight, IavaJointType.AnkleRight, IavaJointType.FootRight));
 
                     // Draw joints
                     foreach (IavaJoint joint in data.Joints) {
@@ -403,13 +422,26 @@ namespace Iava.Ui {
                         jointLine.X1 = jointPos.X - 3;
                         jointLine.X2 = jointLine.X1 + 6;
                         jointLine.Y1 = jointLine.Y2 = jointPos.Y;
-                        //jointLine.Stroke = jointColors[joint.ID];
+                        //jointLine.Stroke = jointColors[joint.JointType];
                         jointLine.StrokeThickness = 6;
                         kinectSkeletonFeed.Children.Add(jointLine);
                     }
                 }
                 iSkeleton++;
             } // for each skeleton
+        }
+
+        /// <summary>
+        /// Unsubscribes from everything when the windows closes
+        /// </summary>
+        private void OnClosed(object sender, EventArgs e) {
+            // Unsubscribe from the Camera Events
+            IavaCamera.ImageFrameReady -= OnCameraImageFrameReady;
+            IavaCamera.SkeletonFrameReady -= OnCameraSkeletonFrameReady;
+
+            // Stop the Recognizers
+            m_pAudioRecognizer.Stop();
+            m_pGestureRecognizer.Stop();
         }
 
         /// <summary>
@@ -422,12 +454,12 @@ namespace Iava.Ui {
 
             if (m_pGestureRecognizer.Status == Core.RecognizerStatus.Running)
             {
-                //m_pGestureRecognizer.Camera.ImageFrameReady += OnCameraImageFrameReady;
+                //m_pGestureRecognizer.Camera.ColorImageFrameReady += OnCameraImageFrameReady;
                 //m_pGestureRecognizer.Camera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
             }
             else
             {
-                //m_pGestureRecognizer.Camera.ImageFrameReady -= OnCameraImageFrameReady;
+                //m_pGestureRecognizer.Camera.ColorImageFrameReady -= OnCameraImageFrameReady;
                 //m_pGestureRecognizer.Camera.SkeletonFrameReady -= OnCameraSkeletonFrameReady;
             }
         }
@@ -482,16 +514,6 @@ namespace Iava.Ui {
         }
 
         /// <summary>
-        /// Occurs when the map is unloaded.
-        /// </summary>
-        /// <param name="sender">Sender of the event</param>
-        /// <param name="e">Event args</param>
-        private void OnMapUnloaded(object sender, RoutedEventArgs e) {
-            m_pAudioRecognizer.Stop();
-            m_pGestureRecognizer.Stop();
-        }
-
-        /// <summary>
         /// Event used in junction with the display status function.
         /// </summary>
         /// <param name="sender"></param>
@@ -502,7 +524,7 @@ namespace Iava.Ui {
 
         #endregion Event Handlers
 
-        private Polyline GetBodySegment(IavaJointsCollection joints, Brush brush, params IavaJointID[] jointIDs) {
+        private Polyline GetBodySegment(IavaJointCollection joints, Brush brush, params IavaJointType[] jointIDs) {
             PointCollection points = new PointCollection(jointIDs.Length);
             for (int i = 0; i < jointIDs.Length; ++i) {
                 points.Add(ScalePoint(joints[jointIDs[i]].Position.X, joints[jointIDs[i]].Position.Y, kinectSkeletonFeed.Width, kinectSkeletonFeed.Height));
@@ -664,6 +686,8 @@ namespace Iava.Ui {
         private System.Timers.Timer m_pGestureSyncTimer;
         private TimeSpan m_sGestureSyncTime;
         private TextBoxStreamWriter m_pConsoleTxtBox = null;
+        private WriteableBitmap _colorBitmap;
+        private bool _firstRun = true;
 
         // UI theme specific.  It'd be great if we had time to databind the the labels to a boolean stating whether
         // or not they're synced and then apply the appropriate theme instead of doing this all in code.
@@ -672,5 +696,7 @@ namespace Iava.Ui {
         private LinearGradientBrush backgroundBrush = new LinearGradientBrush(Color.FromRgb(46, 52, 54), Color.FromRgb(65, 67, 63), 90.0);
 
         #endregion Private Fields
+
+        
     }
 }

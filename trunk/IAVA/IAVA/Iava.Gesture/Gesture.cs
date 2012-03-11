@@ -104,13 +104,13 @@ namespace Iava.Gesture {
         /// Sets all the snapshots to track this specified joint.
         /// </summary>
         /// <param name="joint"></param>
-        public void SetTrackingJoints(params IavaJointID[] joints) {
+        public void SetTrackingJoints(params IavaJointType[] joints) {
             foreach (var segment in this.Snapshots) {
                 segment.SetTrackingJoints(joints);
             }
         }
 
-        public void CheckGesture(IavaSkeletonData skeleton) {/*
+        public void CheckGesture(IavaSkeleton skeleton) {/*
             // NEM: Need to describe what this code is doing...
             if (_paused) {
                 if (_frameCount == _pausedFrameCount) {
@@ -178,7 +178,7 @@ namespace Iava.Gesture {
             foreach (Snapshot snapshot in gesture.Snapshots)
             {
                 // Get the hipcenter
-                BodyPart hipCenter = snapshot.BodyParts[(int)IavaJointID.HipCenter];
+                BodyPart hipCenter = snapshot.BodyParts[(int)IavaJointType.HipCenter];
                 
                 // Translate each bodypart position based on hipcenter
                 foreach (BodyPart bodyPart in snapshot.BodyParts)

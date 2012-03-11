@@ -2,7 +2,7 @@
 //using System.Collections.Generic;
 //using System.Linq;
 //using System.Text;
-////using Microsoft.Research.Kinect.Nui;
+////using Microsoft.Kinect;
 
 //using Iava.Input.Camera;
 
@@ -31,7 +31,7 @@
 
 //        #region Public Methods
 
-//        public void CheckForGesture(IavaSkeletonData skeleton) {
+//        public void CheckForGesture(IavaSkeleton skeleton) {
 //            // NEM: Need to describe what this code is doing...
 //            if (_paused) {
 //                if (_frameCount == _pausedFrameCount) {

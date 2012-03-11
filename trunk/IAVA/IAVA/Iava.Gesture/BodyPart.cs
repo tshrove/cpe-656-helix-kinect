@@ -5,7 +5,6 @@ using System.Text;
 using Iava.Core.Math;
 using Iava.Input.Camera;
 using System.Xml.Serialization;
-using Iava.Core.Math;
 
 namespace Iava.Gesture {
     public class BodyPart {
@@ -16,7 +15,7 @@ namespace Iava.Gesture {
         /// Gets the postion of the body part in x and y axis.
         /// </summary>
         [XmlElement("Position")]
-        public IavaVector Position { get; set; }
+        public IavaSkeletonPoint Position { get; set; }
 
         /// <summary>
         /// Gets or sets whether the body part should be tracked.
@@ -25,23 +24,23 @@ namespace Iava.Gesture {
         public bool Tracking { get; set; }
 
         /// <summary>
-        /// The ID of the Body Part
+        /// The JointType of the Body Part
         /// </summary>
         [XmlAttribute("Name")]
-        public IavaJointID JointID { get; set; }
+        public IavaJointType JointID { get; set; }
 
         #endregion Public Properties
 
         #region Constructors
 
         private BodyPart()
-            : this(0, new IavaVector()) { }
+            : this(0, new IavaSkeletonPoint()) { }
 
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public BodyPart(IavaJointID jointID)
-            : this(jointID, new IavaVector()) {
+        public BodyPart(IavaJointType jointID)
+            : this(jointID, new IavaSkeletonPoint()) {
             // Nothing to do
         }
 
@@ -49,7 +48,7 @@ namespace Iava.Gesture {
         /// Constructor that sets the position to the parameter of position.
         /// </summary>
         /// <param name="position"></param>
-        public BodyPart(IavaJointID jointID, IavaVector position) {
+        public BodyPart(IavaJointType jointID, IavaSkeletonPoint position) {
             this.JointID = jointID;
             this.Position = position;
         }

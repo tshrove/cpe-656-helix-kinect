@@ -31,10 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Research.Kinect, Version=1.0.0.45, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Microsoft SDKs\Kinect\v1.0 Beta2\Assemblies\Microsoft.Research.Kinect.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Kinect, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,20 +43,15 @@
   <ItemGroup>
     <Compile Include="Camera\Camera.cs" />
     <Compile Include="Camera\CameraEventArgs.cs" />
-    <Compile Include="Camera\DataTypes\IavaImageDigitalZoom.cs" />
-    <Compile Include="Camera\DataTypes\IavaImageFrame.cs" />
-    <Compile Include="Camera\DataTypes\IavaImageType.cs" />
-    <Compile Include="Camera\DataTypes\IavaImageResolution.cs" />
-    <Compile Include="Camera\DataTypes\IavaImageViewArea.cs" />
+    <Compile Include="Camera\DataTypes\IavaColorImageFormat.cs" />
+    <Compile Include="Camera\DataTypes\IavaColorImageFrame.cs" />
     <Compile Include="Camera\DataTypes\IavaJoint.cs" />
-    <Compile Include="Camera\DataTypes\IavaJointID.cs" />
-    <Compile Include="Camera\DataTypes\IavaJointsCollection.cs" />
+    <Compile Include="Camera\DataTypes\IavaJointType.cs" />
+    <Compile Include="Camera\DataTypes\IavaJointCollection.cs" />
     <Compile Include="Camera\DataTypes\IavaJointTrackingState.cs" />
-    <Compile Include="Camera\DataTypes\IavaPlanarImage.cs" />
-    <Compile Include="Camera\DataTypes\IavaSkeletonData.cs" />
+    <Compile Include="Camera\DataTypes\IavaSkeleton.cs" />
     <Compile Include="Camera\DataTypes\IavaSkeletonFrame.cs" />
-    <Compile Include="Camera\DataTypes\IavaSkeletonFrameQuality.cs" />
-    <Compile Include="Camera\DataTypes\IavaSkeletonQuality.cs" />
+    <Compile Include="Camera\DataTypes\IavaFrameEdges.cs" />
     <Compile Include="Camera\DataTypes\IavaSkeletonTrackingState.cs" />
     <Compile Include="Camera\IRuntime.cs" />
     <Compile Include="Camera\RuntimeWrapper.cs" />

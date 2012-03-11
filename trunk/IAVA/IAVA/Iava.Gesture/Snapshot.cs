@@ -35,13 +35,13 @@ namespace Iava.Gesture {
         /// Sets the tracking state of the specified BodyParts to true
         /// </summary>
         /// <param name="joints">The joints to track</param>
-        public void SetTrackingJoints(params IavaJointID[] joints) {
-            foreach (IavaJointID id in joints) {
+        public void SetTrackingJoints(params IavaJointType[] joints) {
+            foreach (IavaJointType id in joints) {
                 BodyParts.Where(x => x.JointID == id).Single(x => x.Tracking = true);
             }
         }
 
-        public bool CheckSnapshot(IavaSkeletonData skeleton, double fudgeFactor) {
+        public bool CheckSnapshot(IavaSkeleton skeleton, double fudgeFactor) {
             List<bool> results = new List<bool>();
 
             foreach (BodyPart bodyPart in BodyParts) {
@@ -74,17 +74,17 @@ namespace Iava.Gesture {
         /// parts according to the data provided in skeleton.
         /// </summary>
         /// <param name="skeleton"></param>
-        public Snapshot(IavaSkeletonData skeleton) {
+        public Snapshot(IavaSkeleton skeleton) {
             if (skeleton == null) { return; }
 
             // ROFL, I didn't even know this was allowed...
-            for (IavaJointID i = 0; i < IavaJointID.Count; i++) {
+            for (IavaJointType i = 0; i < IavaJointType.Count; i++) {
                 BodyParts.Add(new BodyPart(i, skeleton.Joints[i].Position));
             }
 
             // Set the body part positions
             foreach (IavaJoint joint in skeleton.Joints) {
-                BodyParts.Where(x => x.JointID == joint.ID).Single().Position = joint.Position;
+                BodyParts.Where(x => x.JointID == joint.JointType).Single().Position = joint.Position;
             }
         }
 

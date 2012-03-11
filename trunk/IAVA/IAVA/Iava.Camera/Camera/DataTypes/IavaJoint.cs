@@ -1,6 +1,5 @@
 ﻿using Iava.Core.Math;
-using Microsoft.Research.Kinect.Nui;
-using Iava.Core.Math;
+using Microsoft.Kinect;
 using System;
 
 namespace Iava.Input.Camera {
@@ -9,9 +8,9 @@ namespace Iava.Input.Camera {
 
         #region Public Properties
 
-        public IavaJointID ID { get; set; }
+        public IavaJointType JointType { get; set; }
 
-        public IavaVector Position { get; set; }
+        public IavaSkeletonPoint Position { get; set; }
 
         public IavaJointTrackingState TrackingState { get; set; }
 
@@ -26,7 +25,7 @@ namespace Iava.Input.Camera {
             // If just one is null, return false.
             if (((object)joint1 == null) || ((object)joint2 == null)) { return false; }
 
-            return (joint1.ID == joint2.ID &&
+            return (joint1.JointType == joint2.JointType &&
                     joint1.Position == joint2.Position &&
                     joint1.TrackingState == joint2.TrackingState);
         }
@@ -38,7 +37,7 @@ namespace Iava.Input.Camera {
             // If just one is null, return true.
             if (((object)joint1 == null) || ((object)joint2 == null)) { return true; }
 
-            return (joint1.ID != joint2.ID ||
+            return (joint1.JointType != joint2.JointType ||
                     joint1.Position != joint2.Position ||
                     joint1.TrackingState != joint2.TrackingState);
         }
@@ -52,7 +51,7 @@ namespace Iava.Input.Camera {
             if ((Object)joint == null) { return false; }
 
             // Do a field by field comparison
-            return (joint.ID == this.ID &&
+            return (joint.JointType == this.JointType &&
                     joint.Position == this.Position &&
                     joint.TrackingState == this.TrackingState);
         }
@@ -60,8 +59,8 @@ namespace Iava.Input.Camera {
         public static explicit operator IavaJoint(Joint value) {
             return new IavaJoint()
             {
-                ID = (IavaJointID)value.ID,
-                Position = (IavaVector)value.Position,
+                JointType = (IavaJointType)value.JointType,
+                Position = (IavaSkeletonPoint)value.Position,
                 TrackingState = (IavaJointTrackingState)value.TrackingState
             };
         }

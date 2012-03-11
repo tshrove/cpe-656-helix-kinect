@@ -232,12 +232,12 @@ namespace Iava.Gesture
         }
 
         protected void OnSkeletonReady(object sender, IavaSkeletonEventArgs e) {
-            IavaVector translationVector = e.Skeleton.Joints[IavaJointID.HipCenter].Position;
+            IavaSkeletonPoint translationVector = e.Skeleton.Joints[IavaJointType.HipCenter].Position;
 
             IavaJoint joint = new IavaJoint();
 
             // Translate all the points in the skeleton to the center of the kinect view
-            for (IavaJointID jointID = 0; jointID < IavaJointID.Count; jointID++) {
+            for (IavaJointType jointID = 0; jointID < IavaJointType.Count; jointID++) {
                 // Refer to http://stackoverflow.com/questions/1003772/setting-margin-properties-in-code
                 // for why things are done this way
                 joint = e.Skeleton.Joints[jointID];
