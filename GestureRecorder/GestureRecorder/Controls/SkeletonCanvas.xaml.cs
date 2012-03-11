@@ -22,7 +22,7 @@ namespace GestureRecorder.Controls {
 
         #region Public Properties
 
-        public IavaSkeletonData Skeleton {
+        public IavaSkeleton Skeleton {
             get { return _skeleton; }
             set { _skeleton = value; UpdateCanvas(); }
         }
@@ -48,11 +48,11 @@ namespace GestureRecorder.Controls {
 
             if (Skeleton.TrackingState == IavaSkeletonTrackingState.Tracked) {
                 // Draw bones
-                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointID.HipCenter, IavaJointID.Spine, IavaJointID.ShoulderCenter, IavaJointID.Head));
-                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointID.ShoulderCenter, IavaJointID.ShoulderLeft, IavaJointID.ElbowLeft, IavaJointID.WristLeft, IavaJointID.HandLeft));
-                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointID.ShoulderCenter, IavaJointID.ShoulderRight, IavaJointID.ElbowRight, IavaJointID.WristRight, IavaJointID.HandRight));
-                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointID.HipCenter, IavaJointID.HipLeft, IavaJointID.KneeLeft, IavaJointID.AnkleLeft, IavaJointID.FootLeft));
-                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointID.HipCenter, IavaJointID.HipRight, IavaJointID.KneeRight, IavaJointID.AnkleRight, IavaJointID.FootRight));
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointType.HipCenter, IavaJointType.Spine, IavaJointType.ShoulderCenter, IavaJointType.Head));
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointType.ShoulderCenter, IavaJointType.ShoulderLeft, IavaJointType.ElbowLeft, IavaJointType.WristLeft, IavaJointType.HandLeft));
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointType.ShoulderCenter, IavaJointType.ShoulderRight, IavaJointType.ElbowRight, IavaJointType.WristRight, IavaJointType.HandRight));
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointType.HipCenter, IavaJointType.HipLeft, IavaJointType.KneeLeft, IavaJointType.AnkleLeft, IavaJointType.FootLeft));
+                Children.Add(GetBodySegment(Skeleton.Joints, brush, IavaJointType.HipCenter, IavaJointType.HipRight, IavaJointType.KneeRight, IavaJointType.AnkleRight, IavaJointType.FootRight));
 
                 // Draw joints
                 foreach (IavaJoint joint in Skeleton.Joints) {
@@ -74,7 +74,7 @@ namespace GestureRecorder.Controls {
         /// <param name="brush">Color of the lines to draw</param>
         /// <param name="jointIDs">Joints to be connected by the poly line</param>
         /// <returns></returns>
-        private Polyline GetBodySegment(IavaJointsCollection joints, Brush brush, params IavaJointID[] jointIDs) {
+        private Polyline GetBodySegment(IavaJointCollection joints, Brush brush, params IavaJointType[] jointIDs) {
             PointCollection points = new PointCollection(jointIDs.Length);
             for (int i = 0; i < jointIDs.Length; ++i) {
                 points.Add(ScalePoint(joints[jointIDs[i]].Position.X, joints[jointIDs[i]].Position.Y, ActualWidth, ActualHeight));
@@ -120,7 +120,7 @@ namespace GestureRecorder.Controls {
 
         #region Private Fields
 
-        private IavaSkeletonData _skeleton;
+        private IavaSkeleton _skeleton;
 
         #endregion Private Fields
     }

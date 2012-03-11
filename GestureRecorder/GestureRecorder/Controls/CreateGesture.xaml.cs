@@ -94,12 +94,33 @@ namespace GestureRecorder.Controls {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnCameraImageFrameReady(object sender, IavaImageFrameReadyEventArgs e) {
-            IavaPlanarImage Image = e.ImageFrame.Image;
+        private void OnCameraImageFrameReady(object sender, IavaColorImageFrameReadyEventArgs e) {
+            if (e.ImageFrame == null) { return; }
 
-            VideoFeed.Source = BitmapSource.Create(
-                Image.Width, Image.Height, 96, 96, PixelFormats.Bgr32, null,
-                Image.Bits, Image.Width * Image.BytesPerPixel);
+            // Set up the writable bitmap...
+            if (_firstRun) {
+                // This is more efficient than creating a new bitmap every frame
+                _colorBitmap = new WriteableBitmap(
+                    e.ImageFrame.Width,
+                    e.ImageFrame.Height,
+                    96.0, // DpiX
+                    96.0, // DpiY
+                    PixelFormats.Bgr32,
+                    null);
+
+                // Set the image source
+                VideoFeed.Source = _colorBitmap;
+
+                // Indicate this is not the first run
+                _firstRun = false;
+            }
+
+            // Draw the image
+            _colorBitmap.WritePixels(
+                new Int32Rect(0, 0, e.ImageFrame.Width, e.ImageFrame.Height),
+                e.ImageFrame.PixelData,
+                e.ImageFrame.Width * ((PixelFormats.Bgr32.BitsPerPixel + 7) / 8), // Got this from sample code
+                0);
         }
 
         /// <summary>
@@ -136,7 +157,7 @@ namespace GestureRecorder.Controls {
         private void OnJointCheck(object sender, RoutedEventArgs e) {
             System.Windows.Controls.Primitives.ToggleButton temp = sender as System.Windows.Controls.Primitives.ToggleButton;
             // Sets all the snapshots to track this joint.
-            this.Gesture.SetTrackingJoints((IavaJointID)(Convert.ToInt32(temp.Tag)));
+            this.Gesture.SetTrackingJoints((IavaJointType)(Convert.ToInt32(temp.Tag)));
         }
 
         /// <summary>
@@ -297,6 +318,10 @@ namespace GestureRecorder.Controls {
         /// Pointer to the current gesture segment canvas
         /// </summary>
         private SkeletonCanvas _activeSkeletonCanvas = null;
+
+        private WriteableBitmap _colorBitmap = null;
+
+        private bool _firstRun = true;
 
         #endregion Private Fields
     }
