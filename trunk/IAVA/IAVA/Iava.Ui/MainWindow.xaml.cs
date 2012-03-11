@@ -504,11 +504,11 @@ namespace Iava.Ui {
         }
 
         /// <summary>
-        /// Occurs when the map is loaded.
+        /// Starts the recognizers when the window is loaded
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Event args</param>
-        private void OnMapLoaded(object sender, RoutedEventArgs e) {
+        private void OnLoaded(object sender, RoutedEventArgs e) {
             m_pAudioRecognizer.Start();
             m_pGestureRecognizer.Start();
         }
@@ -696,7 +696,5 @@ namespace Iava.Ui {
         private LinearGradientBrush backgroundBrush = new LinearGradientBrush(Color.FromRgb(46, 52, 54), Color.FromRgb(65, 67, 63), 90.0);
 
         #endregion Private Fields
-
-        
     }
 }
