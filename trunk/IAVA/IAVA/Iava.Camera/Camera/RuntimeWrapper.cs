@@ -18,9 +18,9 @@ namespace Iava.Input.Camera {
         /// Default Constructor
         /// </summary>
         public KinectRuntimeWrapper() {
-            _kinectSensor = KinectSensor.KinectSensors[0];
+            if (KinectSensor.KinectSensors.Count == 0) { throw new Exception("Kinect sensor not detected."); }
 
-            if (_kinectSensor == null) { throw new Exception("Kinect camera not detected."); }
+            _kinectSensor = KinectSensor.KinectSensors[0];
 
             // Register for the Skeleton and Video Frame Events
             _kinectSensor.SkeletonFrameReady += OnSkeletonFrameReady;
@@ -37,21 +37,23 @@ namespace Iava.Input.Camera {
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="SkeletonFrameReadyEventArgs"/> instance containing the event data.</param>
         private void OnSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e) {
-            Skeleton[] skeletons = null;
-
             using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame()) {
                 bool receivedData = false;
                 if (skeletonFrame != null) {
-
-                    // Allocate only the first time
-                    if (skeletons == null) {
-                        skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
-                        skeletonFrame.CopySkeletonDataTo(skeletons);
+                    // Allocate the array only the first time
+                    if (_skeletons == null) {
+                        _skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
                     }
+
+                    // Copy the data into our array
+                    skeletonFrame.CopySkeletonDataTo(_skeletons);
 
                     // Mark that we received new data
                     receivedData = true;
                 }
+
+                // We're falling behind on processing just return.
+                else { return; }
 
                 if (receivedData) {
 
@@ -61,7 +63,7 @@ namespace Iava.Input.Camera {
                     }
 
                     // Process each skeleton in the event...
-                    foreach (Skeleton skeleton in skeletons) {
+                    foreach (Skeleton skeleton in _skeletons) {
                         // If the Kinect camera is tracking this skeleton...
                         if (skeleton.TrackingState == SkeletonTrackingState.Tracked) {
                             // Create and throw the SkeletonReady event...
@@ -91,6 +93,8 @@ namespace Iava.Input.Camera {
         /// Reference to the speech recognition engine.
         /// </summary>
         private static KinectSensor _kinectSensor;
+
+        private Skeleton[] _skeletons = null;
 
         #endregion Private Fields
 
