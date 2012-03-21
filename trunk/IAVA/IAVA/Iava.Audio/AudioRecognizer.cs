@@ -248,10 +248,10 @@ namespace Iava.Audio
             catch (Exception exception)
             {
                 Status = RecognizerStatus.Error;
-                //StatusLogger.LogMessage(new Message("Failed to detect Kinect or start speech recognition engine.", 
-                //                                    GetType().Name, 
-                //                                    MessageType.Error, 
-                //                                    exception));
+                StatusLogger.LogMessage(new Message("Failed to detect Kinect or start speech recognition engine.",
+                                                    GetType().Name,
+                                                    MessageType.Error,
+                                                    exception));
             }
             finally
             {
@@ -349,7 +349,10 @@ namespace Iava.Audio
                             m_syncContext.Post(new SendOrPostCallback(delegate(object state) { AudioCallbacks[command].Invoke(args); }), null);
                         }
                         catch (Exception exception) {
-                            //TODO: Log message if this fails
+                            StatusLogger.LogMessage(new Message("Error occured in speech recogition method or speech recognition callback.",
+                                                    GetType().Name,
+                                                    MessageType.Error,
+                                                    exception));
                         }
 
                         break;
