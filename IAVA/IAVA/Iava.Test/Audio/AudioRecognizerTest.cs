@@ -45,7 +45,7 @@ namespace Iava.Test.Audio
         #region Additional test attributes
 
         /// <summary>
-        /// Used to signal callbacks were invoked.
+        /// Used to signal that callbacks were invoked.
         /// </summary>
         private ManualResetEvent resetEvent = new ManualResetEvent(false);
 

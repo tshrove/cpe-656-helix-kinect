@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using Iava.Core;
 using Iava.Core.Math;
 using Iava.Input.Camera;
+using Iava.Core.Logging;
 
 namespace Iava.Gesture 
 {
     /// <summary>
-    /// Audio Callback for when a gesture command is detected.
+    /// Gesture callback for when a gesture command is detected.
     /// </summary>
-    /// <param name="e"></param>
+    /// <param name="e">event args</param>
     public delegate void GestureCallback(GestureEventArgs e);
 
     /// <summary>
@@ -188,7 +189,10 @@ namespace Iava.Gesture
             }
 
             catch (Exception e) {
-                // TODO: Log message.  Failed to detect Kinect or start Camera
+                StatusLogger.LogMessage(new Message("Failed to detect Kinect or start camera.",
+                                                    GetType().Name,
+                                                    MessageType.Error,
+                                                    e));
                 Status = RecognizerStatus.Error;
                 throw e;
             }

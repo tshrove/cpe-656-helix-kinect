@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Speech.Recognition;
 using System.Speech.AudioFormat;
+using Iava.Core.Logging;
 
 namespace Iava.Audio
 {
@@ -37,7 +38,11 @@ namespace Iava.Audio
 
             if (ri == null)
             {
-                throw new Exception("Failed to find any installed audio recognizers.");
+                const string message = "Failed to find any installed audio recognizers.";
+                StatusLogger.LogMessage(new Message(message,
+                                                    GetType().Name,
+                                                    MessageType.Error));
+                throw new Exception(message);
             }
 
             engine = new SpeechRecognitionEngine(ri.Id);

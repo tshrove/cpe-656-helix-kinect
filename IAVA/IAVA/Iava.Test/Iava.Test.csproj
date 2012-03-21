@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\RecognizerTest.cs" />
     <Compile Include="Gesture\SnapshotTest.cs" />
+    <Compile Include="StatusLoggerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Iava.Audio\Iava.Audio.csproj">
@@ -101,6 +102,9 @@
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\Iave.Core.accessor" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Logging\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
