@@ -22,9 +22,9 @@ namespace Iava.Core.Logging
     {
         #region Private Attributes
 
-        private static readonly ConcurrentQueue<Message> messageQueue = new ConcurrentQueue<Message>();
+        private static ConcurrentQueue<Message> messageQueue = new ConcurrentQueue<Message>();
 
-        private static readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
+        private static CancellationTokenSource tokenSource = new CancellationTokenSource();
 
         private static StreamWriter writer;
 
@@ -47,6 +47,12 @@ namespace Iava.Core.Logging
         /// <param name="message">Message to log.</param>
         internal static void LogMessage(Message message)
         {
+            // Initialize the log if it has not been initialized
+            if (messageConsumeTask == null)
+            {
+                Initialize();
+            }
+
             if (message == null)
             {
                 throw new ArgumentNullException("message", "Message parameter cannot be null.");
@@ -69,14 +75,6 @@ namespace Iava.Core.Logging
         }
 
         /// <summary>
-        /// Static constructor.
-        /// </summary>
-        static StatusLogger()
-        {
-            Initialize();         
-        }
-
-        /// <summary>
         /// Destructor.
         /// </summary>
         ~StatusLogger()
@@ -88,8 +86,7 @@ namespace Iava.Core.Logging
         /// Initializes the status logger.  No messages will be logged unless this method is called first.
         /// </summary>
         private static void Initialize()
-        {               
-            // TODO: Add lock mechanism so that only one task is started
+        {
             // Start task
             messageConsumeTask = Task.Factory.StartNew(_ => ConsumeMessageTask(tokenSource.Token), tokenSource.Token, TaskCreationOptions.LongRunning);
         }
@@ -100,7 +97,6 @@ namespace Iava.Core.Logging
         private static void Shutdown()
         {
             tokenSource.Cancel();
-            messageConsumeTask = null;
         }
 
         /// <summary>
