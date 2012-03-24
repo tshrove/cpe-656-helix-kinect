@@ -69,7 +69,7 @@ namespace Iava.Test
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            StatusLogger_Accessor.Initialize();
+
         }
         
         /// <summary>
@@ -80,6 +80,10 @@ namespace Iava.Test
         {
             messageReceived = null;
             StatusLogger_Accessor.Shutdown();
+
+            StatusLogger_Accessor.tokenSource = new CancellationTokenSource();
+            StatusLogger_Accessor.messageQueue = new System.Collections.Concurrent.ConcurrentQueue<Message>();
+            StatusLogger_Accessor.messageConsumeTask = null;           
 
             // Allow time for the thread to stop
             Thread.Sleep(500);
@@ -98,7 +102,7 @@ namespace Iava.Test
         ///</summary>
         [TestMethod()]
         public void LogMessageTest()
-        {            
+        {           
             try { StatusLogger.LogMessage(null); }
             catch (Exception e)
             {
