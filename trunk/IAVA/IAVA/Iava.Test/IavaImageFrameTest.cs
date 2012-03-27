@@ -24,22 +24,22 @@
 //        ///A test for op_Explicit
 //        ///</summary>
 //        [TestMethod()]
-//        public void op_ExplicitTest() {
+//        public void ExplicitCastTest() {
 //            try {
 //                // Create and initialize the Iava object
-//                IavaColorImageFrame iavaFrame = new IavaColorImageFrame();
-//                iavaFrame.FrameNumber = 32;
-//                iavaFrame.Resolution = IavaImageResolution.Resolution640x480;
-//                iavaFrame.Timestamp = 1987530;
-//                iavaFrame.Type = IavaImageType.ColorYuv;
-//                iavaFrame.Image = new IavaPlanarImage()
+//                IavaColorImageFrame accessor = new IavaColorImageFrame();
+//                accessor.FrameNumber = 32;
+//                accessor.Resolution = IavaImageResolution.Resolution640x480;
+//                accessor.Timestamp = 1987530;
+//                accessor.Type = IavaImageType.ColorYuv;
+//                accessor.Image = new IavaPlanarImage()
 //                {
 //                    Bits = new byte[10],
 //                    BytesPerPixel = 4,
 //                    Height = 120,
 //                    Width = 45
 //                };
-//                iavaFrame.ViewArea = new IavaImageViewArea()
+//                accessor.ViewArea = new IavaImageViewArea()
 //                {
 //                    CenterX = 45,
 //                    CenterY = 19,
@@ -67,7 +67,7 @@
 //                };
 
 //                // Make sure the ImageFrames are the same
-//                Assert.AreEqual(iavaFrame, (IavaColorImageFrame)kinectFrame);
+//                Assert.AreEqual(accessor, (IavaColorImageFrame)kinectFrame);
 //            }
 //            catch (Exception ex) {
 //                Assert.Fail(ex.Message);
@@ -80,15 +80,15 @@
 //        [TestMethod()]
 //        public void FrameNumberTest() {
 //            try {
-//                IavaColorImageFrame imageFrame = new IavaColorImageFrame();
+//                IavaColorImageFrame skeletonFrame = new IavaColorImageFrame();
 
 //                int frameNumber = 12345;
 
 //                // Set the Frame Number
-//                imageFrame.FrameNumber = frameNumber;
+//                skeletonFrame.FrameNumber = frameNumber;
 
 //                // Make sure the Frame Number was updated
-//                Assert.AreEqual(frameNumber, imageFrame.FrameNumber);
+//                Assert.AreEqual(frameNumber, skeletonFrame.FrameNumber);
 //            }
 //            catch (Exception ex) {
 //                Assert.Fail(ex.Message);
@@ -101,7 +101,7 @@
 //        [TestMethod()]
 //        public void ImageTest() {
 //            try {
-//                IavaColorImageFrame imageFrame = new IavaColorImageFrame();
+//                IavaColorImageFrame skeletonFrame = new IavaColorImageFrame();
 
 //                IavaPlanarImage planarImage = new IavaPlanarImage()
 //                {
@@ -112,10 +112,10 @@
 //                };
 
 //                // Set the Image
-//                imageFrame.Image = planarImage;
+//                skeletonFrame.Image = planarImage;
 
 //                // Make sure the Image was updated
-//                Assert.AreEqual(planarImage, imageFrame.Image);
+//                Assert.AreEqual(planarImage, skeletonFrame.Image);
 //            }
 //            catch (Exception ex) {
 //                Assert.Fail(ex.Message);
@@ -128,15 +128,15 @@
 //        [TestMethod()]
 //        public void ResolutionTest() {
 //            try {
-//                IavaColorImageFrame imageFrame = new IavaColorImageFrame();
+//                IavaColorImageFrame skeletonFrame = new IavaColorImageFrame();
 
 //                IavaImageResolution resolution = IavaImageResolution.Resolution640x480;
 
 //                // Set the Resolution
-//                imageFrame.Resolution = resolution;
+//                skeletonFrame.Resolution = resolution;
 
 //                // Make sure the Resolution was updated
-//                Assert.AreEqual(resolution, imageFrame.Resolution);
+//                Assert.AreEqual(resolution, skeletonFrame.Resolution);
 //            }
 //            catch (Exception ex) {
 //                Assert.Fail(ex.Message);
@@ -149,15 +149,15 @@
 //        [TestMethod()]
 //        public void TimestampTest() {
 //            try {
-//                IavaColorImageFrame imageFrame = new IavaColorImageFrame();
+//                IavaColorImageFrame skeletonFrame = new IavaColorImageFrame();
 
 //                int timestamp = 12345;
 
 //                // Set the Timestamp
-//                imageFrame.Timestamp = timestamp;
+//                skeletonFrame.Timestamp = timestamp;
 
 //                // Make sure the Timestamp was updated
-//                Assert.AreEqual(timestamp, imageFrame.Timestamp);
+//                Assert.AreEqual(timestamp, skeletonFrame.Timestamp);
 //            }
 //            catch (Exception ex) {
 //                Assert.Fail(ex.Message);
@@ -170,15 +170,15 @@
 //        [TestMethod()]
 //        public void TypeTest() {
 //            try {
-//                IavaColorImageFrame imageFrame = new IavaColorImageFrame();
+//                IavaColorImageFrame skeletonFrame = new IavaColorImageFrame();
 
 //                IavaImageType type = IavaImageType.Depth;
 
 //                // Set the Type
-//                imageFrame.Type = type;
+//                skeletonFrame.Type = type;
 
 //                // Make sure the Type was updated
-//                Assert.AreEqual(type, imageFrame.Type);
+//                Assert.AreEqual(type, skeletonFrame.Type);
 //            }
 //            catch (Exception ex) {
 //                Assert.Fail(ex.Message);
@@ -191,7 +191,7 @@
 //        [TestMethod()]
 //        public void ViewAreaTest() {
 //            try {
-//                IavaColorImageFrame imageFrame = new IavaColorImageFrame();
+//                IavaColorImageFrame skeletonFrame = new IavaColorImageFrame();
 
 //                IavaImageViewArea viewArea = new IavaImageViewArea()
 //                {
@@ -201,10 +201,10 @@
 //                };
 
 //                // Set the View Area
-//                imageFrame.ViewArea = viewArea;
+//                skeletonFrame.ViewArea = viewArea;
 
 //                // Make sure the View Area was updated
-//                Assert.AreEqual(viewArea, imageFrame.ViewArea);
+//                Assert.AreEqual(viewArea, skeletonFrame.ViewArea);
 //            }
 //            catch (Exception ex) {
 //                Assert.Fail(ex.Message);

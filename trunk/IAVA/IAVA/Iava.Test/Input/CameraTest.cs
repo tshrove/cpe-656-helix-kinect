@@ -1,91 +1,91 @@
-﻿//using System.Threading;
-//using Iava.Input.Camera;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
+﻿using System.Threading;
+using Iava.Input.Camera;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
-//namespace Iava.Test.Camera {
+namespace Iava.Test.Camera {
 
-//    /// <summary>
-//    ///This is a test class for CameraTest and is intended
-//    ///to contain all CameraTest Unit Tests
-//    ///</summary>
-//    [TestClass()]
-//    public class CameraTest {
-        
-//        [TestMethod()]
-//        public void CameraImageFrameReadyTest() {
-//            // Create a mock runtime
-//            var mockRuntime = SetupMockRuntime();
-//            camera = new IavaCamera(mockRuntime.Object);
+    /// <summary>
+    ///This is a test class for CameraTest and is intended
+    ///to contain all CameraTest Unit Tests
+    ///</summary>
+    [TestClass()]
+    public class CameraTest {
 
-//            bool eventFired = false;
+        [TestMethod()]
+        public void CameraImageFrameReadyTest() {
+            // Create a mock runtime
+            var mockImageFrame = SetupMockColorImageFrame();
+            camera = new IavaCamera(mockImageFrame.Object);
 
-//            // Subscribe to our Camera ImageFrame Ready Event
-//            IavaCamera.ImageFrameReady += (param1, param2) => eventFired = true;
+            bool eventFired = false;
 
-//            // Raise the IRuntime ColorImageFrameReady Event
-//            mockRuntime.Raise(m => m.ColorImageFrameReady += null, IavaColorImageFrameReadyEventArgs.Empty);
-//            Thread.Sleep(50);
+            // Subscribe to our Camera ImageFrame Ready Event
+            IavaCamera.ImageFrameReady += (param1, param2) => eventFired = true;
 
-//            Assert.IsTrue(eventFired);
-//        }
+            // Raise the IRuntime ColorImageFrameReady Event
+            mockImageFrame.Raise(m => m.ColorImageFrameReady += null, IavaColorImageFrameReadyEventArgs.Empty);
+            Thread.Sleep(50);
 
-//        [TestMethod()]
-//        public void CameraSkeletonReadyTest() {
-//            // Create a mock runtime
-//            var mockRuntime = SetupMockRuntime();
-//            camera = new IavaCamera(mockRuntime.Object);
+            Assert.IsTrue(eventFired);
+        }
 
-//            bool eventFired = false;
+        [TestMethod()]
+        public void CameraSkeletonReadyTest() {
+            // Create a mock runtime
+            var mockImageFrame = SetupMockColorImageFrame();
+            camera = new IavaCamera(mockImageFrame.Object);
 
-//            // Subscribe to our Camera SkeletonReady Ready Event
-//            IavaCamera.SkeletonReady += (param1, param2) => eventFired = true;
+            bool eventFired = false;
 
-//            // Raise the IRuntime SkeletonReady Event
-//            mockRuntime.Raise(m => m.SkeletonReady += null, IavaSkeletonEventArgs.Empty);
-//            Thread.Sleep(50);
+            // Subscribe to our Camera SkeletonReady Ready Event
+            IavaCamera.SkeletonReady += (param1, param2) => eventFired = true;
 
-//            Assert.IsTrue(eventFired);
-//        }
+            // Raise the IRuntime SkeletonReady Event
+            mockImageFrame.Raise(m => m.SkeletonReady += null, IavaSkeletonEventArgs.Empty);
+            Thread.Sleep(50);
 
-//        [TestMethod()]
-//        public void CameraSkeletonFrameReadyTest() {
-//            // Create a mock runtime
-//            var mockRuntime = SetupMockRuntime();
-//            camera = new IavaCamera(mockRuntime.Object);
+            Assert.IsTrue(eventFired);
+        }
 
-//            bool eventFired = false;
+        [TestMethod()]
+        public void CameraSkeletonFrameReadyTest() {
+            // Create a mock runtime
+            var mockImageFrame = SetupMockColorImageFrame();
+            camera = new IavaCamera(mockImageFrame.Object);
 
-//            // Subscribe to our Camera ImageFrame Ready Event
-//            IavaCamera.SkeletonFrameReady += (param1, param2) => eventFired = true;
+            bool eventFired = false;
 
-//            // Raise the IRuntime SkeletonFrameReady Event
-//            mockRuntime.Raise(m => m.SkeletonFrameReady += null, IavaSkeletonFrameReadyEventArgs.Empty);
-//            Thread.Sleep(50);
+            // Subscribe to our Camera ImageFrame Ready Event
+            IavaCamera.SkeletonFrameReady += (param1, param2) => eventFired = true;
 
-//            Assert.IsTrue(eventFired);
-//        }
+            // Raise the IRuntime SkeletonFrameReady Event
+            mockImageFrame.Raise(m => m.SkeletonFrameReady += null, IavaSkeletonFrameReadyEventArgs.Empty);
+            Thread.Sleep(50);
 
-//        #region Private Methods And Attributes
+            Assert.IsTrue(eventFired);
+        }
 
-//        /// <summary>
-//        /// Recognizer object under test.
-//        /// </summary>
-//        private IavaCamera camera;
+        #region Private Methods And Attributes
 
-//        /// <summary>
-//        /// Creates and sets up a mock IRuntime.
-//        /// </summary>
-//        /// <returns>Mock IRuntime</returns>
-//        private Mock<IRuntime> SetupMockRuntime() {
-//            var mockRuntime = new Mock<IRuntime>(MockBehavior.Strict);
+        /// <summary>
+        /// Recognizer object under test.
+        /// </summary>
+        private IavaCamera camera;
 
-//            // Setup methods that need to be called
-//            mockRuntime.Setup(m => m.Initialize());
+        /// <summary>
+        /// Creates and sets up a mock IRuntime.
+        /// </summary>
+        /// <returns>Mock IRuntime</returns>
+        private Mock<IRuntime> SetupMockColorImageFrame() {
+            var mockImageFrame = new Mock<IRuntime>(MockBehavior.Strict);
 
-//            return mockRuntime;
-//        }
+            // Setup methods that need to be called
+            mockImageFrame.Setup(m => m.Initialize());
 
-//        #endregion Private Methods And Attributes
-//    }
-//}
+            return mockImageFrame;
+        }
+
+        #endregion Private Methods And Attributes
+    }
+}

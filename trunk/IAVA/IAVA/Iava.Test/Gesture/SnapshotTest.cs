@@ -72,8 +72,8 @@ namespace Iava.Test
         [DeploymentItem("Iava.Gesture.dll")]
         public void SnapshotConstructorTest()
         {
-            //Snapshot_Accessor target = new Snapshot_Accessor();
-            //Assert.Inconclusive("TODO: Implement code to verify target");
+            //Snapshot_Accessor collection1 = new Snapshot_Accessor();
+            //Assert.Inconclusive("TODO: Implement code to verify collection1");
         }
 
         /// <summary>
@@ -83,8 +83,8 @@ namespace Iava.Test
         public void SnapshotConstructorTest1()
         {
             //IavaSkeleton skeleton = new IavaSkeleton();
-            //Snapshot target = new Snapshot(skeleton);
-            //Assert.Inconclusive("TODO: Implement code to verify target");
+            //Snapshot collection1 = new Snapshot(skeleton);
+            //Assert.Inconclusive("TODO: Implement code to verify collection1");
         }
 
         /// <summary>
@@ -93,13 +93,13 @@ namespace Iava.Test
         [TestMethod()]
         public void CheckSnapshotTest()
         {
-            //Snapshot target = new Snapshot(); // TODO: Initialize to an appropriate value
-            //IavaSkeleton skeleton = null; // TODO: Initialize to an appropriate value
-            //double fudgeFactor = 0F; // TODO: Initialize to an appropriate value
-            //bool expected = false; // TODO: Initialize to an appropriate value
+            //Snapshot collection1 = new Snapshot(); // TODO: Initialize to an appropriate kinectFrame
+            //IavaSkeleton skeleton = null; // TODO: Initialize to an appropriate kinectFrame
+            //double fudgeFactor = 0F; // TODO: Initialize to an appropriate kinectFrame
+            //bool accessor = false; // TODO: Initialize to an appropriate kinectFrame
             //bool actual;
-            //actual = target.CheckSnapshot(skeleton, fudgeFactor);
-            //Assert.AreEqual(expected, actual);
+            //actual = collection1.CheckSnapshot(skeleton, fudgeFactor);
+            //Assert.AreEqual(accessor, actual);
             //Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
@@ -109,9 +109,9 @@ namespace Iava.Test
         [TestMethod()]
         public void ClearTrackingJointsTest()
         {
-            //Snapshot target = new Snapshot(); // TODO: Initialize to an appropriate value
-            //target.ClearTrackingJoints();
-            //Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            //Snapshot collection1 = new Snapshot(); // TODO: Initialize to an appropriate kinectFrame
+            //collection1.ClearTrackingJoints();
+            //Assert.Inconclusive("A method that does not return a kinectFrame cannot be verified.");
         }
 
         /// <summary>
@@ -121,10 +121,10 @@ namespace Iava.Test
         [DeploymentItem("Iava.Gesture.dll")]
         public void SetTrackingJointsTest()
         {
-            //Snapshot_Accessor target = new Snapshot_Accessor(); // TODO: Initialize to an appropriate value
+            //Snapshot_Accessor collection1 = new Snapshot_Accessor(); // TODO: Initialize to an appropriate kinectFrame
             //IavaJointType[] joints = new IavaJointType[] { IavaJointType.Head, IavaJointType.AnkleLeft };
-            //target.SetTrackingJoints(joints);
-            //Assert.Inconclusive("A method that does not return a value cannot be verified.");
+            //collection1.SetTrackingJoints(joints);
+            //Assert.Inconclusive("A method that does not return a kinectFrame cannot be verified.");
         }
 
         /// <summary>
