@@ -25,9 +25,9 @@ namespace Iava.Input.Camera {
             // If just one is null, return false.
             if (((object)joint1 == null) || ((object)joint2 == null)) { return false; }
 
-            return (joint1.JointType == joint2.JointType &&
-                    joint1.Position == joint2.Position &&
-                    joint1.TrackingState == joint2.TrackingState);
+            return (joint1.JointType.Equals(joint2.JointType) &&
+                    joint1.Position.Equals(joint2.Position) &&
+                    joint1.TrackingState.Equals(joint2.TrackingState));
         }
 
         public static bool operator !=(IavaJoint joint1, IavaJoint joint2) {
@@ -37,23 +37,27 @@ namespace Iava.Input.Camera {
             // If just one is null, return true.
             if (((object)joint1 == null) || ((object)joint2 == null)) { return true; }
 
-            return (joint1.JointType != joint2.JointType ||
-                    joint1.Position != joint2.Position ||
-                    joint1.TrackingState != joint2.TrackingState);
+            return (!joint1.JointType.Equals(joint2.JointType) ||
+                    !joint1.Position.Equals(joint2.Position) ||
+                    !joint1.TrackingState.Equals(joint2.TrackingState));
         }
 
         public override bool Equals(object obj) {
             // If parameter is null return false.
             if (obj == null) { return false; }
 
-            // If parameter cannot be cast, return false.
-            IavaJoint joint = (IavaJoint)obj;
-            if ((Object)joint == null) { return false; }
+            try {
+                IavaJoint joint = (IavaJoint)obj;
 
-            // Do a field by field comparison
-            return (joint.JointType == this.JointType &&
-                    joint.Position == this.Position &&
-                    joint.TrackingState == this.TrackingState);
+                // Do a field by field comparison
+                return (joint.JointType.Equals(this.JointType) &&
+                        joint.Position.Equals(this.Position) &&
+                        joint.TrackingState.Equals(this.TrackingState));
+            }
+            // If parameter cannot be cast, return false.
+            catch (InvalidCastException) {
+                return false;
+            }
         }
 
         public static explicit operator IavaJoint(Joint value) {

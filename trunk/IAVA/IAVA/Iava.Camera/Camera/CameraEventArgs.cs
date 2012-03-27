@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Kinect;
 
 namespace Iava.Input.Camera {
@@ -35,6 +36,57 @@ namespace Iava.Input.Camera {
         }
 
         #endregion Constructors
+
+        #region Operator Overloads
+
+        public static bool operator ==(IavaSkeletonEventArgs eventArgs1, IavaSkeletonEventArgs eventArgs2) {
+            // If both are null, or are same instance, return true.
+            if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return true; }
+
+            // If just one is null, return false.
+            if (((object)eventArgs1 == null) || ((object)eventArgs2 == null)) { return false; }
+
+            // Skeleton can be null need to check that first...
+            if ((eventArgs1.Skeleton == null) && (eventArgs2.Skeleton == null)) { return true; }
+
+            // Do a field by field comparison
+            return (eventArgs1.Skeleton.Equals(eventArgs2.Skeleton));
+        }
+
+        public static bool operator !=(IavaSkeletonEventArgs eventArgs1, IavaSkeletonEventArgs eventArgs2) {
+            // If both are null, or are same instance, return false.
+            if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return false; }
+
+            // If just one is null, return true.
+            if ((eventArgs1 == null) || (eventArgs2 == null)) { return true; }
+
+            // Skeleton can be null need to check that first...
+            if ((eventArgs1.Skeleton == null) && (eventArgs2.Skeleton == null)) { return false; }
+
+            // Do a field by field comparison
+            return (!eventArgs1.Skeleton.Equals(eventArgs2.Skeleton));
+        }
+
+        public override bool Equals(object obj) {
+            // If parameter is null return false.
+            if (obj == null) { return false; }
+
+            try {
+                IavaSkeletonEventArgs eventArgs = (IavaSkeletonEventArgs)obj;
+
+                // Skeleton can be null need to check that first...
+                if ((eventArgs.Skeleton == null) && (this.Skeleton == null)) { return true; }
+
+                // Do a field by field comparison
+                return (eventArgs.Skeleton.Equals(this.Skeleton));
+            }
+            // If parameter cannot be cast, return false.
+            catch (InvalidCastException) {
+                return false;
+            }
+        }
+
+        #endregion Operator Overloads
     }
 
     /// <summary>
@@ -71,6 +123,51 @@ namespace Iava.Input.Camera {
         }
 
         #endregion Constructors
+
+        #region Operator Overloads
+
+        public static bool operator ==(IavaSkeletonFrameEventArgs eventArgs1, IavaSkeletonFrameEventArgs eventArgs2) {
+            // If both are null, or are same instance, return true.
+            if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return true; }
+
+            // If just one is null, return false.
+            if (((object)eventArgs1 == null) || ((object)eventArgs2 == null)) { return false; }
+
+            // Do a field by field comparison
+            return (eventArgs1.SkeletonIDs.SequenceEqual((eventArgs2.SkeletonIDs)) &&
+                    eventArgs1.Timestamp.Equals(eventArgs2.Timestamp));
+        }
+
+        public static bool operator !=(IavaSkeletonFrameEventArgs eventArgs1, IavaSkeletonFrameEventArgs eventArgs2) {
+            // If both are null, or are same instance, return false.
+            if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return false; }
+
+            // If just one is null, return true.
+            if ((eventArgs1 == null) || (eventArgs2 == null)) { return true; }
+
+            // Do a field by field comparison
+            return (!eventArgs1.SkeletonIDs.SequenceEqual((eventArgs2.SkeletonIDs)) ||
+                    !eventArgs1.Timestamp.Equals(eventArgs2.Timestamp));
+        }
+
+        public override bool Equals(object obj) {
+            // If parameter is null return false.
+            if (obj == null) { return false; }
+
+            try {
+                IavaSkeletonFrameEventArgs eventArgs = (IavaSkeletonFrameEventArgs)obj;
+
+                // Do a field by field comparison
+                return (eventArgs.SkeletonIDs.SequenceEqual((this.SkeletonIDs)) &&
+                        eventArgs.Timestamp.Equals(this.Timestamp));
+            }
+            // If parameter cannot be cast, return false.
+            catch (InvalidCastException) {
+                return false;
+            }
+        }
+
+        #endregion Operator Overloads
     }
 
     public sealed class IavaColorImageFrameReadyEventArgs : EventArgs {
@@ -93,7 +190,56 @@ namespace Iava.Input.Camera {
 
         #region Operator Overloads
 
-        public static implicit operator IavaColorImageFrameReadyEventArgs(ColorImageFrameReadyEventArgs value) {
+        public static bool operator ==(IavaColorImageFrameReadyEventArgs eventArgs1, IavaColorImageFrameReadyEventArgs eventArgs2) {
+            // If both are null, or are same instance, return true.
+            if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return true; }
+
+            // If just one is null, return false.
+            if (((object)eventArgs1 == null) || ((object)eventArgs2 == null)) { return false; }
+
+            // ImageFrame can be null need to check that first...
+            if ((eventArgs1.ImageFrame == null) && (eventArgs2.ImageFrame == null)) { return true; }
+
+            // Do a field by field comparison
+            return (eventArgs1.ImageFrame.Equals(eventArgs2.ImageFrame));
+        }
+
+        public static bool operator !=(IavaColorImageFrameReadyEventArgs eventArgs1, IavaColorImageFrameReadyEventArgs eventArgs2) {
+            // If both are null, or are same instance, return false.
+            if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return false; }
+
+            // If just one is null, return true.
+            if ((eventArgs1 == null) || (eventArgs2 == null)) { return true; }
+
+            // ImageFrame can be null need to check that first...
+            if ((eventArgs1.ImageFrame == null) && (eventArgs2.ImageFrame == null)) { return false; }
+
+            // Do a field by field comparison
+            return (!eventArgs1.ImageFrame.Equals(eventArgs2.ImageFrame));
+        }
+
+        public override bool Equals(object obj) {
+            // If parameter is null return false.
+            if (obj == null) { return false; }
+
+            try {
+                IavaColorImageFrameReadyEventArgs eventArgs = (IavaColorImageFrameReadyEventArgs)obj;
+
+                // ImageFrame can be null need to check that first...
+                if ((eventArgs.ImageFrame == null) && (this.ImageFrame == null)) { return true; }
+
+                // Do a field by field comparison
+                return (eventArgs.ImageFrame.Equals(this.ImageFrame));
+            }
+            // If parameter cannot be cast, return false.
+            catch (InvalidCastException) {
+                return false;
+            }
+        }
+
+        public static explicit operator IavaColorImageFrameReadyEventArgs(ColorImageFrameReadyEventArgs value) {
+            if (value == null) { return null; }
+
             return new IavaColorImageFrameReadyEventArgs((IavaColorImageFrame)value.OpenColorImageFrame());
         }
 
@@ -120,7 +266,56 @@ namespace Iava.Input.Camera {
 
         #region Operator Overloads
 
-        public static implicit operator IavaSkeletonFrameReadyEventArgs(SkeletonFrameReadyEventArgs value) {
+        public static bool operator ==(IavaSkeletonFrameReadyEventArgs eventArgs1, IavaSkeletonFrameReadyEventArgs eventArgs2) {
+            // If both are null, or are same instance, return true.
+            if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return true; }
+
+            // If just one is null, return false.
+            if (((object)eventArgs1 == null) || ((object)eventArgs2 == null)) { return false; }
+
+            // ImageFrame can be null need to check that first...
+            if ((eventArgs1.SkeletonFrame == null) && (eventArgs2.SkeletonFrame == null)) { return true; }
+
+            // Do a field by field comparison
+            return (eventArgs1.SkeletonFrame.Equals(eventArgs2.SkeletonFrame));
+        }
+
+        public static bool operator !=(IavaSkeletonFrameReadyEventArgs eventArgs1, IavaSkeletonFrameReadyEventArgs eventArgs2) {
+            // If both are null, or are same instance, return false.
+            if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return false; }
+
+            // If just one is null, return true.
+            if ((eventArgs1 == null) || (eventArgs2 == null)) { return true; }
+
+            // ImageFrame can be null need to check that first...
+            if ((eventArgs1.SkeletonFrame == null) && (eventArgs2.SkeletonFrame == null)) { return false; }
+
+            // Do a field by field comparison
+            return (!eventArgs1.SkeletonFrame.Equals(eventArgs2.SkeletonFrame));
+        }
+
+        public override bool Equals(object obj) {
+            // If parameter is null return false.
+            if (obj == null) { return false; }
+
+            try {
+                IavaSkeletonFrameReadyEventArgs eventArgs = (IavaSkeletonFrameReadyEventArgs)obj;
+
+                // ImageFrame can be null need to check that first...
+                if ((eventArgs.SkeletonFrame == null) && (this.SkeletonFrame == null)) { return true; }
+
+                // Do a field by field comparison
+                return (eventArgs.SkeletonFrame.Equals(this.SkeletonFrame));
+            }
+            // If parameter cannot be cast, return false.
+            catch (InvalidCastException) {
+                return false;
+            }
+        }
+
+        public static explicit operator IavaSkeletonFrameReadyEventArgs(SkeletonFrameReadyEventArgs value) {
+            if (value == null) { return null; }
+
             return new IavaSkeletonFrameReadyEventArgs((IavaSkeletonFrame)value.OpenSkeletonFrame());
         }
 

@@ -8,7 +8,7 @@ namespace Iava.Input.Camera {
 
         #region Public Properties
 
-        public int Count { get { return (int)IavaJointType.Count; } }
+        public int Count { get { return _joints.Length; } }
 
         public IavaJoint this[IavaJointType i] {
             get { return _joints[(int)i]; }
@@ -19,9 +19,21 @@ namespace Iava.Input.Camera {
 
         #region Private Fields
 
-        private IavaJoint[] _joints = new IavaJoint[(int)IavaJointType.Count];
+        private IavaJoint[] _joints;
 
         #endregion Private Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public IavaJointCollection() {
+            // Initialize the JointArray
+            _joints = new IavaJoint[(int)IavaJointType.Count];
+        }
+
+        #endregion Constructors
 
         #region Operator Overloads
 
@@ -33,7 +45,7 @@ namespace Iava.Input.Camera {
             if (((object)collection1 == null) || ((object)collection2 == null)) { return false; }
 
             for (IavaJointType i = 0; i < IavaJointType.Count; i++) {
-                if (collection1[i] != collection2[i]) { return false; }
+                if (!collection1[i].Equals(collection2[i])) { return false; }
             }
 
             // If we made it here they are the same
@@ -48,7 +60,7 @@ namespace Iava.Input.Camera {
             if (((object)collection1 == null) || ((object)collection2 == null)) { return true; }
 
             for (IavaJointType i = 0; i < IavaJointType.Count; i++) {
-                if (collection1[i] != collection2[i]) { return true; }
+                if (!collection1[i].Equals(collection2[i])) { return true; }
             }
 
             // If we made it here they are the same
@@ -59,17 +71,21 @@ namespace Iava.Input.Camera {
             // If parameter is null return false.
             if (obj == null) { return false; }
 
-            // If parameter cannot be cast, return false.
-            IavaJointCollection collection = (IavaJointCollection)obj;
-            if ((Object)collection == null) { return false; }
+            try {
+                IavaJointCollection collection = (IavaJointCollection)obj;
 
-            // Do a element by element comparison
-            for (IavaJointType i = 0; i < IavaJointType.Count; i++) {
-                if (collection[i] != this[i]) { return false; }
+                // Do a element by element comparison
+                for (IavaJointType i = 0; i < IavaJointType.Count; i++) {
+                    if (!collection[i].Equals(this[i])) { return false; }
+                }
+
+                // If we made it here they are equal
+                return true;
             }
-
-            // If we made it here they are equal
-            return true;
+            // If parameter cannot be cast, return false.
+            catch (InvalidCastException) {
+                return false;
+            }
         }
 
         public static explicit operator IavaJointCollection(JointCollection value) {

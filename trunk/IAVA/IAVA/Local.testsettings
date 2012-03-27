@@ -28,7 +28,7 @@
                 <CodeCoverageItem binaryFile="Iava.Audio\bin\Debug\Iava.Audio.dll" pdbFile="Iava.Audio\bin\Debug\Iava.Audio.pdb" instrumentInPlace="true" />
                 <CodeCoverageItem binaryFile="Iava.Camera\bin\Debug\Iava.Camera.dll" pdbFile="Iava.Camera\bin\Debug\Iava.Camera.pdb" instrumentInPlace="true" />
                 <CodeCoverageItem binaryFile="Iava.Gesture\bin\Debug\Iava.Gesture.dll" pdbFile="Iava.Gesture\bin\Debug\Iava.Gesture.pdb" instrumentInPlace="true" />
-                <CodeCoverageItem binaryFile="IAVA\bin\Debug\Iave.Core.dll" pdbFile="IAVA\bin\Debug\Iave.Core.pdb" instrumentInPlace="true" />
+                <CodeCoverageItem binaryFile="Iava.Core\bin\Debug\Iave.Core.dll" pdbFile="Iava.Core\bin\Debug\Iave.Core.pdb" instrumentInPlace="true" />
               </Regular>
             </CodeCoverage>
           </Configuration>

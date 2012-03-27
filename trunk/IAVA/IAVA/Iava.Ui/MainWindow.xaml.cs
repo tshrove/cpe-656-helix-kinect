@@ -422,7 +422,7 @@ namespace Iava.Ui {
                         jointLine.X1 = jointPos.X - 3;
                         jointLine.X2 = jointLine.X1 + 6;
                         jointLine.Y1 = jointLine.Y2 = jointPos.Y;
-                        //jointLine.Stroke = jointColors[joint.JointType];
+                        //jointLine.Stroke = jointColors[point.JointType];
                         jointLine.StrokeThickness = 6;
                         kinectSkeletonFeed.Children.Add(jointLine);
                     }

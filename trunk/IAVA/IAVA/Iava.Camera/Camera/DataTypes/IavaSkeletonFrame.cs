@@ -61,10 +61,10 @@ namespace Iava.Input.Camera {
             // If just one is null, return false.
             if (((object)skeletonFrame1 == null) || ((object)skeletonFrame2 == null)) { return false; }
 
-            return (skeletonFrame1.ActiveSkeleton == skeletonFrame2.ActiveSkeleton && 
-                    skeletonFrame1.FloorClipPlane == skeletonFrame2.FloorClipPlane &&
+            // Do a field by field comparison
+            return (skeletonFrame1.FloorClipPlane.Equals(skeletonFrame2.FloorClipPlane) &&
                     skeletonFrame1.FrameNumber == skeletonFrame2.FrameNumber &&
-                    skeletonFrame1.Skeletons == skeletonFrame2.Skeletons &&
+                    skeletonFrame1.Skeletons.SequenceEqual(skeletonFrame2.Skeletons) &&
                     skeletonFrame1.Timestamp == skeletonFrame2.Timestamp);
         }
 
@@ -75,27 +75,29 @@ namespace Iava.Input.Camera {
             // If just one is null, return true.
             if (((object)skeletonFrame1 == null) || ((object)skeletonFrame2 == null)) { return true; }
 
-            return (skeletonFrame1.ActiveSkeleton != skeletonFrame2.ActiveSkeleton ||
-                    skeletonFrame1.FloorClipPlane != skeletonFrame2.FloorClipPlane ||
-                    skeletonFrame1.FrameNumber != skeletonFrame2.FrameNumber ||
-                    skeletonFrame1.Skeletons != skeletonFrame2.Skeletons ||
-                    skeletonFrame1.Timestamp != skeletonFrame2.Timestamp);
+            return (!skeletonFrame1.FloorClipPlane.Equals(skeletonFrame2.FloorClipPlane) ||
+                    !skeletonFrame1.FrameNumber.Equals(skeletonFrame2.FrameNumber) ||
+                    !skeletonFrame1.Skeletons.SequenceEqual(skeletonFrame2.Skeletons) ||
+                    !skeletonFrame1.Timestamp.Equals(skeletonFrame2.Timestamp));
         }
 
         public override bool Equals(object obj) {
             // If parameter is null return false.
             if (obj == null) { return false; }
 
-            // If parameter cannot be cast, return false.
-            IavaSkeletonFrame skeletonFrame = (IavaSkeletonFrame)obj;
-            if ((Object)skeletonFrame == null) { return false; }
+            try {
+                IavaSkeletonFrame skeletonFrame = (IavaSkeletonFrame)obj;
 
-            // Do a field by field comparison
-            return (skeletonFrame.ActiveSkeleton == this.ActiveSkeleton &&
-                    skeletonFrame.FloorClipPlane == this.FloorClipPlane &&
-                    skeletonFrame.FrameNumber == this.FrameNumber &&
-                    skeletonFrame.Skeletons == this.Skeletons &&
-                    skeletonFrame.Timestamp == this.Timestamp);
+                // Do a field by field comparison
+                return (skeletonFrame.FloorClipPlane.Equals(this.FloorClipPlane) &&
+                        skeletonFrame.FrameNumber.Equals(this.FrameNumber) &&
+                        skeletonFrame.Skeletons.SequenceEqual(this.Skeletons) &&
+                        skeletonFrame.Timestamp.Equals(this.Timestamp));
+            }
+            // If parameter cannot be cast, return false.
+            catch (InvalidCastException) {
+                return false;
+            }
         }
 
         public static explicit operator IavaSkeletonFrame(SkeletonFrame value) {
@@ -110,12 +112,20 @@ namespace Iava.Input.Camera {
             };
 
             // Copy the Skeletons
-            Skeleton[] kinectSkeletons = new Skeleton[value.SkeletonArrayLength];
-            value.CopySkeletonDataTo(kinectSkeletons);
+            if (value.SkeletonArrayLength > 0) {
+                try {
+                    Skeleton[] kinectSkeletons = new Skeleton[value.SkeletonArrayLength];
+                    value.CopySkeletonDataTo(kinectSkeletons);
 
-            // Convert the array
-            for (int i = 0; i < kinectSkeletons.Length; i++) {
-                skeletonFrame.Skeletons[i] = (IavaSkeleton)kinectSkeletons[i];
+                    // Convert the array
+                    for (int i = 0; i < kinectSkeletons.Length; i++) {
+                        skeletonFrame.Skeletons[i] = (IavaSkeleton)kinectSkeletons[i];
+                    }
+                }
+                catch (ArgumentNullException) {
+                    // Somehow the SkeletonFrame's skeleton array is empty
+                    // Since we can't copy it, just return.
+                }
             }
 
             return skeletonFrame;

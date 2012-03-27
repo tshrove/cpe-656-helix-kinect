@@ -1,4 +1,5 @@
-﻿using Microsoft.Kinect;
+﻿using System;
+using Microsoft.Kinect;
 
 namespace Iava.Core.Math {
 
@@ -41,15 +42,33 @@ namespace Iava.Core.Math {
         }
 
         public static bool operator ==(IavaSkeletonPoint vector1, IavaSkeletonPoint vector2) {
-            return (vector1.X == vector2.X &&
-                    vector1.Y == vector2.Y &&
-                    vector1.Z == vector2.Z);
+            return (vector1.X.Equals(vector2.X) &&
+                    vector1.Y.Equals(vector2.Y) &&
+                    vector1.Z.Equals(vector2.Z));
         }
 
         public static bool operator !=(IavaSkeletonPoint vector1, IavaSkeletonPoint vector2) {
-            return (vector1.X != vector2.X &&
-                    vector1.Y != vector2.Y &&
-                    vector1.Z != vector2.Z);
+            return (!vector1.X.Equals(vector2.X) &&
+                    !vector1.Y.Equals(vector2.Y) &&
+                    !vector1.Z.Equals(vector2.Z));
+        }
+
+        public override bool Equals(object obj) {
+            // If parameter is null return false.
+            if (obj == null) { return false; }
+
+            try {
+                IavaSkeletonPoint point = (IavaSkeletonPoint)obj;
+
+                // Do a field by field comparison
+                return (point.X.Equals(this.X) &&
+                        point.Y.Equals(this.Y) &&
+                        point.Z.Equals(this.Z));
+            }
+            // If parameter cannot be cast, return false.
+            catch (InvalidCastException) {
+                return false;
+            }
         }
 
         public static explicit operator IavaSkeletonPoint(SkeletonPoint value) {

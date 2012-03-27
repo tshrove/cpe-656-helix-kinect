@@ -101,9 +101,9 @@ namespace Iava.Gesture {
         #region Public Methods
 
         /// <summary>
-        /// Sets all the snapshots to track this specified joint.
+        /// Sets all the snapshots to track this specified point.
         /// </summary>
-        /// <param name="joint"></param>
+        /// <param name="point"></param>
         public void SetTrackingJoints(params IavaJointType[] joints) {
             foreach (var segment in this.Snapshots) {
                 segment.SetTrackingJoints(joints);
