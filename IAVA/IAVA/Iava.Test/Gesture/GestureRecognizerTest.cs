@@ -72,7 +72,7 @@ namespace Iava.Test.Gesture {
                 // Make sure the GestureCallbacks is a dictionary
                 Assert.IsInstanceOfType(recognizer.GestureCallbacks, typeof(Dictionary<string, GestureCallback>));
 
-                // Hold our expected callbacks (in this case empty)
+                // Hold our accessor callbacks (in this case empty)
                 Dictionary<string, GestureCallback> expectedCallbacks = new Dictionary<string, GestureCallback>();
 
                 // Make sure we have the same number of callbacks as we are expecting
@@ -84,7 +84,7 @@ namespace Iava.Test.Gesture {
                 // Make sure the SupportedGestures is a list
                 Assert.IsInstanceOfType(recognizer.SupportedGestures, typeof(List<IavaGesture>));
 
-                // Hold our expected gestures (in this case empty)
+                // Hold our accessor gestures (in this case empty)
                 List<string> expectedGestures = new List<string>();
 
                 // Make sure we have the same number of gestures as we are expecting
@@ -240,7 +240,7 @@ namespace Iava.Test.Gesture {
 
                 string eventName;
 
-                // Hold our expected callbacks and a key value pair for the subscription signature
+                // Hold our accessor callbacks and a key kinectFrame pair for the subscription signature
                 Dictionary<string, GestureCallback> expectedCallbacks = new Dictionary<string, GestureCallback>();
                 KeyValuePair<string, GestureCallback> subscriptionSignature = new KeyValuePair<string, GestureCallback>();
 
@@ -252,7 +252,7 @@ namespace Iava.Test.Gesture {
                     // Subscribe to the gesture
                     recognizer.Subscribe(subscriptionSignature.Key, subscriptionSignature.Value);
 
-                    // Add it to our expected callbacks
+                    // Add it to our accessor callbacks
                     expectedCallbacks.Add(subscriptionSignature.Key, subscriptionSignature.Value);
 
                     // Make sure we have the same number of callbacks
@@ -264,7 +264,7 @@ namespace Iava.Test.Gesture {
                     // Subscribe to the gesture
                     recognizer.Subscribe(subscriptionSignature.Key, subscriptionSignature.Value);
 
-                    // Add it to our expected callbacks
+                    // Add it to our accessor callbacks
                     expectedCallbacks.Add(subscriptionSignature.Key, subscriptionSignature.Value);
 
                     // Again, make sure we have the same number of callbacks
@@ -320,7 +320,7 @@ namespace Iava.Test.Gesture {
 
                 string eventName;
 
-                // Hold our expected callbacks and a key value pair for the subscription signature
+                // Hold our accessor callbacks and a key kinectFrame pair for the subscription signature
                 Dictionary<string, GestureCallback> expectedCallbacks = new Dictionary<string, GestureCallback>();
                 KeyValuePair<string, GestureCallback> subscriptionSignature = new KeyValuePair<string, GestureCallback>();
 
@@ -332,7 +332,7 @@ namespace Iava.Test.Gesture {
                     // Subscribe to the gesture
                     recognizer.Subscribe(subscriptionSignature.Key, subscriptionSignature.Value);
 
-                    // Add it to our expected callbacks
+                    // Add it to our accessor callbacks
                     expectedCallbacks.Add(subscriptionSignature.Key, subscriptionSignature.Value);
 
                     // Create the subscription signature for the 'Wave' Gesture
@@ -341,13 +341,13 @@ namespace Iava.Test.Gesture {
                     // Subscribe to the gesture
                     recognizer.Subscribe(subscriptionSignature.Key, subscriptionSignature.Value);
 
-                    // Add it to our expected callbacks
+                    // Add it to our accessor callbacks
                     expectedCallbacks.Add(subscriptionSignature.Key, subscriptionSignature.Value);
 
                     // Unsubscribe from the 'Wave' gesture
                     recognizer.Unsubscribe("Wave");
 
-                    // Remove it from our expected callbacks
+                    // Remove it from our accessor callbacks
                     expectedCallbacks.Remove("Wave");
 
                     // Make sure we have the same number of callbacks
@@ -556,12 +556,12 @@ namespace Iava.Test.Gesture {
         ///</summary>
         [TestMethod()]
         public void OnSkeletonReadyTest() {/*
-            PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-            GestureRecognizer_Accessor target = new GestureRecognizer_Accessor(param0); // TODO: Initialize to an appropriate value
-            object sender = null; // TODO: Initialize to an appropriate value
-            IavaSkeletonEventArgs e = null; // TODO: Initialize to an appropriate value
-            target.OnSkeletonReady(sender, e);
-            Assert.Inconclusive("A method that does not return a value cannot be verified.");*/
+            PrivateObject param0 = null; // TODO: Initialize to an appropriate kinectFrame
+            GestureRecognizer_Accessor collection1 = new GestureRecognizer_Accessor(param0); // TODO: Initialize to an appropriate kinectFrame
+            object sender = null; // TODO: Initialize to an appropriate kinectFrame
+            IavaSkeletonEventArgs e = null; // TODO: Initialize to an appropriate kinectFrame
+            collection1.OnSkeletonReady(sender, e);
+            Assert.Inconclusive("A method that does not return a kinectFrame cannot be verified.");*/
         }
 
         // ************************************************
@@ -575,7 +575,7 @@ namespace Iava.Test.Gesture {
 
             string eventName;
 
-            // Hold our expected callbacks
+            // Hold our accessor callbacks
             Dictionary<string, GestureCallback> gestureCallbacks = new Dictionary<string, GestureCallback>();
             gestureCallbacks.Add("Sync", (eventArgs) => { eventName = eventArgs.Name; });
             gestureCallbacks.Add("Wave", (eventArgs) => { eventName = eventArgs.Name; });
