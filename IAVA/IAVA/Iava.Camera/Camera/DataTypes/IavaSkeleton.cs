@@ -20,6 +20,22 @@ namespace Iava.Input.Camera {
 
         #endregion Public Properties
 
+        #region Constructors
+
+        public IavaSkeleton() {
+            Joints = new IavaJointCollection();
+
+            IavaJoint iavaJoint = new IavaJoint();
+
+            // Initialize the Joint Collection
+            for (IavaJointType type = 0; type < IavaJointType.Count; type++) {
+                iavaJoint.JointType = type;
+                Joints[type] = iavaJoint;
+            }
+        }
+
+        #endregion Constructors
+
         #region Operator Overloads
 
         public static bool operator ==(IavaSkeleton skeleton1, IavaSkeleton skeleton2) {
@@ -29,11 +45,11 @@ namespace Iava.Input.Camera {
             // If just one is null, return false.
             if (((object)skeleton1 == null) || ((object)skeleton2 == null)) { return false; }
 
-            return (skeleton1.ClippedEdges == skeleton2.ClippedEdges &&
-                    skeleton1.Joints == skeleton2.Joints &&
-                    skeleton1.Position == skeleton2.Position &&
-                    skeleton1.TrackingId == skeleton2.TrackingId &&
-                    skeleton1.TrackingState == skeleton2.TrackingState);
+            return (skeleton1.ClippedEdges.Equals(skeleton2.ClippedEdges) &&
+                    skeleton1.Joints.Equals(skeleton2.Joints) &&
+                    skeleton1.Position.Equals(skeleton2.Position) &&
+                    skeleton1.TrackingId.Equals(skeleton2.TrackingId) &&
+                    skeleton1.TrackingState.Equals(skeleton2.TrackingState));
         }
 
         public static bool operator !=(IavaSkeleton skeleton1, IavaSkeleton skeleton2) {
@@ -43,11 +59,11 @@ namespace Iava.Input.Camera {
             // If just one is null, return true.
             if (((object)skeleton1 == null) || ((object)skeleton2 == null)) { return true; }
 
-            return (skeleton1.ClippedEdges != skeleton2.ClippedEdges ||
-                    skeleton1.Joints != skeleton2.Joints ||
-                    skeleton1.Position != skeleton2.Position ||
-                    skeleton1.TrackingId != skeleton2.TrackingId ||
-                    skeleton1.TrackingState != skeleton2.TrackingState);
+            return (!skeleton1.ClippedEdges.Equals(skeleton2.ClippedEdges) ||
+                    !skeleton1.Joints.Equals(skeleton2.Joints) ||
+                    !skeleton1.Position.Equals(skeleton2.Position) ||
+                    !skeleton1.TrackingId.Equals(skeleton2.TrackingId) ||
+                    !skeleton1.TrackingState.Equals(skeleton2.TrackingState));
         }
 
         public static explicit operator IavaSkeleton(Skeleton value) {
@@ -67,16 +83,20 @@ namespace Iava.Input.Camera {
             // If parameter is null return false.
             if (obj == null) { return false; }
 
-            // If parameter cannot be cast, return false.
-            IavaSkeleton skeleton = (IavaSkeleton)obj;
-            if ((Object)skeleton == null) { return false; }
+            try {
+                IavaSkeleton skeleton = (IavaSkeleton)obj;
 
-            // Do a field by field comparison
-            return (skeleton.ClippedEdges == this.ClippedEdges && 
-                    skeleton.Joints == this.Joints &&
-                    skeleton.Position == this.Position &&
-                    skeleton.TrackingId == this.TrackingId &&
-                    skeleton.TrackingState == this.TrackingState);
+                // Do a field by field comparison
+                return (skeleton.ClippedEdges.Equals(this.ClippedEdges) &&
+                        skeleton.Joints.Equals(this.Joints) &&
+                        skeleton.Position.Equals(this.Position) &&
+                        skeleton.TrackingId.Equals(this.TrackingId) &&
+                        skeleton.TrackingState.Equals(this.TrackingState));
+            }
+            // If parameter cannot be cast, return false.
+            catch (InvalidCastException) {
+                return false;
+            }
         }
 
         #endregion Operator Overloads

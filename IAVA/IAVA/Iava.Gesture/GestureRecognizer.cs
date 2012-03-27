@@ -247,7 +247,7 @@ namespace Iava.Gesture
                 joint = e.Skeleton.Joints[jointID];
                 joint.Position = Geometry.Translate(joint.Position, translationVector);
 
-                // Set the joint to the joint with the updated position
+                // Set the point to the point with the updated position
                 e.Skeleton.Joints[jointID] = joint;
             }
 
