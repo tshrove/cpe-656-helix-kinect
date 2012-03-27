@@ -70,7 +70,6 @@
     <Compile Include="Input\Event Args\IavaSkeletonFrameEventArgsTest.cs" />
     <Compile Include="Input\Event Args\IavaSkeletonFrameReadyEventArgsTest.cs" />
     <Compile Include="Input\DataTypes\IavaColorImageFrameTest.cs" />
-    <Compile Include="IavaImageFrameTest.cs" />
     <Compile Include="Input\DataTypes\IavaJointCollectionTest.cs" />
     <Compile Include="Input\DataTypes\IavaJointTest.cs" />
     <Compile Include="Input\DataTypes\IavaSkeletonFrameTest.cs" />
