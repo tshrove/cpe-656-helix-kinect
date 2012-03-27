@@ -65,9 +65,16 @@
     <Compile Include="Core\Logging\StatusLoggerTest.cs" />
     <Compile Include="Core\Math\GeometryTest.cs" />
     <Compile Include="Core\Math\IavaVectorTest.cs" />
+    <Compile Include="Input\Event Args\IavaColorImageFrameReadyEventArgsTest.cs" />
+    <Compile Include="Input\Event Args\IavaSkeletonEventArgsTest.cs" />
+    <Compile Include="Input\Event Args\IavaSkeletonFrameEventArgsTest.cs" />
+    <Compile Include="Input\Event Args\IavaSkeletonFrameReadyEventArgsTest.cs" />
+    <Compile Include="Input\DataTypes\IavaColorImageFrameTest.cs" />
     <Compile Include="IavaImageFrameTest.cs" />
-    <Compile Include="Input\CameraDataTypesTest.cs" />
-    <Compile Include="Input\CameraEventArgsTest.cs" />
+    <Compile Include="Input\DataTypes\IavaJointCollectionTest.cs" />
+    <Compile Include="Input\DataTypes\IavaJointTest.cs" />
+    <Compile Include="Input\DataTypes\IavaSkeletonFrameTest.cs" />
+    <Compile Include="Input\DataTypes\IavaSkeletonTest.cs" />
     <Compile Include="Input\CameraTest.cs" />
     <Compile Include="Gesture\GestureRecognizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,7 +110,9 @@
   <ItemGroup>
     <Shadow Include="Test References\Iave.Core.accessor" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Shadow Include="Test References\Iava.Camera.accessor" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
