@@ -8,13 +8,13 @@
         <DockPanel LastChildFill="True">
             <StackPanel>
                 <TextBlock Text="Gesture to test" HorizontalAlignment="Center" Foreground="Wheat" FontSize="14" DockPanel.Dock="Top"/>
-                <ListBox Name="lstGestures" DockPanel.Dock="Left" Width="200" Background="#FF313131" ItemsSource="{Binding}">
-                    <ListBox.ItemTemplate>
+                <ListView Name="lstGestures" DockPanel.Dock="Left" Width="200" Background="#FF313131" ItemsSource="{Binding}">
+                    <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" Foreground="White" FontSize="15" />
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackPanel>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" Name="kinectSkeletonFeed" Width="320" Height="240" Background="Black">
                 <Canvas.RenderTransform>
@@ -28,5 +28,19 @@
             <Button Name="btnExit"  Content="Close" Height="50" Margin="5" Click="btnExit_Click" />
         </StackPanel>
         <Image Name="Gesture" />
+        <Popup x:Name="popStatus" 
+               Placement="Center" 
+               AllowsTransparency="True"
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               PopupAnimation="Fade"
+               StaysOpen="False"
+               Height="50">
+            <Border Background="Black" BorderThickness="1,1,1,1" CornerRadius="10,10,10,10" Opacity="0.65">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
+                    <Label x:Name="lblStatus" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="20" Background="Transparent"/>
+                </Grid>
+            </Border>
+        </Popup>
     </DockPanel>
 </UserControl>
