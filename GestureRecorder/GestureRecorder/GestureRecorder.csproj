@@ -38,19 +38,19 @@
   <ItemGroup>
     <Reference Include="Iava.Audio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\IAVA\IAVA\Iava.Ui\bin\Release\Iava.Audio.dll</HintPath>
+      <HintPath>..\..\IAVA\Iava.Audio\bin\Release\Iava.Audio.dll</HintPath>
     </Reference>
     <Reference Include="Iava.Camera, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\IAVA\IAVA\Iava.Ui\bin\Release\Iava.Camera.dll</HintPath>
+      <HintPath>..\..\IAVA\Iava.Camera\bin\Release\Iava.Camera.dll</HintPath>
     </Reference>
     <Reference Include="Iava.Gesture, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\IAVA\IAVA\Iava.Ui\bin\Release\Iava.Gesture.dll</HintPath>
+      <HintPath>..\..\IAVA\Iava.Gesture\bin\Release\Iava.Gesture.dll</HintPath>
     </Reference>
     <Reference Include="Iave.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\IAVA\IAVA\Iava.Ui\bin\Release\Iave.Core.dll</HintPath>
+      <HintPath>..\..\IAVA\Iava.Core\bin\Release\Iave.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

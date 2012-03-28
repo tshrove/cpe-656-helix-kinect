@@ -7,6 +7,9 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Collections.Generic;
+using Iava.Core.Math;
+using System.Linq;
+using System;
 
 namespace GestureRecorder.Controls
 {
@@ -20,6 +23,7 @@ namespace GestureRecorder.Controls
         ObservableCollection<IavaGesture> m_pGestures = new ObservableCollection<IavaGesture>();
         GestureRecognizer m_pGestureRecognizer = null;
         bool m_bStarted = false;
+        new System.Timers.Timer m_pTimer = new System.Timers.Timer();
         #endregion
 
         #region Constructor
@@ -71,8 +75,29 @@ namespace GestureRecorder.Controls
         /// <param name="e"></param>
         private void GestureDetected(GestureEventArgs e)
         {
+            if (!popStatus.IsOpen) {
+                m_pTimer.Interval = 2000; // 2 seconds
+                m_pTimer.Elapsed += OnTimerElapsed;
+                m_pTimer.Enabled = true;
+                popStatus.IsOpen = true;
+                lblStatus.Content = e.Name;
+            }
+            else {
+                m_pTimer.Interval = 2000;
+                lblStatus.Content = e.Name;
+            }
             System.Media.SystemSounds.Beep.Play();
         }
+
+        /// <summary>
+        /// Event used in junction with the display status function.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTimerElapsed(object sender, System.Timers.ElapsedEventArgs e) {
+            popStatus.Dispatcher.Invoke(new Action(() => popStatus.IsOpen = false));
+        }
+
         /// <summary>
         /// Raises when the start button has been clicked.
         /// </summary>
@@ -114,17 +139,17 @@ namespace GestureRecorder.Controls
             brushes[5] = new SolidColorBrush(Color.FromRgb(128, 128, 255));
 
             kinectSkeletonFeed.Children.Clear();
-            foreach (IavaSkeletonData data in skeletonFrame.Skeletons)
+            foreach (IavaSkeleton data in skeletonFrame.Skeletons)
             {
                 if (IavaSkeletonTrackingState.Tracked == data.TrackingState)
                 {
                     // Draw bones
                     Brush brush = brushes[iSkeleton % brushes.Length];
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.HipCenter, IavaJointID.Spine, IavaJointID.ShoulderCenter, IavaJointID.Head));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.ShoulderCenter, IavaJointID.ShoulderLeft, IavaJointID.ElbowLeft, IavaJointID.WristLeft, IavaJointID.HandLeft));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.ShoulderCenter, IavaJointID.ShoulderRight, IavaJointID.ElbowRight, IavaJointID.WristRight, IavaJointID.HandRight));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.HipCenter, IavaJointID.HipLeft, IavaJointID.KneeLeft, IavaJointID.AnkleLeft, IavaJointID.FootLeft));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointID.HipCenter, IavaJointID.HipRight, IavaJointID.KneeRight, IavaJointID.AnkleRight, IavaJointID.FootRight));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.HipCenter, IavaJointType.Spine, IavaJointType.ShoulderCenter, IavaJointType.Head));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.ShoulderCenter, IavaJointType.ShoulderLeft, IavaJointType.ElbowLeft, IavaJointType.WristLeft, IavaJointType.HandLeft));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.ShoulderCenter, IavaJointType.ShoulderRight, IavaJointType.ElbowRight, IavaJointType.WristRight, IavaJointType.HandRight));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.HipCenter, IavaJointType.HipLeft, IavaJointType.KneeLeft, IavaJointType.AnkleLeft, IavaJointType.FootLeft));
+                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.HipCenter, IavaJointType.HipRight, IavaJointType.KneeRight, IavaJointType.AnkleRight, IavaJointType.FootRight));
 
                     // Draw joints
                     foreach (IavaJoint joint in data.Joints)
@@ -142,7 +167,7 @@ namespace GestureRecorder.Controls
                 iSkeleton++;
             } // for each skeleton
         }
-        private Polyline GetBodySegment(IavaJointsCollection joints, Brush brush, params IavaJointID[] jointIDs)
+        private Polyline GetBodySegment(IavaJointCollection joints, Brush brush, params IavaJointType[] jointIDs)
         {
             PointCollection points = new PointCollection(jointIDs.Length);
             for (int i = 0; i < jointIDs.Length; ++i)
