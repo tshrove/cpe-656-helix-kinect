@@ -1,14 +1,17 @@
 ﻿using System;
 
 namespace Iava.Gesture {
+
     /// <summary>
-    /// 
+    /// EventArgs specifying the name of the Gesture it came from
     /// </summary>
-    /// <remarks>In the future we probably want to ship the gesture object along with the name</remarks>
     public class GestureEventArgs : EventArgs {
 
         #region Public Properties
 
+        /// <summary>
+        /// Name of the Gesture
+        /// </summary>
         public string Name { get; private set; }
 
         #endregion Public Properties

@@ -66,7 +66,7 @@ namespace Iava.Test
         #endregion
 
         /// <summary>
-        ///A test for Snapshot Constructor
+        ///A test for IavaSnapshot Constructor
         ///</summary>
         [TestMethod()]
         [DeploymentItem("Iava.Gesture.dll")]
@@ -77,13 +77,13 @@ namespace Iava.Test
         }
 
         /// <summary>
-        ///A test for Snapshot Constructor
+        ///A test for IavaSnapshot Constructor
         ///</summary>
         [TestMethod()]
         public void SnapshotConstructorTest1()
         {
             //IavaSkeleton skeleton = new IavaSkeleton();
-            //Snapshot collection1 = new Snapshot(skeleton);
+            //IavaSnapshot collection1 = new IavaSnapshot(skeleton);
             //Assert.Inconclusive("TODO: Implement code to verify collection1");
         }
 
@@ -93,7 +93,7 @@ namespace Iava.Test
         [TestMethod()]
         public void CheckSnapshotTest()
         {
-            //Snapshot collection1 = new Snapshot(); // TODO: Initialize to an appropriate kinectFrame
+            //IavaSnapshot collection1 = new IavaSnapshot(); // TODO: Initialize to an appropriate kinectFrame
             //IavaSkeleton skeleton = null; // TODO: Initialize to an appropriate kinectFrame
             //double fudgeFactor = 0F; // TODO: Initialize to an appropriate kinectFrame
             //bool accessor = false; // TODO: Initialize to an appropriate kinectFrame
@@ -109,7 +109,7 @@ namespace Iava.Test
         [TestMethod()]
         public void ClearTrackingJointsTest()
         {
-            //Snapshot collection1 = new Snapshot(); // TODO: Initialize to an appropriate kinectFrame
+            //IavaSnapshot collection1 = new IavaSnapshot(); // TODO: Initialize to an appropriate kinectFrame
             //collection1.ClearTrackingJoints();
             //Assert.Inconclusive("A method that does not return a kinectFrame cannot be verified.");
         }
@@ -134,9 +134,9 @@ namespace Iava.Test
         [DeploymentItem("Iava.Gesture.dll")]
         public void BodyPartsTest()
         {
-            Snapshot_Accessor target = new Snapshot_Accessor();
-            List<BodyPart> expected = new List<BodyPart>();
-            List<BodyPart> actual;
+            IavaSnapshot_Accessor target = new IavaSnapshot_Accessor();
+            List<IavaBodyPart> expected = new List<IavaBodyPart>();
+            List<IavaBodyPart> actual;
             actual = target.BodyParts;
             Assert.AreNotEqual(actual, null);
             Assert.AreEqual(expected.Count, actual.Count);

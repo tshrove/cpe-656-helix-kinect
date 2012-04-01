@@ -43,10 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BodyPart.cs" />
-    <Compile Include="Gesture Stuff\Enums.cs" />
-    <Compile Include="Gesture Stuff\Gesture.cs" />
-    <Compile Include="Gesture Stuff\IGestureSegment.cs" />
-    <Compile Include="Gesture Stuff\RecognizerEngine.cs" />
     <Compile Include="Gesture.cs" />
     <Compile Include="GestureEngine.cs" />
     <Compile Include="GestureEventArgs.cs" />
@@ -64,11 +60,6 @@
       <Project>{80DF01EC-0E97-4B4D-A36F-FED9659D748A}</Project>
       <Name>Iava.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="GestureDefinition.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
