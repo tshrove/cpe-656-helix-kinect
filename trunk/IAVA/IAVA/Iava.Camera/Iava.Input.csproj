@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera\Camera.cs" />
-    <Compile Include="Camera\CameraEventArgs.cs" />
     <Compile Include="Camera\DataTypes\IavaColorImageFormat.cs" />
     <Compile Include="Camera\DataTypes\IavaColorImageFrame.cs" />
     <Compile Include="Camera\DataTypes\IavaJoint.cs" />
@@ -53,6 +52,10 @@
     <Compile Include="Camera\DataTypes\IavaSkeletonFrame.cs" />
     <Compile Include="Camera\DataTypes\IavaFrameEdges.cs" />
     <Compile Include="Camera\DataTypes\IavaSkeletonTrackingState.cs" />
+    <Compile Include="Camera\EventArgs\IavaColorImageFrameEventArgs.cs" />
+    <Compile Include="Camera\EventArgs\IavaSkeletonEventArgs.cs" />
+    <Compile Include="Camera\EventArgs\IavaSkeletonFrameEventArgs.cs" />
+    <Compile Include="Camera\EventArgs\IavaSkeletonFrameReadyEventArgs.cs" />
     <Compile Include="Camera\IRuntime.cs" />
     <Compile Include="Camera\RuntimeWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
