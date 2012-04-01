@@ -1,51 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using Iava.Input.Camera;
-using Iava.Core.Math;
 
 namespace Iava.Gesture {
+
+    /// <summary>
+    /// Contains state information for a single 'pose' of a defined IavaGesture
+    /// </summary>
     [XmlRoot("Gesture", Namespace = "urn:Gestures")]
     public class IavaGesture {
 
         #region Public Events
 
+        /// <summary>
+        /// Fired when the gesture is recognized
+        /// </summary>
         public event EventHandler<GestureEventArgs> GestureRecognized;
 
         #endregion Public Events
-
-        #region Private Fields
-
-        private List<Snapshot> _snapshots = new List<Snapshot>();
-
-        /// <summary>
-        /// Indicates if the current gesture is in the paused state
-        /// </summary>
-        [XmlIgnore()]
-        private bool _paused = false;
-
-        /// <summary>
-        /// Specifies how many frames the gesture has been in the paused state
-        /// </summary>
-        [XmlIgnore()]
-        private int _pausedFrameCount = 10;
-
-        /// <summary>
-        /// Specifies the number of frames we have analyzed for this gesture
-        /// </summary>
-        [XmlIgnore()]
-        private int _frameCount = 0;
-
-        /// <summary>
-        /// Specifies the current gesture segment we are trying to detect
-        /// </summary>
-        [XmlIgnore()]
-        private int _currentGestureSegment = 0;
-
-        #endregion Private Fields
 
         #region Public Properties
 
@@ -53,7 +27,7 @@ namespace Iava.Gesture {
         /// Gets the list of snapshots for the current Gesture.
         /// </summary>
         [XmlElement("Snapshot")]
-        public List<Snapshot> Snapshots {
+        public List<IavaSnapshot> Snapshots {
             get {
                 return this._snapshots;
             }
@@ -82,23 +56,43 @@ namespace Iava.Gesture {
 
         #endregion Public Properties
 
-        #region Constructors
+        #region Public Methods
 
         /// <summary>
-        /// Default Constructor
+        /// Saves the all the IavaGesture into an xml file.
         /// </summary>
-        public IavaGesture() {
-            //Nothing to do
+        /// <param name="gesture">IavaGesture to be saved</param>
+        /// <param name="path">Filepath where the gesture should be written to</param>
+        public static void Save(IavaGesture gesture, string path) {
+            foreach (IavaSnapshot snapshot in gesture.Snapshots) {
+                // Get the hipcenter
+                IavaBodyPart hipCenter = snapshot.BodyParts[(int)IavaJointType.HipCenter];
+
+                // Translate each bodypart position based on hipcenter
+                foreach (IavaBodyPart bodyPart in snapshot.BodyParts) {
+                    bodyPart.Position = Iava.Core.Math.Geometry.Translate(bodyPart.Position, hipCenter.Position);
+                }
+            }
+            XmlSerializer serializer = new XmlSerializer(typeof(IavaGesture));
+            TextWriter textWriter = new StreamWriter(path);
+            serializer.Serialize(textWriter, gesture);
+            textWriter.Close();
         }
 
-        public IavaGesture(string name, List<Snapshot> snapshots) {
-            Name = name;
-            Snapshots = snapshots;
+        /// <summary>
+        /// Creates a gesture from the current xml file path.
+        /// </summary>
+        /// <param name="path">Filepath to the gesture</param>
+        /// <returns>IavaGesture defined in the xml file</returns>
+        public static IavaGesture Load(string path) {
+            IavaGesture newGesture = null;
+            XmlSerializer deserializer = new XmlSerializer(typeof(IavaGesture));
+            TextReader textReader = new StreamReader(path);
+            newGesture = (IavaGesture)deserializer.Deserialize(textReader);
+            textReader.Close();
+
+            return newGesture;
         }
-
-        #endregion Constructors
-
-        #region Public Methods
 
         /// <summary>
         /// Sets all the snapshots to track this specified point.
@@ -168,43 +162,46 @@ namespace Iava.Gesture {
 
         #endregion
 
-        #region Static Methods
-        /// <summary>
-        /// Save the gesture into an xml file.
-        /// </summary>
-        /// <param name="gesture"></param>
-        /// <param name="path"></param>
-        public static void Save(IavaGesture gesture, string path) {
-            foreach (Snapshot snapshot in gesture.Snapshots)
-            {
-                // Get the hipcenter
-                BodyPart hipCenter = snapshot.BodyParts[(int)IavaJointType.HipCenter];
-                
-                // Translate each bodypart position based on hipcenter
-                foreach (BodyPart bodyPart in snapshot.BodyParts)
-                {
-                    bodyPart.Position = Iava.Core.Math.Geometry.Translate(bodyPart.Position, hipCenter.Position);
-                }
-            }
-            XmlSerializer serializer = new XmlSerializer(typeof(IavaGesture));
-            TextWriter textWriter = new StreamWriter(path);
-            serializer.Serialize(textWriter, gesture);
-            textWriter.Close();
-        }
-        /// <summary>
-        /// Creates a gesture from the current xml file path.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static IavaGesture Load(string path) {
-            IavaGesture newGesture = null;
-            XmlSerializer deserializer = new XmlSerializer(typeof(IavaGesture));
-            TextReader textReader = new StreamReader(path);
-            newGesture = (IavaGesture)deserializer.Deserialize(textReader);
-            textReader.Close();
+        #region Constructors
 
-            return newGesture;
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        internal IavaGesture() {
+            //Nothing to do
         }
-        #endregion
+
+        /// <summary>
+        /// Creates an IavaGesture containing the specified name and list of snapshots that make up the IavaGesture
+        /// </summary>
+        /// <param name="name">Name of the gesture</param>
+        /// <param name="snapshots">'Poses' defining the gesture</param>
+        public IavaGesture(string name, List<IavaSnapshot> snapshots) {
+            Name = name;
+            Snapshots = snapshots;
+        }
+
+        #endregion Constructors
+
+        #region Private Fields
+
+        /// <summary>
+        /// Snapshots defining the IavaGesture
+        /// </summary>
+        private List<IavaSnapshot> _snapshots = new List<IavaSnapshot>();
+
+        /// <summary>
+        /// Specifies the number of frames we have analyzed for this gesture
+        /// </summary>
+        [XmlIgnore()]
+        private int _frameCount = 0;
+
+        /// <summary>
+        /// Specifies the current gesture segment we are trying to detect
+        /// </summary>
+        [XmlIgnore()]
+        private int _currentGestureSegment = 0;
+
+        #endregion Private Fields
     }
 }

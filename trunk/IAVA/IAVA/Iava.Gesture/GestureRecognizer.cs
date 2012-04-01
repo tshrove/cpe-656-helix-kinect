@@ -5,36 +5,27 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Iava.Core;
+using Iava.Core.Logging;
 using Iava.Core.Math;
 using Iava.Input.Camera;
-using Iava.Core.Logging;
 
-namespace Iava.Gesture 
-{
+namespace Iava.Gesture {
+
     /// <summary>
     /// Gesture callback for when a gesture command is detected.
     /// </summary>
-    /// <param name="e">event args</param>
+    /// <param name="e">GestureEventArgs containing the name of the detected gesture</param>
     public delegate void GestureCallback(GestureEventArgs e);
 
     /// <summary>
-    /// GestureRecognizer Class
+    /// Detects gesture commands performed from a kinect video stream.
     /// </summary>
     public class GestureRecognizer : Recognizer {
-
-        #region Public Properties
-        /*
-        /// <summary>
-        /// Not sure if we want to make this public or not.
-        /// </summary>
-        public Camera Camera { get; private set; }*/
-
-        #endregion Public Properties
 
         #region Public Methods
 
         /// <summary>
-        /// Starts the recognizer.
+        /// Starts the GestureRecognizer.
         /// </summary>
         public override void Start() {
             if (Status != RecognizerStatus.Running) {
@@ -42,7 +33,7 @@ namespace Iava.Gesture
 
                 // Wait for the SetupGestureDevice call to complete
                 m_resetEvent.WaitOne();
-                
+
                 // Reset the event
                 m_resetEvent.Reset();
 
@@ -52,7 +43,7 @@ namespace Iava.Gesture
         }
 
         /// <summary>
-        ///  Stops the recognizer.
+        ///  Stops the GestureRecognizer.
         /// </summary>
         public override void Stop() {
             tokenSource.Cancel();
@@ -67,11 +58,10 @@ namespace Iava.Gesture
         }
 
         /// <summary>
-        /// Used to connect a given delegate to a specified gesture
-        /// given by the name.
+        /// Registers a callback delegate to the specified gesture's recognized event
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="d"></param>
+        /// <param name="name">Name of the gesture</param>
+        /// <param name="d">Callback function to invoke on gesture recognition</param>
         public void Subscribe(string name, GestureCallback callBack) {
             if (string.IsNullOrEmpty(name)) {
                 throw new ArgumentException("Name argument was either null or empty.", "name");
@@ -87,8 +77,7 @@ namespace Iava.Gesture
         }
 
         /// <summary>
-        /// Unsubscribe the given delegate from the given delegate
-        /// by the name.
+        /// Unsubscribes the callback delegate from the specified gesture's recognized event
         /// </summary>
         /// <param name="name"></param>
         public void Unsubscribe(string name) {
@@ -106,9 +95,9 @@ namespace Iava.Gesture
         #region Constructors
 
         /// <summary>
-        /// Constructor.
+        /// Default Constructor.
         /// </summary>
-        /// <param name="filePath">Path to gesture file</param>
+        /// <param name="filePath">Filepath to the gesture file directory</param>
         public GestureRecognizer(string filePath)
             : base() {
 
@@ -139,7 +128,7 @@ namespace Iava.Gesture
         private Dictionary<string, GestureCallback> GestureCallbacks { get; set; }
 
         /// <summary>
-        /// Holds all the gestures this recognizer supports in a Name, Gesture pair
+        /// Holds all the gestures this recognizer supports
         /// </summary>
         private List<IavaGesture> SupportedGestures { get; set; }
 
@@ -167,7 +156,11 @@ namespace Iava.Gesture
         #endregion Private Properties
 
         #region Private Methods
-        
+
+        /// <summary>
+        /// Initializes the Gesture Recognizer to the point where it can detect gestures.
+        /// </summary>
+        /// <param name="token"></param>
         private void SetupGestureDevice(CancellationToken token) {
             try {
                 if (!token.IsCancellationRequested) {
@@ -204,16 +197,30 @@ namespace Iava.Gesture
 
         #region Private Fields
 
+        /// <summary>
+        /// The sync gesture
+        /// </summary>
         private IavaGesture _syncGesture;
 
+        /// <summary>
+        /// Filepath to the gesture directory
+        /// </summary>
         private string _filepath;
 
+        /// <summary>
+        /// GestureEngine that will do the heavy lifting
+        /// </summary>
         private GestureEngine _engine;
 
         #endregion Private Fields
 
         #region Protected Methods
 
+        /// <summary>
+        /// Fires the appropriate callback when a gesture has been recognized
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">GestureEventArgs containing the name of the recognized gesture</param>
         protected void OnGestureRecognized(object sender, GestureEventArgs e) {
             // If we just synced, set the flag and return
             if (e.Name == SyncGesture.Name) {
@@ -235,6 +242,11 @@ namespace Iava.Gesture
             else { /* No one cares about this gesture =( */ }
         }
 
+        /// <summary>
+        /// Preps the Skeleton object so we can test it for performed gestures
+        /// </summary>
+        /// <param name="sender">Event sender</param>
+        /// <param name="e">IavaSkeletonEventArgs containing the Skeleton object</param>
         protected void OnSkeletonReady(object sender, IavaSkeletonEventArgs e) {
             IavaSkeletonPoint translationVector = e.Skeleton.Joints[IavaJointType.HipCenter].Position;
 

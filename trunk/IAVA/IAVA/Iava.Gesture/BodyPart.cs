@@ -1,30 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Xml.Serialization;
 using Iava.Core.Math;
 using Iava.Input.Camera;
-using System.Xml.Serialization;
 
 namespace Iava.Gesture {
-    public class BodyPart {
+
+    /// <summary>
+    /// Contains state information for a single joint of a defined IavaSnapshot
+    /// </summary>
+    public class IavaBodyPart {
 
         #region Public Properties
 
         /// <summary>
-        /// Gets the postion of the body part in x and y axis.
+        /// Gets/Sets the postion of the IavaBodyPart in X,Y,Z coordinates.
         /// </summary>
         [XmlElement("Position")]
         public IavaSkeletonPoint Position { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the body part should be tracked.
+        /// Gets/Sets the IavaBodyPart's tracking state.
         /// </summary>
         [XmlElement("Tracking")]
         public bool Tracking { get; set; }
 
         /// <summary>
-        /// The JointType of the Body Part
+        /// Gets/Sets the JointType of the IavaBodyPart
         /// </summary>
         [XmlAttribute("Name")]
         public IavaJointType JointID { get; set; }
@@ -33,22 +33,27 @@ namespace Iava.Gesture {
 
         #region Constructors
 
-        private BodyPart()
-            : this(0, new IavaSkeletonPoint()) { }
-
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public BodyPart(IavaJointType jointID)
+        private IavaBodyPart()
+            : this(0, new IavaSkeletonPoint()) { }
+
+        /// <summary>
+        /// Creates a IavaBodyPart containing the specified JointType
+        /// </summary>
+        /// <param name="jointID">The JointType of the IavaBodyPart</param>
+        public IavaBodyPart(IavaJointType jointID)
             : this(jointID, new IavaSkeletonPoint()) {
             // Nothing to do
         }
 
         /// <summary>
-        /// Constructor that sets the position to the parameter of position.
+        /// Creates a IavaBodyPart containing the specified JointType and position
         /// </summary>
-        /// <param name="position"></param>
-        public BodyPart(IavaJointType jointID, IavaSkeletonPoint position) {
+        /// <param name="jointID">The JointType of the IavaBodyPart</param>
+        /// <param name="position">Position of the IavaBodyPart</param>
+        public IavaBodyPart(IavaJointType jointID, IavaSkeletonPoint position) {
             this.JointID = jointID;
             this.Position = position;
         }
