@@ -17,10 +17,13 @@ namespace Iava.Input.Camera {
         public List<int> SkeletonIDs { get; private set; }
 
         /// <summary>
-        /// Gets the event's timestamp
+        /// Gets the timestamp
         /// </summary>
         public long Timestamp { get; private set; }
 
+        /// <summary>
+        /// Represents an empty IavaSkeletonFrameEventArgs
+        /// </summary>
         public static readonly IavaSkeletonFrameEventArgs Empty = null;
 
         #endregion Public Properties
@@ -28,10 +31,10 @@ namespace Iava.Input.Camera {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IavaSkeletonFrameEventArgs"/> class.
+        /// Creates an IavaColorImageFrameReadyEventArgs containing the supplied skeleton ID values and timestamp.
         /// </summary>
         /// <param name="skeletonIDValues">The skeleton JointType values.</param>
-        /// <param name="timeStamp">The time stamp.</param>
+        /// <param name="timeStamp">The timestamp.</param>
         public IavaSkeletonFrameEventArgs(List<int> skeletonIDs, long timestamp) {
             this.SkeletonIDs = skeletonIDs;
             this.Timestamp = timestamp;
@@ -41,6 +44,12 @@ namespace Iava.Input.Camera {
 
         #region Operator Overloads
 
+        /// <summary>
+        /// Determines whether two IavaSkeletonFrameEventArgs instances are equal.
+        /// </summary>
+        /// <param name="eventArgs1">A IavaSkeletonFrameEventArgs to compare for equality.</param>
+        /// <param name="eventArgs2">A IavaSkeletonFrameEventArgs to compare for equality.</param>
+        /// <returns>TRUE if the two IavaSkeletonFrameEventArgs instances are equal, else FALSE</returns>
         public static bool operator ==(IavaSkeletonFrameEventArgs eventArgs1, IavaSkeletonFrameEventArgs eventArgs2) {
             // If both are null, or are same instance, return true.
             if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return true; }
@@ -53,6 +62,12 @@ namespace Iava.Input.Camera {
                     eventArgs1.Timestamp.Equals(eventArgs2.Timestamp));
         }
 
+        /// <summary>
+        /// Determines whether two IavaSkeletonFrameEventArgs instances are not equal.
+        /// </summary>
+        /// <param name="eventArgs1">A IavaSkeletonFrameEventArgs to compare for inequality.</param>
+        /// <param name="eventArgs2">A IavaSkeletonFrameEventArgs to compare for inequality.</param>
+        /// <returns>TRUE if the two IavaSkeletonFrameEventArgs instances are not equal, else FALSE</returns>
         public static bool operator !=(IavaSkeletonFrameEventArgs eventArgs1, IavaSkeletonFrameEventArgs eventArgs2) {
             // If both are null, or are same instance, return false.
             if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return false; }
@@ -65,6 +80,11 @@ namespace Iava.Input.Camera {
                     !eventArgs1.Timestamp.Equals(eventArgs2.Timestamp));
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current IavaSkeletonFrameEventArgs. 
+        /// </summary>
+        /// <param name="obj">Object to compare with the current IavaSkeletonFrameEventArgs.</param>
+        /// <returns>TRUE if the specified object is equal to the current IavaSkeletonFrameEventArgs, else FALSE. </returns>
         public override bool Equals(object obj) {
             // If parameter is null return false.
             if (obj == null) { return false; }

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Kinect;
 
 namespace Iava.Input.Camera {
 
     /// <summary>
-    /// Wraps Microsoft Kinect's Runtime class so it conforms to the
-    /// IRuntime interface.
+    /// Wraps Microsoft Kinect's KinectSensor class so it conforms to the IRuntime interface.
     /// </summary>
     internal class KinectRuntimeWrapper : IRuntime {
 
@@ -31,6 +27,15 @@ namespace Iava.Input.Camera {
 
         #region Private Methods
 
+        /// <summary>
+        /// Handles the VideoFrameReady event of the Kinect's RunTime control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ImageFrameReadyEventArgs"/> instance containing the event data.</param>
+        private void OnColorFrameReady(object sender, ColorImageFrameReadyEventArgs e) {
+            if (ColorImageFrameReady != null) { ColorImageFrameReady(null, new IavaColorImageFrameReadyEventArgs((IavaColorImageFrame)e.OpenColorImageFrame())); }
+        }
+        
         /// <summary>
         /// Handles the SkeletonFrameReady event of the Kinect's RunTime control.
         /// </summary>
@@ -76,15 +81,6 @@ namespace Iava.Input.Camera {
             }
         }
 
-        /// <summary>
-        /// Handles the VideoFrameReady event of the Kinect's RunTime control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ImageFrameReadyEventArgs"/> instance containing the event data.</param>
-        private void OnColorFrameReady(object sender, ColorImageFrameReadyEventArgs e) {
-            if (ColorImageFrameReady != null) { ColorImageFrameReady(null, new IavaColorImageFrameReadyEventArgs((IavaColorImageFrame)e.OpenColorImageFrame())); }
-        }
-
         #endregion Private Methods
 
         #region Private Fields
@@ -100,9 +96,9 @@ namespace Iava.Input.Camera {
 
         #region IRuntime Members
 
-        public event EventHandler<IavaSkeletonEventArgs> SkeletonReady;
-
         public event EventHandler<IavaColorImageFrameReadyEventArgs> ColorImageFrameReady;
+        
+        public event EventHandler<IavaSkeletonEventArgs> SkeletonReady;
 
         public event EventHandler<IavaSkeletonFrameReadyEventArgs> SkeletonFrameReady;
         

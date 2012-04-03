@@ -4,6 +4,9 @@ using Microsoft.Kinect;
 
 namespace Iava.Input.Camera {
 
+    /// <summary>
+    /// Contains the state information of a skeletal object.
+    /// </summary>
     public sealed class IavaSkeleton {
 
         #region Public Properties
@@ -38,6 +41,12 @@ namespace Iava.Input.Camera {
 
         #region Operator Overloads
 
+        /// <summary>
+        /// Determines whether two IavaSkeleton instances are equal.
+        /// </summary>
+        /// <param name="skeleton1">A IavaSkeleton to compare for equality.</param>
+        /// <param name="skeleton2">A IavaSkeleton to compare for equality.</param>
+        /// <returns>TRUE if the two IavaSkeleton instances are equal, else FALSE</returns>
         public static bool operator ==(IavaSkeleton skeleton1, IavaSkeleton skeleton2) {
             // If both are null, or are same instance, return true.
             if (Object.ReferenceEquals(skeleton1, skeleton2)) { return true; }
@@ -52,6 +61,12 @@ namespace Iava.Input.Camera {
                     skeleton1.TrackingState.Equals(skeleton2.TrackingState));
         }
 
+        /// <summary>
+        /// Determines whether two IavaSkeleton instances are not equal.
+        /// </summary>
+        /// <param name="skeleton1">A IavaSkeleton to compare for inequality.</param>
+        /// <param name="skeleton2">A IavaSkeleton to compare for inequality.</param>
+        /// <returns>TRUE if the two IavaSkeleton instances are not equal, else FALSE</returns>
         public static bool operator !=(IavaSkeleton skeleton1, IavaSkeleton skeleton2) {
             // If both are null, or are same instance, return false.
             if (Object.ReferenceEquals(skeleton1, skeleton2)) { return false; }
@@ -66,19 +81,11 @@ namespace Iava.Input.Camera {
                     !skeleton1.TrackingState.Equals(skeleton2.TrackingState));
         }
 
-        public static explicit operator IavaSkeleton(Skeleton value) {
-            if (value == null) { return null; }
-
-            return new IavaSkeleton()
-            {
-                ClippedEdges = (IavaFrameEdges)value.ClippedEdges,
-                Joints = (IavaJointCollection)value.Joints,
-                Position = (IavaSkeletonPoint)value.Position,
-                TrackingId = value.TrackingId,
-                TrackingState = (IavaSkeletonTrackingState)value.TrackingState
-            };
-        }
-
+        /// <summary>
+        /// Determines whether the specified object is equal to the current IavaSkeleton. 
+        /// </summary>
+        /// <param name="obj">Object to compare with the current IavaSkeleton.</param>
+        /// <returns>TRUE if the specified object is equal to the current IavaSkeleton, else FALSE. </returns>
         public override bool Equals(object obj) {
             // If parameter is null return false.
             if (obj == null) { return false; }
@@ -97,6 +104,24 @@ namespace Iava.Input.Camera {
             catch (InvalidCastException) {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Casts the specified Skeleton to an IavaSkeleton
+        /// </summary>
+        /// <param name="value">Skeleton to cast to an IavaSkeleton</param>
+        /// <returns>IavaSkeleton representation of the Skeleton</returns>
+        public static explicit operator IavaSkeleton(Skeleton value) {
+            if (value == null) { return null; }
+
+            return new IavaSkeleton()
+            {
+                ClippedEdges = (IavaFrameEdges)value.ClippedEdges,
+                Joints = (IavaJointCollection)value.Joints,
+                Position = (IavaSkeletonPoint)value.Position,
+                TrackingId = value.TrackingId,
+                TrackingState = (IavaSkeletonTrackingState)value.TrackingState
+            };
         }
 
         #endregion Operator Overloads

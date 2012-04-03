@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 
 namespace Iava.Input.Camera {
+
+    /// <summary>
+    /// Color data options.
+    /// </summary>
     public enum IavaColorImageFormat {
         Undefined = 0,
         RgbResolution640x480Fps30 = 1,

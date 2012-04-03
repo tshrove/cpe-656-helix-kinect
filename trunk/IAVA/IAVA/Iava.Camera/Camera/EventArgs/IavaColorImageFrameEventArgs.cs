@@ -10,14 +10,24 @@ namespace Iava.Input.Camera {
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets the IavaColorImageFrame
+        /// </summary>
         public IavaColorImageFrame ImageFrame { get; private set; }
 
+        /// <summary>
+        /// Represents an empty IavaColorImageFrameReadyEventArgs
+        /// </summary>
         public static readonly IavaColorImageFrameReadyEventArgs Empty = null;
 
-        #endregion Pulbic Properties
+        #endregion Public Properties
 
         #region Constructors
 
+        /// <summary>
+        /// Creates an IavaColorImageFrameReadyEventArgs containing the supplied IavaColorImageFrame
+        /// </summary>
+        /// <param name="imageFrame">IavaColorImageFrame to be contained in the IavaColorImageFrameReadyEventArgs</param>
         public IavaColorImageFrameReadyEventArgs(IavaColorImageFrame imageFrame) {
             ImageFrame = imageFrame;
         }
@@ -26,6 +36,12 @@ namespace Iava.Input.Camera {
 
         #region Operator Overloads
 
+        /// <summary>
+        /// Determines whether two IavaColorImageFrameReadyEventArgs instances are equal.
+        /// </summary>
+        /// <param name="eventArgs1">A IavaColorImageFrameReadyEventArgs to compare for equality.</param>
+        /// <param name="eventArgs2">A IavaColorImageFrameReadyEventArgs to compare for equality.</param>
+        /// <returns>TRUE if the two IavaColorImageFrameReadyEventArgs instances are equal, else FALSE</returns>
         public static bool operator ==(IavaColorImageFrameReadyEventArgs eventArgs1, IavaColorImageFrameReadyEventArgs eventArgs2) {
             // If both are null, or are same instance, return true.
             if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return true; }
@@ -40,6 +56,12 @@ namespace Iava.Input.Camera {
             return (eventArgs1.ImageFrame.Equals(eventArgs2.ImageFrame));
         }
 
+        /// <summary>
+        /// Determines whether two IavaColorImageFrameReadyEventArgs instances are not equal.
+        /// </summary>
+        /// <param name="eventArgs1">A IavaColorImageFrameReadyEventArgs to compare for inequality.</param>
+        /// <param name="eventArgs2">A IavaColorImageFrameReadyEventArgs to compare for inequality.</param>
+        /// <returns>TRUE if the two IavaColorImageFrameReadyEventArgs instances are not equal, else FALSE</returns>
         public static bool operator !=(IavaColorImageFrameReadyEventArgs eventArgs1, IavaColorImageFrameReadyEventArgs eventArgs2) {
             // If both are null, or are same instance, return false.
             if (Object.ReferenceEquals(eventArgs1, eventArgs2)) { return false; }
@@ -54,6 +76,11 @@ namespace Iava.Input.Camera {
             return (!eventArgs1.ImageFrame.Equals(eventArgs2.ImageFrame));
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current IavaColorImageFrameReadyEventArgs. 
+        /// </summary>
+        /// <param name="obj">Object to compare with the current IavaColorImageFrameReadyEventArgs.</param>
+        /// <returns>TRUE if the specified object is equal to the current IavaColorImageFrameReadyEventArgs, else FALSE. </returns>
         public override bool Equals(object obj) {
             // If parameter is null return false.
             if (obj == null) { return false; }
@@ -73,6 +100,11 @@ namespace Iava.Input.Camera {
             }
         }
 
+        /// <summary>
+        /// Casts the specified ColorImageFrameReadyEventArgs to an IavaColorImageFrameReadyEventArgs
+        /// </summary>
+        /// <param name="value">ColorImageFrameReadyEventArgs to cast to an IavaColorImageFrameReadyEventArgs</param>
+        /// <returns>IavaColorImageFrameReadyEventArgs representation of the ColorImageFrameReadyEventArgs</returns>
         public static explicit operator IavaColorImageFrameReadyEventArgs(ColorImageFrameReadyEventArgs value) {
             if (value == null) { return null; }
 

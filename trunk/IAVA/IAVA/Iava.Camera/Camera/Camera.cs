@@ -1,8 +1,9 @@
 ﻿using System;
 
 namespace Iava.Input.Camera {
+
     /// <summary>
-    /// Wraps the Kinect Camera Sensor
+    /// Controls access to the KinectSensor
     /// </summary>
     public class IavaCamera {
 
@@ -52,22 +53,13 @@ namespace Iava.Input.Camera {
             InitializeDevice();
         }
 
-        /// <summary>
-        /// Do our cleanup code here...
-        /// </summary>
-        private static void ShutDown(object sender, EventArgs e) {
-            // Unsubscribe from the sensor events
-            _runtime.ColorImageFrameReady -= OnImageFrameReady;
-            _runtime.SkeletonReady -= OnSkeletonReady;
-            _runtime.SkeletonFrameReady -= OnSkeletonFrameReady;
-
-            _runtime.Uninitialize();
-        }
-
         #endregion Constructors
 
         #region Private Methods
 
+        /// <summary>
+        /// Initializes the IRuntime and subscribes to events
+        /// </summary>
         private static void InitializeDevice() {
             // Initialize the runtime
             _runtime.Initialize();
@@ -76,6 +68,15 @@ namespace Iava.Input.Camera {
             _runtime.ColorImageFrameReady += OnImageFrameReady;
             _runtime.SkeletonReady += OnSkeletonReady;
             _runtime.SkeletonFrameReady += OnSkeletonFrameReady;
+        }
+
+        /// <summary>
+        /// Handles the ColorImageFrameReady event of the IRuntime control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ImageFrameReadyEventArgs"/> instance containing the event data.</param>
+        private static void OnImageFrameReady(object sender, IavaColorImageFrameReadyEventArgs e) {
+            if (ImageFrameReady != null) { ImageFrameReady(null, e); }
         }
 
         /// <summary>
@@ -97,12 +98,15 @@ namespace Iava.Input.Camera {
         }
 
         /// <summary>
-        /// Handles the ColorImageFrameReady event of the IRuntime control.
+        /// Do our cleanup code here...
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ImageFrameReadyEventArgs"/> instance containing the event data.</param>
-        private static void OnImageFrameReady(object sender, IavaColorImageFrameReadyEventArgs e) {
-            if (ImageFrameReady != null) { ImageFrameReady(null, e); }
+        private static void ShutDown(object sender, EventArgs e) {
+            // Unsubscribe from the sensor events
+            _runtime.ColorImageFrameReady -= OnImageFrameReady;
+            _runtime.SkeletonReady -= OnSkeletonReady;
+            _runtime.SkeletonFrameReady -= OnSkeletonFrameReady;
+
+            _runtime.Uninitialize();
         }
 
         #endregion Private Methods

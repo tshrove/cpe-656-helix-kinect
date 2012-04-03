@@ -4,6 +4,9 @@ using System;
 
 namespace Iava.Input.Camera {
 
+    /// <summary>
+    /// IEnumerable containing a collection of IavaJoint objects.
+    /// </summary>
     public class IavaJointCollection : IEnumerable {
 
         #region Public Properties
@@ -37,6 +40,12 @@ namespace Iava.Input.Camera {
 
         #region Operator Overloads
 
+        /// <summary>
+        /// Determines whether two IavaJointCollection instances are equal.
+        /// </summary>
+        /// <param name="collection1">A IavaJointCollection to compare for equality.</param>
+        /// <param name="collection2">A IavaJointCollection to compare for equality.</param>
+        /// <returns>TRUE if the two IavaJointCollection instances are equal, else FALSE</returns>
         public static bool operator ==(IavaJointCollection collection1, IavaJointCollection collection2) {
             // If both are null, or are same instance, return true.
             if (Object.ReferenceEquals(collection1, collection2)) { return true; }
@@ -52,6 +61,12 @@ namespace Iava.Input.Camera {
             return true;
         }
 
+        /// <summary>
+        /// Determines whether two IavaJointCollection instances are not equal.
+        /// </summary>
+        /// <param name="collection1">A IavaJointCollection to compare for inequality.</param>
+        /// <param name="collection2">A IavaJointCollection to compare for inequality.</param>
+        /// <returns>TRUE if the two IavaJointCollection instances are not equal, else FALSE</returns>
         public static bool operator !=(IavaJointCollection collection1, IavaJointCollection collection2) {
             // If both are null, or are same instance, return false.
             if (Object.ReferenceEquals(collection1, collection2)) { return false; }
@@ -67,6 +82,11 @@ namespace Iava.Input.Camera {
             return false;
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current IavaJointCollection. 
+        /// </summary>
+        /// <param name="obj">Object to compare with the current IavaJointCollection.</param>
+        /// <returns>TRUE if the specified object is equal to the current IavaJointCollection, else FALSE. </returns>
         public override bool Equals(object obj) {
             // If parameter is null return false.
             if (obj == null) { return false; }
@@ -88,6 +108,11 @@ namespace Iava.Input.Camera {
             }
         }
 
+        /// <summary>
+        /// Casts the specified JointCollection to an IavaJointCollection
+        /// </summary>
+        /// <param name="value">JointCollection to cast to an IavaJointCollection</param>
+        /// <returns>IavaJointCollection representation of the JointCollection</returns>
         public static explicit operator IavaJointCollection(JointCollection value) {
             if (value == null) { return null; }
 
