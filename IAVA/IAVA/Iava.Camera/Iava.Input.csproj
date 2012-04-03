@@ -57,7 +57,7 @@
     <Compile Include="Camera\EventArgs\IavaSkeletonFrameEventArgs.cs" />
     <Compile Include="Camera\EventArgs\IavaSkeletonFrameReadyEventArgs.cs" />
     <Compile Include="Camera\IRuntime.cs" />
-    <Compile Include="Camera\RuntimeWrapper.cs" />
+    <Compile Include="Camera\KinectRuntimeWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
