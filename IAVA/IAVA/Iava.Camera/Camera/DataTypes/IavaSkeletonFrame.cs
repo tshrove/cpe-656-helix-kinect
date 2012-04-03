@@ -1,10 +1,12 @@
-﻿using System.Linq;
-using Iava.Core.Math;
+﻿using System;
+using System.Linq;
 using Microsoft.Kinect;
-using System;
 
 namespace Iava.Input.Camera {
 
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class IavaSkeletonFrame : IDisposable {
 
         #region Public Properties
@@ -14,18 +16,34 @@ namespace Iava.Input.Camera {
         /// </summary>
         public IavaSkeleton ActiveSkeleton { get { return GetActiveSkeleton(); } }
 
+        /// <summary>
+        /// Gets/Sets the direction of the clipping plane for the floor
+        /// </summary>
         public Tuple<float, float, float, float> FloorClipPlane { get; set; }
 
+        /// <summary>
+        /// Gets/Sets the frame number
+        /// </summary>
         public int FrameNumber { get; set; }
 
+        /// <summary>
+        /// Gets/Sets the collection of the IavaSkeletons in the current frame
+        /// </summary>
         public IavaSkeleton[] Skeletons { get; set; }
 
+        /// <summary>
+        /// Gets/Sets the frame's timestamp
+        /// </summary>
         public long Timestamp { get; set; }
 
         #endregion Public Properties
 
         #region Private Methods
 
+        /// <summary>
+        /// Returns the active skeleton (if any) in the frame
+        /// </summary>
+        /// <returns>Active IavaSkeleton</returns>
         private IavaSkeleton GetActiveSkeleton() {
             // Check all the skeleton slots
             for (int i = 0; i < Skeletons.Count(); i++) {
@@ -33,14 +51,14 @@ namespace Iava.Input.Camera {
                     if (Skeletons[i].Position.X != 0 &&
                         Skeletons[i].Position.Y != 0 &&
                         Skeletons[i].Position.Z != 0) {
-                        _skeletonIndex = i;
+                        _activeSkeletonIndex = i;
                         return Skeletons[i];
                     }
                 }
             }
 
             // If we get here we didn't find anything
-            _skeletonIndex = 0;
+            _activeSkeletonIndex = 0;
             return null;
         }
 
@@ -48,12 +66,21 @@ namespace Iava.Input.Camera {
         
         #region Private Fields
 
-        private int _skeletonIndex = 0;
+        /// <summary>
+        /// Index of the active skeleton
+        /// </summary>
+        private int _activeSkeletonIndex = 0;
 
         #endregion Private Fields
 
         #region Operator Overloads
 
+        /// <summary>
+        /// Determines whether two IavaSkeletonFrame instances are equal.
+        /// </summary>
+        /// <param name="skeletonFrame1">A IavaSkeletonFrame to compare for equality.</param>
+        /// <param name="skeletonFrame2">A IavaSkeletonFrame to compare for equality.</param>
+        /// <returns>TRUE if the two IavaSkeletonFrame instances are equal, else FALSE</returns>
         public static bool operator ==(IavaSkeletonFrame skeletonFrame1, IavaSkeletonFrame skeletonFrame2) {
             // If both are null, or are same instance, return true.
             if (Object.ReferenceEquals(skeletonFrame1, skeletonFrame2)) { return true; }
@@ -68,6 +95,12 @@ namespace Iava.Input.Camera {
                     skeletonFrame1.Timestamp == skeletonFrame2.Timestamp);
         }
 
+        /// <summary>
+        /// Determines whether two IavaSkeletonFrame instances are not equal.
+        /// </summary>
+        /// <param name="skeletonFrame1">A IavaSkeletonFrame to compare for inequality.</param>
+        /// <param name="skeletonFrame2">A IavaSkeletonFrame to compare for inequality.</param>
+        /// <returns>TRUE if the two IavaSkeletonFrame instances are not equal, else FALSE</returns>
         public static bool operator !=(IavaSkeletonFrame skeletonFrame1, IavaSkeletonFrame skeletonFrame2) {
             // If both are null, or are same instance, return false.
             if (Object.ReferenceEquals(skeletonFrame1, skeletonFrame2)) { return false; }
@@ -81,6 +114,11 @@ namespace Iava.Input.Camera {
                     !skeletonFrame1.Timestamp.Equals(skeletonFrame2.Timestamp));
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current IavaSkeletonFrame. 
+        /// </summary>
+        /// <param name="obj">Object to compare with the current IavaSkeletonFrame.</param>
+        /// <returns>TRUE if the specified object is equal to the current IavaSkeletonFrame, else FALSE. </returns>
         public override bool Equals(object obj) {
             // If parameter is null return false.
             if (obj == null) { return false; }
@@ -100,6 +138,11 @@ namespace Iava.Input.Camera {
             }
         }
 
+        /// <summary>
+        /// Casts the specified SkeletonFrame to an IavaSkeletonFrame
+        /// </summary>
+        /// <param name="value">SkeletonFrame to cast to an IavaSkeletonFrame</param>
+        /// <returns>IavaSkeletonFrame representation of the SkeletonFrame</returns>
         public static explicit operator IavaSkeletonFrame(SkeletonFrame value) {
             if (value == null) { return null; }
 
@@ -139,6 +182,6 @@ namespace Iava.Input.Camera {
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion IDisposable Members
     }
 }

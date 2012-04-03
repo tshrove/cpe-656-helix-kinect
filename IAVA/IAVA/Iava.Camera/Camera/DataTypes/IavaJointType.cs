@@ -1,5 +1,8 @@
 ﻿namespace Iava.Input.Camera {
 
+    /// <summary>
+    /// Specifies the various skeleton joints.
+    /// </summary>
     public enum IavaJointType {
         HipCenter = 0,
         Spine = 1,

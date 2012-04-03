@@ -1,25 +1,49 @@
-﻿using Microsoft.Kinect;
-using System;
+﻿using System;
 using System.Linq;
+using Microsoft.Kinect;
 
 namespace Iava.Input.Camera {
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class IavaColorImageFrame : IDisposable {
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets the number of bytes per pixel
+        /// </summary>
         public int BytesPerPixel { get; private set; }
         
+        /// <summary>
+        /// Gets the format for the color data
+        /// </summary>
         public IavaColorImageFormat Format { get; private set; }
 
+        /// <summary>
+        /// Gets the frame number
+        /// </summary>
         public int FrameNumber { get; private set; }
 
+        /// <summary>
+        /// Gets the height of the IavaColorImage in the current frame
+        /// </summary>
         public int Height { get; private set; }
 
+        /// <summary>
+        /// Gets the collection of bytes making up the current frame
+        /// </summary>
         public byte[] PixelData { get; private set; }
 
+        /// <summary>
+        /// Gets the frame's timestamp
+        /// </summary>
         public long Timestamp { get; private set; }
 
+        /// <summary>
+        /// Gets the width of the IavaColorImage in the current frame
+        /// </summary>
         public int Width { get; private set; }
 
         #endregion Public Properties
@@ -35,7 +59,13 @@ namespace Iava.Input.Camera {
         #endregion Constructors
 
         #region Operator Overloads
-        
+
+        /// <summary>
+        /// Determines whether two IavaColorImageFrame instances are equal.
+        /// </summary>
+        /// <param name="imageFrame1">A IavaColorImageFrame to compare for equality.</param>
+        /// <param name="imageFrame2">A IavaColorImageFrame to compare for equality.</param>
+        /// <returns>TRUE if the two IavaColorImageFrame instances are equal, else FALSE</returns>
         public static bool operator ==(IavaColorImageFrame imageFrame1, IavaColorImageFrame imageFrame2) {
             // If both are null, or are same instance, return true.
             if (Object.ReferenceEquals(imageFrame1, imageFrame2)) { return true; }
@@ -53,6 +83,12 @@ namespace Iava.Input.Camera {
                     imageFrame1.Width.Equals(imageFrame2.Width));
         }
 
+        /// <summary>
+        /// Determines whether two IavaColorImageFrame instances are not equal.
+        /// </summary>
+        /// <param name="imageFrame1">A IavaColorImageFrame to compare for inequality.</param>
+        /// <param name="imageFrame2">A IavaColorImageFrame to compare for inequality.</param>
+        /// <returns>TRUE if the two IavaColorImageFrame instances are not equal, else FALSE</returns>
         public static bool operator !=(IavaColorImageFrame imageFrame1, IavaColorImageFrame imageFrame2) {
             // If both are null, or are same instance, return false.
             if (Object.ReferenceEquals(imageFrame1, imageFrame2)) { return false; }
@@ -70,6 +106,11 @@ namespace Iava.Input.Camera {
                     !imageFrame1.Width.Equals(imageFrame2.Width));
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current IavaColorImageFrame. 
+        /// </summary>
+        /// <param name="obj">Object to compare with the current IavaColorImageFrame.</param>
+        /// <returns>TRUE if the specified object is equal to the current IavaColorImageFrame, else FALSE. </returns>
         public override bool Equals(object obj) {
             // If parameter is null return false.
             if (obj == null) { return false; }
@@ -91,7 +132,12 @@ namespace Iava.Input.Camera {
                 return false;
             }
         }
-        
+
+        /// <summary>
+        /// Casts the specified ColorImageFrame to an IavaColorImageFrame
+        /// </summary>
+        /// <param name="value">ColorImageFrame to cast to an IavaColorImageFrame</param>
+        /// <returns>IavaColorImageFrame representation of the ColorImageFrame</returns>
         public static explicit operator IavaColorImageFrame(ColorImageFrame value) {
             if (value == null) { return null; }
 
@@ -122,6 +168,6 @@ namespace Iava.Input.Camera {
             throw new NotImplementedException();
         }
 
-        #endregion
+        #endregion IDisposable Members
     }
 }

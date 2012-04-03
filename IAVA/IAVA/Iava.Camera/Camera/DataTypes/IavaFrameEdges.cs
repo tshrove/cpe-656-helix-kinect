@@ -1,6 +1,10 @@
 ﻿using System;
 
 namespace Iava.Input.Camera {
+
+    /// <summary>
+    /// Specifies how much of the skeleton is visible.
+    /// </summary>
     [Flags]
     public enum IavaFrameEdges {
         None = 0,
