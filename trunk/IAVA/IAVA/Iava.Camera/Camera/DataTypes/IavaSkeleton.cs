@@ -11,20 +11,38 @@ namespace Iava.Input.Camera {
 
         #region Public Properties
 
-        public IavaJointCollection Joints { get; set; }
-
-        public IavaSkeletonPoint Position { get; set; }
-
+        /// <summary>
+        /// Gets/Sets a description of which parts of the skeleton are clipped by the edges of the frame.
+        /// </summary>
         public IavaFrameEdges ClippedEdges { get; set; }
 
+        /// <summary>
+        /// Gets/Sets a collection of joints.
+        /// </summary>
+        public IavaJointCollection Joints { get; set; }
+
+        /// <summary>
+        /// Gets/Sets the skeleton position.
+        /// </summary>
+        public IavaSkeletonPoint Position { get; set; }
+
+        /// <summary>
+        /// Gets/Sets an ID for tracking a skeleton.
+        /// </summary>
         public int TrackingId { get; set; }
 
+        /// <summary>
+        /// Gets/Sets the way a skeleton is tracked.
+        /// </summary>
         public IavaSkeletonTrackingState TrackingState { get; set; }
 
         #endregion Public Properties
 
         #region Constructors
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public IavaSkeleton() {
             Joints = new IavaJointCollection();
 

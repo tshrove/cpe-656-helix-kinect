@@ -11,8 +11,16 @@ namespace Iava.Input.Camera {
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets the number of elements in the collection
+        /// </summary>
         public int Count { get { return _joints.Length; } }
 
+        /// <summary>
+        /// Gets the specified element of the collection
+        /// </summary>
+        /// <param name="i">The joint identifier</param>
+        /// <returns></returns>
         public IavaJoint this[IavaJointType i] {
             get { return _joints[(int)i]; }
             set { _joints[(int)i] = value; }
@@ -22,6 +30,9 @@ namespace Iava.Input.Camera {
 
         #region Private Fields
 
+        /// <summary>
+        /// Collection of joints
+        /// </summary>
         private IavaJoint[] _joints;
 
         #endregion Private Fields
