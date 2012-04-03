@@ -11,10 +11,19 @@ namespace Iava.Input.Camera {
 
         #region Public Properties
 
+        /// <summary>
+        /// Gets/Sets the type of joint
+        /// </summary>
         public IavaJointType JointType { get; set; }
 
+        /// <summary>
+        /// Gets/Sets the joint position
+        /// </summary>
         public IavaSkeletonPoint Position { get; set; }
 
+        /// <summary>
+        /// Gets/Sets the joint's tracking state
+        /// </summary>
         public IavaJointTrackingState TrackingState { get; set; }
 
         #endregion Public Properties
