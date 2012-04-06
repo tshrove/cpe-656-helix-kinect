@@ -22,16 +22,34 @@ namespace Iava.Core.Logging
     {
         #region Private Attributes
 
+        /// <summary>
+        /// Queue used to log messages.
+        /// </summary>
         private static ConcurrentQueue<Message> messageQueue = new ConcurrentQueue<Message>();
 
+        /// <summary>
+        /// Cancellation token to cancel the message consume task.
+        /// </summary>
         private static CancellationTokenSource tokenSource = new CancellationTokenSource();
 
+        /// <summary>
+        /// Writes logged messages to a file.
+        /// </summary>
         private static StreamWriter writer;
 
+        /// <summary>
+        /// The absolute path to the log file.
+        /// </summary>
         private static string logFilePath;
 
+        /// <summary>
+        /// Task used to consume logged messages.
+        /// </summary>
         private static Task messageConsumeTask;
 
+        /// <summary>
+        /// Wait time (in milliseconds) between message log cycles.
+        /// </summary>
         private const int ConsumeTaskWaitTime = 50;
 
         #endregion
@@ -117,7 +135,7 @@ namespace Iava.Core.Logging
         /// <summary>
         /// Task that writes messages to a log file.
         /// </summary>
-        /// <param name="token">cancellation token</param>
+        /// <param name="token">Cancellation token</param>
         private static void ConsumeMessageTask(CancellationToken token)
         {
             try
@@ -155,7 +173,7 @@ namespace Iava.Core.Logging
         /// <summary>
         /// Formats a log message and writes it to the log file.
         /// </summary>
-        /// <param name="message">message to write to the log file</param>
+        /// <param name="message">Message to write to the log file</param>
         private static void WriteMessageToLog(Message message)
         {
             // Time Stamp    Message Level   Source   Text

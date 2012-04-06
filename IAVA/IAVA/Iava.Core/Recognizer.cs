@@ -209,6 +209,9 @@ namespace Iava.Core {
 
         #region Private Fields
 
+        /// <summary>
+        /// Specifies the sync timeout value (in milliseconds).
+        /// </summary>
         private int m_syncTimeout;
 
         /// <summary>

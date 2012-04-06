@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Iava.Audio
 {
+    /// <summary>
+    /// Audio recognized event arguments.
+    /// </summary>
     public class AudioEventArgs : EventArgs
     {
         #region Attributes

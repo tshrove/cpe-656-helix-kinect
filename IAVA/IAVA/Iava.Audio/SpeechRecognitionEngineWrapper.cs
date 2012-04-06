@@ -50,6 +50,10 @@ namespace Iava.Audio
             engine.SpeechRecognized += OnSpeechRecognized;
         }
 
+        /// <summary>
+        /// Retrieves the Kinect speech recognizer.
+        /// </summary>
+        /// <returns>Recognizer object</returns>
         private static RecognizerInfo GetKinectRecognizer()
         {
             RecognizerInfo rv = null;
@@ -69,26 +73,45 @@ namespace Iava.Audio
     
         #region ISpeechRecognition Members
 
+        /// <summary>
+        /// Loads a grammar object into the speech recognition engine.
+        /// </summary>
+        /// <param name="grammar">Grammar to load</param>
         void  ISpeechRecognitionEngine.LoadGrammar(Grammar grammar)
         {
             engine.LoadGrammar(grammar);
         }
 
-        void  ISpeechRecognitionEngine.SetInputToAudioStream(System.IO.Stream stream, SpeechAudioFormatInfo audioFormat)
+        /// <summary>
+        /// Sets the input of the engine to an audio stream.
+        /// </summary>
+        /// <param name="stream">Audio stream</param>
+        /// <param name="audioFormat">Format of the audio stream</param>
+        void ISpeechRecognitionEngine.SetInputToAudioStream(System.IO.Stream stream, SpeechAudioFormatInfo audioFormat)
         {
             engine.SetInputToAudioStream(stream, audioFormat);
         }
 
-        void  ISpeechRecognitionEngine.RecognizeAsync(RecognizeMode mode)
+        /// <summary>
+        /// Recognizes speech asynchronously.
+        /// </summary>
+        /// <param name="mode">Recognizer mode</param>
+        void ISpeechRecognitionEngine.RecognizeAsync(RecognizeMode mode)
         {
             engine.RecognizeAsync(mode);
         }
 
+        /// <summary>
+        /// Stops recongizing speech asynchronously.
+        /// </summary>
         void ISpeechRecognitionEngine.RecognizeAsyncStop()
         {
             engine.RecognizeAsyncStop();
         }
 
+        /// <summary>
+        /// Event for when speech was recognized.
+        /// </summary>
         event EventHandler<IavaSpeechRecognizedEventArgs> ISpeechRecognitionEngine.SpeechRecognized
         {
             add 
@@ -101,12 +124,18 @@ namespace Iava.Audio
             }
         }
 
+        /// <summary>
+        /// Event for when speech was hypothesized.
+        /// </summary>
         event EventHandler<SpeechHypothesizedEventArgs> ISpeechRecognitionEngine.SpeechHypothesized
         {
             add { engine.SpeechHypothesized += value; }
             remove { engine.SpeechHypothesized -= value; }
         }
 
+        /// <summary>
+        /// Event for when speech was rejected.
+        /// </summary>
         event EventHandler<SpeechRecognitionRejectedEventArgs> ISpeechRecognitionEngine.SpeechRecognitionRejected
         {
             add { engine.SpeechRecognitionRejected += value; }
