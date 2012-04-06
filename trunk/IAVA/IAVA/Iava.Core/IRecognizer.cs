@@ -6,6 +6,9 @@ using System.IO;
 
 namespace Iava.Core
 {
+    /// <summary>
+    /// Recognizer interface.
+    /// </summary>
     public interface IRecognizer
     {
         #region Properties

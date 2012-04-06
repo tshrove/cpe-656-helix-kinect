@@ -20,12 +20,25 @@ namespace Iava.Core.Logging
     /// </summary>
     public class Message
     {
+        /// <summary>
+        /// The message text.
+        /// </summary>
         public string Text { get; private set; }
 
+        /// <summary>
+        /// Source of the log message (usually the class name the message originated from).
+        /// </summary>
         public string Source { get; private set; }
 
+        /// <summary>
+        /// The level at which the message should be logged.
+        /// </summary>
         public MessageType Level { get; private set; }      
 
+        /// <summary>
+        /// Exception logged with the message.  If no exception was logged with the message, 
+        /// this value will be null.
+        /// </summary>
         public Exception Exception { get; private set; }
 
         /// <summary>
@@ -42,6 +55,5 @@ namespace Iava.Core.Logging
             Level = level;          
             Exception = exception;
         }
-
     }
 }
