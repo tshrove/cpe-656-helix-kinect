@@ -198,19 +198,19 @@ namespace Iava.Gesture {
         #region Private Fields
 
         /// <summary>
-        /// The sync gesture
+        /// GestureEngine that will do the heavy lifting
         /// </summary>
-        private IavaGesture _syncGesture;
-
+        private GestureEngine _engine;
+        
         /// <summary>
         /// Filepath to the gesture directory
         /// </summary>
         private string _filepath;
 
         /// <summary>
-        /// GestureEngine that will do the heavy lifting
+        /// The sync gesture
         /// </summary>
-        private GestureEngine _engine;
+        private IavaGesture _syncGesture;
 
         #endregion Private Fields
 

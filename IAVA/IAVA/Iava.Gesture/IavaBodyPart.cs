@@ -12,6 +12,12 @@ namespace Iava.Gesture {
         #region Public Properties
 
         /// <summary>
+        /// Gets/Sets the JointType of the IavaBodyPart
+        /// </summary>
+        [XmlAttribute("Name")]
+        public IavaJointType JointID { get; set; }
+
+        /// <summary>
         /// Gets/Sets the postion of the IavaBodyPart in X,Y,Z coordinates.
         /// </summary>
         [XmlElement("Position")]
@@ -22,12 +28,6 @@ namespace Iava.Gesture {
         /// </summary>
         [XmlElement("Tracking")]
         public bool Tracking { get; set; }
-
-        /// <summary>
-        /// Gets/Sets the JointType of the IavaBodyPart
-        /// </summary>
-        [XmlAttribute("Name")]
-        public IavaJointType JointID { get; set; }
 
         #endregion Public Properties
 
