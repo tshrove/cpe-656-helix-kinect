@@ -27,23 +27,6 @@ namespace Iava.Gesture {
         #region Public Methods
 
         /// <summary>
-        /// Clears the Tracking state of all segment BodyParts
-        /// </summary>
-        public void ClearTrackingJoints() {
-            BodyParts.ForEach(x => x.Tracking = false);
-        }
-
-        /// <summary>
-        /// Sets the tracking state of the specified BodyParts to true
-        /// </summary>
-        /// <param name="joints">The joints to track</param>
-        public void SetTrackingJoints(params IavaJointType[] joints) {
-            foreach (IavaJointType id in joints) {
-                BodyParts.Where(x => x.JointID == id).Single(x => x.Tracking = true);
-            }
-        }
-
-        /// <summary>
         /// Checks each SkeletonJoint to see if it falls within the expected bounds defining this gesture snapshot
         /// </summary>
         /// <param name="skeleton">Skeleton object being checked</param>
@@ -63,6 +46,23 @@ namespace Iava.Gesture {
             if (results.Count == 0) { return false; }
 
             return results.TrueForAll(x => x == true);
+        }
+        
+        /// <summary>
+        /// Clears the Tracking state of all segment BodyParts
+        /// </summary>
+        public void ClearTrackingJoints() {
+            BodyParts.ForEach(x => x.Tracking = false);
+        }
+
+        /// <summary>
+        /// Sets the tracking state of the specified BodyParts to true
+        /// </summary>
+        /// <param name="joints">The joints to track</param>
+        public void SetTrackingJoints(params IavaJointType[] joints) {
+            foreach (IavaJointType id in joints) {
+                BodyParts.Where(x => x.JointID == id).Single(x => x.Tracking = true);
+            }
         }
 
         #endregion Public Methods

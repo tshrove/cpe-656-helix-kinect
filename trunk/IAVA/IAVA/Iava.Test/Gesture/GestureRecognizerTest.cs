@@ -27,7 +27,7 @@ namespace Iava.Test.Gesture {
         /// </summary>
         [TestMethod]
         public void GestureRecognizerConstructorTest() {
-            // Supply an empty file path
+            // Supply an empty file filepath
             try {
                 GestureRecognizer recognizer = new GestureRecognizer(string.Empty);
             }
@@ -36,7 +36,7 @@ namespace Iava.Test.Gesture {
                 Assert.IsInstanceOfType(ex, typeof(ArgumentException));
             }
 
-            // Pass in a null file path
+            // Pass in a null file filepath
             try {
                 GestureRecognizer recognizer = new GestureRecognizer(null);
             }
@@ -45,7 +45,7 @@ namespace Iava.Test.Gesture {
                 Assert.IsInstanceOfType(ex, typeof(ArgumentException));
             }
 
-            // Pass in a file path that does not exist
+            // Pass in a file filepath that does not exist
             try {
                 GestureRecognizer recognizer = new GestureRecognizer(@"C:\Does\not\exist\");
             }

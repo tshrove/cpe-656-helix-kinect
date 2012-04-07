@@ -10,7 +10,7 @@ namespace Iava.Gesture {
         #region Public Properties
 
         /// <summary>
-        /// Name of the Gesture
+        /// Gets name of the gesture
         /// </summary>
         public string Name { get; private set; }
 
