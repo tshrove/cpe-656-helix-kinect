@@ -107,7 +107,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Shadow Include="Test References\Iave.Core.accessor" />
+    <Shadow Include="Test References\Iava.Core.accessor" />
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\Iava.Camera.accessor" />
