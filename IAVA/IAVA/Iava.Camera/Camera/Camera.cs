@@ -38,7 +38,7 @@ namespace Iava.Input.Camera {
             InitializeDevice();
 
             // Since there is no such thing as a static destructor do
-            // our clean p code when we recognize the ProcessExit event
+            // our clean up code when we recognize the ProcessExit event
             AppDomain.CurrentDomain.ProcessExit += ShutDown;
         }
 

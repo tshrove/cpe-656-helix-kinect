@@ -66,7 +66,7 @@ namespace Iava.Audio
                     rv = recognizer;
                     break;
                 }
-            }         
+            }
 
             return rv;
         }
@@ -77,7 +77,7 @@ namespace Iava.Audio
         /// Loads a grammar object into the speech recognition engine.
         /// </summary>
         /// <param name="grammar">Grammar to load</param>
-        void  ISpeechRecognitionEngine.LoadGrammar(Grammar grammar)
+        void ISpeechRecognitionEngine.LoadGrammar(Grammar grammar)
         {
             engine.LoadGrammar(grammar);
         }
@@ -89,7 +89,8 @@ namespace Iava.Audio
         /// <param name="audioFormat">Format of the audio stream</param>
         void ISpeechRecognitionEngine.SetInputToAudioStream(System.IO.Stream stream, SpeechAudioFormatInfo audioFormat)
         {
-            engine.SetInputToAudioStream(stream, audioFormat);
+            //engine.SetInputToAudioStream(stream, audioFormat);
+            engine.SetInputToDefaultAudioDevice();
         }
 
         /// <summary>

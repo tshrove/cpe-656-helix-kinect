@@ -101,6 +101,7 @@ namespace Iava.Audio
             tokenSource.Cancel();
             tokenSource = new CancellationTokenSource();
             speechEngine.RecognizeAsyncStop();
+            audioSource.Stop();
 
             Status = RecognizerStatus.Ready;
 
