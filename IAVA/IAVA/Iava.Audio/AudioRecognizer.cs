@@ -83,7 +83,7 @@ namespace Iava.Audio
         public override void Start() {
             if (Status != RecognizerStatus.Running)
             {
-                Task.Factory.StartNew(() => SetupAudioDevice(tokenSource.Token), tokenSource.Token);
+                Task.Factory.StartNew(() => SetupAudioDevice(m_tokenSource.Token), m_tokenSource.Token);
 
                 // Wait until the setup thread has finished
                 m_resetEvent.WaitOne();
@@ -98,8 +98,8 @@ namespace Iava.Audio
         /// Stops the recognizer.
         /// </summary>
         public override void Stop() {
-            tokenSource.Cancel();
-            tokenSource = new CancellationTokenSource();
+            m_tokenSource.Cancel();
+            m_tokenSource = new CancellationTokenSource();
             speechEngine.RecognizeAsyncStop();
             audioSource.Stop();
 

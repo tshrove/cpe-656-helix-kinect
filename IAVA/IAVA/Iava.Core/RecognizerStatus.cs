@@ -1,10 +1,8 @@
-﻿namespace Iava.Core
-{
+﻿namespace Iava.Core {
     /// <summary>
     /// Recognizer status enumeration.
     /// </summary>
-    public enum RecognizerStatus
-    {
+    public enum RecognizerStatus {
         Ready,
         NotReady,
         Running,

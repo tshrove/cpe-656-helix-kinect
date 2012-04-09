@@ -29,7 +29,7 @@ namespace Iava.Gesture {
         /// </summary>
         public override void Start() {
             if (Status != RecognizerStatus.Running) {
-                Task.Factory.StartNew(() => SetupGestureDevice(tokenSource.Token), tokenSource.Token);
+                Task.Factory.StartNew(() => SetupGestureDevice(m_tokenSource.Token), m_tokenSource.Token);
 
                 // Wait for the SetupGestureDevice call to complete
                 m_resetEvent.WaitOne();
@@ -46,8 +46,8 @@ namespace Iava.Gesture {
         ///  Stops the GestureRecognizer.
         /// </summary>
         public override void Stop() {
-            tokenSource.Cancel();
-            tokenSource = new CancellationTokenSource();
+            m_tokenSource.Cancel();
+            m_tokenSource = new CancellationTokenSource();
 
             // Unsubscribe from the events
             IavaCamera.SkeletonReady -= OnSkeletonReady;

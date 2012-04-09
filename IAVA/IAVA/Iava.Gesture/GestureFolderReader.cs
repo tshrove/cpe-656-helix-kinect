@@ -9,6 +9,7 @@ namespace Iava.Gesture {
     public class GestureFolderReader {
 
         #region Public Methods
+
         /// <summary>
         /// Scans a specified directory for IavaGesture files
         /// </summary>
@@ -25,6 +26,7 @@ namespace Iava.Gesture {
             // Return the list
             return gestures;
         }
+
         #endregion Public Methods
     }
 }
