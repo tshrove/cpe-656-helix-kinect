@@ -110,7 +110,7 @@
     <Shadow Include="Test References\Iava.Core.accessor" />
   </ItemGroup>
   <ItemGroup>
-    <Shadow Include="Test References\Iava.Camera.accessor" />
+    <Shadow Include="Test References\Iava.Input.accessor" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
