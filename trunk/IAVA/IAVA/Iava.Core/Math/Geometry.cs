@@ -1,5 +1,16 @@
 ﻿namespace Iava.Core.Math {
+
+    /// <summary>
+    /// Performs basic math operations on the IavaSkeletonPoint class.
+    /// </summary>
     public static class Geometry {
+
+        /// <summary>
+        /// Translates an IavaSkeletonPoint according to the supplied translation point.
+        /// </summary>
+        /// <param name="original">The original IavaSkeletonPoint to be translated.</param>
+        /// <param name="translation">The translation IavaSkeletonPoint.</param>
+        /// <returns>A new IavaSkeletonPoint resulting from the translation.</returns>
         public static IavaSkeletonPoint Translate(IavaSkeletonPoint original, IavaSkeletonPoint translation) {
             IavaSkeletonPoint returnPoint = new IavaSkeletonPoint();
             // Translate the Points
@@ -9,6 +20,12 @@
             return returnPoint;
         }
 
+        /// <summary>
+        /// Returns the 2D magnitude between the two supplied IavaSkeletonPoints.
+        /// </summary>
+        /// <param name="point1">IavaSkeletonPoint</param>
+        /// <param name="point2">IavaSkeletonPoint</param>
+        /// <returns>2D magnitude between the two IavaSkeletonPoints.</returns>
         public static double Magnitude2D(IavaSkeletonPoint point1, IavaSkeletonPoint point2) {
             IavaSkeletonPoint difference = point1 - point2;
 
@@ -16,6 +33,12 @@
                                     System.Math.Pow(difference.Y, 2.0));
         }
 
+        /// <summary>
+        /// Returns the 3D magnitude between the two supplied IavaSkeletonPoints.
+        /// </summary>
+        /// <param name="point1">IavaSkeletonPoint</param>
+        /// <param name="point2">IavaSkeletonPoint</param>
+        /// <returns>3D magnitude between the two IavaSkeletonPoints.</returns>
         public static double Magnitude3D(IavaSkeletonPoint point1, IavaSkeletonPoint point2) {
             IavaSkeletonPoint difference = point1 - point2;
 

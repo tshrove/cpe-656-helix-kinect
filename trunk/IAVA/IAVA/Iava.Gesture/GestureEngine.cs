@@ -33,28 +33,7 @@ namespace Iava.Gesture {
 
         #endregion Public Properties
 
-        #region Constructors
-
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public GestureEngine() {
-        }
-
-        #endregion Constructors
-
         #region Public Methods
-
-        /// <summary>
-        /// Initializes the GestureEngine so the appropriate events are fired when a gesture is recognized
-        /// </summary>
-        public void Initialize() {
-            //Subscribe to the Sync Gesture's Recognized event
-            SyncGesture.GestureRecognized += OnGestureRecognized;
-
-            // Subscribe to all the GestureRecognized Events
-            SupportedGestures.ForEach(x => x.GestureRecognized += OnGestureRecognized);
-        }
 
         /// <summary>
         /// Checks the provided IavaSkeleton object to see if it completes a gesture
@@ -77,6 +56,17 @@ namespace Iava.Gesture {
         }
 
         /// <summary>
+        /// Initializes the GestureEngine so the appropriate events are fired when a gesture is recognized
+        /// </summary>
+        public void Initialize() {
+            //Subscribe to the Sync Gesture's Recognized event
+            SyncGesture.GestureRecognized += OnGestureRecognized;
+
+            // Subscribe to all the GestureRecognized Events
+            SupportedGestures.ForEach(x => x.GestureRecognized += OnGestureRecognized);
+        }
+
+        /// <summary>
         /// Fires the GestureRecognized event when a gesture is detected and resets
         /// the partially recognized states off all the supported gestures
         /// </summary>
@@ -91,5 +81,15 @@ namespace Iava.Gesture {
         }
 
         #endregion Public Methods
+
+        #region Constructors
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public GestureEngine() {
+        }
+
+        #endregion Constructors
     }
 }
