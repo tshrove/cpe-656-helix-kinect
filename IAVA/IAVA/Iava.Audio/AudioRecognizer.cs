@@ -156,7 +156,7 @@ namespace Iava.Audio {
         /// <summary>
         /// Constructor.  Used for unit testing.
         /// </summary>
-        /// <param name="filePath">Path to configuration file</param>
+        /// <param name="engine">Speech recognition engine</param>
         internal AudioRecognizer(ISpeechRecognitionEngine engine)
             : base() {
             Initialize();

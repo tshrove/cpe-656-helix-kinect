@@ -15,8 +15,32 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_1217A1D5CCDF7E087E189C205DF40B87"
-        "OwnerKey" = "8:_911F69C4A7C349C6AE0031CA81A217D4"
+        "MsmKey" = "8:_019D25AB6DC2270E567B061DE5971028"
+        "OwnerKey" = "8:_34686E91A62D4B73A57681DE4038A219"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_019D25AB6DC2270E567B061DE5971028"
+        "OwnerKey" = "8:_56BB0A0328B646CF8EC70855534348E0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_019D25AB6DC2270E567B061DE5971028"
+        "OwnerKey" = "8:_522A1E3F8AE248A0A4F5EA672F36B81F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_086E48822BD3428B9BBECB9FAE531E7A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0D6B797C381F484B9D1B069EEA65D17B"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -27,50 +51,56 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_31338686C3B3B01F7F5708751D07919C"
-        "OwnerKey" = "8:_7FC4E4233A2F43EDB5EAAE96A900C2AB"
+        "MsmKey" = "8:_13CF9ACA11304C73BC6D0ACD6AB1C41E"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_31338686C3B3B01F7F5708751D07919C"
-        "OwnerKey" = "8:_911F69C4A7C349C6AE0031CA81A217D4"
+        "MsmKey" = "8:_32026BE9BB2A7D9DF6A3CCA8460EC166"
+        "OwnerKey" = "8:_086E48822BD3428B9BBECB9FAE531E7A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_31338686C3B3B01F7F5708751D07919C"
-        "OwnerKey" = "8:_1217A1D5CCDF7E087E189C205DF40B87"
+        "MsmKey" = "8:_34686E91A62D4B73A57681DE4038A219"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_31338686C3B3B01F7F5708751D07919C"
-        "OwnerKey" = "8:_E6395B6816294FF9B56FDBC21DE68D1A"
+        "MsmKey" = "8:_522A1E3F8AE248A0A4F5EA672F36B81F"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
-        "OwnerKey" = "8:_7FC4E4233A2F43EDB5EAAE96A900C2AB"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
-        "OwnerKey" = "8:_1217A1D5CCDF7E087E189C205DF40B87"
+        "MsmKey" = "8:_56BB0A0328B646CF8EC70855534348E0"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
-        "OwnerKey" = "8:_911F69C4A7C349C6AE0031CA81A217D4"
+        "OwnerKey" = "8:_086E48822BD3428B9BBECB9FAE531E7A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
         "OwnerKey" = "8:_E6395B6816294FF9B56FDBC21DE68D1A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
+        "OwnerKey" = "8:_D9E6A54116C341CC93D7B6707D1F3E5B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
+        "OwnerKey" = "8:_AC550E112B2F4081B5B74AD8A7C72FA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -82,7 +112,55 @@
         "Entry"
         {
         "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
-        "OwnerKey" = "8:_31338686C3B3B01F7F5708751D07919C"
+        "OwnerKey" = "8:_911F69C4A7C349C6AE0031CA81A217D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
+        "OwnerKey" = "8:_7FC4E4233A2F43EDB5EAAE96A900C2AB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
+        "OwnerKey" = "8:_7F3F56D41D09454E8B35DF89A9F6589D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
+        "OwnerKey" = "8:_0D6B797C381F484B9D1B069EEA65D17B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
+        "OwnerKey" = "8:_E12CA17B5C79F9D790F646E7D4C2B250"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
+        "OwnerKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
+        "OwnerKey" = "8:_67A3991A1EAAB28A1E069C2988E76725"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_67A3991A1EAAB28A1E069C2988E76725"
+        "OwnerKey" = "8:_086E48822BD3428B9BBECB9FAE531E7A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7F3F56D41D09454E8B35DF89A9F6589D"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -105,38 +183,134 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_96A7CE4FE7F146A2A489279FEB7D7282"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A5927FCCC76978A5233B7CCDB876489B"
+        "OwnerKey" = "8:_522A1E3F8AE248A0A4F5EA672F36B81F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_67A3991A1EAAB28A1E069C2988E76725"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_E6395B6816294FF9B56FDBC21DE68D1A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_D9E6A54116C341CC93D7B6707D1F3E5B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_911F69C4A7C349C6AE0031CA81A217D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_7FC4E4233A2F43EDB5EAAE96A900C2AB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_7F3F56D41D09454E8B35DF89A9F6589D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_0D6B797C381F484B9D1B069EEA65D17B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_32026BE9BB2A7D9DF6A3CCA8460EC166"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_086E48822BD3428B9BBECB9FAE531E7A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "OwnerKey" = "8:_E12CA17B5C79F9D790F646E7D4C2B250"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AC550E112B2F4081B5B74AD8A7C72FA2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C718F5E570E847E3AFAB413553B2F868"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D9E6A54116C341CC93D7B6707D1F3E5B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E12CA17B5C79F9D790F646E7D4C2B250"
+        "OwnerKey" = "8:_086E48822BD3428B9BBECB9FAE531E7A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E12CA17B5C79F9D790F646E7D4C2B250"
+        "OwnerKey" = "8:_911F69C4A7C349C6AE0031CA81A217D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E12CA17B5C79F9D790F646E7D4C2B250"
+        "OwnerKey" = "8:_7F3F56D41D09454E8B35DF89A9F6589D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E12CA17B5C79F9D790F646E7D4C2B250"
+        "OwnerKey" = "8:_32026BE9BB2A7D9DF6A3CCA8460EC166"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E6395B6816294FF9B56FDBC21DE68D1A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
+        "MsmKey" = "8:_EFC44F569428F8D5E774283F29585DE7"
+        "OwnerKey" = "8:_086E48822BD3428B9BBECB9FAE531E7A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_911F69C4A7C349C6AE0031CA81A217D4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1217A1D5CCDF7E087E189C205DF40B87"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E6395B6816294FF9B56FDBC21DE68D1A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_91503AC54BBB42518EEF02A69BCF86D8"
+        "MsmKey" = "8:_FBFA1A89463442E69E4284F2434384BF"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -148,7 +322,85 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_31338686C3B3B01F7F5708751D07919C"
+        "OwnerKey" = "8:_E6395B6816294FF9B56FDBC21DE68D1A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D9E6A54116C341CC93D7B6707D1F3E5B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_AC550E112B2F4081B5B74AD8A7C72FA2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_91503AC54BBB42518EEF02A69BCF86D8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_911F69C4A7C349C6AE0031CA81A217D4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7F3F56D41D09454E8B35DF89A9F6589D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0D6B797C381F484B9D1B069EEA65D17B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_086E48822BD3428B9BBECB9FAE531E7A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_32026BE9BB2A7D9DF6A3CCA8460EC166"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E12CA17B5C79F9D790F646E7D4C2B250"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_67A3991A1EAAB28A1E069C2988E76725"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A726AB475CB81B1A7D2C730B7B62774A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EFC44F569428F8D5E774283F29585DE7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_65C5782E5699FE5E10DA35FE099BD614"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -169,6 +421,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -185,6 +458,27 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -206,7 +500,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=131000"
                 }
@@ -214,23 +508,12 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1217A1D5CCDF7E087E189C205DF40B87"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_019D25AB6DC2270E567B061DE5971028"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Iava.Input, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_1217A1D5CCDF7E087E189C205DF40B87"
-                    {
-                    "Name" = "8:Iava.Input.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Iava.Input.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:Iava.Core.xml"
+            "TargetName" = "8:Iava.Core.xml"
             "Tag" = "8:"
-            "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -265,20 +548,40 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_31338686C3B3B01F7F5708751D07919C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_13CF9ACA11304C73BC6D0ACD6AB1C41E"
+            {
+            "SourcePath" = "8:..\\Gestures\\Swipe Right.iava"
+            "TargetName" = "8:Swipe Right.iava"
+            "Tag" = "8:"
+            "Folder" = "8:_DDFD120121FA486DB2D5FD875E291E43"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_32026BE9BB2A7D9DF6A3CCA8460EC166"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Iava.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Iava.Gesture, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_31338686C3B3B01F7F5708751D07919C"
+                    "_32026BE9BB2A7D9DF6A3CCA8460EC166"
                     {
-                    "Name" = "8:Iava.Core.dll"
+                    "Name" = "8:Iava.Gesture.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Iava.Core.dll"
+            "SourcePath" = "8:Iava.Gesture.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
@@ -327,6 +630,190 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_67A3991A1EAAB28A1E069C2988E76725"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Iava.Audio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_67A3991A1EAAB28A1E069C2988E76725"
+                    {
+                    "Name" = "8:Iava.Audio.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Iava.Audio.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A5927FCCC76978A5233B7CCDB876489B"
+            {
+            "SourcePath" = "8:Iava.Input.xml"
+            "TargetName" = "8:Iava.Input.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A726AB475CB81B1A7D2C730B7B62774A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Iava.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A726AB475CB81B1A7D2C730B7B62774A"
+                    {
+                    "Name" = "8:Iava.Core.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Iava.Core.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C718F5E570E847E3AFAB413553B2F868"
+            {
+            "SourcePath" = "8:..\\Gestures\\Sync.iava"
+            "TargetName" = "8:Sync.iava"
+            "Tag" = "8:"
+            "Folder" = "8:_DDFD120121FA486DB2D5FD875E291E43"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E12CA17B5C79F9D790F646E7D4C2B250"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Iava.Input, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E12CA17B5C79F9D790F646E7D4C2B250"
+                    {
+                    "Name" = "8:Iava.Input.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Iava.Input.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EFC44F569428F8D5E774283F29585DE7"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Xml.Schema.Linq, Version=2.0.2.56002, Culture=neutral, PublicKeyToken=47d0c84d0ebb13e5, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_EFC44F569428F8D5E774283F29585DE7"
+                    {
+                    "Name" = "8:Xml.Schema.Linq.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Xml.Schema.Linq.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FBFA1A89463442E69E4284F2434384BF"
+            {
+            "SourcePath" = "8:..\\Gestures\\Swipe Left.iava"
+            "TargetName" = "8:Swipe Left.iava"
+            "Tag" = "8:"
+            "Folder" = "8:_DDFD120121FA486DB2D5FD875E291E43"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -354,6 +841,28 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+                    {
+                    "Name" = "8:VsReference"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_CC3D14BA670B4218A50EE00DAD2E0CB3"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_DDFD120121FA486DB2D5FD875E291E43"
+                    {
+                    "Name" = "8:Gestures"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_59AB4E0A2EE34E98801DACA65AEAA3AA"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_BE7A3D5B34C84C258CD9FA2A20927E16"
@@ -373,20 +882,42 @@
             "{836E08B8-0285-4809-BA42-01DB6754A45D}:_3D75C5B9C81741D1828E87A14BBAD84B"
             {
             "Name" = "8:IsKinectSdkInstalled"
-            "Condition" = "8:REGISTRYVALUE1 > 0"
+            "Condition" = "8:FILEEXISTS1 OR FILEEXISTS2"
             "Message" = "8:The Microsoft Kinect SDK v1.0 is not installed.  Please install the Kinect SDK then re-run this installer.  Exit and go to Kinect SDK download site?"
             "InstallUrl" = "8:http://www.microsoft.com/en-us/kinectforwindows/develop/overview.aspx"
             }
         }
         "Locator"
         {
-            "{CF66B7F7-B7DA-4B08-A67A-233430638C9C}:_6162F9DE187845A8B2EA6422E3E2CEDB"
+            "{39E1837C-0DB9-45A2-89C8-438377A77565}:_43114113E7D943D5811203E946F826A7"
             {
-            "Name" = "8:KinectSDK"
-            "Root" = "2:1"
-            "RegKey" = "8:SOFTWARE\\Microsoft\\KinectSDK\\v1.0"
-            "Value" = "8:installed"
-            "Property" = "8:REGISTRYVALUE1"
+            "Name" = "8:Kinect_64bit"
+            "Folder" = "8:[ProgramFiles64Folder]Microsoft SDKs\\Kinect\\v1.0\\Assemblies"
+            "Depth" = "2:0"
+            "FileName" = "8:Microsoft.Kinect.dll"
+            "MinVesion" = "8:"
+            "MaxVersion" = "8:"
+            "MinSize" = "8:"
+            "MaxSize" = "8:"
+            "MinDate" = "8:"
+            "MaxDate" = "8:"
+            "Languages" = "8:"
+            "Property" = "8:FILEEXISTS2"
+            }
+            "{39E1837C-0DB9-45A2-89C8-438377A77565}:_5F7D65E89AB143EB9E3D9E2AEB898745"
+            {
+            "Name" = "8:Kinect_32bit"
+            "Folder" = "8:[ProgramFilesFolder]Microsoft SDKs\\Kinect\\v1.0\\Assemblies"
+            "Depth" = "2:0"
+            "FileName" = "8:Microsoft.Kinect.dll"
+            "MinVesion" = "8:"
+            "MaxVersion" = "8:"
+            "MinSize" = "8:"
+            "MaxSize" = "8:"
+            "MinDate" = "8:"
+            "MaxDate" = "8:"
+            "Languages" = "8:"
+            "Property" = "8:FILEEXISTS1"
             }
         }
         "MsiBootstrapper"
@@ -399,7 +930,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:IAVA"
         "ProductCode" = "8:{F6AE5C6D-D620-4B45-ACFB-F3C3B13E0A7D}"
-        "PackageCode" = "8:{16E97555-99E9-4C55-8741-395273B650A4}"
+        "PackageCode" = "8:{67E1C9B1-7322-495B-A2DB-7F25BB752261}"
         "UpgradeCode" = "8:{88D05D90-D93C-4EC5-8ADF-4A6EA10446A2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -485,7 +1016,7 @@
                                                             "Condition" = "8:"
                                                             "Transitive" = "11:FALSE"
                                                             "ValueTypes" = "3:1"
-                                                            "Value" = "8:C:\\\\Program Files (x86)\\\\IAVA\\\\"
+                                                            "Value" = "8:C:\\Program Files (x86)\\IAVA\\VsReference"
                                                             }
                                                         }
                                                     }
@@ -515,20 +1046,6 @@
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_8D1E85C5B0484779BB914838C335E307"
-                    {
-                    "Name" = "8:Software"
-                    "Condition" = "8:"
-                    "AlwaysCreate" = "11:FALSE"
-                    "DeleteAtUninstall" = "11:FALSE"
-                    "Transitive" = "11:FALSE"
-                        "Keys"
-                        {
-                        }
-                        "Values"
-                        {
-                        }
-                    }
                 }
             }
             "HKCR"
@@ -889,28 +1406,6 @@
                             }
                         }
                     }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_F467B6CE61BE4D59A9977808F85516D7"
-                    {
-                    "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -919,9 +1414,177 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_086E48822BD3428B9BBECB9FAE531E7A"
+            {
+            "SourcePath" = "8:..\\GestureRecorder\\obj\\x86\\Release\\GestureRecorder.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{7B844FB8-A8A0-42F2-8F51-53E3BAA29054}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0D6B797C381F484B9D1B069EEA65D17B"
+            {
+            "SourcePath" = "8:..\\Iava.Camera\\obj\\Release\\Iava.Input.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_34686E91A62D4B73A57681DE4038A219"
+            {
+            "SourcePath" = "8:..\\Iava.Camera\\bin\\Release\\Iava.Input.XML"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Documentation"
+            "OutputProjectGuid" = "8:{5220C5FE-CE76-40FF-A2DD-00E4C2560C31}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_522A1E3F8AE248A0A4F5EA672F36B81F"
+            {
+            "SourcePath" = "8:..\\Iava.Gesture\\bin\\Release\\Iava.Gesture.XML"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Documentation"
+            "OutputProjectGuid" = "8:{39C4649E-594B-41FC-B9BE-0000AA88F569}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_56BB0A0328B646CF8EC70855534348E0"
+            {
+            "SourcePath" = "8:..\\Iava.Audio\\bin\\Release\\Iava.Audio.XML"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Documentation"
+            "OutputProjectGuid" = "8:{7B781211-504F-4752-AE5B-822A6829FC23}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7F3F56D41D09454E8B35DF89A9F6589D"
+            {
+            "SourcePath" = "8:..\\Iava.Gesture\\obj\\Release\\Iava.Gesture.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{39C4649E-594B-41FC-B9BE-0000AA88F569}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7FC4E4233A2F43EDB5EAAE96A900C2AB"
             {
-            "SourcePath" = "8:..\\Iava.Audio\\obj\\Debug\\Iava.Audio.dll"
+            "SourcePath" = "8:..\\Iava.Audio\\obj\\Release\\Iava.Audio.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
@@ -949,7 +1612,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_911F69C4A7C349C6AE0031CA81A217D4"
             {
-            "SourcePath" = "8:..\\Iava.Gesture\\obj\\Debug\\Iava.Gesture.dll"
+            "SourcePath" = "8:..\\Iava.Gesture\\obj\\Release\\Iava.Gesture.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
@@ -977,7 +1640,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_91503AC54BBB42518EEF02A69BCF86D8"
             {
-            "SourcePath" = "8:..\\Iava.Core\\obj\\Debug\\Iava.Core.dll"
+            "SourcePath" = "8:..\\Iava.Core\\obj\\Release\\Iava.Core.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
@@ -1003,9 +1666,93 @@
                 {
                 }
             }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_96A7CE4FE7F146A2A489279FEB7D7282"
+            {
+            "SourcePath" = "8:..\\Iava.Core\\bin\\Release\\Iava.Core.XML"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Documentation"
+            "OutputProjectGuid" = "8:{80DF01EC-0E97-4B4D-A36F-FED9659D748A}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AC550E112B2F4081B5B74AD8A7C72FA2"
+            {
+            "SourcePath" = "8:..\\Iava.Core\\obj\\Release\\Iava.Core.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{80DF01EC-0E97-4B4D-A36F-FED9659D748A}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D9E6A54116C341CC93D7B6707D1F3E5B"
+            {
+            "SourcePath" = "8:..\\Iava.Audio\\obj\\Release\\Iava.Audio.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_1B1EA7B9E9DE4358886CDD9DF38BD4DF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{7B781211-504F-4752-AE5B-822A6829FC23}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_E6395B6816294FF9B56FDBC21DE68D1A"
             {
-            "SourcePath" = "8:..\\Iava.Camera\\obj\\Debug\\Iava.Input.dll"
+            "SourcePath" = "8:..\\Iava.Camera\\obj\\Release\\Iava.Input.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
