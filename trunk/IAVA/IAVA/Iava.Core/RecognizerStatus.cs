@@ -1,4 +1,5 @@
 ﻿namespace Iava.Core {
+
     /// <summary>
     /// Recognizer status enumeration.
     /// </summary>

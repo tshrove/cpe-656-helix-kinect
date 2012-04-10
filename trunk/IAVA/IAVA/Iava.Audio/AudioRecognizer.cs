@@ -8,8 +8,8 @@ using Iava.Core;
 using Iava.Core.Logging;
 using Microsoft.Kinect;
 
-namespace Iava.Audio 
-{
+namespace Iava.Audio {
+
     /// <summary>
     /// Audio Callback for when a audio command is detected.
     /// </summary>
@@ -19,24 +19,19 @@ namespace Iava.Audio
     /// <summary>
     /// AudioRecognizer class.
     /// </summary>
-    public class AudioRecognizer : Recognizer
-    {
+    public class AudioRecognizer : Recognizer {
         #region Public Attributes
-      
+
         /// <summary>
         /// The level of confidence of the audio being recognized.  Anything below this level is
         /// ignored.
         /// </summary>
-        public float AudioConfidenceThreshold
-        {
-            get 
-            { 
-                return audioConfidenceThreshold; 
+        public float AudioConfidenceThreshold {
+            get {
+                return audioConfidenceThreshold;
             }
-            set
-            {
-                if (value < 0.0f || value > 1.0f)
-                {
+            set {
+                if (value < 0.0f || value > 1.0f) {
                     throw new ArgumentOutOfRangeException("value", "Confidence level must be in the range of [0, 1.0].");
                 }
 
@@ -47,23 +42,18 @@ namespace Iava.Audio
         /// <summary>
         /// The command that syncs the recognizer.
         /// </summary>
-        public string SyncCommand
-        {
-            get
-            {
+        public string SyncCommand {
+            get {
                 return syncCommand;
             }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
+            set {
+                if (string.IsNullOrWhiteSpace(value)) {
                     throw new ArgumentException("value", "Sync command was either null, empty, or consisted of only whitespace.");
                 }
 
                 syncCommand = value;
-                
-                if (Status == RecognizerStatus.Running)
-                {
+
+                if (Status == RecognizerStatus.Running) {
                     Stop();
                     Start();
                 }
@@ -77,8 +67,7 @@ namespace Iava.Audio
         /// Starts the recognizer.
         /// </summary>
         public override void Start() {
-            if (Status != RecognizerStatus.Running)
-            {
+            if (Status != RecognizerStatus.Running) {
                 Task.Factory.StartNew(() => SetupAudioDevice(m_tokenSource.Token), m_tokenSource.Token);
 
                 // Wait until the setup thread has finished
@@ -111,31 +100,25 @@ namespace Iava.Audio
         /// </summary>
         /// <param name="name">The audio command to listen for.</param>
         /// <param name="callBack">The method to invoke when the spoken command is recognized.</param>
-        public void Subscribe(string name, AudioCallback callBack) 
-        {
-            if (string.IsNullOrEmpty(name)) 
-            {
+        public void Subscribe(string name, AudioCallback callBack) {
+            if (string.IsNullOrEmpty(name)) {
                 throw new ArgumentException("Name argument was either null or empty.", "name");
             }
 
-            if (callBack == null)
-            {
+            if (callBack == null) {
                 throw new ArgumentException("Callback argument was null.", "callback");
             }
 
-            if (!this.AudioCallbacks.ContainsKey(name))
-            {
+            if (!this.AudioCallbacks.ContainsKey(name)) {
                 AudioCallbacks.Add(name, callBack);
 
                 // To update the grammar the recognizer needs to be restarted
-                if (Status == RecognizerStatus.Running)
-                {
+                if (Status == RecognizerStatus.Running) {
                     Stop();
                     Start();
                 }
             }
-            else
-            {
+            else {
                 throw new ArgumentException("A key already exists with the name " + name + ".", "name");
             }
         }
@@ -144,33 +127,28 @@ namespace Iava.Audio
         /// Unsubscribe the spoken command from being recognized.
         /// </summary>
         /// <param name="name">Spoken command to stop being recognized.</param>
-        public void Unsubscribe(string name) 
-        {
+        public void Unsubscribe(string name) {
             if (!string.IsNullOrEmpty(name) &&
-                this.AudioCallbacks.ContainsKey(name))
-            {
+                this.AudioCallbacks.ContainsKey(name)) {
                 AudioCallbacks.Remove(name);
                 // To update the grammar the recognizer needs to be restarted
-                if (Status == RecognizerStatus.Running)
-                {
+                if (Status == RecognizerStatus.Running) {
                     Stop();
                     Start();
                 }
             }
-            else
-            {
+            else {
                 throw new ArgumentException("Name was either null or name is not contained within audio callback map.", "name");
             }
         }
         #endregion
-        
+
         #region Constructors and Initialization
         /// <summary>
         /// Constructor.
         /// </summary>
         public AudioRecognizer()
-            : base() 
-        {
+            : base() {
             Initialize();
             speechEngine = new SpeechRecognitionEngineWrapper();
         }
@@ -180,8 +158,7 @@ namespace Iava.Audio
         /// </summary>
         /// <param name="filePath">Path to configuration file</param>
         internal AudioRecognizer(ISpeechRecognitionEngine engine)
-            : base()
-        {
+            : base() {
             Initialize();
             speechEngine = engine;
         }
@@ -189,8 +166,7 @@ namespace Iava.Audio
         /// <summary>
         /// Initialize method.
         /// </summary>
-        private void Initialize()
-        {
+        private void Initialize() {
             this.AudioCallbacks = new Dictionary<string, AudioCallback>();
         }
 
@@ -201,8 +177,7 @@ namespace Iava.Audio
         /// <summary>
         /// Holds the callbacks for each gesture.
         /// </summary>
-        private Dictionary<string, AudioCallback> AudioCallbacks 
-        {
+        private Dictionary<string, AudioCallback> AudioCallbacks {
             get;
             set;
         }
@@ -257,17 +232,14 @@ namespace Iava.Audio
         /// Sets up the Kinect Audio Source.
         /// </summary>
         /// <param name="token">Cancellation token argument</param>
-        private void SetupAudioDevice(CancellationToken token) 
-        {
-            try
-            {
+        private void SetupAudioDevice(CancellationToken token) {
+            try {
                 CreateGrammars();
                 speechEngine.SpeechRecognized += SpeechRecognized;
                 speechEngine.SpeechHypothesized += SpeechHypothesized;
-                speechEngine.SpeechRecognitionRejected += SpeechRejected;               
+                speechEngine.SpeechRecognitionRejected += SpeechRejected;
 
-                if (!token.IsCancellationRequested)
-                {
+                if (!token.IsCancellationRequested) {
                     audioSource = KinectSensor.KinectSensors[0].AudioSource;
                     audioSource.EchoCancellationMode = EchoCancellationMode.CancellationOnly;
                     audioSource.AutomaticGainControlEnabled = false;
@@ -283,20 +255,17 @@ namespace Iava.Audio
                     Status = RecognizerStatus.Running;
                 }
             }
-            catch (OperationCanceledException)
-            {
+            catch (OperationCanceledException) {
                 Status = RecognizerStatus.Error;
             }
-            catch (Exception exception)
-            {
+            catch (Exception exception) {
                 Status = RecognizerStatus.Error;
                 StatusLogger.LogMessage(new Message("Failed to detect Kinect or start speech recognition engine.",
                                                     GetType().Name,
                                                     MessageType.Error,
                                                     exception));
             }
-            finally
-            {
+            finally {
                 m_resetEvent.Set();
             }
         }
@@ -315,25 +284,19 @@ namespace Iava.Audio
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>
-        private void SpeechRecognized(object sender, IavaSpeechRecognizedEventArgs e) 
-        {
+        private void SpeechRecognized(object sender, IavaSpeechRecognizedEventArgs e) {
             Console.WriteLine("\rSpeech Recognized: \t{0}\tConfidence:\t{1}", e.Text, e.Confidence);
 
             // If we just synced, set the flag and return
-            if (e.Text.Contains(syncCommand))
-            {
+            if (e.Text.Contains(syncCommand)) {
                 m_syncContext.Post(new SendOrPostCallback(delegate(object state) { OnSynced(this, e); }), null);
                 return;
             }
 
-            if (m_isSynced) 
-            {
-                foreach (string command in AudioCallbacks.Keys) 
-                {
-                    if (e.Text.Contains(command.TrimEnd(new[] { '*' })) && e.Confidence > AudioConfidenceThreshold) 
-                    {
-                        try 
-                        {                                                       
+            if (m_isSynced) {
+                foreach (string command in AudioCallbacks.Keys) {
+                    if (e.Text.Contains(command.TrimEnd(new[] { '*' })) && e.Confidence > AudioConfidenceThreshold) {
+                        try {
                             // We found a command, reset the timer
                             ResetTimer();
 
@@ -342,11 +305,10 @@ namespace Iava.Audio
                                     Command = command
                                 };
 
-                            if (command.EndsWith("*"))
-                            {
+                            if (command.EndsWith("*")) {
                                 // Extract the wildcard words spoken and split them into
                                 string recognizedPhrase = e.Text.Substring(command.Length - 1).ToLower();
-                                args.CommandWildcards = new List<string>(recognizedPhrase.Split(new [] {' '}, StringSplitOptions.RemoveEmptyEntries));                               
+                                args.CommandWildcards = new List<string>(recognizedPhrase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
                             }
 
                             // Invoke the callback
