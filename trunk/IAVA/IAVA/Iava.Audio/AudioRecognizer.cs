@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Speech.AudioFormat;
 using System.Speech.Recognition;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Iava.Core;
 using Iava.Core.Logging;
-
 using Microsoft.Kinect;
 
 namespace Iava.Audio 
@@ -94,6 +90,7 @@ namespace Iava.Audio
                 OnStarted(this, new EventArgs());
             }
         }
+
         /// <summary>
         /// Stops the recognizer.
         /// </summary>
@@ -107,6 +104,7 @@ namespace Iava.Audio
 
             OnStopped(this, new EventArgs());
         }
+
         /// <summary>
         /// Used to map a spoken command to a callback.  When the command is recognized, 
         /// the callback is invoked.
@@ -141,6 +139,7 @@ namespace Iava.Audio
                 throw new ArgumentException("A key already exists with the name " + name + ".", "name");
             }
         }
+
         /// <summary>
         /// Unsubscribe the spoken command from being recognized.
         /// </summary>
@@ -213,6 +212,48 @@ namespace Iava.Audio
         #region Private Methods
 
         /// <summary>
+        /// Creates Grammar objects based on the spoken commands to listen for and loads 
+        /// them into the speech recognition engine.
+        /// </summary>
+        private void CreateGrammars() {
+            Choices choices = new Choices();
+            choices.Add(new[] { syncCommand });
+
+            Choices wildcardChoices = new Choices();
+            bool wildcardChoiceAdded = false;
+
+            foreach (string phrase in AudioCallbacks.Keys) {
+                string command = phrase;
+                if (command.EndsWith("*")) {
+                    command = command.TrimEnd('*');
+                    GrammarBuilder builder = new GrammarBuilder(command);
+                    builder.AppendDictation();
+                    wildcardChoices.Add(builder);
+                    wildcardChoiceAdded = true;
+                }
+                else {
+                    choices.Add(command);
+                }
+            }
+
+            GrammarBuilder commandsBuilder = new GrammarBuilder(choices);
+            Grammar grammar = new Grammar(commandsBuilder);
+            grammar.Enabled = true;
+            grammar.Name = syncCommand;
+            speechEngine.LoadGrammar(grammar);
+
+            // An exception is thrown if no items exist in the builder so only create a Grammar
+            // if at least one wildcard statement exists
+            if (wildcardChoiceAdded) {
+                GrammarBuilder wildcardCommandsBuilder = new GrammarBuilder(wildcardChoices);
+                Grammar wildcardGrammar = new Grammar(wildcardCommandsBuilder);
+                wildcardGrammar.Enabled = true;
+                wildcardGrammar.Name = syncCommand + " - Wildcards";
+                speechEngine.LoadGrammar(wildcardGrammar);
+            }
+        }
+
+        /// <summary>
         /// Sets up the Kinect Audio Source.
         /// </summary>
         /// <param name="token">Cancellation token argument</param>
@@ -261,50 +302,12 @@ namespace Iava.Audio
         }
 
         /// <summary>
-        /// Creates Grammar objects based on the spoken commands to listen for and loads 
-        /// them into the speech recognition engine.
+        /// Occurs when speech has been hypothesized.
         /// </summary>
-        private void CreateGrammars()
-        {
-            Choices choices = new Choices();
-            choices.Add(new[] { syncCommand });
-
-            Choices wildcardChoices = new Choices();
-            bool wildcardChoiceAdded = false;
-
-            foreach (string phrase in AudioCallbacks.Keys)
-            {
-                string command = phrase;
-                if (command.EndsWith("*"))
-                {
-                    command = command.TrimEnd('*');
-                    GrammarBuilder builder = new GrammarBuilder(command);
-                    builder.AppendDictation();
-                    wildcardChoices.Add(builder);
-                    wildcardChoiceAdded = true;
-                }
-                else
-                {
-                    choices.Add(command);
-                }
-            }            
-                   
-            GrammarBuilder commandsBuilder = new GrammarBuilder(choices);
-            Grammar grammar = new Grammar(commandsBuilder);
-            grammar.Enabled = true;
-            grammar.Name = syncCommand;
-            speechEngine.LoadGrammar(grammar);
-
-            // An exception is thrown if no items exist in the builder so only create a Grammar
-            // if at least one wildcard statement exists
-            if (wildcardChoiceAdded)
-            {
-                GrammarBuilder wildcardCommandsBuilder = new GrammarBuilder(wildcardChoices);
-                Grammar wildcardGrammar = new Grammar(wildcardCommandsBuilder);
-                wildcardGrammar.Enabled = true;
-                wildcardGrammar.Name = syncCommand + " - Wildcards";
-                speechEngine.LoadGrammar(wildcardGrammar);
-            }           
+        /// <param name="sender">Object that send the event</param>
+        /// <param name="e">Event args</param>
+        private void SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e) {
+            Console.Write("\rSpeech Hypothesized: \t{0}\tConfidence:\t{1}", e.Result.Text, e.Result.Confidence);
         }
 
         /// <summary>
@@ -371,18 +374,14 @@ namespace Iava.Audio
             Console.WriteLine("\nSpeech Rejected: \t{0}", e.Result.Text);
         }
 
-        /// <summary>
-        /// Occurs when speech has been hypothesized.
-        /// </summary>
-        /// <param name="sender">Object that send the event</param>
-        /// <param name="e">Event args</param>
-        private void SpeechHypothesized(object sender, SpeechHypothesizedEventArgs e) {
-            Console.Write("\rSpeech Hypothesized: \t{0}\tConfidence:\t{1}", e.Result.Text, e.Result.Confidence);
-        }
-
         #endregion Private Methods
 
         #region Private Fields
+
+        /// <summary>
+        /// Confidence threshold.
+        /// </summary>
+        private float audioConfidenceThreshold = 0.8f;
 
         /// <summary>
         /// Reference to the Kinect audio source.
@@ -398,11 +397,6 @@ namespace Iava.Audio
         /// The sync command.
         /// </summary>
         private string syncCommand = "IAVA";
-
-        /// <summary>
-        /// Confidence threshold.
-        /// </summary>
-        private float audioConfidenceThreshold = 0.8f;
 
         #endregion Private Fields
     }

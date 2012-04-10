@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Speech.Recognition;
 
-namespace Iava.Audio
-{
+namespace Iava.Audio {
+
     /// <summary>
     /// Speed recognition event arguments.
     /// </summary>
-    internal class IavaSpeechRecognizedEventArgs : EventArgs
-    {
-        /// <summary>
-        /// The spoken text the engine recognized.
-        /// </summary>
-        public string Text { get; private set; }
+    internal class IavaSpeechRecognizedEventArgs : EventArgs {
+
+        #region Public Properties
 
         /// <summary>
         /// The confidence level of the recognized speech.
@@ -22,13 +16,20 @@ namespace Iava.Audio
         public float Confidence { get; private set; }
 
         /// <summary>
+        /// The spoken text the engine recognized.
+        /// </summary>
+        public string Text { get; private set; }
+
+        #endregion Public Properties
+
+        #region Constructors
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="eventArg">Speech recognized event args</param>
-        public IavaSpeechRecognizedEventArgs(SpeechRecognizedEventArgs eventArg)
-        {
-            if (eventArg == null)
-            {
+        public IavaSpeechRecognizedEventArgs(SpeechRecognizedEventArgs eventArg) {
+            if (eventArg == null) {
                 throw new ArgumentException("eventArg parameter was null.", "eventArg");
             }
 
@@ -41,10 +42,11 @@ namespace Iava.Audio
         /// </summary>
         /// <param name="confidence">confidence</param>
         /// <param name="text">text</param>
-        public IavaSpeechRecognizedEventArgs(string text, float confidence)
-        {
+        public IavaSpeechRecognizedEventArgs(string text, float confidence) {
             Text = text;
             Confidence = confidence;
         }
+
+        #endregion Constructors
     }
 }
