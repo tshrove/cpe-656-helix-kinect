@@ -54,8 +54,6 @@ namespace Iava.Core.Math {
         /// <param name="point2">A IavaSkeletonPoint to compare to subtract.</param>
         /// <returns>The resulting IavaSkeletonPoint of the subtraction operator.</returns>
         public static IavaSkeletonPoint operator -(IavaSkeletonPoint point1, IavaSkeletonPoint point2) {
-            IavaSkeletonPoint returnpoint = new IavaSkeletonPoint();
-
             // Return the difference
             return point1 - point2;
         }
