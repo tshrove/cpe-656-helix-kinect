@@ -28,7 +28,7 @@ namespace Iava.Core.Math {
         /// <summary>
         /// Returns an IavaSkeletonPoint located at the origin.
         /// </summary>
-        public static readonly IavaSkeletonPoint Zero {
+        public static IavaSkeletonPoint Zero {
             get { return new IavaSkeletonPoint() { X = 0.0, Y = 0.0, Z = 0.0 }; }
         }
 
@@ -43,15 +43,8 @@ namespace Iava.Core.Math {
         /// <param name="point2">A IavaSkeletonPoint to compare to add.</param>
         /// <returns>The resulting IavaSkeletonPoint of the addition operator.</returns>
         public static IavaSkeletonPoint operator +(IavaSkeletonPoint point1, IavaSkeletonPoint point2) {
-            IavaSkeletonPoint returnVector = new IavaSkeletonPoint();
-
-            // Add the vectors
-            returnVector.X = vector1.X + vector2.X;
-            returnVector.Y = vector1.Y + vector2.Y;
-            returnVector.Z = vector1.Z + vector2.Z;
-
             // Return the sum
-            return returnVector;
+            return point1 + point2;
         }
 
         /// <summary>
@@ -61,15 +54,10 @@ namespace Iava.Core.Math {
         /// <param name="point2">A IavaSkeletonPoint to compare to subtract.</param>
         /// <returns>The resulting IavaSkeletonPoint of the subtraction operator.</returns>
         public static IavaSkeletonPoint operator -(IavaSkeletonPoint point1, IavaSkeletonPoint point2) {
-            IavaSkeletonPoint returnVector = new IavaSkeletonPoint();
-
-            // Subtract the vectors
-            returnVector.X = vector1.X - vector2.X;
-            returnVector.Y = vector1.Y - vector2.Y;
-            returnVector.Z = vector1.Z - vector2.Z;
+            IavaSkeletonPoint returnpoint = new IavaSkeletonPoint();
 
             // Return the difference
-            return returnVector;
+            return point1 - point2;
         }
 
         /// <summary>
@@ -79,9 +67,9 @@ namespace Iava.Core.Math {
         /// <param name="point2">A IavaSkeletonPoint to compare for equality.</param>
         /// <returns>TRUE if the two IavaSkeletonPoint instances are equal, else FALSE</returns>
         public static bool operator ==(IavaSkeletonPoint point1, IavaSkeletonPoint point2) {
-            return (vector1.X.Equals(vector2.X) &&
-                    vector1.Y.Equals(vector2.Y) &&
-                    vector1.Z.Equals(vector2.Z));
+            return (point1.X.Equals(point2.X) &&
+                    point1.Y.Equals(point2.Y) &&
+                    point1.Z.Equals(point2.Z));
         }
 
         /// <summary>
@@ -91,9 +79,9 @@ namespace Iava.Core.Math {
         /// <param name="point2">A IavaSkeletonPoint to compare for inequality.</param>
         /// <returns>TRUE if the two IavaSkeletonPoint instances are not equal, else FALSE</returns>
         public static bool operator !=(IavaSkeletonPoint point1, IavaSkeletonPoint point2) {
-            return (!vector1.X.Equals(vector2.X) &&
-                    !vector1.Y.Equals(vector2.Y) &&
-                    !vector1.Z.Equals(vector2.Z));
+            return (!point1.X.Equals(point2.X) &&
+                    !point1.Y.Equals(point2.Y) &&
+                    !point1.Z.Equals(point2.Z));
         }
 
         /// <summary>
