@@ -93,14 +93,6 @@ namespace Iava.Audio {
         #region ISpeechRecognition Members
 
         /// <summary>
-        /// Event for when speech was recognized.
-        /// </summary>
-        event EventHandler<IavaSpeechRecognizedEventArgs> ISpeechRecognitionEngine.SpeechRecognized {
-            add { SpeechRecognizedHandler += value; }
-            remove { SpeechRecognizedHandler -= value; }
-        }
-
-        /// <summary>
         /// Event for when speech was hypothesized.
         /// </summary>
         event EventHandler<SpeechHypothesizedEventArgs> ISpeechRecognitionEngine.SpeechHypothesized {
@@ -114,6 +106,14 @@ namespace Iava.Audio {
         event EventHandler<SpeechRecognitionRejectedEventArgs> ISpeechRecognitionEngine.SpeechRecognitionRejected {
             add { engine.SpeechRecognitionRejected += value; }
             remove { engine.SpeechRecognitionRejected -= value; }
+        }
+
+        /// <summary>
+        /// Event for when speech was recognized.
+        /// </summary>
+        event EventHandler<IavaSpeechRecognizedEventArgs> ISpeechRecognitionEngine.SpeechRecognized {
+            add { SpeechRecognizedHandler += value; }
+            remove { SpeechRecognizedHandler -= value; }
         }
 
         /// <summary>

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Iava.Audio
-{
+namespace Iava.Audio {
+
     /// <summary>
     /// Audio recognized event arguments.
     /// </summary>
-    public class AudioEventArgs : EventArgs
-    {
-        #region Attributes
+    public class AudioEventArgs : EventArgs {
+
+        #region Public Properties
 
         /// <summary>
         /// The audio command that was recognized.
@@ -20,16 +20,16 @@ namespace Iava.Audio
         /// </summary>
         public List<string> CommandWildcards { get; set; }
 
-        #endregion
+        #endregion Public Properties
 
-        #region Constructor
+        #region Constructors
+
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public AudioEventArgs()
-        {
-
+        public AudioEventArgs() {
         }
-        #endregion
+
+        #endregion Constructors
     }
 }
