@@ -43,8 +43,15 @@ namespace Iava.Core.Math {
         /// <param name="point2">A IavaSkeletonPoint to compare to add.</param>
         /// <returns>The resulting IavaSkeletonPoint of the addition operator.</returns>
         public static IavaSkeletonPoint operator +(IavaSkeletonPoint point1, IavaSkeletonPoint point2) {
+            IavaSkeletonPoint returnPoint = new IavaSkeletonPoint();
+
+            // Subtract the points
+            returnPoint.X = point1.X + point2.X;
+            returnPoint.Y = point1.Y + point2.Y;
+            returnPoint.Z = point1.Z + point2.Z;
+
             // Return the sum
-            return point1 + point2;
+            return returnPoint;
         }
 
         /// <summary>
@@ -54,8 +61,15 @@ namespace Iava.Core.Math {
         /// <param name="point2">A IavaSkeletonPoint to compare to subtract.</param>
         /// <returns>The resulting IavaSkeletonPoint of the subtraction operator.</returns>
         public static IavaSkeletonPoint operator -(IavaSkeletonPoint point1, IavaSkeletonPoint point2) {
+            IavaSkeletonPoint returnPoint = new IavaSkeletonPoint();
+
+            // Subtract the points
+            returnPoint.X = point1.X - point2.X;
+            returnPoint.Y = point1.Y - point2.Y;
+            returnPoint.Z = point1.Z - point2.Z;
+
             // Return the difference
-            return point1 - point2;
+            return returnPoint;
         }
 
         /// <summary>
