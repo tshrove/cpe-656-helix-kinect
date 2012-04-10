@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="GestureRecorder.Controls.CreateGesture"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Loaded="OnLoaded" Unloaded="OnUnloaded"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d" d:DesignWidth="600" SizeChanged="OnResize">
+    <DockPanel LastChildFill="True">
+        <Border BorderBrush="Gray" CornerRadius="1" Width="150" DockPanel.Dock="Right">
+            <StackPanel>
+                <Button Content="Snapshot" Margin="2" Name="btnSnapshot" Height="30" Click="OnSnapshotClick" />
+                <Button Content="Next" Margin="2" Name="btnNext" Height="30" Click="OnNextClick" />
+                <Button Content="Cancel" Margin="2" Name="btnCancel" Click="OnCancelClick" Height="30"/>
+                <Image Name="VideoFeed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                <Label Name="lblActiveSkeleton" Foreground="White" FontWeight="ExtraBold"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Name="stkSkeletalBody" DockPanel.Dock="Right" IsEnabled="False">
+            <TextBlock Text="Select Joints to Record" HorizontalAlignment="Center" Foreground="Wheat"/>
+            <Grid>
+                <Image Width="200" Height="Auto" Source="pack://application:,,,/Resources/Skeleton.png" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butSpine"          Width="10" Height="10" Margin="88,128,102,248"  Opacity="0.75" Checked="OnJointCheck" Tag="1"  />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butShoulderCenter" Width="10" Height="10" Margin="88,69,102,307"   Opacity="0.75" Checked="OnJointCheck" Tag="2"  />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butHead"           Width="10" Height="10" Margin="88,28,102,348"   Opacity="0.75" Checked="OnJointCheck" Tag="3"  />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butShoulderLeft"   Width="10" Height="10" Margin="57,69,133,307"   Opacity="0.75" Checked="OnJointCheck" Tag="4"  />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butElbowLeft"      Width="10" Height="10" Margin="34,131,156,245"  Opacity="0.75" Checked="OnJointCheck" Tag="5"  />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butWristLeft"      Width="10" Height="10" Margin="29,182,161,194"  Opacity="0.75" Checked="OnJointCheck" Tag="6"  />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butHandLeft"       Width="10" Height="10" Margin="34,205,156,171"  Opacity="0.75" Checked="OnJointCheck" Tag="7"  />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butShoulderRight"  Width="10" Height="10" Margin="123,69,67,307"   Opacity="0.75" Checked="OnJointCheck" Tag="8"  />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butElbowRight"     Width="10" Height="10" Margin="138,132,52,244"  Opacity="0.75" Checked="OnJointCheck" Tag="9"  />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butWristRight"     Width="10" Height="10" Margin="154,182,36,194"  Opacity="0.75" Checked="OnJointCheck" Tag="10" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butHandRight"      Width="10" Height="10" Margin="162,205,28,171"  Opacity="0.75" Checked="OnJointCheck" Tag="11" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butHipLeft"        Width="10" Height="10" Margin="65,162,125,214"  Opacity="0.75" Checked="OnJointCheck" Tag="12" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butKneeLeft"       Width="10" Height="10" Margin="75,262,115,114"  Opacity="0.75" Checked="OnJointCheck" Tag="13" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butAnkleLeft"      Width="10" Height="10" Margin="77,338,113,38"   Opacity="0.75" Checked="OnJointCheck" Tag="14" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butFootLeft"       Width="10" Height="10" Margin="69,357,121,19"   Opacity="0.75" Checked="OnJointCheck" Tag="15" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butHipRight"       Width="10" Height="10" Margin="110,163,80,213"  Opacity="0.75" Checked="OnJointCheck" Tag="16" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butKneeRight"      Width="10" Height="10" Margin="99,262,91,114"   Opacity="0.75" Checked="OnJointCheck" Tag="17" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butAnkleRight"     Width="10" Height="10" Margin="97,338,93,38"    Opacity="0.75" Checked="OnJointCheck" Tag="18" />
+                <ToggleButton Style="{StaticResource JointButton}" Name="butFootRight"      Width="10" Height="10" Margin="106,358,84,18"   Opacity="0.75" Checked="OnJointCheck" Tag="19" />
+            </Grid>
+        </StackPanel>
+        <Grid Name="gridSnapshot" Margin="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.2*" />
+                <ColumnDefinition Width="0.2*" />
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </DockPanel>
+</UserControl>
