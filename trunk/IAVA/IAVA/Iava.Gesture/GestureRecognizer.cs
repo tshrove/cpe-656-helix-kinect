@@ -116,7 +116,13 @@ namespace Iava.Gesture {
             SupportedGestures = new List<IavaGesture>();
 
             _engine = new GestureEngine();
+
+            _detectingGestures = true;
+            _timeoutTimer = new System.Timers.Timer(1000);
+            _timeoutTimer.Elapsed += TimeoutElapsed;
         }
+
+        
 
         #endregion Constructors
 
@@ -193,9 +199,25 @@ namespace Iava.Gesture {
             finally { m_resetEvent.Set(); }
         }
 
+        /// <summary>
+        /// Sets the detecting gesture flag to true, indicating that gesture recognition
+        /// is ready
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TimeoutElapsed(object sender, System.Timers.ElapsedEventArgs e) {
+            _detectingGestures = true;
+        }
+
         #endregion Private Methods
 
         #region Private Fields
+
+        /// <summary>
+        /// When set to TRUE, we are trying to check for gestures,
+        /// otherwise we are resting between gestures.
+        /// </summary>
+        private bool _detectingGestures;
 
         /// <summary>
         /// GestureEngine that will do the heavy lifting
@@ -211,6 +233,11 @@ namespace Iava.Gesture {
         /// The sync gesture
         /// </summary>
         private IavaGesture _syncGesture;
+
+        /// <summary>
+        /// Times out gesture recognition
+        /// </summary>
+        private System.Timers.Timer _timeoutTimer = new System.Timers.Timer();
 
         #endregion Private Fields
 
@@ -237,6 +264,10 @@ namespace Iava.Gesture {
 
                 // Reset all the gesture states
                 SupportedGestures.ForEach(x => x.Reset());
+
+                // We want to wait 1 second before looking for gestures again
+                _detectingGestures = false;
+                _timeoutTimer.Start();
             }
 
             else { /* No one cares about this gesture =( */ }
@@ -248,6 +279,8 @@ namespace Iava.Gesture {
         /// <param name="sender">Event sender</param>
         /// <param name="e">IavaSkeletonEventArgs containing the Skeleton object</param>
         protected void OnSkeletonReady(object sender, IavaSkeletonEventArgs e) {
+            if (!_detectingGestures) { return; }
+
             IavaSkeletonPoint translationVector = e.Skeleton.Joints[IavaJointType.HipCenter].Position;
 
             IavaJoint joint = new IavaJoint();
