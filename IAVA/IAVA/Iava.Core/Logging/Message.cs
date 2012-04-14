@@ -6,8 +6,17 @@ namespace Iava.Core.Logging {
     /// Log message type.
     /// </summary>
     public enum MessageType {
+        /// <summary>
+        /// Indicates the message is an information message.
+        /// </summary>
         Information,
+        /// <summary>
+        /// Indicates the message is an warning message.
+        /// </summary>
         Warning,
+        /// <summary>
+        /// Indicates the message is an error message.
+        /// </summary>
         Error
     }
 
