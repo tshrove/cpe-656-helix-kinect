@@ -164,6 +164,9 @@ namespace Iava.Input.Camera {
 
         #region IDisposable Members
 
+        /// <summary>
+        /// Dispose method.
+        /// </summary>
         public void Dispose() {
             throw new NotImplementedException();
         }

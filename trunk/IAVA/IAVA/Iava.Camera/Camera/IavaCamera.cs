@@ -74,7 +74,7 @@ namespace Iava.Input.Camera {
         /// Handles the ColorImageFrameReady event of the IRuntime control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ImageFrameReadyEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="IavaColorImageFrameReadyEventArgs"/> instance containing the event data.</param>
         private static void OnImageFrameReady(object sender, IavaColorImageFrameReadyEventArgs e) {
             if (ImageFrameReady != null) { ImageFrameReady(null, e); }
         }
@@ -83,7 +83,7 @@ namespace Iava.Input.Camera {
         /// Handles the SkeletonReady event of the IRuntime control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="SkeletonReadyEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="IavaSkeletonEventArgs"/> instance containing the event data.</param>
         private static void OnSkeletonReady(object sender, IavaSkeletonEventArgs e) {
             if (SkeletonReady != null) { SkeletonReady(null, e); }
         }
@@ -92,7 +92,7 @@ namespace Iava.Input.Camera {
         /// Handles the SkeletonFrameReady event of the IRuntime control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="SkeletonFrameReadyEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="IavaSkeletonFrameReadyEventArgs"/> instance containing the event data.</param>
         private static void OnSkeletonFrameReady(object sender, IavaSkeletonFrameReadyEventArgs e) {
             if (SkeletonFrameReady != null) { SkeletonFrameReady(null, e); }
         }

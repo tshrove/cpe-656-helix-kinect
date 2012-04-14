@@ -31,7 +31,7 @@ namespace Iava.Input.Camera {
         /// Handles the VideoFrameReady event of the Kinect's RunTime control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ImageFrameReadyEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="ColorImageFrameReadyEventArgs"/> instance containing the event data.</param>
         private void OnColorFrameReady(object sender, ColorImageFrameReadyEventArgs e) {
             if (ColorImageFrameReady != null) { ColorImageFrameReady(null, new IavaColorImageFrameReadyEventArgs((IavaColorImageFrame)e.OpenColorImageFrame())); }
         }

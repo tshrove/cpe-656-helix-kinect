@@ -27,7 +27,7 @@ namespace Iava.Input.Camera {
         /// <summary>
         /// Creates an IavaSkeletonFrameReadyEventArgs containing the supplied IavaSkeletonFrame
         /// </summary>
-        /// <param name="imageFrame">IavaSkeletonFrame to be contained in the IavaSkeletonFrameReadyEventArgs</param>
+        /// <param name="skeletonFrame">IavaSkeletonFrame to be contained in the IavaSkeletonFrameReadyEventArgs</param>
         public IavaSkeletonFrameReadyEventArgs(IavaSkeletonFrame skeletonFrame) {
             SkeletonFrame = skeletonFrame;
         }
