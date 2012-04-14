@@ -33,8 +33,8 @@ namespace Iava.Input.Camera {
         /// <summary>
         /// Creates an IavaColorImageFrameReadyEventArgs containing the supplied skeleton ID values and timestamp.
         /// </summary>
-        /// <param name="skeletonIDValues">The skeleton JointType values.</param>
-        /// <param name="timeStamp">The timestamp.</param>
+        /// <param name="skeletonIDs">The skeleton JointType values.</param>
+        /// <param name="timestamp">The timestamp.</param>
         public IavaSkeletonFrameEventArgs(List<int> skeletonIDs, long timestamp) {
             this.SkeletonIDs = skeletonIDs;
             this.Timestamp = timestamp;

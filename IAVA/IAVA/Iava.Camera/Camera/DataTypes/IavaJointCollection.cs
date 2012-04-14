@@ -138,6 +138,10 @@ namespace Iava.Input.Camera {
 
         #region IEnumerable Members
 
+        /// <summary>
+        /// Gets the enumerator of the collection.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator GetEnumerator() { return _joints.GetEnumerator(); }
 
         #endregion IEnumerable Members
