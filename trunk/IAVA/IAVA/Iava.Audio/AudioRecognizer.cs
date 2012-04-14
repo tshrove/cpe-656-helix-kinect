@@ -17,7 +17,8 @@ namespace Iava.Audio {
     public delegate void AudioCallback(AudioEventArgs e);
 
     /// <summary>
-    /// AudioRecognizer class.
+    /// Recognizes audio commands and invokes a callback when an audio command
+    /// is recognized.
     /// </summary>
     public class AudioRecognizer : Recognizer {
         #region Public Attributes

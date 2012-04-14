@@ -882,7 +882,7 @@
             "{836E08B8-0285-4809-BA42-01DB6754A45D}:_3D75C5B9C81741D1828E87A14BBAD84B"
             {
             "Name" = "8:IsKinectSdkInstalled"
-            "Condition" = "8:FILEEXISTS1 OR FILEEXISTS2"
+            "Condition" = "8:KINECT_32_EXISTS OR KINECT_64_EXISTS"
             "Message" = "8:The Microsoft Kinect SDK v1.0 is not installed.  Please install the Kinect SDK then re-run this installer.  Exit and go to Kinect SDK download site?"
             "InstallUrl" = "8:http://www.microsoft.com/en-us/kinectforwindows/develop/overview.aspx"
             }
@@ -902,7 +902,7 @@
             "MinDate" = "8:"
             "MaxDate" = "8:"
             "Languages" = "8:"
-            "Property" = "8:FILEEXISTS2"
+            "Property" = "8:KINECT_64_EXISTS"
             }
             "{39E1837C-0DB9-45A2-89C8-438377A77565}:_5F7D65E89AB143EB9E3D9E2AEB898745"
             {
@@ -917,7 +917,7 @@
             "MinDate" = "8:"
             "MaxDate" = "8:"
             "Languages" = "8:"
-            "Property" = "8:FILEEXISTS1"
+            "Property" = "8:KINECT_32_EXISTS"
             }
         }
         "MsiBootstrapper"
@@ -930,7 +930,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:IAVA"
         "ProductCode" = "8:{F6AE5C6D-D620-4B45-ACFB-F3C3B13E0A7D}"
-        "PackageCode" = "8:{67E1C9B1-7322-495B-A2DB-7F25BB752261}"
+        "PackageCode" = "8:{EC54C6FB-CCD8-4953-A560-45B953255C24}"
         "UpgradeCode" = "8:{88D05D90-D93C-4EC5-8ADF-4A6EA10446A2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -991,33 +991,47 @@
                                         {
                                             "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_5CFEDCACD956496DBE6FCCB248B46F6C"
                                             {
-                                            "Name" = "8:AssemblyFolders"
+                                            "Name" = "8:v4.0.30319"
                                             "Condition" = "8:"
                                             "AlwaysCreate" = "11:FALSE"
                                             "DeleteAtUninstall" = "11:FALSE"
                                             "Transitive" = "11:FALSE"
                                                 "Keys"
                                                 {
-                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_9FF8A8DCDC7B4B15847CE5FBACE51024"
+                                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_C48C88D4623C466EB9589F12542A1C91"
                                                     {
-                                                    "Name" = "8:IAVA"
+                                                    "Name" = "8:AssemblyFoldersEx"
                                                     "Condition" = "8:"
                                                     "AlwaysCreate" = "11:FALSE"
                                                     "DeleteAtUninstall" = "11:FALSE"
                                                     "Transitive" = "11:FALSE"
                                                         "Keys"
                                                         {
+                                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_AA06255633F845A0BC6AC01762F1E788"
+                                                            {
+                                                            "Name" = "8:IAVA"
+                                                            "Condition" = "8:"
+                                                            "AlwaysCreate" = "11:FALSE"
+                                                            "DeleteAtUninstall" = "11:FALSE"
+                                                            "Transitive" = "11:FALSE"
+                                                                "Keys"
+                                                                {
+                                                                }
+                                                                "Values"
+                                                                {
+                                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_2F7968CA76814362A411714A20F2014B"
+                                                                    {
+                                                                    "Name" = "8:"
+                                                                    "Condition" = "8:"
+                                                                    "Transitive" = "11:FALSE"
+                                                                    "ValueTypes" = "3:1"
+                                                                    "Value" = "8:C:\\Program Files (x86)\\IAVA\\VsReference"
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                         "Values"
                                                         {
-                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_57008E72283A48969CF2F5FC7E1C0EA2"
-                                                            {
-                                                            "Name" = "8:(Default)"
-                                                            "Condition" = "8:"
-                                                            "Transitive" = "11:FALSE"
-                                                            "ValueTypes" = "3:1"
-                                                            "Value" = "8:C:\\Program Files (x86)\\IAVA\\VsReference"
-                                                            }
                                                         }
                                                     }
                                                 }

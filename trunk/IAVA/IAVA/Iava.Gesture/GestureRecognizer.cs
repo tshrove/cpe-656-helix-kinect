@@ -61,7 +61,7 @@ namespace Iava.Gesture {
         /// Registers a callback delegate to the specified gesture's recognized event
         /// </summary>
         /// <param name="name">Name of the gesture</param>
-        /// <param name="d">Callback function to invoke on gesture recognition</param>
+        /// <param name="callBack">Callback function to invoke on gesture recognition</param>
         public void Subscribe(string name, GestureCallback callBack) {
             if (string.IsNullOrEmpty(name)) {
                 throw new ArgumentException("Name argument was either null or empty.", "name");
