@@ -33,7 +33,9 @@ namespace Iava.Input.Camera {
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="ColorImageFrameReadyEventArgs"/> instance containing the event data.</param>
         private void OnColorFrameReady(object sender, ColorImageFrameReadyEventArgs e) {
-            if (ColorImageFrameReady != null) { ColorImageFrameReady(null, new IavaColorImageFrameReadyEventArgs((IavaColorImageFrame)e.OpenColorImageFrame())); }
+            using (ColorImageFrame imageFrame = e.OpenColorImageFrame()) {
+                if (ColorImageFrameReady != null) { ColorImageFrameReady(null, new IavaColorImageFrameReadyEventArgs((IavaColorImageFrame)imageFrame)); }
+            }
         }
         
         /// <summary>
