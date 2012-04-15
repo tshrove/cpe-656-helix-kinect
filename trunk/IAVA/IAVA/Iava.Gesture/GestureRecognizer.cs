@@ -118,11 +118,9 @@ namespace Iava.Gesture {
             _engine = new GestureEngine();
 
             _detectingGestures = true;
-            _timeoutTimer = new System.Timers.Timer(1000);
+            _timeoutTimer = new System.Timers.Timer(2000);
             _timeoutTimer.Elapsed += TimeoutElapsed;
         }
-
-        
 
         #endregion Constructors
 
@@ -252,6 +250,10 @@ namespace Iava.Gesture {
             // If we just synced, set the flag and return
             if (e.Name == SyncGesture.Name) {
                 m_syncContext.Post(new SendOrPostCallback(delegate(object state) { OnSynced(this, e); }), null);
+
+                // We want to wait 2 seconds before looking for gestures again
+                _detectingGestures = false;
+                _timeoutTimer.Start();
                 return;
             }
 
@@ -265,7 +267,7 @@ namespace Iava.Gesture {
                 // Reset all the gesture states
                 SupportedGestures.ForEach(x => x.Reset());
 
-                // We want to wait 1 second before looking for gestures again
+                // We want to wait 2 seconds before looking for gestures again
                 _detectingGestures = false;
                 _timeoutTimer.Start();
             }

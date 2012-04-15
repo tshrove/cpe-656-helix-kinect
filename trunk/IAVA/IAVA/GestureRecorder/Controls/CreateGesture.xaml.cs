@@ -165,6 +165,9 @@ namespace GestureRecorder.Controls {
         /// <param name="e"></param>
         private void OnLoaded(object sender, RoutedEventArgs e) {
             AddSkeletonCanvas();
+
+            this.Gesture = new IavaGesture();
+            this.Gesture.FudgeFactor = 0.3f;
         }
 
         /// <summary>

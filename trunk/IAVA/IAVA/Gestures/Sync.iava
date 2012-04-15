@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Gesture xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Sync" FudgeFactor="0" xmlns="urn:Gestures">
+<Gesture xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Sync" FudgeFactor="0.3" xmlns="urn:Gestures">
   <Snapshot>
     <BodyPart Name="HipCenter">
       <Position>

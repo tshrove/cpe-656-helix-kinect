@@ -54,7 +54,7 @@ namespace Iava.Gesture {
         /// <param name="skeleton">IavaSkeleton to inspect for gesture</param>
         public void CheckGesture(IavaSkeleton skeleton) {
             // For now hard code Fudgefactor
-            FudgeFactor = 0.3;
+            //FudgeFactor = 0.3;
 
             // Check to see if the skeleton data matches our snapshot
             if (Snapshots[_currentGestureSegment].CheckSnapshot(skeleton, FudgeFactor)) {
@@ -75,7 +75,7 @@ namespace Iava.Gesture {
 
             else {
                 // We've timed out, start over on detecting the gesture
-                if (_frameCount >= 50) {
+                if (_frameCount >= 40) {
                     _currentGestureSegment = 0;
                     _frameCount = 0;
                 }
@@ -145,8 +145,9 @@ namespace Iava.Gesture {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        internal IavaGesture() {
-            //Nothing to do
+        public IavaGesture() {
+            Name = string.Empty;
+            Snapshots = new List<IavaSnapshot>();
         }
 
         /// <summary>
