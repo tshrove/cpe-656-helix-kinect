@@ -102,7 +102,7 @@ namespace Iava.Core {
         #region Protected Methods
 
         /// <summary>
-        /// Raises before the recognizer fails.
+        /// Fires the Failed event when the recognizer enters the failed state.
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>
@@ -112,7 +112,7 @@ namespace Iava.Core {
         }
 
         /// <summary>
-        /// Raises before the recognizer starts.
+        /// Fires the Started event when the recognizer is started.
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>
@@ -122,7 +122,7 @@ namespace Iava.Core {
         }
 
         /// <summary>
-        /// Raises when the status of the recognizer is changed.
+        /// Fires the StatusChanged event when the recognizer's status changes.
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>
@@ -133,7 +133,7 @@ namespace Iava.Core {
         }
 
         /// <summary>
-        /// Raises before the recognizer stops.
+        /// Fires the Stopped event when the recognizer is stopped.
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>
@@ -143,7 +143,7 @@ namespace Iava.Core {
         }
 
         /// <summary>
-        /// Raises when the recognizer is synced.
+        /// Fires the Synced event when the recognizer is synced.
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>
@@ -160,7 +160,7 @@ namespace Iava.Core {
         }
 
         /// <summary>
-        /// Raised when the Timeout Timer expires.
+        /// Unsyncs the recognizer when the recognizer times out.
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>
@@ -169,7 +169,7 @@ namespace Iava.Core {
         }
 
         /// <summary>
-        /// Raises when the recognizer is unsynced.
+        /// Fires the Unsynced event when the recognizer is unsynced.
         /// </summary>
         /// <param name="sender">Sender of event</param>
         /// <param name="e">Event args</param>

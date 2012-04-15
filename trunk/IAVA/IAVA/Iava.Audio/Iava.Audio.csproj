@@ -52,9 +52,6 @@
     <Compile Include="SpeechRecognitionEngineWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Iava.Audio.cd" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Iava.Core\Iava.Core.csproj">
       <Project>{80DF01EC-0E97-4B4D-A36F-FED9659D748A}</Project>
       <Name>Iava.Core</Name>
