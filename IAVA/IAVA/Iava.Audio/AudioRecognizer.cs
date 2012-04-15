@@ -165,7 +165,7 @@ namespace Iava.Audio {
         }
 
         /// <summary>
-        /// Initialize method.
+        /// Initializes the recognizer
         /// </summary>
         private void Initialize() {
             this.AudioCallbacks = new Dictionary<string, AudioCallback>();
