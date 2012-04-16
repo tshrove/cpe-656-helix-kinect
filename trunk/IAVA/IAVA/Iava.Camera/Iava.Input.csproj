@@ -54,7 +54,7 @@
     <Compile Include="Camera\DataTypes\IavaSkeletonFrame.cs" />
     <Compile Include="Camera\DataTypes\IavaFrameEdges.cs" />
     <Compile Include="Camera\DataTypes\IavaSkeletonTrackingState.cs" />
-    <Compile Include="Camera\EventArgs\IavaColorImageFrameEventArgs.cs" />
+    <Compile Include="Camera\EventArgs\IavaColorImageFrameReadyEventArgs.cs" />
     <Compile Include="Camera\EventArgs\IavaSkeletonEventArgs.cs" />
     <Compile Include="Camera\EventArgs\IavaSkeletonFrameEventArgs.cs" />
     <Compile Include="Camera\EventArgs\IavaSkeletonFrameReadyEventArgs.cs" />

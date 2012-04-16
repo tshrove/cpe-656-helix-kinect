@@ -68,7 +68,7 @@ namespace Iava.Gesture {
 
         /// <summary>
         /// Fires the GestureRecognized event when a gesture is detected and resets
-        /// the partially recognized states off all the supported gestures
+        /// the partially recognized states of all the supported gestures
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

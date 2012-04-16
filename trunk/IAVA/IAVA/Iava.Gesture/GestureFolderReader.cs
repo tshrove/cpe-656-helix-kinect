@@ -11,7 +11,7 @@ namespace Iava.Gesture {
         #region Public Methods
 
         /// <summary>
-        /// Scans a specified directory for IavaGesture files
+        /// Scans the specified directory for IavaGesture files
         /// </summary>
         /// <param name="path">Filepath to the gesture directory </param>
         /// <returns>List of Gestures read from the directory</returns>

@@ -28,7 +28,7 @@ namespace Iava.Input.Camera {
         #region Private Methods
 
         /// <summary>
-        /// Handles the VideoFrameReady event of the Kinect's RunTime control.
+        /// Fires the ColorImageFrameReady event when the Kinect sensor’s ColorFrameReady event is detected
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="ColorImageFrameReadyEventArgs"/> instance containing the event data.</param>
@@ -39,7 +39,7 @@ namespace Iava.Input.Camera {
         }
         
         /// <summary>
-        /// Handles the SkeletonFrameReady event of the Kinect's RunTime control.
+        /// Handles the SkeletonFrameReady event of the Kinect sensor.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="SkeletonFrameReadyEventArgs"/> instance containing the event data.</param>
@@ -105,7 +105,7 @@ namespace Iava.Input.Camera {
         public event EventHandler<IavaSkeletonFrameReadyEventArgs> SkeletonFrameReady;
         
         /// <summary>
-        /// Responsible for initializing the Kinect Sensor
+        /// Initializes the Kinect Sensor
         /// </summary>
         public void Initialize() {
             // Create our smoothing parameters for the Skeleton Stream

@@ -85,7 +85,7 @@ namespace Iava.Gesture {
         }
 
         /// <summary>
-        /// Creates a gesture from the current xml file filepath.
+        /// Creates an IavaGesture object from the specified xml file.
         /// </summary>
         /// <param name="filepath">Filepath to the gesture</param>
         /// <returns>IavaGesture defined in the xml file</returns>
@@ -108,7 +108,7 @@ namespace Iava.Gesture {
         }
 
         /// <summary>
-        /// Saves the all the IavaGesture into an xml file.
+        /// Saves the IavaGesture state to the specified xml file.
         /// </summary>
         /// <param name="gesture">IavaGesture to be saved</param>
         /// <param name="filepath">Filepath where the gesture should be written to</param>
@@ -129,7 +129,7 @@ namespace Iava.Gesture {
         }
 
         /// <summary>
-        /// Sets all the snapshots to track this specified point.
+        /// Sets the snapshots to track the specified joints.
         /// </summary>
         /// <param name="joints">Joint type array</param>
         public void SetTrackingJoints(params IavaJointType[] joints) {

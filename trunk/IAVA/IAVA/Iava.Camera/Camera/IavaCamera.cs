@@ -58,7 +58,7 @@ namespace Iava.Input.Camera {
         #region Private Methods
 
         /// <summary>
-        /// Initializes the IRuntime and subscribes to events
+        /// Initializes the IRuntime device and subscribes to events
         /// </summary>
         private static void InitializeDevice() {
             // Initialize the runtime
@@ -98,7 +98,7 @@ namespace Iava.Input.Camera {
         }
 
         /// <summary>
-        /// Do our cleanup code here...
+        /// Cleans up the IRuntime device.
         /// </summary>
         private static void ShutDown(object sender, EventArgs e) {
             // Unsubscribe from the sensor events

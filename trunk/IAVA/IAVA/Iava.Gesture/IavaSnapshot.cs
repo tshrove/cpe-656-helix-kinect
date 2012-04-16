@@ -27,7 +27,7 @@ namespace Iava.Gesture {
         #region Public Methods
 
         /// <summary>
-        /// Checks each SkeletonJoint to see if it falls within the expected bounds defining this gesture snapshot
+        /// Checks each IavaSkeletonJoint to see if it falls within the expected bounds defining this gesture snapshot
         /// </summary>
         /// <param name="skeleton">Skeleton object being checked</param>
         /// <param name="fudgeFactor">Area around the expected point, that constitutes a hit</param>
@@ -49,7 +49,7 @@ namespace Iava.Gesture {
         }
         
         /// <summary>
-        /// Clears the Tracking state of all segment BodyParts
+        /// Clears the tracking state of all segment BodyParts
         /// </summary>
         public void ClearTrackingJoints() {
             BodyParts.ForEach(x => x.Tracking = false);

@@ -276,7 +276,7 @@ namespace Iava.Gesture {
         }
 
         /// <summary>
-        /// Preps the Skeleton object so we can test it for performed gestures
+        /// Preps the IavaSkeleton object so it can be tested for performed gestures
         /// </summary>
         /// <param name="sender">Event sender</param>
         /// <param name="e">IavaSkeletonEventArgs containing the Skeleton object</param>
