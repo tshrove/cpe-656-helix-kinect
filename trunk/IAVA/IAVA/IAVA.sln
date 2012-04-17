@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gestures", "Gestures", "{60
 		Gestures\Swipe Left.iava = Gestures\Swipe Left.iava
 		Gestures\Swipe Right.iava = Gestures\Swipe Right.iava
 		Gestures\Sync.iava = Gestures\Sync.iava
+		Gestures\Zoom In.iava = Gestures\Zoom In.iava
+		Gestures\Zoom Out.iava = Gestures\Zoom Out.iava
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Iava.Installer", "Iava.Installer\Iava.Installer.vdproj", "{D6E33939-B451-4E0A-B1B3-BD0F515655B2}"
