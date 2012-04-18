@@ -114,10 +114,18 @@ namespace Iava.Gesture {
         /// <param name="filepath">Filepath where the gesture should be written to</param>
         public static void Save(IavaGesture gesture, string filepath) {
             foreach (IavaSnapshot snapshot in gesture.Snapshots) {
-                // Get the hipcenter
-                IavaBodyPart hipCenter = snapshot.BodyParts[(int)IavaJointType.HipCenter];
+                // Create a hipCenter joint placeholder
+                IavaBodyPart hipCenter = new IavaBodyPart(IavaJointType.HipCenter);
 
-                // Translate each bodypart position based on hipcenter
+                // Get the HipCenter position...
+                hipCenter.Position = new Core.Math.IavaSkeletonPoint()
+                {
+                    X = snapshot.BodyParts[(int)IavaJointType.HipCenter].Position.X,
+                    Y = snapshot.BodyParts[(int)IavaJointType.HipCenter].Position.Y,
+                    Z = snapshot.BodyParts[(int)IavaJointType.HipCenter].Position.Z
+                };
+
+                // Translate each bodypart position based on original hipcenter position
                 foreach (IavaBodyPart bodyPart in snapshot.BodyParts) {
                     bodyPart.Position = Iava.Core.Math.Geometry.Translate(bodyPart.Position, hipCenter.Position);
                 }
