@@ -204,6 +204,8 @@ namespace Iava.Gesture {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TimeoutElapsed(object sender, System.Timers.ElapsedEventArgs e) {
+            _engine.SupportedGestures.ForEach(x => x.Reset());
+
             _detectingGestures = true;
         }
 
@@ -254,6 +256,12 @@ namespace Iava.Gesture {
                 // We want to wait 2 seconds before looking for gestures again
                 _detectingGestures = false;
                 _timeoutTimer.Start();
+
+                // The engine does this but since this is event driven, the engine will
+                // receive new frames before we have time to stop sending them for the
+                // timeout duration.
+                _engine.SupportedGestures.ForEach(x => x.Reset());
+
                 return;
             }
 
@@ -285,6 +293,8 @@ namespace Iava.Gesture {
 
             IavaSkeletonPoint translationVector = e.Skeleton.Joints[IavaJointType.HipCenter].Position;
 
+            double scaleFactor = 0.5 / Geometry.Magnitude2D(IavaSkeletonPoint.Zero, e.Skeleton.Joints[IavaJointType.ShoulderCenter].Position);
+
             IavaJoint joint = new IavaJoint();
 
             // Translate all the points in the skeleton to the center of the kinect view
@@ -293,6 +303,10 @@ namespace Iava.Gesture {
                 // for why things are done this way
                 joint = e.Skeleton.Joints[jointID];
                 joint.Position = Geometry.Translate(joint.Position, translationVector);
+
+                // Now Scale the points...
+                joint.Position = Geometry.Scale2D(joint.Position, scaleFactor);
+
 
                 // Set the point to the point with the updated position
                 e.Skeleton.Joints[jointID] = joint;

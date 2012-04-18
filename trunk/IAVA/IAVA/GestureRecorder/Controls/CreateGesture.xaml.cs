@@ -167,7 +167,7 @@ namespace GestureRecorder.Controls {
             AddSkeletonCanvas();
 
             this.Gesture = new IavaGesture();
-            this.Gesture.FudgeFactor = 0.3f;
+            this.Gesture.FudgeFactor = 0.2f;
         }
 
         /// <summary>
