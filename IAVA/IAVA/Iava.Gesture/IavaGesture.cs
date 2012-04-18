@@ -69,7 +69,7 @@ namespace Iava.Gesture {
                     Reset();
                 }
 
-                // We have only detected part of athegesture, prepare to look for the next snapshot
+                // We have only detected part of a gesture, prepare to look for the next snapshot
                 else { _frameCount = 0; }
             }
 
