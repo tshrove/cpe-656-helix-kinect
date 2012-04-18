@@ -46,6 +46,16 @@
                                     System.Math.Pow(difference.Y, 2.0) +
                                     System.Math.Pow(difference.Z, 2.0));
         }
+
+        /// <summary>
+        /// Returns the scaled 2D IavaSkeletonPoint
+        /// </summary>
+        /// <param name="point">Base IavaSkeletonPoint</param>
+        /// <param name="scaleFactor">Factor to scale the IavaSkeletonPoint</param>
+        /// <returns>Scaled IavaSkeletonPoint</returns>
+        public static IavaSkeletonPoint Scale2D(IavaSkeletonPoint point, double scaleFactor) {
+            return new IavaSkeletonPoint() { X = point.X * scaleFactor, Y = point.Y * scaleFactor, Z = point.Z };
+        }
     }
 }
 
