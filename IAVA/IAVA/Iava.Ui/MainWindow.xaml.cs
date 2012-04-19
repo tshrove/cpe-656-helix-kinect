@@ -67,7 +67,7 @@ namespace Iava.Ui {
             // Add unmapped gestures so that they will be recognized
             foreach (IavaGesture gesture in GestureFolderReader.Read(gesturesPath))
             {
-                if (!mappedGestureNames.Contains<string>(gesture.Name))
+                if (!Equals("Sync", gesture.Name) && !mappedGestureNames.Contains<string>(gesture.Name))
                 {
                     m_pGestureRecognizer.Subscribe(gesture.Name, GestureUnmappedCallback);
                 }
