@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Linq;
 
 using Iava.Audio;
 using Iava.Gesture;
@@ -28,12 +29,16 @@ namespace Iava.Ui {
         /// </summary>
         public MainWindow() {
             InitializeComponent();
-            //string temp = Directory.GetCurrentDirectory();
-            m_pGestureRecognizer = new Gesture.GestureRecognizer(@"..\..\..\Gestures\");
+
+            const string gesturesPath = @"..\..\..\Gestures\";
+            m_pGestureRecognizer = new Gesture.GestureRecognizer(gesturesPath);
             m_pAudioRecognizer = new AudioRecognizer();
 
             m_pAudioRecognizer.AudioConfidenceThreshold = 0.8f;
+
+            // Initialize the CityLocations class by calling a method on it
             CityLocations.GetCityLocation("test");
+
             // Events
             m_pAudioRecognizer.StatusChanged    += OnAudioRecognizerStatusChanged;
             m_pGestureRecognizer.StatusChanged  += OnGestureRecognizerStatusChanged;
@@ -43,12 +48,30 @@ namespace Iava.Ui {
             m_pGestureRecognizer.Unsynced       += OnGestureRecognizerUnsynced;
 
             // Gesture Callbacks
-            m_pGestureRecognizer.Subscribe("Zoom In", GestureZoomInCallback);
-            m_pGestureRecognizer.Subscribe("Zoom Out", GestureZoomOutCallback);
-            m_pGestureRecognizer.Subscribe("Swipe Left", GestureSwipeLeftCallback);
-            m_pGestureRecognizer.Subscribe("Swipe Right", GestureSwipeRightCallback);
-            m_pGestureRecognizer.Subscribe("Swipe Up", GestureSwipeUpCallback);
-            m_pGestureRecognizer.Subscribe("Swipe Down", GestureSwipeDownCallback);
+            string[] mappedGestureNames = new[] 
+                {
+                    "Zoom In",
+                    "Zoom Out",
+                    "Swipe Left",
+                    "Swipe Right",
+                    "Swipe Up",
+                    "Swipe Down"
+                };
+            m_pGestureRecognizer.Subscribe(mappedGestureNames[0], GestureZoomInCallback);
+            m_pGestureRecognizer.Subscribe(mappedGestureNames[1], GestureZoomOutCallback);
+            m_pGestureRecognizer.Subscribe(mappedGestureNames[2], GestureSwipeLeftCallback);
+            m_pGestureRecognizer.Subscribe(mappedGestureNames[3], GestureSwipeRightCallback);
+            m_pGestureRecognizer.Subscribe(mappedGestureNames[4], GestureSwipeUpCallback);
+            m_pGestureRecognizer.Subscribe(mappedGestureNames[5], GestureSwipeDownCallback);
+
+            // Add unmapped gestures so that they will be recognized
+            foreach (IavaGesture gesture in GestureFolderReader.Read(gesturesPath))
+            {
+                if (!mappedGestureNames.Contains<string>(gesture.Name))
+                {
+                    m_pGestureRecognizer.Subscribe(gesture.Name, GestureUnmappedCallback);
+                }
+            }
 
             // Audio Callbacks
             m_pAudioRecognizer.Subscribe("Zoom In", ZoomInCallback);
@@ -60,7 +83,6 @@ namespace Iava.Ui {
             m_pAudioRecognizer.Subscribe("Exit Application", BlowUp);
             m_pAudioRecognizer.Subscribe("Locate *", LocateCityCallback);
             m_pAudioRecognizer.Subscribe("Get Recognizer Statuses", GetRecognizerStatusesCallback);
-            //m_pAudioRecognizer.Subscribe("Change sync command to *", ChangeAudioSyncCommandCallback);  //TODO: Not working correctly
 
             IavaCamera.ImageFrameReady += OnCameraImageFrameReady;
             IavaCamera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
@@ -89,7 +111,7 @@ namespace Iava.Ui {
         /// <summary>
         /// Occurs when a blow up command was received.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Audio event args</param>
         private void BlowUp(AudioEventArgs e) {
             this.Window.Close();
         }
@@ -97,7 +119,7 @@ namespace Iava.Ui {
         /// <summary>
         /// Occurs when a move east command was received.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Audio event args</param>
         private void MoveEastCallback(AudioEventArgs e) {
             MoveEast();
 
@@ -109,7 +131,7 @@ namespace Iava.Ui {
         /// <summary>
         /// Occurs when a move north command was received.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Audio event args</param>
         private void MoveNorthCallback(AudioEventArgs e) {
             MoveNorth();
 
@@ -121,7 +143,7 @@ namespace Iava.Ui {
         /// <summary>
         /// Occurs when a move south command was received.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Audio event args</param>
         private void MoveSouthCallback(AudioEventArgs e) {
             MoveSouth();
 
@@ -133,7 +155,7 @@ namespace Iava.Ui {
         /// <summary>
         /// Occurs when a move west command was received.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Audio event args</param>
         private void MoveWestCallback(AudioEventArgs e) {
             MoveWest();
 
@@ -234,7 +256,7 @@ namespace Iava.Ui {
         /// <summary>
         /// The callback for when the zoom gesture is detected.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Gesture event args</param>
         private void GestureZoomInCallback(GestureEventArgs e) {
             ZoomIn();
 
@@ -246,7 +268,7 @@ namespace Iava.Ui {
         /// <summary>
         /// The callback for when the zoom gesture is detected.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Gesture event args</param>
         private void GestureZoomOutCallback(GestureEventArgs e) {
             ZoomOut();
 
@@ -258,7 +280,7 @@ namespace Iava.Ui {
         /// <summary>
         /// The callback for when the Left Swipe gesture is detected.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Gesture event args</param>
         private void GestureSwipeLeftCallback(GestureEventArgs e) {
             MoveEast();
 
@@ -270,7 +292,7 @@ namespace Iava.Ui {
         /// <summary>
         /// The callback for when the Right Swipe gesture is detected.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Gesture event args</param>
         private void GestureSwipeRightCallback(GestureEventArgs e) {
             MoveWest();
 
@@ -282,7 +304,7 @@ namespace Iava.Ui {
         /// <summary>
         /// The callback for when the Up Swipe gesture is detected.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Gesture event args</param>
         private void GestureSwipeUpCallback(GestureEventArgs e) {
             MoveSouth();
 
@@ -294,11 +316,22 @@ namespace Iava.Ui {
         /// <summary>
         /// The callback for when the Down Swipe gesture is detected.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Gesture event args</param>
         private void GestureSwipeDownCallback(GestureEventArgs e) {
             MoveNorth();
 
             DisplayStatus(String.Format("Gesture: {0} Detected", e.Name));
+
+            ResetGestureSyncTime();
+        }
+
+        /// <summary>
+        /// The callback for when an unmapped gesture is detected.
+        /// </summary>
+        /// <param name="e">Gesture event args</param>
+        private void GestureUnmappedCallback(GestureEventArgs e)
+        {           
+            DisplayStatus(String.Format("Unmapped Gesture: {0} Detected", e.Name));
 
             ResetGestureSyncTime();
         }

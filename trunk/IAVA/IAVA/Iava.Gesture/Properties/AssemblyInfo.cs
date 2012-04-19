@@ -36,4 +36,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: InternalsVisibleTo("Iava.Test")]
+[assembly: InternalsVisibleTo("Iava.Ui")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
