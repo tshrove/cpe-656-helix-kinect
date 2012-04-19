@@ -426,6 +426,8 @@ namespace Iava.Test.Gesture {
                 recognizer.Synced += (param1, param2) => syncEventFired = true;
                 recognizer.Unsynced += (param1, param2) => unsyncEventFired = true;
 
+                recognizer.Start();
+
                 // Set the Sync Timeout to 5 seconds
                 recognizer.SyncTimeoutValue = 5000;
 
@@ -454,6 +456,8 @@ namespace Iava.Test.Gesture {
 
                 // Make sure the Sync Event did not fire
                 Assert.IsFalse(syncEventFired);
+
+                recognizer.Stop();
             }
             catch (Exception ex) {
                 Assert.Fail(ex.Message);
@@ -480,6 +484,7 @@ namespace Iava.Test.Gesture {
                 recognizer.Synced += (parm1, param2) => { syncEventFired = true; };
                 recognizer.Subscribe("Wave", (eventArgs) => { waveCallbackInvoked = true; });
                 recognizer.Subscribe("Shake", (eventArgs) => { shakeCallbackInvoked = true; });
+                recognizer.Start();
 
                 try {
                     // Recognize the Wave gesture
@@ -543,6 +548,8 @@ namespace Iava.Test.Gesture {
                 catch (Exception ex) {
                     Assert.Fail(ex.Message);
                 }
+
+                recognizer.Stop();
             }
             catch (Exception ex) {
                 Assert.Fail(ex.Message);
