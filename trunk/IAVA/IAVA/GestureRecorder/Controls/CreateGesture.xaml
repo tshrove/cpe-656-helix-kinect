@@ -1,9 +1,10 @@
 ﻿<UserControl x:Class="GestureRecorder.Controls.CreateGesture"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Loaded="OnLoaded" Unloaded="OnUnloaded"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        mc:Ignorable="d" d:DesignWidth="600" SizeChanged="OnResize">
+        mc:Ignorable="d" d:DesignWidth="600"
+        Loaded="OnLoaded" Unloaded="OnUnloaded" SizeChanged="OnResize" IsVisibleChanged="OnVisibilityChanged">
     <DockPanel LastChildFill="True">
         <Border BorderBrush="Gray" CornerRadius="1" Width="150" DockPanel.Dock="Right">
             <StackPanel>

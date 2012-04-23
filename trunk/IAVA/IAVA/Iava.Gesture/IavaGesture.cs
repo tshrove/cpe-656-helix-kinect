@@ -117,6 +117,8 @@ namespace Iava.Gesture {
                 // Create a hipCenter joint placeholder
                 IavaBodyPart hipCenter = new IavaBodyPart(IavaJointType.HipCenter);
 
+                double scaleFactor = 0.5 / Iava.Core.Math.Geometry.Magnitude2D(Iava.Core.Math.IavaSkeletonPoint.Zero, snapshot.BodyParts[(int)IavaJointType.ShoulderCenter].Position);
+
                 // Get the HipCenter position...
                 hipCenter.Position = new Core.Math.IavaSkeletonPoint()
                 {
@@ -128,6 +130,9 @@ namespace Iava.Gesture {
                 // Translate each bodypart position based on original hipcenter position
                 foreach (IavaBodyPart bodyPart in snapshot.BodyParts) {
                     bodyPart.Position = Iava.Core.Math.Geometry.Translate(bodyPart.Position, hipCenter.Position);
+
+                    // Now Scale the points...
+                    bodyPart.Position = Iava.Core.Math.Geometry.Scale2D(bodyPart.Position, scaleFactor);
                 }
             }
             XmlSerializer serializer = new XmlSerializer(typeof(IavaGesture));

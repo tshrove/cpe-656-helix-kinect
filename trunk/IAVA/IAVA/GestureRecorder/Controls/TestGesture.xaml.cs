@@ -1,80 +1,61 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using Iava.Gesture;
 using Iava.Input.Camera;
-using System.Windows.Shapes;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Collections.Generic;
-using Iava.Core.Math;
-using System.Linq;
-using System;
+using Iava.Audio;
 
-namespace GestureRecorder.Controls
-{
+namespace GestureRecorder.Controls {
+
     /// <summary>
     /// Interaction logic for TestGestureWindow.xaml
     /// </summary>
-    public partial class TestGesture : UserControl
-    {
+    public partial class TestGesture : UserControl {
 
-        #region Members
-        ObservableCollection<IavaGesture> m_pGestures = new ObservableCollection<IavaGesture>();
-        GestureRecognizer m_pGestureRecognizer = null;
-        bool m_bStarted = false;
-        new System.Timers.Timer m_pTimer = new System.Timers.Timer();
-        #endregion
+        #region Constructors
 
-        #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public TestGesture()
-        {
+        public TestGesture() {
             InitializeComponent();
-            IavaCamera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
-        }
-        #endregion
 
-        #region EventHandlers
+            SizeSkeletonCanvas(kinectSkeletonFeed);
+        }
+
+        #endregion Constructors
+
+        #region Private Methods
+
+        #region Event Handlers
+
         /// <summary>
-        /// Raises when the load button is clicked.
+        /// Displays the full skeleton image from the Kinect sensor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
-        {
-            using (System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    m_pGestureRecognizer = new GestureRecognizer(dialog.SelectedPath);
-                    m_pGestures = new ObservableCollection<IavaGesture>(GestureFolderReader.Read(dialog.SelectedPath));
-                    foreach (IavaGesture g in m_pGestures)
-                    {
-                        m_pGestureRecognizer.Subscribe(g.Name, GestureDetected);
-                    }
-                    this.lstGestures.ItemsSource = m_pGestures;
-                    btnStartTest.IsEnabled = true;
-                }
-            }
+        private void OnCameraSkeletonFrameReady(object sender, IavaSkeletonFrameReadyEventArgs e) {
+            kinectSkeletonFeed.Skeleton = e.SkeletonFrame.ActiveSkeleton;
         }
+
         /// <summary>
         /// Raises when the close button is clicked.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void btnExit_Click(object sender, RoutedEventArgs e)
-        {
+        private void OnCloseClick(object sender, RoutedEventArgs e) {
             this.Visibility = Visibility.Hidden;
         }
+
         /// <summary>
         /// Raises when a gesture is detected from the list of gestures.
         /// </summary>
         /// <param name="e"></param>
-        private void GestureDetected(GestureEventArgs e)
-        {
+        private void OnGestureDetected(GestureEventArgs e) {
             if (!popStatus.IsOpen) {
                 m_pTimer.Interval = 2000; // 2 seconds
                 m_pTimer.Elapsed += OnTimerElapsed;
@@ -90,6 +71,54 @@ namespace GestureRecorder.Controls
         }
 
         /// <summary>
+        /// Raises when the load button is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnLoadGesturesClick(object sender, RoutedEventArgs e) {
+            using (System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog()) {
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                    m_pGestureRecognizer = new GestureRecognizer(dialog.SelectedPath);
+                    m_pGestures = new ObservableCollection<IavaGesture>(GestureFolderReader.Read(dialog.SelectedPath));
+                    foreach (IavaGesture g in m_pGestures) {
+                        m_pGestureRecognizer.Subscribe(g.Name, OnGestureDetected);
+                    }
+                    this.lstGestures.ItemsSource = m_pGestures;
+                    btnStartTest.IsEnabled = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Performs the last of the setup operations once the Control has finished loading
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnLoaded(object sender, RoutedEventArgs e) {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Raises when the start button has been clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnStartTestClick(object sender, RoutedEventArgs e) {
+            if (m_bStarted) {
+                // Stop everything.
+                m_pGestureRecognizer.Stop();
+                m_bStarted = false;
+                btnStartTest.Content = "Start Test";
+            }
+            else {
+                // Start everything.
+                m_pGestureRecognizer.Start();
+                m_bStarted = true;
+                btnStartTest.Content = "Stop Test";
+            }
+        }
+
+        /// <summary>
         /// Event used in junction with the display status function.
         /// </summary>
         /// <param name="sender"></param>
@@ -99,117 +128,105 @@ namespace GestureRecorder.Controls
         }
 
         /// <summary>
-        /// Raises when the start button has been clicked.
+        /// Resets the Control when the Visibility Changes
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnStartTest_Click(object sender, RoutedEventArgs e)
-        {
-            if (m_bStarted)
-            {
-                // Stop everything.
-                m_pGestureRecognizer.Stop();
-                m_bStarted = false;
-                btnStartTest.Content = "Start Test";
-            }
-            else
-            {
-                // Start everything.
-                m_pGestureRecognizer.Start();
-                m_bStarted = true;
-                btnStartTest.Content = "Stop Test";
-            }         
+        private void OnVisibilityChanged(object sender, DependencyPropertyChangedEventArgs e) {
+            Reset();
         }
+
+        #endregion Event Handlers
+
         /// <summary>
-        /// Displays the full skeleton image from the Kinect sensor
+        /// Initializes the control
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnCameraSkeletonFrameReady(object sender, IavaSkeletonFrameReadyEventArgs e)
-        {
-            Iava.Input.Camera.IavaSkeletonFrame skeletonFrame = e.SkeletonFrame;
+        private void Initialize() {
+            // If we are in design mode, do nothing...
+            if (DesignerProperties.GetIsInDesignMode(this)) { return; }
 
-            int iSkeleton = 0;
-            Brush[] brushes = new Brush[6];
-            brushes[0] = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-            brushes[1] = new SolidColorBrush(Color.FromRgb(0, 255, 0));
-            brushes[2] = new SolidColorBrush(Color.FromRgb(64, 255, 255));
-            brushes[3] = new SolidColorBrush(Color.FromRgb(255, 255, 64));
-            brushes[4] = new SolidColorBrush(Color.FromRgb(255, 64, 255));
-            brushes[5] = new SolidColorBrush(Color.FromRgb(128, 128, 255));
+            try {
+                IavaCamera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
 
-            kinectSkeletonFeed.Children.Clear();
-            foreach (IavaSkeleton data in skeletonFrame.Skeletons)
-            {
-                if (IavaSkeletonTrackingState.Tracked == data.TrackingState)
-                {
-                    // Draw bones
-                    Brush brush = brushes[iSkeleton % brushes.Length];
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.HipCenter, IavaJointType.Spine, IavaJointType.ShoulderCenter, IavaJointType.Head));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.ShoulderCenter, IavaJointType.ShoulderLeft, IavaJointType.ElbowLeft, IavaJointType.WristLeft, IavaJointType.HandLeft));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.ShoulderCenter, IavaJointType.ShoulderRight, IavaJointType.ElbowRight, IavaJointType.WristRight, IavaJointType.HandRight));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.HipCenter, IavaJointType.HipLeft, IavaJointType.KneeLeft, IavaJointType.AnkleLeft, IavaJointType.FootLeft));
-                    kinectSkeletonFeed.Children.Add(GetBodySegment(data.Joints, brush, IavaJointType.HipCenter, IavaJointType.HipRight, IavaJointType.KneeRight, IavaJointType.AnkleRight, IavaJointType.FootRight));
-
-                    // Draw joints
-                    foreach (IavaJoint joint in data.Joints)
-                    {
-                        Point jointPos = new Point(joint.Position.X, joint.Position.Y);
-                        Line jointLine = new Line();
-                        jointLine.X1 = jointPos.X - 3;
-                        jointLine.X2 = jointLine.X1 + 6;
-                        jointLine.Y1 = jointLine.Y2 = jointPos.Y;
-                        //jointLine.Stroke = jointColors[joint.ID];
-                        jointLine.StrokeThickness = 6;
-                        kinectSkeletonFeed.Children.Add(jointLine);
-                    }
-                }
-                iSkeleton++;
-            } // for each skeleton
-        }
-        private Polyline GetBodySegment(IavaJointCollection joints, Brush brush, params IavaJointType[] jointIDs)
-        {
-            PointCollection points = new PointCollection(jointIDs.Length);
-            for (int i = 0; i < jointIDs.Length; ++i)
-            {
-                points.Add(ScalePoint(joints[jointIDs[i]].Position.X, joints[jointIDs[i]].Position.Y, kinectSkeletonFeed.Width, kinectSkeletonFeed.Height));
+                // Subscribe to the Audio events we are interested in...
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Subscribe("Load Gestures", LoadGesturesCallback);
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Subscribe("Start Test", StartTestCallback);
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Subscribe("Stop Test", StopTestCallback);
             }
 
-            Polyline polyline = new Polyline();
-            polyline.Points = points;
-            polyline.Stroke = brush;
-            polyline.StrokeThickness = 5;
-            return polyline;
+            catch (Exception) { }
         }
+
         /// <summary>
-        /// Scales a point between -1 and 1 and scales it up to the Max X and Max Y
+        /// Occurs when the 'Load Gestures' command was received.
         /// </summary>
-        /// <param name="xPos">the X position of the point to scale</param>
-        /// <param name="yPos">the Y position of the point to scale</param>
-        /// <param name="maxX">the largest allowed X value after scale</param>
-        /// <param name="maxY">the largest allowed Y value after scale</param>
-        /// <returns>Point with the new X,Y values</returns>
-        private Point ScalePoint(double xPos, double yPos, double maxX, double maxY)
-        {
-            double newX, newY;
-
-            double temp = ((maxX / 2.0) * xPos) + (maxX / 2.0);
-
-            // Scale the X value
-            if (temp > maxX) { newX = maxX; }
-            else if (temp < 0.0) { newX = 0.0; }
-            else { newX = temp; }
-
-            temp = ((maxY / 2.0) * yPos) + (maxY / 2.0);
-
-            // Scale the Y value
-            if (temp > maxY) { newY = maxY; }
-            else if (temp < 0.0) { newY = 0.0; }
-            else { newY = temp; }
-
-            // Return the new point
-            return new Point(newX, newY);
+        /// <param name="e">Audio event args</param>
+        private void LoadGesturesCallback(AudioEventArgs e) {
+            OnLoadGesturesClick(null, null);
         }
-        #endregion
+
+        /// <summary>
+        /// Resets the state of the UserControl
+        /// </summary>
+        private void Reset() {
+            // 'Bounce' the control
+            TearDown();
+            Initialize();
+        }
+
+        /// <summary>
+        /// Resizes the SkeletonCanvas
+        /// </summary>
+        /// <param name="canvas"></param>
+        private void SizeSkeletonCanvas(SkeletonCanvas canvas) {
+            //canvas.RenderTransform = new ScaleTransform(1.0, -1.0, this.ActualWidth / 2.0, this.ActualHeight / 2.0);
+            /*
+                gridSnapshot.ColumnDefinitions[0].ActualWidth / 2.0,
+                gridSnapshot.RowDefinitions[0].ActualHeight / 2.0);*/
+        }
+
+        /// <summary>
+        /// Occurs when the 'Start Test' command was received.
+        /// </summary>
+        /// <param name="e">Audio event args</param>
+        private void StartTestCallback(AudioEventArgs e) {
+            if (!m_bStarted) { OnStartTestClick(null, null); }
+        }
+
+        /// <summary>
+        /// Occurs when the 'Stop Test' command was received.
+        /// </summary>
+        /// <param name="e">Audio event args</param>
+        private void StopTestCallback(AudioEventArgs e) {
+            if (m_bStarted) { OnStartTestClick(null, null); }
+        }
+
+        /// <summary>
+        /// Tears down the control
+        /// </summary>
+        private void TearDown() {
+            try {
+                IavaCamera.SkeletonFrameReady -= OnCameraSkeletonFrameReady;
+
+                // Unsubscribe from the Audio events we are interested in...
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Unsubscribe("Load Gestures");
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Unsubscribe("Start Test");
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Unsubscribe("Stop Test");
+            }
+
+            catch (Exception) { }
+        }
+
+        #endregion Private Methods
+
+        #region Private Fields
+
+        private ObservableCollection<IavaGesture> m_pGestures = new ObservableCollection<IavaGesture>();
+
+        private GestureRecognizer m_pGestureRecognizer = null;
+
+        private bool m_bStarted = false;
+
+        private System.Timers.Timer m_pTimer = new System.Timers.Timer();
+
+        #endregion Private Fields
     }
 }

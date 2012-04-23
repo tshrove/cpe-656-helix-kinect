@@ -293,8 +293,6 @@ namespace Iava.Gesture {
 
             IavaSkeletonPoint translationVector = e.Skeleton.Joints[IavaJointType.HipCenter].Position;
 
-            double scaleFactor = 0.5 / Geometry.Magnitude2D(IavaSkeletonPoint.Zero, e.Skeleton.Joints[IavaJointType.ShoulderCenter].Position);
-
             IavaJoint joint = new IavaJoint();
 
             // Translate all the points in the skeleton to the center of the kinect view
@@ -303,10 +301,6 @@ namespace Iava.Gesture {
                 // for why things are done this way
                 joint = e.Skeleton.Joints[jointID];
                 joint.Position = Geometry.Translate(joint.Position, translationVector);
-
-                // Now Scale the points...
-                joint.Position = Geometry.Scale2D(joint.Position, scaleFactor);
-
 
                 // Set the point to the point with the updated position
                 e.Skeleton.Joints[jointID] = joint;

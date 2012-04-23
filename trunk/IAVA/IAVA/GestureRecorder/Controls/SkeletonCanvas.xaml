@@ -6,7 +6,7 @@
              xmlns:local="GestureRecorder.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <Canvas.LayoutTransform>
+        <ScaleTransform ScaleY="-1" />
+    </Canvas.LayoutTransform>
 </Canvas>

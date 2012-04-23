@@ -11,31 +11,58 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Iava.Audio;
+using GestureRecorder.Controls;
 
 namespace GestureRecorder {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+
+        public AudioRecognizer AudioRecognizer { get; set; }
+
         public MainWindow() {
             InitializeComponent();
+
+            AudioRecognizer = new Iava.Audio.AudioRecognizer();
+
+            AudioRecognizer.Subscribe("Create Gesture", CreateAudioCallback);
+            AudioRecognizer.Subscribe("Test Gesture", TestAudioCallback);
+            AudioRecognizer.Subscribe("Exit", ExitAudioCallback);
+
+            AudioRecognizer.Start();
         }
 
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
+        private void CreateAudioCallback(AudioEventArgs e) {
+            btnCreate.IsChecked = true;
+        }
+
+        private void TestAudioCallback(AudioEventArgs e) {
+            btnTest.IsChecked = true;
+        }
+
+        private void ExitAudioCallback(AudioEventArgs e) {
             this.Close();
         }
 
-        private void btnTest_Click(object sender, RoutedEventArgs e)
-        {
-            //TestGestureWindow window = new TestGestureWindow();
-            //Nullable<bool> results = window.ShowDialog();
+        private void btnExit_Click(object sender, RoutedEventArgs e) {
+            this.Close();
         }
 
-        private void btnCreate_Click(object sender, RoutedEventArgs e)
-        {
-            //CreateGestureWindow window = new CreateGestureWindow();
-            //Nullable<bool> results = window.ShowDialog();
+        private void OnCreateGestureChecked(object sender, RoutedEventArgs e) {
+            
         }
+
+        private void OnTestGestureChecked(object sender, RoutedEventArgs e) {
+        }
+
+        private void OnExitChecked(object sender, RoutedEventArgs e) {
+            Close();
+        }
+        /*
+        private CreateGesture createGestureControl { get; set; }
+
+        private TestGesture testGestureControl { get; set; }*/
     }
 }
