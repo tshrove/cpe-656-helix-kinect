@@ -24,26 +24,6 @@ namespace GestureRecorder.Controls {
         /// </summary>
         public CreateGesture() {
             InitializeComponent();
-
-            // If we are in design mode, do nothing...
-            if (DesignerProperties.GetIsInDesignMode(this)) { return; }
-
-            // Subscribe to the Camera events we are interested in...
-
-            try {
-                IavaCamera.ImageFrameReady += OnCameraImageFrameReady;
-                IavaCamera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
-            }
-
-            catch (Exception e) {
-            }
-
-            // Set up the Audio Recognizer...
-            AudioRecognizer = new AudioRecognizer();
-            AudioRecognizer.SyncCommand = "IAVA";
-            AudioRecognizer.Subscribe("Capture", CaptureCallback);
-            AudioRecognizer.Subscribe("Snapshot", CaptureCallback);
-            AudioRecognizer.Start();
         }
 
         #endregion Constructors
@@ -63,8 +43,7 @@ namespace GestureRecorder.Controls {
         /// <summary>
         /// Gets the gesture that is about to be saved. 
         /// </summary>
-        private IavaGesture Gesture
-        {
+        private IavaGesture Gesture {
             get;
             set;
         }
@@ -144,7 +123,7 @@ namespace GestureRecorder.Controls {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnCancelClick(object sender, RoutedEventArgs e) {
-            this.Visibility = Visibility.Hidden;
+            Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -164,10 +143,7 @@ namespace GestureRecorder.Controls {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnLoaded(object sender, RoutedEventArgs e) {
-            AddSkeletonCanvas();
-
-            this.Gesture = new IavaGesture();
-            this.Gesture.FudgeFactor = 0.2f;
+            Initialize();
         }
 
         /// <summary>
@@ -176,8 +152,7 @@ namespace GestureRecorder.Controls {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnNextClick(object sender, RoutedEventArgs e) {
-            if (m_bIsNextButton)
-            {
+            if (m_bIsNextButton) {
                 // Get the audio recognizer from adding more snapshots accidentally.
                 this.AudioRecognizer.Unsubscribe("Capture");
                 this.AudioRecognizer.Unsubscribe("Snapshot");
@@ -188,17 +163,15 @@ namespace GestureRecorder.Controls {
                 m_bIsNextButton = false;
                 this.btnNext.Content = "Finish";
             }
-            else
-            {
+            else {
                 Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog()
                 {
                     DefaultExt = "*.iava",
-                    Filter = "IAVA gesture files (*.iava)| *.iava"                    
+                    Filter = "IAVA gesture files (*.iava)| *.iava"
                 };
 
                 Nullable<bool> results = dialog.ShowDialog();
-                if (results == true)
-                {
+                if (results == true) {
                     string sGestureName = System.IO.Path.GetFileNameWithoutExtension(dialog.FileName);
                     // Set the gesture's name
                     // I set the name of the gesture to the filename without the extension.
@@ -249,6 +222,13 @@ namespace GestureRecorder.Controls {
             AudioRecognizer.Stop();
         }
 
+        /// <summary>
+        /// Resets the Control when the Visibility Changes
+        /// </summary>
+        private void OnVisibilityChanged(object sender, DependencyPropertyChangedEventArgs e) {
+            Reset();
+        }
+
         #endregion Event Handlers
 
         /// <summary>
@@ -274,18 +254,75 @@ namespace GestureRecorder.Controls {
             // Set the active canvas segment
             _activeSkeletonCanvas = temp;
 
-            // Increase the number of segments in the gesture
+            // Incriment the GestureSegment count
             GestureSegmentCount++;
+        }
+
+        /// <summary>
+        /// Initializes the control
+        /// </summary>
+        private void Initialize() {
+            // If we are in design mode, do nothing...
+            if (DesignerProperties.GetIsInDesignMode(this)) { return; }
+
+            try {
+                // Subscribe to the Camera events we are interested in...
+                IavaCamera.ImageFrameReady += OnCameraImageFrameReady;
+                IavaCamera.SkeletonFrameReady += OnCameraSkeletonFrameReady;
+
+                // Subscribe to the Audio events we are interested in...
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Subscribe("Capture", CaptureCallback);
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Subscribe("Snapshot", CaptureCallback);
+
+                GestureSegmentCount = 0;
+                
+                AddSkeletonCanvas();
+
+                this.Gesture = new IavaGesture();
+                this.Gesture.FudgeFactor = 0.2f;
+            }
+
+            catch (Exception) {
+            }
+        }
+
+        /// <summary>
+        /// Resets the state of the UserControl
+        /// </summary>
+        private void Reset() {
+            // 'Bounce' the control
+            TearDown();
+            Initialize();
         }
 
         /// <summary>
         /// Resizes the SkeletonCanvas
         /// </summary>
         /// <param name="canvas"></param>
-        private void SizeSkeletonCanvas(SkeletonCanvas canvas) {
+        private void SizeSkeletonCanvas(SkeletonCanvas canvas) {/*
             canvas.RenderTransform = new ScaleTransform(1.0, -1.0,
                 gridSnapshot.ColumnDefinitions[0].ActualWidth / 2.0,
-                gridSnapshot.RowDefinitions[0].ActualHeight / 2.0);
+                gridSnapshot.RowDefinitions[0].ActualHeight / 2.0);*/
+        }
+
+        /// <summary>
+        /// Tears down the control
+        /// </summary>
+        private void TearDown() {
+            try {
+                // Clear the GestureSnapshots
+                gridSnapshot.Children.Clear();
+
+                // Unsubscribe from the Camera events we are interested in...
+                IavaCamera.ImageFrameReady -= OnCameraImageFrameReady;
+                IavaCamera.SkeletonFrameReady -= OnCameraSkeletonFrameReady;
+
+                // Unsubscribe from the Audio events we are interested in...
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Unsubscribe("Capture");
+                (Window.GetWindow(this) as MainWindow).AudioRecognizer.Unsubscribe("Snapshot");
+            }
+
+            catch (Exception) { }
         }
 
         #endregion Private Methods

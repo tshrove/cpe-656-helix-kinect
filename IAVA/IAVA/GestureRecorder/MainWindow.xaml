@@ -12,10 +12,11 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel VerticalAlignment="Top" Grid.Column="0">
-                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Create Gesture" Margin="1,2,1,2" Height="100" Name="btnCreate" Click="btnCreate_Click" />
-                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Test Gestures" Margin="1,2,1,2" Height="100" Name="btnTest" Click="btnTest_Click" />
-                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Exit" Margin="1,2,1,2" Height="100" Name="btnExit" Click="btnExit_Click" />
+                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Create Gesture" Margin="1,2,1,2" Height="100" Name="btnCreate" Checked="OnCreateGestureChecked" />
+                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Test Gestures" Margin="1,2,1,2" Height="100" Name="btnTest" Checked="OnTestGestureChecked" />
+                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Exit" Margin="1,2,1,2" Height="100" Name="btnExit" Checked="OnExitChecked" />
             </StackPanel>
+
             <local:CreateGesture x:Name="CreateGesture" Grid.Column="1"
                                  Visibility="{Binding ElementName=btnCreate,
                                                     Path =IsChecked,

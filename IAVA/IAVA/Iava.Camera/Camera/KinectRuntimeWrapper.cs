@@ -124,7 +124,7 @@ namespace Iava.Input.Camera {
             _kinectSensor.SkeletonStream.Enable(smoothingParams);
 
             // Open the RGB camera
-            _kinectSensor.Start();
+            if (!KinectSensor.KinectSensors[0].IsRunning) { KinectSensor.KinectSensors[0].Start(); }
         }
 
         /// <summary>

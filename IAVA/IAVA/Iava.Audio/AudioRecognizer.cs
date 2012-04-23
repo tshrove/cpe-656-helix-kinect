@@ -90,6 +90,11 @@ namespace Iava.Audio {
             speechEngine.RecognizeAsyncStop();
             audioSource.Stop();
 
+            // Unsubscribe from the SpeechEngine Events
+            speechEngine.SpeechRecognized -= SpeechRecognized;
+            speechEngine.SpeechHypothesized -= SpeechHypothesized;
+            speechEngine.SpeechRecognitionRejected -= SpeechRejected;
+
             Status = RecognizerStatus.Ready;
 
             OnStopped(this, new EventArgs());
@@ -114,7 +119,7 @@ namespace Iava.Audio {
                 AudioCallbacks.Add(name, callBack);
 
                 // To update the grammar the recognizer needs to be restarted
-                if (Status == RecognizerStatus.Running) {
+                if (Status == RecognizerStatus.Running || Status == RecognizerStatus.Error) {
                     Stop();
                     Start();
                 }
@@ -246,6 +251,7 @@ namespace Iava.Audio {
                     audioSource.AutomaticGainControlEnabled = false;
                     audioSource.BeamAngleMode = BeamAngleMode.Adaptive;
 
+                    if (!KinectSensor.KinectSensors[0].IsRunning) { KinectSensor.KinectSensors[0].Start(); }
                     var kinectStream = audioSource.Start();
                     speechEngine.SetInputToAudioStream(kinectStream, new SpeechAudioFormatInfo(
                                                           EncodingFormat.Pcm, 16000, 16, 1,
