@@ -153,9 +153,6 @@ namespace GestureRecorder.Controls {
         /// <param name="e"></param>
         private void OnNextClick(object sender, RoutedEventArgs e) {
             if (m_bIsNextButton) {
-                // Get the audio recognizer from adding more snapshots accidentally.
-                this.AudioRecognizer.Unsubscribe("Capture");
-                this.AudioRecognizer.Unsubscribe("Snapshot");
                 // Enable the skeleton
                 this.stkSkeletalBody.IsEnabled = true;
                 // Disable Snapshot button
