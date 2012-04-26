@@ -255,6 +255,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_C8AD14DC9D5349EEB6BAF88958EA7B8E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D28C7D6503534FAC96379D19C4E0D6AA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -848,6 +854,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C8AD14DC9D5349EEB6BAF88958EA7B8E"
+            {
+            "SourcePath" = "8:..\\Documentation\\IAVAUsersManual.pdf"
+            "TargetName" = "8:IAVAUsersManual.pdf"
+            "Tag" = "8:"
+            "Folder" = "8:_80129A3C5F4147FDB9BC941233AAB133"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D28C7D6503534FAC96379D19C4E0D6AA"
             {
             "SourcePath" = "8:..\\Gestures\\Zoom Out.iava"
@@ -1086,7 +1112,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:IAVA"
         "ProductCode" = "8:{F6AE5C6D-D620-4B45-ACFB-F3C3B13E0A7D}"
-        "PackageCode" = "8:{4324F720-F963-46D1-B6EB-587EFB4A0467}"
+        "PackageCode" = "8:{430805CE-A413-4330-B4FC-5A11AE1D0499}"
         "UpgradeCode" = "8:{88D05D90-D93C-4EC5-8ADF-4A6EA10446A2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
