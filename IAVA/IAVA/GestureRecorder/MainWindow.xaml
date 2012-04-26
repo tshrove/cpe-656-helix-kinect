@@ -12,21 +12,13 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel VerticalAlignment="Top" Grid.Column="0">
-                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Create Gesture" Margin="1,2,1,2" Height="100" Name="btnCreate" Checked="OnCreateGestureChecked" />
-                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Test Gestures" Margin="1,2,1,2" Height="100" Name="btnTest" Checked="OnTestGestureChecked" />
-                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Exit" Margin="1,2,1,2" Height="100" Name="btnExit" Checked="OnExitChecked" />
+                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Create Gesture" Margin="1,2,1,2" Height="100" Name="btnCreate" IsChecked="False" Checked="OnCreateGestureChecked" />
+                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Test Gestures" Margin="1,2,1,2" Height="100" Name="btnTest" IsChecked="False" Checked="OnTestGestureChecked" />
+                <RadioButton Style="{StaticResource {x:Type ToggleButton}}" Content="Exit" Margin="1,2,1,2" Height="100" Name="btnExit" IsChecked="False" Checked="OnExitChecked" />
             </StackPanel>
 
-            <local:CreateGesture x:Name="CreateGesture" Grid.Column="1"
-                                 Visibility="{Binding ElementName=btnCreate,
-                                                    Path =IsChecked,
-                                                    Converter={StaticResource BooleanToVisibilityConverter}}"
-                                 />
-            <local:TestGesture x:Name="TestGesture" Grid.Column="1"
-                               Visibility="{Binding ElementName=btnTest,
-                                                    Path=IsChecked,
-                                                    Converter={StaticResource BooleanToVisibilityConverter}}"
-                                 />
+            <local:CreateGesture x:Name="CreateGesture" Grid.Column="1" />
+            <local:TestGesture x:Name="TestGesture" Grid.Column="1" />
         </Grid>
     </DockPanel>
 
