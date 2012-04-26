@@ -32,6 +32,9 @@ namespace GestureRecorder {
             AudioRecognizer.Subscribe("Exit", ExitAudioCallback);
 
             AudioRecognizer.Start();
+
+            CreateGesture.Visibility = System.Windows.Visibility.Hidden;
+            TestGesture.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void CreateAudioCallback(AudioEventArgs e) {
@@ -51,13 +54,23 @@ namespace GestureRecorder {
         }
 
         private void OnCreateGestureChecked(object sender, RoutedEventArgs e) {
-            
+            CreateGesture.Visibility = ((bool)btnCreate.IsChecked) ? System.Windows.Visibility.Visible
+                                                                   : System.Windows.Visibility.Hidden;
+
+            TestGesture.Visibility = ((bool)btnTest.IsChecked) ? System.Windows.Visibility.Visible
+                                                               : System.Windows.Visibility.Hidden;
         }
 
         private void OnTestGestureChecked(object sender, RoutedEventArgs e) {
+            CreateGesture.Visibility = ((bool)btnCreate.IsChecked) ? System.Windows.Visibility.Visible
+                                                                   : System.Windows.Visibility.Hidden;
+
+            TestGesture.Visibility = ((bool)btnTest.IsChecked) ? System.Windows.Visibility.Visible
+                                                               : System.Windows.Visibility.Hidden;
         }
 
         private void OnExitChecked(object sender, RoutedEventArgs e) {
+            AudioRecognizer.Stop();
             Close();
         }
         /*

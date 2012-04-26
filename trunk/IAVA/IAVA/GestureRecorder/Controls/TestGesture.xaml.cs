@@ -210,6 +210,8 @@ namespace GestureRecorder.Controls {
                 (Window.GetWindow(this) as MainWindow).AudioRecognizer.Unsubscribe("Load Gestures");
                 (Window.GetWindow(this) as MainWindow).AudioRecognizer.Unsubscribe("Start Test");
                 (Window.GetWindow(this) as MainWindow).AudioRecognizer.Unsubscribe("Stop Test");
+
+                m_pGestureRecognizer.Stop();
             }
 
             catch (Exception) { }

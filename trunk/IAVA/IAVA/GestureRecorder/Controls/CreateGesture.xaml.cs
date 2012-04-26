@@ -279,7 +279,7 @@ namespace GestureRecorder.Controls {
                 this.Gesture.FudgeFactor = 0.2f;
             }
 
-            catch (Exception) {
+            catch (Exception e) {
             }
         }
 
