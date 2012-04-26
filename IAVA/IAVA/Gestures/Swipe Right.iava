@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Gesture xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" FudgeFactor="0.20000000298023224" Name="Swipe Right" xmlns="urn:Gestures">
+  <Snapshot>
+    <BodyPart Name="HipCenter">
+      <Position>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="Spine">
+      <Position>
+        <X>0.00094948709011077881</X>
+        <Y>0.066355735063552856</Y>
+        <Z>0.034942626953125</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ShoulderCenter">
+      <Position>
+        <X>0.0039047598838806152</X>
+        <Y>0.417955219745636</Y>
+        <Z>0.01782989501953125</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="Head">
+      <Position>
+        <X>0.0077936649322509766</X>
+        <Y>0.62707054615020752</Y>
+        <Z>-0.030472993850708008</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ShoulderLeft">
+      <Position>
+        <X>-0.16695037856698036</X>
+        <Y>0.32314169406890869</Y>
+        <Z>0.047456741333007812</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ElbowLeft">
+      <Position>
+        <X>-0.20789969712495804</X>
+        <Y>0.067492902278900146</Y>
+        <Z>0.042621612548828125</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="WristLeft">
+      <Position>
+        <X>-0.2035791426897049</X>
+        <Y>-0.14618572592735291</Y>
+        <Z>-0.042189598083496094</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="HandLeft">
+      <Position>
+        <X>-0.19444775581359863</X>
+        <Y>-0.2296308409422636</Y>
+        <Z>-0.0734720230102539</Z>
+      </Position>
+      <Tracking>true</Tracking>
+    </BodyPart>
+    <BodyPart Name="ShoulderRight">
+      <Position>
+        <X>0.17640189826488495</X>
+        <Y>0.30902546644210815</Y>
+        <Z>0.042130708694458008</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ElbowRight">
+      <Position>
+        <X>0.25598488748073578</X>
+        <Y>0.07751619815826416</Y>
+        <Z>0.037114143371582031</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="WristRight">
+      <Position>
+        <X>0.472831591963768</X>
+        <Y>0.10704860091209412</Y>
+        <Z>-0.10322475433349609</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="HandRight">
+      <Position>
+        <X>0.55458508431911469</X>
+        <Y>0.11672037839889526</Y>
+        <Z>-0.13818478584289551</Z>
+      </Position>
+      <Tracking>true</Tracking>
+    </BodyPart>
+    <BodyPart Name="HipLeft">
+      <Position>
+        <X>-0.07835058867931366</X>
+        <Y>-0.075499206781387329</Y>
+        <Z>-0.0046169757843017578</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="KneeLeft">
+      <Position>
+        <X>-0.11627136170864105</X>
+        <Y>-0.54831236600875854</Y>
+        <Z>-0.016391754150390625</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="AnkleLeft">
+      <Position>
+        <X>-0.11327509582042694</X>
+        <Y>-0.9379693865776062</Y>
+        <Z>-0.010557413101196289</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="FootLeft">
+      <Position>
+        <X>-0.15945214591920376</X>
+        <Y>-0.98987764120101929</Y>
+        <Z>-0.054558277130126953</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="HipRight">
+      <Position>
+        <X>0.076842233538627625</X>
+        <Y>-0.07847905158996582</Y>
+        <Z>-0.0068302154541015625</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="KneeRight">
+      <Position>
+        <X>0.12364457547664642</X>
+        <Y>-0.55920255184173584</Y>
+        <Z>-0.032067060470581055</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="AnkleRight">
+      <Position>
+        <X>0.1292693167924881</X>
+        <Y>-0.92408585548400879</Y>
+        <Z>-0.037356376647949219</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="FootRight">
+      <Position>
+        <X>0.15187381207942963</X>
+        <Y>-0.98486393690109253</Y>
+        <Z>-0.080393075942993164</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+  </Snapshot>
+  <Snapshot>
+    <BodyPart Name="HipCenter">
+      <Position>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="Spine">
+      <Position>
+        <X>0.0082774609327316284</X>
+        <Y>0.064028173685073853</Y>
+        <Z>0.054342508316040039</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ShoulderCenter">
+      <Position>
+        <X>0.0113869309425354</X>
+        <Y>0.42420229315757751</Y>
+        <Z>0.042314052581787109</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="Head">
+      <Position>
+        <X>-3.2156705856323242E-05</X>
+        <Y>0.60694947838783264</Y>
+        <Z>0.012436389923095703</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ShoulderLeft">
+      <Position>
+        <X>-0.16197166033089161</X>
+        <Y>0.3185400664806366</Y>
+        <Z>0.080256938934326172</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ElbowLeft">
+      <Position>
+        <X>-0.20509336143732071</X>
+        <Y>0.059883981943130493</Y>
+        <Z>0.066347360610961914</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="WristLeft">
+      <Position>
+        <X>-0.20500569976866245</X>
+        <Y>-0.15377701818943024</Y>
+        <Z>-0.022387504577636719</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="HandLeft">
+      <Position>
+        <X>-0.20156047865748406</X>
+        <Y>-0.24038210138678551</Y>
+        <Z>-0.0541234016418457</Z>
+      </Position>
+      <Tracking>true</Tracking>
+    </BodyPart>
+    <BodyPart Name="ShoulderRight">
+      <Position>
+        <X>0.1771429181098938</X>
+        <Y>0.30877760052680969</Y>
+        <Z>0.034461498260498047</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ElbowRight">
+      <Position>
+        <X>0.22582140564918518</X>
+        <Y>0.090638011693954468</Y>
+        <Z>-0.0627889633178711</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="WristRight">
+      <Position>
+        <X>0.10769528150558472</X>
+        <Y>0.08510175347328186</Y>
+        <Z>-0.25396251678466797</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="HandRight">
+      <Position>
+        <X>0.078990429639816284</X>
+        <Y>0.094329655170440674</Y>
+        <Z>-0.2947688102722168</Z>
+      </Position>
+      <Tracking>true</Tracking>
+    </BodyPart>
+    <BodyPart Name="HipLeft">
+      <Position>
+        <X>-0.077535584568977356</X>
+        <Y>-0.076045110821723938</Y>
+        <Z>-0.00047254562377929688</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="KneeLeft">
+      <Position>
+        <X>-0.10748951137065888</X>
+        <Y>-0.54381003975868225</Y>
+        <Z>0.027963638305664062</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="AnkleLeft">
+      <Position>
+        <X>-0.1084633469581604</X>
+        <Y>-0.93338456749916077</Y>
+        <Z>0.038313865661621094</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="FootLeft">
+      <Position>
+        <X>-0.15455801971256733</X>
+        <Y>-0.985142320394516</Y>
+        <Z>-0.0079174041748046875</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="HipRight">
+      <Position>
+        <X>0.073370441794395447</X>
+        <Y>-0.076795369386672974</Y>
+        <Z>-0.019967555999755859</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="KneeRight">
+      <Position>
+        <X>0.12814685702323914</X>
+        <Y>-0.55455282330513</Y>
+        <Z>-6.3180923461914062E-05</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="AnkleRight">
+      <Position>
+        <X>0.13577237725257874</X>
+        <Y>-0.92066851258277893</Y>
+        <Z>0.0096724033355712891</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="FootRight">
+      <Position>
+        <X>0.15975421667099</X>
+        <Y>-0.98404911160469055</Y>
+        <Z>-0.031292438507080078</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+  </Snapshot>
+  <Snapshot>
+    <BodyPart Name="HipCenter">
+      <Position>
+        <X>0</X>
+        <Y>0</Y>
+        <Z>0</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="Spine">
+      <Position>
+        <X>0.0138014554977417</X>
+        <Y>0.063254266977310181</Y>
+        <Z>0.056122779846191406</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ShoulderCenter">
+      <Position>
+        <X>0.020427629351615906</X>
+        <Y>0.43137216567993164</Y>
+        <Z>0.0571897029876709</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="Head">
+      <Position>
+        <X>0.016103044152259827</X>
+        <Y>0.60662198066711426</Y>
+        <Z>0.046488046646118164</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ShoulderLeft">
+      <Position>
+        <X>-0.15496567729860544</X>
+        <Y>0.32243144512176514</Y>
+        <Z>0.091556072235107422</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ElbowLeft">
+      <Position>
+        <X>-0.20010868087410927</X>
+        <Y>0.043233692646026611</Y>
+        <Z>0.071390390396118164</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="WristLeft">
+      <Position>
+        <X>-0.20297054946422577</X>
+        <Y>-0.15478774160146713</Y>
+        <Z>-0.01840519905090332</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="HandLeft">
+      <Position>
+        <X>-0.20174656808376312</X>
+        <Y>-0.23422460816800594</Y>
+        <Z>-0.046861648559570312</Z>
+      </Position>
+      <Tracking>true</Tracking>
+    </BodyPart>
+    <BodyPart Name="ShoulderRight">
+      <Position>
+        <X>0.17041337490081787</X>
+        <Y>0.30476057529449463</Y>
+        <Z>0.013760566711425781</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="ElbowRight">
+      <Position>
+        <X>0.16690224409103394</X>
+        <Y>0.11477267742156982</Y>
+        <Z>-0.10520100593566895</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="WristRight">
+      <Position>
+        <X>-0.10930141806602478</X>
+        <Y>0.13724952936172485</Y>
+        <Z>-0.13383841514587402</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="HandRight">
+      <Position>
+        <X>-0.2013070173561573</X>
+        <Y>0.14174962043762207</Y>
+        <Z>-0.12950205802917481</Z>
+      </Position>
+      <Tracking>true</Tracking>
+    </BodyPart>
+    <BodyPart Name="HipLeft">
+      <Position>
+        <X>-0.075461849570274353</X>
+        <Y>-0.072872743010520935</Y>
+        <Z>0.0012829303741455078</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="KneeLeft">
+      <Position>
+        <X>-0.10599543899297714</X>
+        <Y>-0.53677797317504883</Y>
+        <Z>0.031488656997680664</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="AnkleLeft">
+      <Position>
+        <X>-0.09861474484205246</X>
+        <Y>-0.92528057098388672</Y>
+        <Z>0.057230234146118164</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="FootLeft">
+      <Position>
+        <X>-0.1443302109837532</X>
+        <Y>-0.98109698295593262</Y>
+        <Z>0.019259452819824219</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="HipRight">
+      <Position>
+        <X>0.067654445767402649</X>
+        <Y>-0.0759175568819046</Y>
+        <Z>-0.026763916015625</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="KneeRight">
+      <Position>
+        <X>0.12932077050209045</X>
+        <Y>-0.54640877246856689</Y>
+        <Z>0.0082409381866455078</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="AnkleRight">
+      <Position>
+        <X>0.1453784704208374</X>
+        <Y>-0.91448384523391724</Y>
+        <Z>0.0298612117767334</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+    <BodyPart Name="FootRight">
+      <Position>
+        <X>0.16812989115715027</X>
+        <Y>-0.97792589664459229</Y>
+        <Z>-0.0065932273864746094</Z>
+      </Position>
+      <Tracking>false</Tracking>
+    </BodyPart>
+  </Snapshot>
+</Gesture>
